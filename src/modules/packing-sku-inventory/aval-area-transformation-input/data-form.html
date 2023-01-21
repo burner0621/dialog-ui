@@ -1,0 +1,59 @@
+<template>
+  <style>
+    #detailTable {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+
+    }
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown label="Area" value.bind="data.area" error.bind="error.Area" read-only.bind="readOnly"
+      items.bind="areas" show.bind="false"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Macam Barang" value.bind="avalType" error.bind="error.AvalType"
+      read-only.bind="readOnly || isEdit" items.bind="avalTypes"></au-dropdown>
+
+    <au-numeric label="Qty Satuan" value.bind="data.totalQuantity" format="0.00" read-only.bind="readOnly" error.bind="error.TotalQuantity"
+      options.bind="controlOptions">
+    </au-numeric>
+
+    <au-numeric label="Qty Berat" value.bind="data.totalWeight" format="0.00" read-only.bind="readOnly" error.bind="error.TotalWeight"
+      options.bind="controlOptions">
+    </au-numeric>
+
+    <au-textbox show.bind="error.AvalTransformationProductionOrder" read-only.bind="true"
+      value.bind="error.AvalTransformationProductionOrder" style="color: red;"></au-textbox>
+
+    <br>
+    <br>
+    <au-collection columns.bind="itemColumns" items.bind="data.displayAvalTransformationProductionOrders"
+      if.bind="!isEdit" errors.one-way="error.AvalTransformationProductionOrders" options.bind="detailOptions"
+      read-only.bind="readOnly"
+      header-template="modules/packing-sku-inventory/aval-area-transformation-input/template/item-header"
+      item-template="modules/packing-sku-inventory/aval-area-transformation-input/template/item">
+    </au-collection>
+
+    <au-collection columns.bind="itemColumns" items.bind="data.displayAvalTransformationProductionOrders"
+      if.bind="isEdit" errors.one-way="error.AvalTransformationProductionOrders" options.bind="detailOptions"
+      read-only.bind="readOnly" remove.bind="onremove"
+      header-template="modules/packing-sku-inventory/aval-area-transformation-input/template/item-header"
+      item-template="modules/packing-sku-inventory/aval-area-transformation-input/template/item">
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+
+
+</template>

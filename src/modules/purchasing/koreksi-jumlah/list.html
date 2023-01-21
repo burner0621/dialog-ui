@@ -1,0 +1,130 @@
+<template>
+    <h1 class="page-header">Monitoring Koreksi Jumlah</h1>
+    <form class="form-horizontal">
+  
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button> 
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    
+        <au-table
+            view-model.ref="table"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Cetak Excel</button>
+            </div>
+        </au-table>
+        <hr/>
+    </form>
+</template>
+
+<!--<template>
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+        </style>
+
+ <h1 class="page-header">Monitoring Koreksi Harga</h1>
+     <form class="form-horizontal">
+       
+        <datepicker label="Tanggal Awal" value.bind="dateFrom" ></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" ></datepicker> 
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+               <button click.delegate="searching()" class='btn btn-success'>Cari</button> 
+               <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div> 
+        
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+        
+    </form>
+    <br>
+<br>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <tr>
+                <td rowspan="2">No</td>
+                <td colspan="2">NOTA DEBET</td>
+                <td rowspan="2">NO SPB</td>
+                <td rowspan="2">NO PO EXTERNAL</td>
+                <td rowspan="2">NO PURCHASE REQUEST</td>
+                <td rowspan="2">FAKTUR PAJAK PPN</td>
+                <td rowspan="2">TANGGAL FAKTUR PAJAK PPN</td>
+                <td rowspan="2">SUPPLIER</td>
+                <td rowspan="2">JENIS KOREKSI</td>
+                <td colspan="2">BARANG</td>
+                <td colspan="4">KOREKSI</td>
+                <td rowspan="2">USER INPUT</td>
+                
+                </tr>
+                <tr>
+                    <td>NOMOR</td>
+                    <td>TANGGAL</td>
+                    <td>KODE</td>
+                    <td>NAMA</td>
+                    <td>JUMLAH</td>
+                    <td>SATUAN</td>
+                    <td>HARGA SATUAN</td>
+                    <td>HARGA TOTAL</td>
+
+                <!--<th>Kategori UOM</th>-->
+            <!--</tr>
+        
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data">
+                <td>${$index + 1}</td>
+                <td class="text-center">${item.no}</td>
+                <td class="text-center">${item.date | dateFormat: 'D MMM YYYY'}</td>
+                <td class="text-center">${item.unitPaymentOrder.no}</td>
+                <td class="text-center">${item.items.purchaseOrder.purchaseOrderExternal.no}</td>
+                <td class="text-center">${item.items.purchaseOrder.purchaseRequest.no}</td>
+                <td class="text-left">${item.incomeTaxCorrectionNo}</td>
+                <td class="text-left">${item.incomeTaxCorrectionDate | dateFormat: 'D MMM YYYY'}</td>
+                <td class="text-left">${item.unitPaymentOrder.supplier.name}</td>
+                <td class="text-right">${item.correctionType}</td>
+                <td class="text-left">${item.items.product.code}</td>
+                <td class="text-left">${item.items.product.name}</td>
+                <td class="text-right">${item.items.quantity}</td>
+                <td class="text-right">${item.items.uom.unit}</td>
+                <td class="text-right">${item.items.pricePerUnit}</td>
+                <td class="text-right">${item.items.priceTotal}</td>
+                <td class="text-right">${item._createdBy}</td>
+            </tr>
+        </tbody>
+    </table>-->
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+    
+</template>-->

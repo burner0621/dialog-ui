@@ -1,0 +1,67 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="data.DispositionNote"
+                             error.bind="error.DispositionNote"
+                             loader.one-time="dispositionNoteLoader"
+                             text="DocumentNo">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.DispositionNote.Date"
+                           read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.DispositionNote.DueDate"
+                           read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.DispositionNote.SupplierName"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.DispositionNote.VATAmount"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.DispositionNote.IncomeTaxAmount"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.DispositionNote.TotalPaid"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.DispositionNote.CurrencyCode"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Remark">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-info"
+                    click.delegate="toggle()">i</button>
+            <button class="btn btn-danger"
+                    click.delegate="onremove(data)">-</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="9">
+            <au-collection items.bind="data.DispositionNote.Items"
+                           columns.bind="columns"
+                           item-template="modules/garment-finance/garment-disposition-to-verification/templates/detail">
+            </au-collection>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,181 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+    
+        <div class="row">
+                <au-textbox 
+                    label="Nomor VB" 
+                    value.bind="data.vbNo" 
+                    read-only="true"
+                    options.bind="controlOptions" 
+                    if.bind="readOnly || data.id">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal VB" 
+                    value.bind="data.vbDate" 
+                    error.bind="error.vbDate"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete 
+                    label="Buyer" 
+                    placeholder="Pilih buyer" 
+                    value.bind="selectedBuyer"
+                    error.bind="error.buyer" 
+                    loader.bind="buyerLoader" 
+                    text.bind="buyerView"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-dropdown
+                    label="Jenis Pembayaran"
+                    value.bind="selectedPaymentType"
+                    error.bind="error.paymentType"
+                    read-only.bind="readOnly"
+                    items.bind="paymentTypeOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+                
+                <au-autocomplete 
+                    label="EMKL" 
+                    placeholder="Pilih emkl" 
+                    value.bind="data.emkl"
+                    error.bind="error.emkl" 
+                    loader.bind="emklLoader" 
+                    text.bind="emklView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-autocomplete 
+                    label="Forwarder" 
+                    placeholder="Pilih forwarder" 
+                    value.bind="data.forwarder"
+                    error.bind="error.forwarder" 
+                    loader.bind="forwarderLoader" 
+                    text.bind="forwarderView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='Forwarder'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-textbox 
+                    label="No Invoice EMKL" 
+                    value.bind="data.emklInvoiceNo"
+                    error.bind="error.emklInvoiceNo" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No Invoice Forwarder" 
+                    value.bind="data.forwarderInvoiceNo"
+                    error.bind="error.forwarderInvoiceNo" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='Forwarder'"
+                    options.bind="controlOptions">
+                </au-textbox>
+                <div class="row" style="margin-left: 13.5%;">
+                    <div class="col-md-3">
+                        <au-numeric 
+                            label="Nilai Tagihan" 
+                            value.bind="data.billValue"
+                            error.bind="error.billValue" 
+                            read-only.bind="readOnly" 
+                            options.bind="length4">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-3">
+                        <au-numeric 
+                            label="Nilai PPN" 
+                            value.bind="data.vatValue"
+                            error.bind="error.vatValue" 
+                            read-only.bind="readOnly" 
+                            options.bind="length4">
+                        </au-numeric>
+                    </div>
+                </div>
+                <au-datepicker 
+                    label="Tanggal Pembayaran" 
+                    value.bind="data.paymentDate" 
+                    error.bind="error.paymentDate"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-datepicker>
+                
+                <au-autocomplete 
+                    label="PPH" 
+                    placeholder="Pilih PPH" 
+                    value.bind="data.incomeTax"
+                    error.bind="error.incomeTax" 
+                    loader.bind="incomeTaxLoader" 
+                    text.bind="incomeTaxView"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-numeric 
+                    label="Rate PPH (%)" 
+                    value.bind="data.incomeTax.Rate || data.incomeTax.rate"
+                    if.bind="data.incomeTax"
+                    error.bind="error.incomeTax" 
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric 
+                    label="Total Tagihan" 
+                    value.bind="billTotal"
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+                
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                
+                <p>Beban Unit :</p>
+                
+        <div class="form-group has-error">
+            <p if.bind="error.unitsCount" class="help-block text-center">${error.unitsCount}</p>
+        </div>
+                <au-collection 
+                    items.bind="data.units" 
+                    errors.bind="error.units" 
+                    columns.bind="unitsColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removeUnits"
+                    add.bind="addUnits"
+                    options.bind="Options"
+                    footer-template="modules/garment-shipping/vb-payment/template/unit-footer"
+                    item-template="modules/garment-shipping/vb-payment/template/unit">
+                </au-collection>
+    
+                <p>Detail Invoice DL :</p>
+                
+        <div class="form-group has-error">
+            <p if.bind="error.invoicesCount" class="help-block text-center">${error.invoicesCount}</p>
+        </div>
+                <au-collection 
+                    items.bind="data.invoices" 
+                    errors.bind="error.invoices" 
+                    columns.bind="invoicesColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removeInvoices"
+                    add.bind="addInvoices"
+                    options.bind="Options"
+                    show.bind="data.buyer"
+                    item-template="modules/garment-shipping/vb-payment/template/invoice">
+                </au-collection>
+            </div>
+        </div>
+        
+        
+        <br>
+    </au-input-form>
+</template>

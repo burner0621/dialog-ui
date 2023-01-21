@@ -1,0 +1,45 @@
+<template >
+    <tr >
+        <!-- <td>
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td> -->
+        <td style="background-color:#a7a0a0">
+            <au-multiline
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-multiline>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-multiline
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-multiline>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-numeric
+                value.bind="data.TotalCuttingOut"
+                read-only.bind="true">
+            </au-numeric>                   
+        </td>
+        <td class="col-sm-1">
+            <div>
+                <button class="btn btn-info pull-right" if.bind= "data.Sizes" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="4">
+            <au-collection 
+                items.bind="data.Details" 
+                columns.bind="itemsColumns"
+                read-only.bind="true" 
+                options.bind="itemOptions"
+                item-template="modules/garment-subcon/garment-subcon-delivery-letter-out/template/size-cutting" >
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+</template>

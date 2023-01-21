@@ -1,0 +1,40 @@
+<template>
+    <tr>
+        <td if.bind="!readOnly">
+            <au-checkbox value.bind="data.isChecked" disabled.bind="readOnly" change.delegate="changeCheckBox()">>
+            </au-checkbox>
+        </td>
+
+        <td class="col-sm-3">
+            <au-autocomplete value.bind="data.salesNoteItem.product" error.bind="error.product" loader.bind="productLoader"
+                read-only="true" placeholder="Kode - Nama Barang" text.bind="productView">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.salesNoteItem.quantity" read-only="true">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.returnQuantity" error.bind="error.returnQuantity" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-1">
+            <au-autocomplete value.bind="data.salesNoteItem.uom" loader.bind="uomLoader" read-only="true" placeholder="Satuan"
+                text.bind="uomView">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.salesNoteItem.price" read-only="true">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-2">
+            <au-numeric value.to-view="total" read-only="true">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

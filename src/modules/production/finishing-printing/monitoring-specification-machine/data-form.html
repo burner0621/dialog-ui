@@ -1,0 +1,32 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <button slot="actions" class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+        <button slot="actions" class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+        <button slot="actions" class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+        <button slot="actions" class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+
+        <fieldset>
+            <au-datetimepicker label="Tanggal/Jam" value.bind="data.DateTimeInput " error.bind="error.DateTimeInput" options.bind="auInputOptions" read-only.bind="(readOnly)"></au-datetimepicker>
+            <au-autocomplete value.bind="Machine" error.bind="error.Machine" label="machine" loader.bind="machineLoader" placeholder="Cari machine"
+                key="Code" text="Name" read-only.bind="(readOnly)" options.bind="auInputOptions">
+            </au-autocomplete>
+            <au-autocomplete value.bind="ProductionOrder" error.bind="error.ProductionOrder" label="No Surat Produksi Order" loader.bind="productionOrderLoader"
+                placeholder="Cari No Surat Produksi Order" key="OrderNo" text="OrderNo" read-only.bind="(readOnly)" options.bind="auInputOptions">
+            </au-autocomplete>
+            <au-textbox label="Nomor Kereta" value.bind="data.CartNumber" placeholder="input nomor kereta" error.bind="error.CartNumber"
+                read-only.bind="(readOnly)" options.bind="auInputOptions"></au-textbox>
+        </fieldset>
+
+        <monitoring-specification-machine-collection value.bind="data.Details" error.bind="error.Details" if.bind="Machine" options.bind="Options"
+            click.delegate="resetErrors"></monitoring-specification-machine-collection>
+        <!-- <au-collection
+            items.bind="data.Indicators"
+            errors.bind="error.Indicators"
+            read-only.bind="readOnly"
+            show.bind="machine.Id"
+            columns.bind="IndicatorsHeader.Columns"
+            item-template="modules/production/finishing-printing/monitoring-specification-machine/template/indicator"
+            view-model.ref="dataCollection">
+        </au-collection> -->
+    </au-input-form>
+</template>

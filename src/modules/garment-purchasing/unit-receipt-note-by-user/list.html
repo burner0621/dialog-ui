@@ -1,0 +1,20 @@
+<template>
+    <div class="display-wrapper">
+        <h1 class="page-header">Bon Terima Unit Garment</h1>
+        <br>
+        <au-table
+            data.bind="loader"
+            context.bind="context"
+            context-click.delegate="contextClickCallback($event)"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25">
+            
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="create()">Buat</button>
+            </div>
+        </au-table>
+
+		<hr/>
+    </div>
+</template>

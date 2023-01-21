@@ -1,0 +1,6 @@
+<template>
+    <div>Nomor Pre Sales Contract Asal : <b>${data.PreSCNoSource}</b></div>
+    <div>Nomor SPP Asal : <b>${copiedCCFrom}</b></div>
+    <require from="modules/sales/finishing-printing-cost-calculation/data-form"></require>
+    <data-form title="Buat Baru Cost Calculation Dyeing/Printing" data.bind="data" error.bind="error" is-copy="true"></data-form>
+</template>

@@ -1,0 +1,59 @@
+<template>
+    <tr>
+        <td align='center' if.bind="options.isCreate" class="bg-primary" class="col-sm-1">
+            <au-checkbox 
+                value.bind="data.IsSave" 
+                if.bind="options.isCreate"
+                options.bind="controlOptions"
+                change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-numeric
+                value.bind="data.TotalCuttingOut"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <div>
+                <button class="btn btn-info pull-right" if.bind= "data.Details" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+        <tr if.bind="error.DetailsCount">
+            <div class="form-group has-error" if.bind="error.DetailsCount">
+                <p if.bind="error.DetailsCount" class="help-block text-center">${error.DetailsCount}</p>
+            </div>
+        </tr>
+    <tr show.bind="isShowing">
+        <td colspan="15">
+            <au-collection 
+                items.bind="data.Details" 
+                errors.bind="error.Details" 
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly" 
+                add.bind="addItems" 
+                remove.bind="removeItems"
+                options.bind="itemOptions"
+                item-template="modules/garment-production/cutting-out/template/detail"
+                footer-template="modules/garment-production/cutting-out/template/detail-footer" >
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+    <!-- <tr>
+        <td colspan="15" style="background-color: #173250;"></td> -->
+    </tr>
+    
+</template>

@@ -1,0 +1,74 @@
+<template>
+    <h1 class="page-header">Laporan Surat Permintaan Barang</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="materialsRequestNote"
+            label="No. SPB"
+            loader.one-time="materialRequestNoteLoader"
+            options.bind="controlOptions"
+            text="Code">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="productionOrder"
+            label="No. SPP"
+            loader.one-time="productionOrderLoader"
+            options.bind="controlOptions"
+            text="orderNo">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="unit"
+            query.bind="unitQuery"
+            label="Unit"
+            loader.one-time="unitLoader"
+            options.bind="controlOptions"
+            text="name">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="product"
+            label="Product"
+            loader.one-time="productLoader"
+            options.bind="controlOptions"
+            text="name">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="status"
+            label="Status"
+            options.bind="controlOptions"
+            items.bind="statusLists">
+        </au-dropdown>
+
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <au-table
+            view-model.ref="mrnTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+        </au-table>
+        <hr/>
+    </form>
+</template>

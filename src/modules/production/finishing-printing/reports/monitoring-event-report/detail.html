@@ -1,0 +1,34 @@
+<template>
+    <h1 class="page-header">Rincian Spesifikasi Mesin</h1>
+        <p style="color:red" if.bind="!data">Rincian spesifikasi mesin tidak ditemukan</p>
+        <form class="form-horizontal" if.bind="data">
+            <fieldset>
+                <textbox label="Kode" value.bind="data.Code" error.bind="error.Code" read-only="true"></textbox>
+                <datepicker label="Tanggal" value.bind="data.DateTimeInput" error.bind="error.DateTimeInput" read-only="true"> </datepicker>
+                <textbox label="Jam" value.bind="data.DateTimeInput | dateFormat:'HH:mm'" error.bind="error.DateTimeInput" read-only="true"></textbox>
+                <textbox label="Mesin " value.bind="data.Machine.Name" error.bind="error.Machine.Name" read-only="true"></textbox>
+                <textbox label="No Surat Produksi Order " value.bind="data.ProductionOrder.OrderNo" error.bind="error.ProductionOrder.OrderNo"
+                    read-only="true"></textbox>
+                <textbox label="Nomor Kereta" value.bind="data.CartNumber" error.bind="error.CartNumber" read-only="true"></textbox>
+            </fieldset>
+            <!-- <monitoring-specification-machine-collection value.bind="data.Details" error.bind="error.Details" options.bind="Options"></monitoring-specification-machine-collection> -->
+        </form>
+        <table class="table table-bordered table-hover" border="1" id="myTable2" if.bind="data">
+                <thead align="center">
+                    <th>Indikator</th>
+                    <th>Value</th>
+                    <th>Satuan</th>
+                </thead>
+                <tbody>
+                    <tr repeat.for="monitoringEventSpec of data.Details">
+                        <td class="text-left">${monitoringEventSpec.Indicator}</td>
+                        <td class="text-left">${monitoringEventSpec.Value}</td>
+                        <td class="text-left">${monitoringEventSpec.Uom}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <hr/>
+        <div class="btn-group pull-right">
+            <button click.delegate="list(mId,Mach,meId,MachE,pONOn,ProdNo,dateFrom,dateTo)" class="btn btn-default btn-sm">Kembali</button>
+        </div>
+</template>

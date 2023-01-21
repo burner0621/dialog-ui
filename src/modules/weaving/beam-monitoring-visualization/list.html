@@ -1,0 +1,50 @@
+<template>
+  <require from="./styles/list-style.css"></require>
+  <require from="./../../../lib/number-format-value-converter"></require>
+
+  <div id="kanbanArea">
+    <h1 class="page-header">Visualisasi Pemantauan Beam</h1>
+    <!-- <au-table data.bind="loader" columns.bind="columns" sortable="true" page-size="25" context.bind="context"
+    context-click.delegate="contextCallback($event)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-success" click.delegate="create()">Buat</button>
+    </div>
+  </au-table> -->
+
+    <!--<dragula-and-drop drop-fn.call="itemDropped(item, target, source, sibling, itemVM, siblingVM)"></dragula-and-drop>-->
+
+    <div class="row" id="kanbanRow">
+      <div class="stagesBox" repeat.for="stage of stages">
+        <div class="kanban__box ${type[$index % 4]}">
+          <div class="kanban__title">
+            <h4>${stage.name}</h4>
+          </div>
+          <div class="col-sm-12 kanban">
+              <ol>
+                <li class="kanbanDd-item" repeat.for="i of stage.map.beam">
+                  <h4 class="kanbanTitle">
+                    ${i.beamNumber}
+                    <br>
+                  </h4>
+                  <div class="kanbanText">
+                    <br /> Tanggal Masuk: ${i.entryDate}
+                    <br /> No. Perintah Produksi: ${i.orderNumber}
+                    <br /> No. Konstruksi: ${i.constructionNumber}
+                    <br /> Panjang: ${i.stockLength}
+                  </div>
+                </li>
+              </ol>
+          </div>
+
+          <!-- <div class="total col-sm-12">
+              Total Beam: ${stage.beamTotal} -->
+              <!-- <br> Good Output Total: ${stage.goodOutputTotal | numberFormat: '0,000'}
+              <br> Bad Output Total: ${stage.badOutputTotal | numberFormat: '0,000'} -->
+          <!-- </div> -->
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>

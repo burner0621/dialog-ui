@@ -1,0 +1,19 @@
+<template>
+    <tr>
+        <td colspan="3"
+            class="text-right">
+            <au-textbox value.bind="'Total'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.bind="getDebitSum"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,90 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title="Create: Operasional Mesin Harian Reaching" options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Mesin" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Mesin" value.bind="MachineDocument" error.bind="error.MachineDocumentId"
+            read-only.bind="readOnly" loader.bind="machines" text="MachineNumber"></au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Order Produksi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Order Produksi" value.bind="OrderDocument" error.bind="error.OrderDocumentId"
+            read-only.bind="readOnly" loader.bind="orders" text="OrderNumber">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Konstruksi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="No. Konstruksi" value.bind="ConstructionNumber" error.bind="error.ConstructionNumber"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2 col-md-offset-1" style="text-align:left;">
+          <textbox label="Unit Weaving" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Unit Weaving" value.bind="WeavingUnitDocument" error.bind="error.WeavingUnitDocument"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Beam Sizing" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Beam Sizing" value.bind="SizingBeamDocument"
+            error.bind="error.SizingBeamId" read-only.bind="readOnly" loader.bind="sizingBeamProducts" text="SizingBeamNumber"
+            query.bind="beamFilter">
+          </au-autocomplete>
+          <!-- <au-autocomplete placeholder="No. Beam Sizing" value.bind="SizingBeamDocument"
+            error.bind="error.SizingBeamId" read-only.bind="readOnly" loader.bind="beams" text="Number">
+          </au-autocomplete> -->
+        </div>
+      </div>
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Tanggal Pasang" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-datepicker value.bind="PreparationDate" error.bind="error.PreparationDate">
+          </au-datepicker>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Waktu Pasang" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-timepicker value.bind="PreparationTime" error.bind="error.PreparationTime" read-only.bind="readOnly">
+        </div>
+        <div class="col-md-2 col-md-offset-2" style="text-align:left;">
+          <textbox label="Shift" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Shift" value.bind="Shift.Name" error.bind="error.ShiftDocumentId" read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+  </au-input-form>
+</template>

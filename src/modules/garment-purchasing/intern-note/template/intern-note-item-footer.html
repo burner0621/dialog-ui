@@ -1,0 +1,8 @@
+<template>
+  
+  <tr>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <td if.bind="!readOnly" colspan="2" class="text-left"><b>Total Amount : ${currency} ${grandTotalPrice | numberFormat:"0,000.00"}</b></td>
+    <td if.bind="readOnly" colspan="2" class="text-left"><b>Total Amount : ${currency} ${grandTotalPrice2 | numberFormat:"0,000.00"}</b></td>
+  </tr>
+</template>

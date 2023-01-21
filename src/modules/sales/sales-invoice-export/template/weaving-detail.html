@@ -1,0 +1,61 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedDeliveryNote" error.bind="error.BonNo" read-only.bind="readOnly"
+                loader.one-time="deliveryNoteLoader" key="code" text="code" keypress.delegate="enterDelegate($event)"
+                placeholder="Pilih No. Bon Pengiriman">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ContractNo" error.bind="error.ContractNo" read-only.bind="readOnly"
+                placeholder="Input No. Kontrak">
+            </au-textbox>
+        </td>
+        <td>
+            <au-multiline placeholder="Deskripsi" value.bind="data.Description" error.bind="error.Description"
+                read-only.bind="readOnly">
+            </au-multiline>
+        </td>
+        <td>
+            <au-numeric value.bind="data.GrossWeight" error.bind="error.GrossWeight" read-only.bind="readOnly"
+                format="0,0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.NetWeight" error.bind="error.NetWeight" read-only.bind="readOnly"
+                format="0,0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.WeightUom" items.bind="weightUomOptions" error.bind="error.WeightUom"
+                read-only.bind="readOnly || isEdit">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-numeric value.bind="data.TotalMeas" error.bind="error.TotalMeas" read-only.bind="readOnly"
+                format="0,0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.TotalUom" items.bind="totalUomOptions" error.bind="error.TotalUom"
+                read-only.bind="readOnly || isEdit">
+            </au-dropdown>
+        </td>
+        <td if.bind="!readOnly">
+            <button if.bind="!readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    <tr>
+        <!-- show.bind="selectedDeliveryNote"  -->
+        <td colspan="8">
+            <au-collection columns.bind="salesInvoiceItemsInfo.columns" items.bind="data.SalesInvoiceExportItems"
+                view-model.ref="SalesInvoiceExportItems" errors.bind="error.SalesInvoiceExportItems"
+                read-only.bind="readOnly" options.bind="shippingOutTableOptions"
+                item-template="modules/sales/sales-invoice-export/template/weaving-item"
+                add.bind="salesInvoiceItemsInfo.onAdd" remove.bind="salesInvoiceItemsInfo.onRemove">
+            </au-collection>
+            <au-textbox error.bind="error.SalesInvoiceItem" read-only.bind="true"></au-textbox>
+        </td>
+    </tr>
+</template>

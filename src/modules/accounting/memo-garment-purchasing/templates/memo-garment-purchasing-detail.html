@@ -1,0 +1,47 @@
+<template>
+    <tr>
+        <td width="20%">
+            <au-autocomplete 
+            placeholder="pilih akun"
+            value.bind="data.COA"
+            error.bind="error.COA" 
+            read-only.bind="readOnly" 
+            loader.one-time="chartOfAccountLoader"
+            text= "No"
+            options.bind="controlOption" >
+            </au-autocomplete>
+          </td>
+        
+          <td width="25%">
+            <au-textbox
+              value.bind="data.COA.Name"
+              read-only.bind="true"
+              options.bind="controlOptions">
+            </au-textbox>
+          </td>
+        
+          <td width="20%">
+            <au-numeric 
+            value.bind="data.DebitNominal" 
+            error.bind="error.DebitNominal" 
+            read-only.bind="readOnly || data.CreditNominal" 
+            format = "0,0.0000"
+            options.bind="controlOption">
+            </au-numeric>
+          </td>
+        
+          <td width="20%">
+            <au-numeric 
+            value.bind="data.CreditNominal" 
+            error.bind="error.CreditNominal" 
+            read-only.bind="readOnly || data.DebitNominal" 
+            format = "0,0.0000"
+            options.bind="controlOption">
+            </au-numeric>
+          </td>
+
+        <td width="2%" if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,129 @@
+<template>
+  <require from="./card-template/card-content"></require>
+  <au-input-form title.bind="title"
+                 with.bind="context"
+                 options.bind="formOptions">
+
+    <au-datepicker value.bind="data.Date"
+                   error.bind="error.Date"
+                   show.bind="isVisible"
+                   read-only.bind="readOnly"
+                   label="Tanggal"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-datepicker value.bind="data.RealizationEstimationDate"
+                   error.bind="error.RealizationEstimationDate"
+                   read-only.bind="readOnly"
+                   label="Tanggal Estimasi Realisasi"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-autocomplete value.bind="data.SuppliantUnit"
+                     error.bind="error.SuppliantUnit"
+                     label="Unit Pemohon"
+                     loader.one-time="unitLoader"
+                     text.bind="unitView"
+                     read-only.bind="readOnly || isEdit"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete placeholder="pilih mata uang"
+                     value.bind="data.Currency"
+                     error.bind="error.Currency"
+                     loader.bind="currencyLoader"
+                     label="Mata Uang"
+                     text.bind="currencyView"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-numeric label="Jumlah Uang"
+                value.bind="data.Amount"
+                error.bind="error.Amount"
+                read-only.bind="readOnly"
+                format="0,0.00"
+                options.bind="controlOptions">
+    </au-numeric>
+
+    <au-multiline label="Kegunaan"
+                  value.bind="data.Purpose"
+                  error.bind="error.Purpose"
+                  placeholder="Kegunaan"
+                  read-only.bind="readOnly"
+                  options.bind="controlOptions">
+    </au-multiline>
+
+    <au-checkbox label="Inklaring"
+                 value.bind="data.IsInklaring"
+                 placeholder="inklaring"
+                 read-only.bind="readOnly"
+                 options.bind="controlOptions">
+    </au-checkbox>
+
+    <div show.bind="data.IsInklaring">
+      <au-textbox value.bind="data.NoBL" read-only.bind="readOnly" error.bind="error.NoBL" label="No. BL / AWB"
+        options.bind="controlOptions">
+      </au-textbox>
+      <au-textbox value.bind="data.NoPO" read-only.bind="readOnly" error.bind="error.NoPO" label="No. Kontrak / PO"
+        options.bind="controlOptions">
+      </au-textbox>
+    </div>
+    <!-- <card-content data.bind="data">
+
+    </card-content> -->
+    <div class="container">
+      <au-textbox show.bind="data.Currency && error.Item"
+                  read-only.bind="true"
+                  value.bind="error.Item"
+                  style="color: red;"></au-textbox>
+      <!-- <table show.bind="data.Currency">
+        <tr repeat.for="cardContents of cards">
+          <td repeat.for="cardContent of cardContents">
+             
+            <au-checkbox if.bind="cardContent.Unit.VBDocumentLayoutOrder != 10"
+                         label.bind="cardContent.Unit.Name"
+                         value.bind="cardContent.IsSelected"
+                         error.bind="error.cardContent"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptionsLabel">
+            </au-checkbox>
+            <au-checkbox if.bind="cardContent.Unit.VBDocumentLayoutOrder == 10 && !readOnly"
+                         value.bind="cardContent.IsSelected"
+                         change.delegate="otherUnitSelected($event,cardContent)"
+                         error.bind="error.cardContent"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptionsLabel">
+            </au-checkbox>
+            <au-checkbox if.bind="cardContent.Unit.VBDocumentLayoutOrder == 10 && readOnly"
+                         label.bind="cardContent.Unit.Name"
+                         value.bind="cardContent.IsSelected"
+                         error.bind="error.cardContent"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptionsLabel">
+            </au-checkbox>
+            <au-autocomplete if.bind="cardContent.IsSelected && cardContent.Unit.VBDocumentLayoutOrder == 10 && !readOnly "
+                             value.bind="cardContentUnit"
+                             read-only.bind="readOnly"
+                             loader.bind="unitVBNonPOLoader"
+                             query.bind="unitQuery"
+                             text="Name"
+                             options.bind="controlOptionsDetail">
+            </au-autocomplete>
+          </td>
+        </tr>
+      </table> -->
+      <au-collection items.bind="data.Items"
+                     errors.bind="error.Items"
+                     columns.bind="itemColumns"
+                     add.bind="addItems"
+                     remove.bind="onremoveItems"
+                     read-only.bind="readOnly"
+                     options.bind="itemOptions"
+                     show.bind="data.Currency"
+                     item-template="modules/purchasing/vb-request-document-non-po/card-template/card-content">
+      </au-collection>
+    </div>
+
+  </au-input-form>
+</template>

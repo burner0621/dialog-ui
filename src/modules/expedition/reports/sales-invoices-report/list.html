@@ -1,0 +1,73 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Pembayaran Faktur</h1>
+        <div class="form-group">
+
+            <au-autocomplete value.bind="selectedBuyer"
+                             label="Buyer"
+                             placeholder="pilih buyer"
+                             loader.one-time="buyerLoader"
+                             text="Name"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="selectedSalesInvoice"
+                             label="No. Faktur Jual"
+                             placeholder="pilih faktur"
+                             loader.one-time="salesInvoiceLoader"
+                             text="SalesInvoiceNo"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-dropdown label="Keterangan"
+                         value.bind="selectedStatus"
+                         items.bind="statusTypes"
+                         options.bind="controlOptions"
+                         text="label">
+            </au-dropdown>
+
+            <au-datepicker label="Tanggal Awal Jatuh Tempo"
+                           value.bind="startDate"
+                           options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-datepicker label="Tanggal Akhir Jatuh Tempo"
+                           value.bind="endDate"
+                           options.bind="controlOptions">
+            </au-datepicker>
+
+            <div class="form-group">
+                <label for="contact"
+                       class="col-sm-6 control-label"></label>
+                <div class="col-sm-12 text-center">
+                    <button click.delegate="search()"
+                            class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()"
+                            class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <au-table view-model.ref="table"
+                          data.bind="loader"
+                          columns.bind="columns"
+                          page-size="25"
+                          context.bind="context"
+                          context-click.delegate="contextClickCallback($event)"
+                          options.bind="tableOptions">
+                    <div slot="toolbar"
+                         class="btn-group">
+                        <button class='btn btn-primary'
+                                click.delegate="exportToExcel()">Excel</button>
+                    </div>
+                </au-table>
+            </div>
+        </div>
+    </au-input-form>
+</template>

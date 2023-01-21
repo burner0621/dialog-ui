@@ -1,0 +1,46 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox   
+          label="Kode" 
+          options.bind="controlOptions"
+          value.bind="data.Code"
+          error.bind="error.Code"
+          read-only.bind="(readOnly || isEdit)" >
+        </au-textbox>
+
+        <au-textbox   
+          label="Simbol" 
+          options.bind="controlOptions"
+          value.bind="data.Symbol"
+          error.bind="error.Symbol"
+          read-only.bind="readOnly" >
+        </au-textbox>
+
+        <au-numeric   
+          label="Rate" 
+          options.bind="controlOptions"
+          value.bind="data.Rate"
+          error.bind="error.Rate"
+          read-only.bind="readOnly" >
+        </au-numeric>
+
+        <au-multiline
+          label="Keterangan"
+          options.bind="controlOptions"
+          value.bind="data.Description"
+          error.bind="error.Description"
+          read-only.bind="readOnly">
+        </au-multiline>
+
+        <template replaceable part="actions"></template>
+        
+      </au-input-form>
+    </div>
+  </div>
+</template>

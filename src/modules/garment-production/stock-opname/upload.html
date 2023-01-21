@@ -1,0 +1,16 @@
+<template>
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title="Upload Stock Opname Garment" options.bind="formOptions">
+
+                <label for="dataFile" class="col-sm-2 control-label">File Path</label>
+                <div class="col-sm-10">
+                    <input type="file" id="fileCsv" name="fileUpload">
+                    <span class="help-block">${error.file}</span>
+                </div>
+
+                <pre if.bind="error.upload">${error.upload}</pre>
+            </au-input-form>
+        </div>
+    </div>
+</template>

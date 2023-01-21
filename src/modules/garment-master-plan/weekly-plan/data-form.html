@@ -1,0 +1,47 @@
+<template>
+  <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+            <!--text.bind="textFormatter"-->
+        <au-numeric  
+            label="Tahun" 
+            value.bind="data.Year"
+            error.bind="error.Year"
+            read-only.bind="isEdit"
+            options.bind="controlOptions"
+            format="0"
+            step.bind="dataDetail">
+        </au-numeric>
+            
+        <au-autocomplete 
+            value.bind="selectedUnit" 
+            error.bind="error.Unit"
+            label="Unit Konveksi" 
+            loader.one-time="unitLoader"
+            text.bind = "unitView"
+            placeholder="Cari unit konveksi" 
+            key="_id" 
+            read-only.bind="isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        
+        <au-collection 
+            items.bind="data.Items"
+            errors.bind="error.Items" 
+            columns.bind="itemColumns"
+            options.bind="controlOptions"
+            read-only.bind="readOnly"
+            change.delegate="onitemchange($event)"
+            item-template="modules/garment-master-plan/weekly-plan/template/item">
+        </au-collection>
+
+  </au-input-form>
+</template>

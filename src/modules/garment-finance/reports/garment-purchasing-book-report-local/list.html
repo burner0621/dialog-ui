@@ -1,0 +1,110 @@
+<template>
+  <require from="../../../../lib/number-format-value-converter"></require>
+
+  <h1 class="page-header">Laporan Buku Pembelian Lokal</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete value.bind="selectedBillNo" label="Nomor BP Besar" loader.bind="billNoLoader" text="Value"
+      placeholder="cari nomor bp besar" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedPaymentBill" label="Nomor BP Kecil" loader.bind="paymentBillLoader"
+      text="Value" placeholder="cari nomor bp kecil" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedAccountingCategory" label="Kategori Pembukuan"
+      loader.bind="accountingCategoryLoader" text="Value" placeholder="cari kategori pembukuan"
+      read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-datepicker value.bind="info.startDate" label="Tanggal Awal" options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-datepicker value.bind="info.endDate" label="Tanggal Akhir" options.bind="controlOptions">
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="credit-balance-table">
+    <au-table view-model.ref="tableList" data.bind="loader" columns.bind="columns" sortable="true" page-size="25"
+      options.bind="tableOptions">
+      <div slot="toolbar" class="btn-group">
+        <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+        <button class="btn btn-primary" click.delegate="pdf()">PDF</button>
+      </div>
+    </au-table>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-sm-4">
+      <au-table view-model.ref="categoryTableList"
+                data.bind="categories"
+                columns.bind="categoryColumns"
+                options.bind="tableOptions">
+      </au-table>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3">
+      <au-table view-model.ref="currencyTableList"
+                data.bind="currencies"
+                columns.bind="currencyColumns"
+                options.bind="tableOptions">
+      </au-table>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-sm-4">
+
+      <div class="table-responsive" if.bind="categories && categories.length > 0">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+          <thead align="center">
+            <tr>
+              <td>Kategori</td>
+              <td>Total (IDR)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="category of categories">
+              <td>${category.CategoryName}</td>
+              <td class="text-right"><strong>${category.Amount | numberFormat:
+                  '0,000.0000'}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="col-sm-4">
+
+      <div class="table-responsive" if.bind="currencies && currencies.length > 0">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+          <thead align="center">
+            <tr>
+              <td>Mata Uang</td>
+              <td>Total (IDR)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="currency of currencies">
+              <td>${currency.CurrencyCode}</td>
+              <td class="text-right"><strong>${currency.Amount | numberFormat:
+                  '0,000.0000'}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="col-sm-4">
+
+    </div>
+  </div>
+</template>

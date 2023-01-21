@@ -1,0 +1,116 @@
+<template>
+ <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Monitoring Disposisi Pembayaran Shipment | EMKL, FORWARDER, COURIER</h1>
+    <form class="form-horizontal">
+        
+        <au-dropdown 
+                label="Tipe Pembayaran" 
+                value.bind="paytype"
+                items.bind="PAYType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-datepicker label="Tanggal Payment Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Payment Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+
+        <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak</button>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td align="center" rowspan="2">No</td>
+                    <td align="center" rowspan="2">No Disposisi</td>
+                    <td align="center" rowspan="2">Tgl Bayar</td>
+                    <td align="center" rowspan="2">Tipe Bayar</td>
+                    <td align="center" rowspan="2">Kode Ekspedisi</td>
+                    <td align="center" rowspan="2">Nama Ekspedisi</td>
+                    <td align="center" rowspan="2">Motode Bayar</td>
+                    <td align="center" rowspan="2">Termin Bayar</td>
+                    <td align="center" rowspan="2">Nama Bank</td>
+                    <td align="center" rowspan="2">No Rekening</td>
+                    <td align="center" rowspan="2">Kode Buyer</td>
+                    <td align="center" rowspan="2">Nama Buyer</td>
+                    <td align="center" rowspan="2">No Invoice Tagihan</td>
+                    <td align="center" rowspan="2">Tgl Invoice Tagihan</td>
+                    <td align="center" rowspan="2">No Faktur Pajak</td>
+                    <td align="center" colspan="3">Unit Charges</td>
+                </tr>
+                <tr>
+                    <td align="center">Konfeksi</td>
+                    <td align="center">% Tagihan</td>
+                    <td align="center">Nilai Tagihan</td>                        
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.dispositionNo}</td>
+                        <td>${data.paymentDate}</td>
+                        <td>${data.paymentType}</td>
+                        <td>${data.xpdcCode}</td>
+                        <td>${data.xpdcName}</td>
+                        <td>${data.paymentMethod}</td>
+                        <td>${data.paymentTerm}</td>
+                        <td>${data.bankName}</td>
+                        <td>${data.accNumber}</td>
+                        <td>${data.buyerCode}</td>
+                        <td>${data.buyerName}</td>
+                        <td>${data.invoiceNumber}</td>
+                        <td>${data.invoiceDate}</td>
+                        <td>${data.invoiceTaxNumber}</td>
+                        <td>${data.UnitCode}</td>
+                        <td class="text-right"><strong>${data.unitPercentage}</strong></td>
+                        <td class="text-right"><strong>${data.unitAmount}</strong></td>
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td class="text-center">NO DISPOSISI :</td>
+                        <td colspan="2"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">.</td>                        
+                        <td class="text-center">NILAI TAGIHAN :</td>
+                        <td class="text-right"><strong>${buyer.subTotal}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">NILAI PPN :</td>
+                        <td class="text-right"><strong>${buyer.subTotal1}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">NILAI PPH :</td>
+                        <td class="text-right"><strong>${buyer.subTotal2}</strong></td>                        
+                        <td class="text-center">.</td>
+                        <td colspan="2" class="text-center">TOTAL TAGIHAN :</td>                        
+                        <td class="text-right"><strong>${buyer.subTotal3}</strong></td>
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td colspan="6" class="text-center"><strong>GRAND TOTAL :</strong></td>
+                        <td class="text-center">NILAI TAGIHAN :</td>
+                        <td class="text-right"><strong>${Total1}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">NILAI PPN :</td>
+                        <td class="text-right"><strong>${Total2}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">NILAI PPH :</td>
+                        <td class="text-right"><strong>${Total3}</strong></td>                        
+                        <td class="text-center">.</td>
+                        <td colspan="2" class="text-center">TOTAL TAGIHAN :</td>                        
+                        <td class="text-right"><strong>${Total4}</strong></td>
+                    </tr>
+            </tbody>
+        </table>
+         
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

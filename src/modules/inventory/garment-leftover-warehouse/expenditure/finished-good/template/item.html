@@ -1,0 +1,56 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete
+                value.bind="selectedComodity"
+                error.bind="error.LeftoverComodity"
+                loader.bind="leftoverComodityLoader"
+                read-only.bind="readOnly|| data.Id"
+                placeholder="leftoverComodity"
+                text.bind="leftoverComodityView">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-autocomplete
+                value.bind="selectedUnit"
+                error.bind="error.Unit"
+                loader.bind="unitLoader"
+                read-only.bind="readOnly || data.Id"
+                placeholder="unit"
+                text.bind = "unitView"
+                >
+            </au-autocomplete>
+        </td>
+        <td >
+            <au-autocomplete
+                value.bind="selectedStock"
+                error.bind="error.RONo"
+                loader.bind="stockLoader"
+                read-only.bind="readOnly|| data.Id"
+                placeholder="no RO"
+                text.bind = "roView"
+                show.bind="data.Unit"
+                query.bind= "filter"
+                view-model.ref="selectedStockViewModel">
+            </au-autocomplete>
+        </td>
+        <td if.bind="!readOnly">
+            <au-numeric
+                value.bind="data.StockQuantity"
+                error.bind="error.StockQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric
+                value.bind="data.ExpenditureQuantity"
+                error.bind="error.ExpenditureQuantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

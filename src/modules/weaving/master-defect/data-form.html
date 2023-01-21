@@ -1,0 +1,38 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Kode Cacat" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2" style="text-align:left;">
+          <au-textbox placeholder="Kode Cacat" value.bind="data.DefectCode" error.bind="error.DefectCode"
+            read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Tipe/ Nama Cacat" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Tipe/ Nama Cacat" value.bind="data.DefectType" error.bind="error.DefectType" read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Jenis/ Kategori Cacat" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-dropdown value.bind="data.DefectCategory" items.bind="Categories"
+            options.bind="controlOptions" error.bind="error.DefectCategory" read-only.bind="readOnly">
+          </au-dropdown>
+        </div>
+      </div>
+
+    </div>
+  </au-input-form>
+</template>

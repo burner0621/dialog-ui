@@ -1,0 +1,28 @@
+<template>
+    <h1 class="page-header">Migrate Data</h1>
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="form-group ${error.file ? 'has-error':''}">
+
+                <au-dropdown label="SQL Table" value.bind="data.tables" read-only.bind="readOnly" items.bind="tables" options.bind="auInputOptions"></au-dropdown>
+                <au-dropdown label="Selected date/month" value.bind="data.date" read-only.bind="readOnly" items.bind="monthOpt" options.bind="auInputOptions"></au-dropdown>
+                <au-dropdown label="Tahun" value.bind="data.year" items.bind="yearList" options.bind="auInputOptions"></au-dropdown>
+                <au-autocomplete value.bind="data.buyer" error.bind="error.buyer" label="Buyer" loader.bind="buyerLoader" options.bind="auInputOptions"
+                    placeholder="Cari Buyer" key="no" text="name">
+                </au-autocomplete>
+
+            </div>
+        </div>
+    </form>
+
+    <br>
+    <div class="row-sm-4">
+        <block>
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" click.delegate="cancelCallback()">Kembali</button>
+                <button class="btn btn-success" click.delegate="saveCallback()">Migrate</button>
+            </div>
+        </block>
+    </div>
+    </br>
+</template>

@@ -1,0 +1,125 @@
+<template>
+    <h1 class="page-header">Buku Harian Pembelian Garment</h1>
+    <form class="form-horizontal">
+       <au-autocomplete  value.bind="unitName" label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+                
+        <au-dropdown 
+                label="Jenis Supplier" 
+                value.bind="JenisSpl"
+                items.bind="SupplierType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+       
+        <au-dropdown 
+                label="Supplier" 
+                value.bind="NamaSpl"
+                items.bind="SupplierName"
+                options.bind="controlOptions" >
+        </au-dropdown>
+        
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <au-dropdown 
+            label="Jenis BC" 
+            value.bind="JenisBC"
+            items.bind="BC"
+            options.bind="controlOptions" >
+        </au-dropdown>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td class="text-center">Nomor</td>
+                    <td class="text-center">Supplier</td>
+                    <td class="text-center">Nomor Nota</td>
+                    <td class="text-center">No Bon Kecil</td>
+                    <td class="text-center">No Bea Cukai</td>
+                    <td class="text-center">Tipe Bea Cukai</td>
+                    <td class="text-center">No Surat Jalan</td>
+                    <td class="text-center">Nota Intern</td>
+                    <td class="text-center">Nama Unit</td>
+                    <td class="text-center">Nama Barang</td>
+                    <td class="text-center">Jumlah</td>
+                    <td class="text-center">Satuan</td>
+                    <td class="text-center">DPP VLS</td>
+                    <td class="text-center">DPP IDR</td>                    
+                    <td class="text-center">Mata Uang</td>
+                    <td class="text-center">Rate</td>     
+                    <td class="text-center">Bahan Embalase [Rp]</td>
+                    <td class="text-center">Bahan Pendukung [Rp]</td>
+                    <td class="text-center">Bahan Baku [Rp]</td>
+                    <td class="text-center">Proses [Rp]</td>                    
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="supplier of suppliers">
+                    <tr repeat.for="data of supplier.data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${data.SplName}</td>
+                        <td>${data.BPBesar}</td>
+                        <td>${data.BPKecil}</td>
+                        <td>${data.BCNomor}</td>
+                        <td>${data.BCTipe}</td>                    
+                        <td>${data.NoSJ}</td>
+                        <td>${data.NotaInt}</td>
+                        <td>${data.Konveksi}</td>
+                        <td>${data.NmBrg}</td>
+                        <td class="text-right">${data.Jumlah}</td>
+                        <td>${data.Satuan}</td>
+                        <td class="text-right"><strong>${data.AmountDPPVLS}</strong></td>                    
+                        <td class="text-right"><strong>${data.AmountDPPIDR}</strong></td>
+                        <td>${data.MtUang}</td>
+                        <td class="text-right">${data.Rate}</td>   
+                        <td class="text-right"><strong>${data.AmountBE}</strong></td>
+                        <td class="text-right"><strong>${data.AmountBP}</strong></td>
+                        <td class="text-right"><strong>${data.AmountBB}</strong></td>
+                        <td class="text-right"><strong>${data.AmountBX}</strong></td>                        
+                    </tr>
+                    <tr class="active">
+                       <td class="text-center" >.</td>
+                       <td class="text-center" colspan="4"><strong>BO BON PUSAT KECIL</strong></td>
+                       <td class="text-right" colspan="4"><strong>${supplier.supplier}</strong></td>
+                       <td class="text-center" colspan="3"><strong>SUB TOTAL</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal7}</strong></td>                                               
+                       <td class="text-right"><strong>${supplier.subTotal8}</strong></td>                        
+                       <td class="text-left"><strong>${supplier.mtuang}</strong></td>     
+                       <td class="text-center">.</td>                       
+                       <td class="text-right"><strong>${supplier.subTotal1}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal2}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal3}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal4}</strong></td>                    
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center">.</td>                       
+                        <td class="text-center" colspan="10"><strong>T O T A L  P E M B E L I A N . . . . . . . .</strong></td>
+                        <td class="text-center">.</td>                       
+                        <td class="text-right"><strong>${AmountTotal7}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal8}</strong></td>                        
+                        <td class="text-center">.</td>                       
+                        <td class="text-center">.</td>                       
+                        <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal2}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal3}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal4}</strong></td>                        
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

@@ -1,0 +1,92 @@
+<template>
+    <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">BUKU PENJUALAN EXPORT GARMENT</h1>
+    <form class="form-horizontal">
+        <au-datepicker label="Tanggal Trucking Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Trucking Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="myTable">
+               <thead>
+                   <tr>
+                       <th class="text-center">NO</th>
+                       <th class="text-center">TGL TRUCKING</th>
+                       <th class="text-center">NAMA BUYER</th>
+                       <th class="text-center">NEGARA</th>
+                       <th class="text-center">KODE BUYER</th>
+                       <th class="text-center">JENIS BARANG</th>
+                       <th class="text-center">INVOICE NO</th>
+                       <th class="text-center">INVOICE TGL</th>
+                       <th class="text-center">PEB NO</th>
+                       <th class="text-center">PEB TGL</th>
+                       <th class="text-center">QUANTITY</th>      
+                       <th class="text-center">SATUAN</th> 
+                       <th class="text-center">MT UANG</th>      
+                       <th class="text-center">A M O U N T</th>
+                       <th class="text-center">R A T E</th>                            
+                       <th class="text-center">JUMLAH IDR</th>                                         
+                   </tr>
+               </thead>
+               <tbody>
+                <template repeat.for="Seksi of Sections">
+                    <tr repeat.for="item of Seksi.data">
+                           <td class="text-center"> ${$index + 1}</td>   
+                           <td>${item.truckingDate}</td>
+                           <td>${item.buyerAgentName}</td>                  
+                           <td>${item.destination}</td>                  
+                           <td>${item.buyerAgentCode}</td>                  
+                           <td>${item.comodityName}</td>                  
+                           <td>${item.invoiceNo}</td>
+                           <td>${item.invoiceDate}</td>                  
+                           <td>${item.pebNo}</td>
+                           <td>${item.pebDate}</td>
+                           <td class="text-right"><strong>${item.quantity}</strong></td>
+                           <td>${item.uomUnit}</td>
+                           <td>${item.currencyCode}</td>
+                           <td class="text-right"><strong>${item.amount}</strong></td>
+                           <td>${item.rate}</td>
+                           <td class="text-right"><strong>${item.amountIDR}</strong></td>                                                 
+                       </tr>
+                           <tr class="active">
+                           <td class="text-center" colspan="8">.</td>
+                           <td class="text-center" colspan="4"><strong>TOTAL AMOUNT</strong></td>
+                           <td class="text-center">:</td>
+                           <td class="text-right"><strong>${Seksi.subTotal}</strong></td>   
+                           <td class="text-center">.</td>                                                                                              
+                           <td class="text-right"><strong>${Seksi.subTotal1}</strong></td>     
+                       </tr>
+                   </template>
+                   </tbody>
+                   </table>
+                       </div>
+                       <div class="row" if.bind="grandTotalByUom.length > 0">
+                           <div class="form-group col-md-1"></div>
+                           <div class="form-group col-md-10">
+                               <template repeat.for="uomIndex of grandTotalByUom.length">
+                                   <label class="control-label text-left col-md-4"><strong>${uomIndex==0 ? 'GRAND TOTAL :' : ''}</strong></label>
+                                   <p class="form-control-static text-right col-md-3"><strong>${grandTotalByUom[uomIndex].quantity | numberFormat:'0,000'}</strong></p>
+                                   <p class="form-control-static col-md-1"><strong>${grandTotalByUom[uomIndex].uomUnit}</strong></p>
+                                   <p class="form-control-static text-right col-md-1"><strong>${grandTotalByUom[uomIndex].amount | numberFormat:'0,000.00'}</strong></p>
+                                   <p class="form-control-static text-right col-md-1"><strong>${grandTotalByUom[uomIndex].amount1 | numberFormat:'0,000.00'}</strong></p>                                   
+                               </template>
+                           </div>
+                           <br>                          
+                       </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

@@ -1,0 +1,32 @@
+<template>
+  <tr>
+    <td style="white-space: nowrap;">
+      <au-autocomplete
+        value.bind="Code"
+        error.bind="error.Code"
+        read-only.bind="readOnly"
+        placeholder="Kode Nomor Benang"
+        loader.bind="rings"
+        text="Code"
+      >
+      </au-autocomplete>
+    </td>
+    <td style="white-space: nowrap;">
+      <au-textbox
+        value.bind="data.FullNumber"
+        error.bind="error.FullNumber"
+        read-only.bind="true"
+        placeholder="Nomor Benang"
+      >
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" if.bind="!readOnly">
+      <button
+        class="btn btn-danger pull-right"
+        click.delegate="onremove(data, $event)"
+      >
+        -
+      </button>
+    </td>
+  </tr>
+</template>

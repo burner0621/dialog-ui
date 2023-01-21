@@ -1,0 +1,132 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+      <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+    </div>
+
+    <au-textbox
+      label="Kode"
+      value.bind="data.Code"
+      error.bind="error.Code"
+      if.bind="readOnly || isEdit"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-dropdown
+      label="Jenis Pengiriman"
+      value.bind="data.DeliveryType"
+      items.bind="deliveryTypeOptions"
+      error.bind="error.DeliveryType"
+      read-only.bind="readOnly">
+    </au-dropdown>
+    
+    <au-dropdown
+      label="Jenis Barang Jadi"
+      value.bind="data.FinishedProductType"
+      items.bind="finishedProductTypeOptions"
+      error.bind="error.FinishedProductType"
+      read-only.bind="readOnly">
+    </au-dropdown>
+
+    <au-autocomplete
+      value.bind="selectedProductionOrder"
+      label="Nomor Order"
+      read-only.bind="readOnly || isEdit"
+      error.bind="error.ProductionOrder"
+      loader.bind="productionOrderLoader"
+      key="OrderNo"
+      text.bind="productionOrderTextFormatter"
+      keypress.delegate="enterDelegate($event)">
+    </au-autocomplete>
+
+    <au-textbox
+      label="Jenis Order"
+      value.bind="data.OrderTypeName"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-textbox 
+      label="Jenis Warna"
+      value.bind="data.ColorType"
+      read-only.bind="true"
+      if.bind="isSolid">
+    </au-textbox>
+
+    <au-textbox
+      label="Warna Diminta"
+      value.bind="data.ColorName"
+      read-only.bind="true">
+    </au-textbox>
+    
+    <au-autocomplete
+      value.bind="selectedBuyer"
+      label="Tujuan Pengiriman"
+      read-only.bind="readOnly"
+      error.bind="error.Buyer"
+      loader.bind="buyersLoader"
+      key="Name"
+      text="Name"
+      keypress.delegate="enterDelegate($event)">
+    </au-autocomplete>
+
+    <au-textbox
+      label="Material"
+      value.bind="data.Material"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-autocomplete
+      value.bind="selectedMaterialConstructionFinish"
+      label="Konstruksi Finish"
+      read-only.bind="readOnly"
+      error.bind="error.MaterialConstructionFinish"
+      loader.bind="materialConstructionFinishLoader"
+      key="Name"
+      text="Name"
+      keypress.delegate="enterDelegate($event)">
+    </au-autocomplete>
+
+    <au-textbox
+      label="Lebar Finish"
+      value.bind="data.MaterialWidthFinish"
+      error.bind="error.MaterialWidthFinish"
+      read-only.bind="readOnly"
+      keypress.delegate="enterDelegate($event)"
+      change.delegate="widthChanged($event)">
+    </au-textbox>
+
+    <au-datepicker
+      label="Tanggal"
+      value.bind="data.Date"
+      error.bind="error.Date"
+      read-only.bind="readOnly">
+    </au-datepicker>
+
+    <au-dropdown
+      label="Satuan"
+      value.bind="data.PackingUom"
+      items.bind="packingUomOptions"
+      error.bind="error.PackingUom"
+      read-only.bind="readOnly">
+    </au-dropdown>
+
+    <au-textbox show.bind="error.PackingDetail" error.bind="error.PackingDetail" read-only.bind="true"></au-textbox>
+
+    <au-collection
+      columns.bind="packingDetailsInfo.columns"
+      items.bind="data.PackingDetails"
+      errors.one-way="error.PackingDetails"
+      add.bind="packingDetailsInfo.onAdd"
+      remove.bind="packingDetailsInfo.onRemove"
+      read-only.bind="readOnly"
+      item-template="modules/production/finishing-printing/packing/template/packing-item"
+      view-model.ref="PackingDetailsCollection">
+    </au-collection>
+    
+  </au-input-form>
+
+</template>

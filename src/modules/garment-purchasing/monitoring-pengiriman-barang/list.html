@@ -1,0 +1,67 @@
+<template>
+    <h1 class="page-header">Monitoring Ketepatan Pengiriman Barang</h1>
+    <form class="form-horizontal">
+
+        <au-datepicker label="Tgl Surat Jalan Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)">
+        </au-datepicker>
+        <au-datepicker label="Tgl Surat Jalan Akhir" value.bind="dateTo" min.bind="dateFrom"></au-datepicker>
+
+        <au-dropdown label="Tipe Pembayaran" value.bind="paymentType" items.bind="typePaymentOptions">
+        </au-dropdown>
+
+        <au-dropdown label="Term Pembayaran" value.bind="paymentMethod" items.bind="termPaymentOptions">
+        </au-dropdown>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="prMonitor">
+                <thead align="center">
+                    <tr if.bind="data.length > 0">
+                        <td>Total</td>
+                        <td></td>
+                        <td>${tperOk}%</td>
+                        <td>${tjumcount}</td>
+
+                    </tr>
+                    <tr>
+                        <td>No</td>
+                        <td>Supplier</td>
+                        <td>Pengiriman OK (%)</td>
+                        <td>Jumlah</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="pr of data" click.delegate="view(pr,dateFrom,dateTo)">
+                        <td>${$index + 1}</td>
+                        <td>${pr.supplier.Name}</td>
+                        <td>${pr.percentOk_notOk}%</td>
+                        <td>${pr.jumlah}</td>
+
+                    </tr>
+                </tbody>
+
+                <tfoot if.bind="data.length > 0">
+                    <tr>
+                        <td colspan='2' class="text-left">Jumlah Total</td>
+                        <td class="text-right">${tperOk}%</td>
+                        <td class="text-right">${tjumcount}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr />
+    </form>
+</template>

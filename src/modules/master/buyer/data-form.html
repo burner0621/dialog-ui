@@ -1,0 +1,103 @@
+<template>
+
+  <div class="row">
+      <div class="col-md-6">
+        <au-input-form 
+          title.bind="title"
+          with.bind="context"
+          options.bind="formOptions"
+        >
+
+        <au-textbox 
+          label="Kode"
+          value.bind="data.Code"
+          error.bind="error.code"
+          read-only.bind="(readOnly || isEdit)"
+        ></au-textbox>
+
+        <au-textbox 
+          label="NIK"
+          value.bind="data.NIK"
+          error.bind="error.nik"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox 
+          label="Nama Buyer"
+          value.bind="data.Name"
+          error.bind="error.name"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox 
+          label="Nama Pemilik"
+          value.bind="data.BuyerOwner"
+          error.bind="error.buyerOwner"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-multiline 
+          label="Alamat"
+          value.bind="data.Address"
+          error.bind="error.address"
+          read-only.bind="readOnly"
+        ></au-multiline>
+
+        <au-textbox 
+          label="Kota"
+          value.bind="data.City"
+          error.bind="error.city"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-dropdown
+          label="Negara"
+          value.bind="data.Country"
+          error.bind="error.country"
+          read-only.bind="readOnly"
+          items.bind="countries"
+        ></au-dropdown>
+
+        <au-textbox 
+          label="Kontak"
+          value.bind="data.Contact"
+          error.bind="error.contact"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-numeric
+          label="Tempo"
+          value.bind="data.Tempo"
+          error.bind="error.tempo"
+          format="0"
+          read-only.bind="readOnly"
+        ></au-numeric>
+
+        <au-textbox 
+          label="NPWP"
+          value.bind="data.NPWP"
+          error.bind="error.NPWP"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-dropdown
+          label="Jenis Buyer"
+          value.bind="data.Type"
+          error.bind="error.type"
+          read-only.bind="readOnly"
+          items.bind="types"
+        ></au-dropdown>
+
+        <au-textbox
+          label="Jabatan/Pekerjaan"
+          value.bind="data.Job"
+          error.bind="error.job"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <template replaceable part="actions"></template>
+        </au-input-form>
+      </div>
+  </div>
+    
+</template>

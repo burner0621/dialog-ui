@@ -1,0 +1,22 @@
+<template>
+    <tr>
+        <td class="col-sm-6">
+            <au-textbox 
+                value.bind="data.billDescription"
+                error.bind="error.billDescription" 
+                read-only.bind="readOnly" >
+            </au-textbox>
+        </td>
+        <td class="col-sm-6">
+            <au-numeric 
+                value.bind="data.amount"
+                error.bind="error.amount" 
+                read-only.bind="readOnly" >
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

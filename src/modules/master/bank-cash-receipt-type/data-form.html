@@ -1,0 +1,25 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox 
+                    label="Nama" placeholder="Nama" 
+                    value.bind="data.Name" error.bind="error.Name"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-autocomplete 
+                    label="COA" 
+                    value.bind="selectedCOA" error.bind="error.COA"
+                    loader.bind="coaLoader" text.bind = "coaView" key="Name"
+                    placeholder="COA" options.bind="controlOptions" 
+                    read-only.bind="readOnly">
+                </au-autocomplete>
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

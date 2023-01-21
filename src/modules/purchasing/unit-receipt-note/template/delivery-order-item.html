@@ -1,0 +1,39 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox
+				value.one-way="data.prNo"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="product"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.deliveredQuantity"
+				read-only.bind="true"
+				format = "0,0.00"
+				error.bind="error.deliveredQuantity">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.deliveredUom.unit"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.bind="data.productRemark"
+				read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+		<!--<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>-->
+	</tr>
+</template>

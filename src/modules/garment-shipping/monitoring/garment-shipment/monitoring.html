@@ -1,0 +1,135 @@
+<template>
+    <h1 class="page-header">Monitoring Shipment Garment</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Invoice No"
+            value.bind="invoiceNo"
+            error.bind="error.InvoiceNo"
+            loader.bind="shippinginvoiceLoader"
+            text.bind = "shippinginvoiceNoView"
+            key="InvoiceNo"
+            placeholder="Cari Invoice No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Trucking Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Trucking Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">No Invoice</th>
+                    <th class="text-center">Tgl Invoice</th>
+                    <th class="text-center">Tgl Trucking</th>
+                    <th class="text-center">Pelabuhan Muat</th>
+                    <th class="text-center">Pelabuhan Bongkar</th>
+                    <th class="text-center">Nama Buyer</th>
+                    <th class="text-center">Consignee</th>
+                    <th class="text-center">Nama Brand</th>
+                    <th class="text-center">Komoditi</th>  
+                    <th class="text-center">Seksi</th>
+                    <th class="text-center">Tgl Booking</th>
+                    <th class="text-center">Tgl Ex-Fty</th>
+                    <th class="text-center">No PEB</th>
+                    <th class="text-center">Tgl PEB</th>
+                    <th class="text-center">Tgl ETD / Sailing</th>
+                    <th class="text-center">Jarak Tgl Booking - Tgl Ex-Fty (Hari)</th>
+                    <th class="text-center">Terbit COO</th>
+                    <th class="text-center">Terima BL/HAWB</th>
+                    <th class="text-center">Tgl Kirim/Upload Dokumen</th>
+                    <th class="text-center">Jarak ETD+Tempo-Kirim Dokumen</th>
+                    <th class="text-center">Tempo Pembayaran (Hari)</th>
+                    <th class="text-center">Tgl Jatuh tempo</th>
+                    <th class="text-center">Tgl Payment</th>
+                    <th class="text-center">Tgl Jatuh Tempo - Tgl Payment</th>
+                    <th class="text-center">Nilai FOB</th>
+                    <th class="text-center">Nilai CMT</th>
+                    <th class="text-center">Nama EMKL /Trucking</th>
+                    <th class="text-center">Nama Forwarder</th>
+                    <th class="text-center">Staf Shipping</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.invoiceNo}</td>
+                        <td>${data.invoiceDate}</td>
+                        <td>${data.truckingDate}</td>
+                        <td>${data.originPort}</td>
+                        <td>${data.destinationPort}</td>
+                        <td>${data.buyerAgentName}</td>
+                        <td>${data.consigneeName}</td>
+                        <td>${data.buyerBrandName}</td>
+                        <td>${data.comodityName}</td>
+                        <td>${data.sectionCode}</td>
+                        <td>${data.bookingDate}</td>
+                        <td>${data.expFactoryDate}</td>
+                        <td>${data.pebNo}</td>
+                        <td>${data.pebDate}</td>
+                        <td>${data.sailingDate}</td>
+                        <td>${data.diffBDCL}</td>
+                        <td>${data.coNo}</td>
+                        <td>${data.docSendDate}</td>
+                         <td>${data.docSendDate}</td>
+                        <td>${data.diffETDDSD}</td>
+                        <td>${data.paymentDue}</td>
+                        <td>${data.dueDate}</td>
+                        <td>${data.paymentDate}</td>
+                        <td>${data.diffDDPD}</td>
+                        <td class="text-right"><strong>${data.amount}</strong></td>
+                        <td class="text-right"><strong>${data.cmtAmount}</strong></td>
+                        <td>${data.emklName}</td>
+                        <td>${data.forwarderName}</td>
+                        <td>${data.shippingStaffName}</td>
+
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td class="text-center" colspan="3"><strong>INVOICE NO :</strong></td>
+                        <td colspan="2"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center" colspan="2"><strong>AMOUNT FOB :</strong></td>
+                        <td class="text-right" colspan="2"><strong>${buyer.subTotal1}</strong></td>
+                        <td class="text-center" colspan="3"><strong>LESS FABRIC COST :</strong></td>
+                        <td class="text-right" colspan="2"><strong>${buyer.subTotal2}</strong></td>
+                        <td class="text-center" colspan="2"><strong>AMOUNT CMT :</strong></td>
+                        <td class="text-right" colspan="2"><strong>${buyer.subTotal3}</strong></td>
+                        <td class="text-center" colspan="2"><strong>DHL CHARGES :</strong></td>
+                        <td class="text-right" colspan="2"><strong>${buyer.subTotal4}</strong></td>
+                        <td class="text-center" colspan="3"><strong>AMOUNT TO BE PAID :</strong></td>
+                        <td class="text-right" colspan="2"><strong>${buyer.subTotal5}</strong></td>  
+                        <td class="text-center" colspan="4">.</td>                       
+                    </tr>
+                </template>                  
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

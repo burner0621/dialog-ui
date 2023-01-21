@@ -1,0 +1,48 @@
+<template>
+    <tr>
+        <td class="col-sm-2">
+            <au-autocomplete value.bind="selectedUnit" error.bind="error.Unit" loader.bind="unitLoader"
+                read-only.bind="readOnly || isEdit" placeholder="Unit" text="Code">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-2">
+            <au-autocomplete value.bind="selectedProduct" error.bind="error.Product" loader.bind="productLoader"
+                query.bind="productLoaderFilter" select.bind="productLoaderSelect" read-only.bind="readOnly || isEdit"
+                placeholder="Kode Barang" text="ProductCode" view-model.ref="selectedProductViewModel">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-2">
+            <au-textbox value.bind="data.Product.Name" read-only="true">
+            </au-textbox>
+        </td>
+
+        <td class="col-sm-4">
+            <au-autocomplete value.bind="selectedStock" error.bind="error.PONo" loader.bind="stockLoader"
+                query.bind="stockLoaderFilter" select.bind="stockLoaderSelect" read-only.bind="readOnly || isEdit"
+                placeholder="Stock" text="PONo" view-model.ref="selectedStockViewModel" show.bind="data.Product">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-2">
+            <au-dropdown items.bind="uomItems" value.bind="selectedUom" error.bind="error.Uom"
+                read-only.bind="readOnly || isEdit">
+            </au-dropdown>
+        </td>
+
+        <td class="col-sm-2" if.bind="!readOnly">
+            <au-numeric value.bind="data.Stock.Quantity" read-only="true" format="0.00">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.Quantity" error.bind="error.Quantity" read-only.bind="readOnly" format="0.00">
+            </au-numeric>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

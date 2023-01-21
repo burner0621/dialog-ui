@@ -1,0 +1,52 @@
+<template >
+    <tr>
+        <!-- <td align='center' if.bind="options.isCreate" class="col-sm-1">
+            <au-checkbox 
+                value.bind="data.IsSave" 
+                if.bind="options.isCreate"
+                options.bind="controlOptions"
+                change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td> -->
+        <td>
+            <au-textbox 
+                value.bind="data.Size.Size"
+                error.bind = "error.size"
+                read-only.bind="true">
+            </au-textbox>                    
+        </td>
+        <!-- <td if.bind="options.isCreate">
+            <au-numeric 
+                value.bind="data.StockQuantity"
+                error.bind = "error.StockQuantity"
+                read-only.bind="true"
+                if.bind="options.isCreate"
+                format="0">
+            </au-numeric>                    
+        </td> -->
+        <td>
+            <au-numeric 
+                value.bind="data.Quantity"
+                error.bind = "error.Quantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Description"
+                error.bind="error.Description"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

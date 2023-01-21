@@ -1,0 +1,24 @@
+<template replace-part="CottonComposition">
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="product" 
+                error.bind="error.product" 
+                loader.one-time="productLoader" 
+                text="Name" placeholder="cari serat"
+                key="Id" read-only.bind="readOnly"  
+                options.bind="controlOptions">
+        </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Composition" 
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

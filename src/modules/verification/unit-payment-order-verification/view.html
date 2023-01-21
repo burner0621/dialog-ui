@@ -1,0 +1,16 @@
+<template>
+    <style>
+        multiline {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Rincian Verifikasi Surat Perintah Bayar</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" read-only.bind="true" error.bind="error"></data-form>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+            <a click.delegate="edit()" class='btn btn-danger btn-sm'>Ubah</a>
+        </div>
+    </block>
+</template>

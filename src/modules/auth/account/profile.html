@@ -1,0 +1,5 @@
+<template>
+    <textbox label="Firstname" value.bind="data.firstname" error.bind="error.firstname" read-only.bind="readOnly"></textbox>
+    <textbox label="Lastname" value.bind="data.lastname" error.bind="error.lastname" read-only.bind="readOnly"></textbox>
+    <dropdown   label="Gender"  value.bind="data.gender"   error.bind="error.gender"  read-only.bind="readOnly"   items.bind="genders"></dropdown>
+</template>

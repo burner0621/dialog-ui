@@ -1,0 +1,120 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Monitoring Invoice</h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete 
+                value.bind="invoice" 
+                label="Nomor Invoice" 
+                loader.bind="invoiceLoader"
+                placeholder="Cari Nomor Invoice" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="no"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Nomor Invoice</td>
+                        <td>Tanggal Invoice</td>
+                        <td>Supplier</td>
+                        <td>Mata Uang</td>
+                        <td>Dikenakan PPN</td>
+                        <td>Nomor PPN</td>
+                        <td>Tanggal PPN</td>
+                        <td>Dikenakan PPH</td>
+                        <td>Jenis PPH</td>
+                        <td>Nomor PPH</td>
+                        <td>Tanggal PPH</td>
+                        <td>Pajak Dibayar</td>
+                        <td>Nomor Surat Jalan</td>
+                        <td>Nomor PO Eksternal</td>
+                        <td>Nomor PR</td>
+                        <td>Nomor Ref PR</td>
+                        <td>Nomor RO</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah</td>
+                        <td>Satuan</td>
+                        <td>Harga Satuan</td>
+                        <td>Harga Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <require from="../../../lib/number-format-value-converter"></require>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td >${item.no}</td>
+                        <td >${item.date | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.supplier}</td>
+                        <td >${item.currency}</td>
+                        <td >${item.tax}</td>
+                        <td >${item.taxNo}</td>
+                        <td >${item.taxDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.vat}</td>
+                        <td >${item.vatType}</td>
+                        <td >${item.vatNo}</td>
+                        <td >${item.vatDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.payTax}</td>
+                        <td >${item.doNo}</td>
+                        <td >${item.poEksNo}</td>
+                        <td >${item.prNo}</td>
+                        <td >${item.prRefNo}</td>
+                        <td >${item.roNo}</td>
+                        <td >${item.productCode}</td>
+                        <td >${item.productName}</td>
+                        <td >${item.qty}</td>
+                        <td >${item.uom}</td>
+                        <td >${item.price}</td>
+                        <td >${item.totalPrice}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

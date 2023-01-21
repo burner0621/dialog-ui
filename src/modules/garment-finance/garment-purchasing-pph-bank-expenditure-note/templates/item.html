@@ -1,0 +1,58 @@
+<template>
+    <tr>
+        
+        <td if.bind="!readOnly">
+            <au-checkbox value.bind="data.Check"></au-checkbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.INNo"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            
+            <au-datepicker 
+                value.bind="data.INDate"
+                read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.INDueDate"
+                read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.SupplierName"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <require from="../../../../lib/number-format-value-converter.js"></require>
+            <au-numeric
+                value.bind="data.TotalIncomeTaxNI | numberFormat: '0,000.0000'"
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.CurrencyCode"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <button class="btn btn-info" click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="12">
+            <au-collection
+                items.bind="data.dataView" 
+                columns.bind="columns"
+                item-template="modules/garment-finance/garment-purchasing-pph-bank-expenditure-note/templates/detail">
+            </au-collection>
+        </td>  
+    </tr>
+</template>

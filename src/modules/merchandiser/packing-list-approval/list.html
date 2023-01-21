@@ -1,0 +1,18 @@
+<template>
+    <h1 class="page-header">Approval Packing List</h1>
+    <au-table
+        view-model.ref="table"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable.bind="true"
+        page-size="25"
+        context.bind="context"
+        context-click.delegate="contextClickCallback($event)">
+        <au-dropdown
+            slot="toolbar"
+            label="Seksi"
+            value.bind="section"
+            items.bind="SectionOptions">
+        </au-dropdown>
+    </au-table>
+</template>

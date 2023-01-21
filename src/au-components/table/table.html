@@ -1,0 +1,16 @@
+<template>  
+  <div ref="toolbar">
+    <slot name="toolbar">
+      
+    </slot>
+  </div>
+  <table ref="table">
+    <thead> 
+    </thead> 
+  </table> 
+  
+  <!-- context menu -->
+  <ul id="context-menu" class="dropdown-menu" show.bind="__hasContext & signal:'context:row-changed'">
+    <li repeat.for="c of __context" data-item.bind="c" show.bind="__contextShow($index, c) & signal:'context:row-changed'"><a>${c}</a></li>
+  </ul>  
+</template>

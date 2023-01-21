@@ -1,0 +1,18 @@
+<template>
+    <style>
+        multiline {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Target Omzet Divisi Garment</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error" read-only="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+            <a click.delegate="edit(data)" class='btn btn-primary btn-sm' >Ubah</a>
+            <a click.delegate="delete()" class='btn btn-danger btn-sm' >Hapus</a>
+        </div>
+    </block>
+</template>

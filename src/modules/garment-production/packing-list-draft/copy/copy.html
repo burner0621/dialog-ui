@@ -1,0 +1,14 @@
+<template>
+    <div>Nomor Invoice Asal : <b>${copiedFrom.invoiceNo}</b></div>
+    <br>
+    <h1 class="page-header">Copy Draft Packing List</h1>
+    <require from="modules/garment-production/packing-list-draft/copy/data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <button class="btn btn-default" click.delegate="list()">Kembali</button>
+            <button class="btn btn-success" click.delegate="copy()">Simpan</button>
+        </div>
+    </block>
+</template>

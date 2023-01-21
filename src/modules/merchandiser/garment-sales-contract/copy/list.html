@@ -1,0 +1,17 @@
+<template>
+    <au-input-form title="Copy Sales Contract Per RO">
+        <au-autocomplete
+            value.bind="data"
+            label="Nomor RO"
+            loader.bind="loader"
+            query.bind="filter"
+            text="RONumber"
+            placeholder="Nomor RO"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div>
+            <span class="col-sm-2"></span>
+            <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+        </div>
+    </au-input-form>
+</template>

@@ -1,0 +1,87 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+        
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-primary" click.delegate="context.unpost($event)" if.one-way="context.hasUnpost">Unpost</button>
+        </div>
+        
+        <au-textbox 
+            label="No. TR" 
+            value.bind="data.trNo" 
+            error.bind="error.trNo" 
+            read-only.bind="true"
+            if.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl TR" 
+            value.bind="data.trDate"  
+            error.bind="error.trDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl Diminta Datang" 
+            value.bind="data.requestedArrivalDate"  
+            error.bind="error.requestedArrivalDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="data.unit" 
+            error.bind="error.unit"
+            label="Unit" 
+            change.delegate="unitChanged($event)" 
+            loader.bind="unitLoader"
+            placeholder="cari unit" 
+            key="code"
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="data.category" 
+            error.bind="error.category"
+            label="Kategori" 
+            change.delegate="categoryChanged($event)" 
+            loader.bind="categoryLoader"
+            placeholder="cari kategori" 
+            key="code"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="!data.details || data.details.length === 0"
+            error.bind="error.details"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.details" 
+            errors.bind="error.details" 
+            columns.bind="detailsColumns" 
+            add.bind="addDetails" 
+            remove.bind="removeDetails"
+            read-only.bind="readOnly" 
+            item-template="modules/int-purchasing/transfer-request/template/transfer-request-detail">
+        </au-collection>
+    </au-input-form>
+</template>

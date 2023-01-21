@@ -1,0 +1,70 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.EPONo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.PRNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.POSerialNumber" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.RONo" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Product.Name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Quantity"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                format = "0.[00000000000000000000]"
+                value.bind="data.PricePerDealUnitAfter"
+                read-only.bind="readOnly || pricePerUnitReadOnly"
+                error.bind="error.PricePerDealUnit">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="priceTotal"
+                show.bind="readOnly || !pricePerUnitReadOnly"
+                read-only="true">
+            </au-textbox>
+            <au-numeric 
+                value.bind="priceTotal"
+                show.bind="!readOnly && pricePerUnitReadOnly"
+                error.bind="error.PriceTotal">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>
+     </tr>
+</template>
+

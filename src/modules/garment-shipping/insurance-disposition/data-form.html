@@ -1,0 +1,58 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-textbox label="No Disposisi" value.bind="data.dispositionNo" read-only="true" options.bind="controlOptions"
+            if.bind="readOnly || data.id">
+        </au-textbox>
+
+        <au-dropdown label="Jenis Polis Asuransi" value.bind="selectedPolicyType" error.bind="error.policyType"
+            read-only.bind="readOnly|| data.id" items.bind="policyTypeOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-datepicker label="Tgl Disposisi" value.bind="data.paymentDate" error.bind="error.paymentDate"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="Dibayar Kepada" placeholder="Pilih insurance" value.bind="selectedInsurance"
+            error.bind="error.insurance" loader.bind="insuranceLoader" text.bind="insuranceView"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Bank" value.bind="data.bankName || ''" error.bind="error.bank" read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="Rate(%)" value.bind="rate" error.bind="error.rate" read-only.bind="readOnly"
+            if.bind="selectedPolicyType=='Piutang'" options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline label="Keterangan" value.bind="data.remark" error.bind="error.remark" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <div class="form-group has-error">
+            <p if.bind="error.itemsCount" class="help-block text-center">${error.itemsCount}</p>
+        </div>
+
+        <au-collection items.bind="data.items" errors.bind="error.items"
+            columns.bind="selectedPolicyType=='Kargo' ? itemsColumnsCargo : itemsColumnsCredit"
+            read-only.bind="readOnly || (selectedPolicyType!='Kargo' && data.rate==0)" add.bind="addItems"
+            remove.bind="removeItems" options.bind="Options" change.delegate="itemChanged($event)"
+            footer-template="modules/garment-shipping/insurance-disposition/template/item-footer"
+            item-template="modules/garment-shipping/insurance-disposition/template/item">
+        </au-collection>
+
+        <div class="row">
+            <div class="col-md-6">
+                <au-collection view-model.ref="chargeCollection" items.bind="data.unitCharge"
+                    columns.bind="unitColumns.columns" errors.bind="error.unitCharge" options.bind="Options"
+                    responsive.bind="true"
+                    footer-template="modules/garment-shipping/insurance-disposition/template/unit-charge-footer"
+                    item-template="modules/garment-shipping/insurance-disposition/template/unit-charge"
+                    read-only.bind="readOnly">
+                </au-collection>
+            </div>
+        </div>
+
+    </au-input-form>
+</template>

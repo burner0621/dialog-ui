@@ -1,0 +1,47 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Product.Name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Product.Remark"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.RONo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.SmallQuantity" 
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.SmallUom.Unit" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+     </tr>
+</template>
+

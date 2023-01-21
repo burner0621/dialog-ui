@@ -1,0 +1,16 @@
+<template>
+    <au-input-form title="Copy Cost Calculation Dyeing/Printing">
+        <au-autocomplete
+            value.bind="costCalculation"
+            label="Nomor SPP"
+            loader.bind="costCalculationLoader"
+            query.bind="costCalculationFilter"
+            text.bind="costCalculationView"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div>
+            <span class="col-sm-1"></span>
+            <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+        </div>
+    </au-input-form>
+</template>

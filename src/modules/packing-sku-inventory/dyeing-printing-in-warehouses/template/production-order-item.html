@@ -1,0 +1,153 @@
+<template replace-part="packingItem">
+  <tr>
+    <td show.bind="!readOnly">
+      <au-checkbox value.bind="data.IsSave"
+                   disabled.bind="readOnly">
+      </au-checkbox>
+    </td>
+    <!-- <td>
+          <au-numeric
+            value.bind="data.productionOrder.orderQuantity"
+            format="0.00"
+            read-only.bind="true"
+            error.bind="error.QtyOrder"
+            options.bind="controlOptions"
+          >
+          </au-numeric>
+        </td> -->
+    <td>
+      <au-textbox value.bind="data.construction"
+                  read-only.bind="true"
+                  error.bind="error.Construction"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+
+    <td>
+      <au-textbox value.bind="data.productTextile.name"
+                  read-only.bind="true"
+                  error.bind="error.ProductTextile"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.unit"
+                  read-only.bind="true"
+                  error.bind="error.Unit"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.buyer"
+                  read-only.bind="true"
+                  error.bind="error.Buyer"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.color"
+                  read-only.bind="true"
+                  error.bind="error.Color"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.motif"
+                  read-only.bind="true"
+                  error.bind="error.Motif"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <!-- <td>
+          <au-textbox
+            value.bind="data.productionOrder.type"
+            read-only.bind="true"
+            error.bind="error.productionOrder.type"
+            options.bind="controlOptions"
+          >
+          </au-textbox>
+        </td> -->
+    <td>
+      <au-textbox value.bind="data.grade"
+                  read-only.bind="true"
+                  error.bind="error.Grade"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.uomUnit"
+                  read-only.bind="true"
+                  error.bind="error.UomUnit"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.area"
+                  read-only.bind="true"
+                  error.bind="error.Area"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="data.inputPackagingQty"
+                  read-only.bind="true"
+                  error.bind="error.InputPackagingQty"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <au-textbox value.bind="data.packagingUnit"
+                  read-only.bind="true"
+                  error.bind="error.PackagingUnit"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.packagingType"
+                  read-only.bind="true"
+                  error.bind="error.PackagingType"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td show.bind="!type">
+      <au-numeric value.bind="data.qty"
+                  format="0.00"
+                  read-only.bind="true"
+                  error.bind="error.qty"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="data.inputQuantity"
+                  format="0.00"
+                  read-only.bind="true"
+                  error.bind="error.InputQuantity"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <button class="btn btn-info pull-right"
+              click.delegate="toggle()">
+        i
+      </button>
+    </td>
+  </tr>
+  <tr if.bind="error.item">
+    <au-textbox error.bind="error.packingCode"
+                read-only.bind="true"></au-textbox>
+  </tr>
+  <tr if.bind="isShowing">
+    <!-- <td show.bind="!readOnly"></td> -->
+    <td colspan="14">
+      <au-collection columns.bind="barcodeColumns"
+                     items.bind="data.productPackingCodeList"
+                     read-only.bind="readOnly"
+                     options.bind="listOptions"
+                     callback.call="someCallbackFunction()"
+                     item-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/production-order-item-barcode"
+                     header-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/production-order-item-barcode-header">
+      </au-collection>
+      <!-- show.bind="isAval" -->
+    </td>
+  </tr>
+</template>

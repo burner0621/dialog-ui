@@ -1,0 +1,125 @@
+<template>
+    <h1 class="page-header">LAPORAN REALISASI CMT DIVISI GARMENT</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="unit" 
+            label="Unit" 
+            loader.bind="unitLoader"
+            placeholder="cari unit" 
+            text.bind = "unitView"
+            query.bind="unitQuery"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td align="center" rowspan="2">NO.</td>
+                        <td align="center" rowspan="2">NO INVOICE</td>
+                        <td align="center" rowspan="2">NO. BON</td>
+                        <td align="center" rowspan="2">RO</td>
+                        <td align="center" rowspan="2">ARTIKEL</td>
+                        <td align="center" rowspan="2">QTY BJ</td>
+                        <!-- <td align="center" rowspan="2">FABRIC COST</td> -->
+                        <td align="center" colspan="6">BON PEMAKAIAN</td>
+                        <td align="center" colspan="10">BON PENERIMAAN</td>
+                    </tr>
+                    <tr>
+                            <td align="center">NO. BON</td>
+                            <td align="center">KETERANGAN </td>
+                            <td align="center">QTY</td>
+                            <td align="center">AMOUNT VALAS</td>
+                            <td align="center">AMOUNT IDR</td>
+                            <td align="center" >ASAL</td>
+
+                            <td align="center" >NO. BON</td>
+                            <td align="center" >KETERANGAN</td>
+                            <td align="center" >QTY</td>
+                            <td align="center">AMOUNT VALAS</td>
+                            <td align="center">AMOUNT IDR</td>
+                            <td align="center">SURAT JALAN</td>
+                            <td align="center">SUPPLIER</td>
+                            <td align="center">NO NOTA</td>
+                            <td align="center">NO. BON KECIL</td>
+                            <td align="center">NO KAS BANK</td>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.Count}</td>
+                        <td if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.InvoiceNo}</td>
+                        <td if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.ExpenditureGoodNo}</td>
+                        <td if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.RONo}</td>
+                        <td if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.Article}</td>
+                        <td align="right" if.bind="item.invoicespan" rowspan="${item.invoicespan}">${item.UnitQty}</td>
+                        <!-- <td align="right" if.bind="item.docspan" rowspan="${item.docspan}">${item.EGAmountIDR}</td>                         -->
+                        
+                        <td if.bind="item.uenspan" rowspan="${item.uenspan}">${item.UENNo}</td>
+                        <td if.bind="item.remarkuenspan" rowspan="${item.remarkuenspan}">${item.ProductRemark}</td>
+                        <td align="right" if.bind="item.qtybukspan" rowspan="${item.qtybukspan}">${item.Quantity}</td>
+                        <td align="right" if.bind="item.qtybukspan" rowspan="${item.qtybukspan}">${item.EAmountVLS}</td>
+                        <td align="right" if.bind="item.qtybukspan" rowspan="${item.qtybukspan}">${item.EAmountIDR}</td>                        
+                        <td if.bind="item.rouenspan" rowspan="${item.rouenspan}">${item.RONo}</td>
+                        <td if.bind="item.urnspan" rowspan="${item.urnspan}">${item.URNNo}</td>
+                        <td if.bind="item.remarkurnspan" rowspan="${item.remarkurnspan}">${item.ProductRemark2}</td>
+                        <td align="right" if.bind="item.qtyurnspan" rowspan="${item.qtyurnspan}">${item.ReceiptQuantity}</td>
+                        <td align="right" if.bind="item.qtyurnspan" rowspan="${item.qtyurnspan}">${item.UAmountVLS}</td>
+                        <td align="right" if.bind="item.qtyurnspan" rowspan="${item.qtyurnspan}">${item.UAmountIDR}</td>
+                        <td if.bind="item.billspan" rowspan="${item.billspan}">${item.DONo}</td>  
+                        <td if.bind="item.supplierspan" rowspan="${item.supplierspan}">${item.SupplierName}</td>
+                        <td if.bind="item.billspan" rowspan="${item.billspan}">${item.BillNo}</td>
+                        <td if.bind="item.billspan" rowspan="${item.billspan}">${item.PaymentBill}</td>
+                        <td if.bind="item.billspan" rowspan="${item.billspan}">${item.NoKasBank}</td>
+                        <!-- <td>${$index+1}</td>
+                        <td>${item.InvoiceNo}</td>
+                        <td>${item.ExpenditureGoodNo}</td>
+                        <td>${item.RONo}</td>
+                        <td>${item.Article}</td>
+                        <td align="right">${item.UnitQty}</td>
+                        <td align="right">${item.EGAmountIDR}</td>                        
+                        
+                        <td>${item.UENNo}</td>
+                        <td>${item.ProductRemark}</td>
+                        <td align="right">${item.Quantity}</td>
+                        <td align="right">${item.EAmountVLS}</td>
+                        <td align="right">${item.EAmountIDR}</td>                        
+                        <td>${item.RONo}</td>
+                        <td>${item.URNNo}</td>
+                        <td>${item.ProductRemark2}</td>
+                        <td align="right">${item.ReceiptQuantity}</td>
+                        <td align="right">${item.UAmountVLS}</td>
+                        <td align="right">${item.UAmountIDR}</td>  
+                        <td>${item.SupplierName}</td>
+                        <td>${item.BillNo}</td>
+                        <td>${item.PaymentBill}</td>
+                        <td>${item.DONo}</td> -->
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+                Tidak ada data ditemukan.
+            </div>
+            <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+            <hr/>
+    </form>
+
+    
+</template>

@@ -1,0 +1,51 @@
+<template>
+    <h1 class="page-header">Total Pembelian Per Unit</h1> 
+    <form class="form-horizontal">
+        <!-- <textbox label="Tanggal Awal" value.bind="dateFrom" if.bind="dateFrom" read-only="true"></textbox>
+        <textbox label="Tanggal Akhir" value.bind="dateTo" if.bind="dateTo" read-only="true"></textbox> -->
+        <textbox label="Divisi" value.bind="divisionName" read-only="true"></textbox>
+         
+<br>
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Nomor</th>
+                <th class="text-center">Unit</th>
+                <th class="text-center">Rp</th>
+                <th class="text-center">%</th>
+                <!--<th>Kategori UOM</th>-->
+            </tr>
+            
+        </thead>
+        <tfoot if.bind="data.length > 0">
+            <tr>
+                <td colspan="2" class="text-center">Total</td>
+                <td class="text-right">${pricetotals}</td>
+                    <td class="text-right">${percentagetotal}%</td> 
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr repeat.for="item of data">
+                <td class="text-center">${$index + 1}</td>
+                <td class="text-center">${item.unitName}</td>
+                <td class="text-right"> ${item.amount}</td>
+                <td class="text-right"> ${item.percentage}</td>
+                
+            </tr>
+            
+        </tbody>
+    </table>
+        
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <span if.bind="data.length > 0">
+            *Persentase diatas merupakan hasil pembulatan.
+        </span>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list(dateFrom,dateTo)" class='btn btn-default btn-sm'>Kembali</a>
+        </div>
+    </form>
+        
+</template>

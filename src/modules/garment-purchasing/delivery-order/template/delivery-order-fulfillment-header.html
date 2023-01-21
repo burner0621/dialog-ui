@@ -1,0 +1,24 @@
+<template >
+  <tr>
+      <th width="5%" if.bind="!options.hasView" >
+        <au-checkbox 
+          value.bind="saveAll"
+          change.delegate="saveAllChanged($event)">
+        </au-checkbox>
+      </th>
+      <!-- <th width="15%">Nomor PR</th> -->
+      <th width="15%">Nomor Referensi PR</th>
+      <th width="15%">Barang</th>
+      <th width="15%">Keterangan Barang</th>
+      <th width="15%">Dipesan</th>
+      <th width="15%">Diterima</th>
+      <th width="15%">Satuan</th>
+      <th width="15%">Konversi</th>
+      <th width="15%">Jumlah Kecil</th>
+      <th width="15%">Satuan Kecil</th>
+      <th width="15%">Harga</th>
+      <th width="15%">Harga Total</th>
+      <th width="15%">Mata Uang</th>
+      <th width="15%">Catatan</th>
+  </tr>
+</template>

@@ -1,0 +1,41 @@
+<template>
+	<tr>
+		<td class="bg-primary">
+			<au-autocomplete value.bind="selectedInvoice" error.bind="error.InvoiceNo"
+				loader.bind="invoiceLoader" text.bind="invoiceView" placeholder="Cari No Invoice"
+				read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td>
+		<td class="bg-primary">
+			<au-textbox value.bind="data.BuyerAgent.Code" error.bind="error.BuyerCode"
+				read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td class="bg-primary">
+			<au-textbox value.bind="data.BuyerAgent.Name" error.bind="error.BuyerName"
+				read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td class="bg-primary">
+			<au-textbox value.bind="data.Currency.Code" error.bind="error.CurrencyCode"
+				read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.Currency.Rate" error.bind="error.Rate" read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.Amount" error.bind="error.Amount" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="total" error.bind="error.total" read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+
+	</tr>
+</template>

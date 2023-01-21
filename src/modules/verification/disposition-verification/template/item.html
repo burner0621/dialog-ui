@@ -1,0 +1,71 @@
+<template>
+    <tr>
+        <td class="col-sm-3">
+            <au-autocomplete 
+                value.bind="data.EPONo"
+                read-only.bind="true">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+            <au-checkbox 
+                value.bind="data.UseVat"
+                read-only="true">
+            </au-checkbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="vatValue"
+                read-only="true"
+                format="0,0.0000">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-checkbox 
+                value.bind="data.UseIncomeTax"
+                read-only="true">
+            </au-checkbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox 
+                value.bind="incomeTax"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="incomeTaxValue"
+                read-only="true"
+                format="0,0.0000">
+            </au-numeric>
+        </td>
+		<td class="col-sm-2">
+			<au-numeric
+				value.bind="VerifiedPaidPrice"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+        <td class="col-sm-2">
+			<au-numeric
+				value.bind="TotalPaidPrice"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+        <td class="col-sm-1">
+            <button class="btn btn-info" click.delegate="toggle()">i</button> 
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="9">
+            <au-collection 
+                items.bind="data.Details"
+                columns.bind="itemsColumns.columns"
+                options.bind="context"
+                read-only.bind="options.readOnly"
+                item-template="modules/verification/disposition-verification/template/detail">
+            </au-collection>
+            
+        </td>  
+    </tr>
+</template>

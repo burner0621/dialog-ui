@@ -1,0 +1,17 @@
+<template>
+    <h1 class="page-header">Master Minggu</h1>
+    <au-table 
+        view-model.ref="table" 
+        data.bind="loader" 
+        columns.bind="columns" 
+        sortable.bind="true" 
+        page-size="25" 
+        context.bind="context" 
+        context-click.delegate="contextClickCallback($event)"
+        row-formatter.bind="rowFormatter">
+
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="create()">Buat</button>
+        </div>
+  </au-table>
+</template>

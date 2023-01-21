@@ -1,0 +1,35 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.unit.name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.product.name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.quantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.uom.unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.price"
+                format="0,000.0000"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

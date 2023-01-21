@@ -1,0 +1,25 @@
+<template>
+
+  <tr>
+    <td colspan.bind="type? 8 : isEdit? 9: 10" class="text-right">
+      Total Qty Packaging
+    </td>
+    <td show.bind ="type">
+    </td>
+    <td class="text-left">
+      <require from="../../../../lib/number-format-value-converter"></require>
+      ${itemSum | numberFormat:"0.00"}
+    </td>
+    <td colspan.bind="type? 2 : readOnly ? 3 :4" class="text-right">
+      Total Qty Keluar
+    </td>
+    <td class="text-left">
+      <require from="../../../../lib/number-format-value-converter"></require>
+      ${itemQty | numberFormat:"0.00"}
+    </td>
+    <td colspan.bind="readOnly ? 2 : 3">
+
+    </td >
+    
+  </tr>
+</template>

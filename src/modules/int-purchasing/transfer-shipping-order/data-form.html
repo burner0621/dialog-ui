@@ -1,0 +1,62 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <button slot="actions" class="btn btn-success" click.delegate="context.unpost($event)" if.one-way="context.hasUnpost">Unpost</button>
+
+        <au-textbox
+            if.bind="data.SONo"
+            value.bind="data.SONo"
+            label="Nomor Surat Jalan"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl. Surat Jalan"
+            value.bind="data.SODate"
+            error.bind="error.SODate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-autocomplete
+            value.bind="dataSupplier"
+            error.bind="error.Supplier"
+            label="Unit Pengirim"
+            loader.bind="supplierLoader"
+            text.bind="supplierView"
+            placeholder="Unit Pengirim"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-multiline
+            label="Keterangan"
+            value.bind="data.Remark"
+            placeholder="Tambah Keterangan"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="error.TransferShippingOrderItemsCount"
+            error.bind="error.TransferShippingOrderItemsCount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection
+            items.bind="data.TransferShippingOrderItems"
+            errors.bind="error.TransferShippingOrderItems"
+            columns.bind="transferShippingOrderItemsColumns"
+            options.bind="transferShippingOrderItemsOptions"
+            add.bind="addTransferShippingOrderItems"
+            read-only.bind="readOnly || !data.Supplier"
+            item-template="modules/int-purchasing/transfer-shipping-order/template/transfer-shipping-order-item">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

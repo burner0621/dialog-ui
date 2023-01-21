@@ -1,0 +1,10 @@
+<template>
+    <require from="./profile"></require>
+    <form class="form-horizontal">
+        <textbox    label="Username"    value.bind="data.username"      error.bind="error.username"     read-only.bind="(readOnly || isEdit)"></textbox>
+        <password    label="Password"    value.bind="data.password"      error.bind="error.password"     read-only.bind="readOnly"></password>
+        <hr/>
+        <profile data.bind="data.profile" error.bind="error.profile" read-only.bind="readOnly"></profile>
+        <role-item-collection value.bind="data.roles" error.bind="error.roles" read-only.bind="readOnly"></role-item-collection>
+    </form>
+</template>

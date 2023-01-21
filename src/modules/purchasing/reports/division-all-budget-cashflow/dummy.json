@@ -1,0 +1,797 @@
+[
+  {
+    "columns": ["MATA UANG", "NOMINAL VALAS", "NOMINAL IDR", "ACTUAL IDR"],
+    "rows": [
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Pendapatan Operasional:",
+        "level": 1,
+        "order": 1,
+        "labelOnly": true,
+        "useSection": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Ekspor",
+        "level": 2,
+        "order": 2
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Ekspor",
+        "level": 2,
+        "order": 2
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Lokal",
+        "level": 2,
+        "order": 3
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Tunai",
+        "level": 2,
+        "order": 4
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Intern (Antar Divisi)",
+        "level": 2,
+        "order": 5
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Intern (Antar Unit Satu Divisi)",
+        "level": 2,
+        "order": 6
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "PPN Masukan Intern (perhitungan)",
+        "level": 2,
+        "order": 7
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Pendapatan Operasional Lain-lain:",
+        "level": 1,
+        "order": 8,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Penjualan Lain-lain",
+        "level": 2,
+        "order": 9
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "PPN Masukan Ekstern (Pembelian Lokal)",
+        "level": 2,
+        "order": 10
+      },
+      {
+        "sectionId": 1,
+        "groupId": 1,
+        "label": "Total Penerimaan Operasional",
+        "level": 1,
+        "order": 11
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "HPP/Biaya Produksi:",
+        "level": 1,
+        "order": 12,
+
+        "labelOnly": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Bahan Baku Impor",
+        "level": 2,
+        "order": 13
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Bahan Baku Lokal",
+        "level": 2,
+        "order": 14
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Tenaga Kerja Langsung/U. Karyawan",
+        "level": 2,
+        "order": 15
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Bahan Pembantu",
+        "level": 2,
+        "order": 16
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "SubCount",
+        "level": 2,
+        "order": 17
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Embalage",
+        "level": 2,
+        "order": 18
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Listrik (PLN)",
+        "level": 2,
+        "order": 19
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Batu Bara",
+        "level": 2,
+        "order": 20
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "BBM dan Pelumas",
+        "level": 2,
+        "order": 21
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Sparepart dan Pemeliharaan Mesin",
+        "level": 2,
+        "order": 22
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "BTKL Staf Unit",
+        "level": 2,
+        "order": 23
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "THR/Bonus Karyawan & Staf Unit",
+        "level": 2,
+        "order": 24
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Gaji/Honor Konsultan & TKA",
+        "level": 2,
+        "order": 25
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Askes & Jamsostek Unit",
+        "level": 2,
+        "order": 26
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pesangon/Pensiun Unit",
+        "level": 2,
+        "order": 27
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pengolahan Limbah, ABT, dll",
+        "level": 2,
+        "order": 28
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Impor (Inklaring, Demurage, dll)",
+        "level": 2,
+        "order": 29
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pembelian Intern (Antar Divisi)",
+        "level": 2,
+        "order": 30
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pembelian Intern (Antar Unit Satu Divisi)",
+        "level": 2,
+        "order": 31
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "PPN Keluaran Intern (Perhitungan)",
+        "level": 2,
+        "order": 32
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Penjualan:",
+        "level": 1,
+        "order": 33,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Gaji Staf",
+        "level": 2,
+        "order": 34
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Upah Karyawan",
+        "level": 2,
+        "order": 35
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "JPK/Jamsostek Staf & Karyawan",
+        "level": 2,
+        "order": 36
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "THR/Bonus Staf & Karyawan",
+        "level": 2,
+        "order": 37
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Iklan, Reklame dan Pameran",
+        "level": 2,
+        "order": 38
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Perjalanan Dinas",
+        "level": 2,
+        "order": 39
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Pengiriman/Ongkos Angkut",
+        "level": 2,
+        "order": 40
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Komisi Penjualan Lokal/Ekspor",
+        "level": 2,
+        "order": 41
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Freight/EMKL",
+        "level": 2,
+        "order": 42
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Klaim",
+        "level": 2,
+        "order": 43
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Pengurusan Dokumen",
+        "level": 2,
+        "order": 44
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Asuransi",
+        "level": 2,
+        "order": 45
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Penjualan Lain-lain",
+        "level": 2,
+        "order": 46
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Administrasi & Umum:",
+        "level": 1,
+        "order": 47,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "PPN Keluaran Ekstern (Pejualan Lokal)",
+        "level": 2,
+        "order": 48
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pajak (PPN, PPh, PBB, PNBP, dll)",
+        "level": 2,
+        "order": 49
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Gaji Staf Kantor",
+        "level": 2,
+        "order": 50
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Upah Karyawan Kantor",
+        "level": 2,
+        "order": 51
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Askes/Jamsostek Staf & Karyawan",
+        "level": 2,
+        "order": 52
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Pemeliharaan Gedung",
+        "level": 2,
+        "order": 53
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Perjalanan Dinas",
+        "level": 2,
+        "order": 54
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Pengiriman Surat",
+        "level": 2,
+        "order": 55
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Alat Tulis",
+        "level": 2,
+        "order": 56
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Air/ABT",
+        "level": 2,
+        "order": 57
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Listrik",
+        "level": 2,
+        "order": 58
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Notaris & Konsultan",
+        "level": 2,
+        "order": 59
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Training & Pendidikan",
+        "level": 2,
+        "order": 60
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Perizinan & Sertifikat",
+        "level": 2,
+        "order": 61
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Sumbangan",
+        "level": 2,
+        "order": 62
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Representatif, Entertainment, Tamu, dll",
+        "level": 2,
+        "order": 63
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Ass. Kendaraan, Gedung dan Mesin",
+        "level": 2,
+        "order": 64
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban URTP",
+        "level": 2,
+        "order": 65
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Pesangon Staf & Karyawan",
+        "level": 2,
+        "order": 66
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "THR/Bonus Staf & Karyawan, Umum dan Direksi",
+        "level": 2,
+        "order": 67
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Kendaraan",
+        "level": 2,
+        "order": 68
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Keamanan",
+        "level": 2,
+        "order": 69
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Beban Lain-lain",
+        "level": 2,
+        "order": 70
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Telepon, Fax & Internet",
+        "level": 2,
+        "order": 71
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Operasional Lain-lain:",
+        "level": 1,
+        "order": 72,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Biaya Lainnya",
+        "level": 2,
+        "order": 73
+      },
+      {
+        "sectionId": 1,
+        "groupId": 2,
+        "label": "Total Pengeluaran Operasional",
+        "level": 1,
+        "order": 74
+      },
+      {
+        "sectionId": 1,
+        "groupId": 3,
+        "label": "Surplus/Deficit-Kas dari Kegiatan Operasional",
+        "level": 0,
+        "order": 75
+      },
+      {
+        "sectionId": 2,
+        "groupId": 4,
+        "label": "Penerimaan dari Investasi:",
+        "level": 1,
+        "order": 76,
+
+        "labelOnly": true,
+        "useSection": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 2,
+        "groupId": 4,
+        "label": "Deposito",
+        "level": 2,
+        "order": 77
+      },
+      {
+        "sectionId": 2,
+        "groupId": 4,
+        "label": "Lain-lain",
+        "level": 2,
+        "order": 78
+      },
+      {
+        "sectionId": 2,
+        "groupId": 4,
+        "label": "Total Penerimaan Investasi",
+        "level": 1,
+        "order": 79
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Pembayaran Pembelian Asset Tetap:",
+        "level": 1,
+        "order": 80,
+
+        "labelOnly": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Mesin",
+        "level": 2,
+        "order": 81
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Kendaraan",
+        "level": 2,
+        "order": 82
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Inventaris",
+        "level": 2,
+        "order": 83
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Alat Komputer",
+        "level": 2,
+        "order": 84
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Proyek",
+        "level": 2,
+        "order": 85
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Deposito",
+        "level": 1,
+        "order": 86
+      },
+      {
+        "sectionId": 2,
+        "groupId": 5,
+        "label": "Total Pengeluaran Investasi",
+        "level": 1,
+        "order": 87
+      },
+      {
+        "sectionId": 2,
+        "groupId": 6,
+        "label": "Surplus/Deficit-Kas dari Kegiatan Investasi",
+        "level": 0,
+        "order": 88
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Penerimaan dari Pendanaan:",
+        "level": 1,
+        "order": 89,
+
+        "labelOnly": true,
+        "useSection": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Pencairan Pinjaman (Loan Withdrawal)",
+        "level": 2,
+        "order": 90
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Penerimaan Lain-lain dari Pendanaan:",
+        "level": 1,
+        "order": 91,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Afiliasi",
+        "level": 2,
+        "order": 92
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Jual Beli Valas",
+        "level": 2,
+        "order": 93
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Cadangan Perusahaan",
+        "level": 2,
+        "order": 94
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Lain-lain (Klaim Ass./Tab, THR/VB Impor/Giro, dll)",
+        "level": 2,
+        "order": 95
+      },
+      {
+        "sectionId": 3,
+        "groupId": 7,
+        "label": "Total Penerimaan Pendanaan",
+        "level": 1,
+        "order": 96
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Pembayaran Angsuran dan Bunga Pinjaman:",
+        "level": 1,
+        "order": 97,
+
+        "labelOnly": true,
+        "useGroup": true
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Angsuran Kredit",
+        "level": 2,
+        "order": 98
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Biaya Bunga Bank",
+        "level": 2,
+        "order": 99
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Pembayaran Biaya Administrasi Bank:",
+        "level": 1,
+        "order": 100,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Biaya Adm. Bank",
+        "level": 2,
+        "order": 101
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Pengeluaran Lain-lain dari Pendanaan:",
+        "level": 1,
+        "order": 102,
+
+        "labelOnly": true
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Afiliasi (Psr, Group)",
+        "level": 2,
+        "order": 103
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Jual Beli Valas",
+        "level": 2,
+        "order": 104
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Lain-lain efrata/b Mandiri/MD/Cad THR",
+        "level": 2,
+        "order": 105
+      },
+      {
+        "sectionId": 3,
+        "groupId": 8,
+        "label": "Total Pengeluaran Pendanaan",
+        "level": 1,
+        "order": 106
+      },
+      {
+        "sectionId": 3,
+        "groupId": 9,
+        "label": "Surplus/Deficit-Kas dari Kegiatan Pendanaan",
+        "level": 0,
+        "order": 107
+      }
+    ]
+  }
+]

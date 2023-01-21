@@ -1,0 +1,33 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete placeholder="Input No. Faktur Penjualan" value.bind="selectedSalesInvoice"
+                error.bind="error.SalesInvoiceNo" loader.bind="salesInvoiceLoader" key="SalesInvoiceNo"
+                text="SalesInvoiceNo" read-only.bind="readOnly" keypress.delegate="enterDelegate($event)">
+            </au-autocomplete>
+
+            <au-collection columns.bind="returnDetailsInfo.columns" items.bind="data.DOReturnDetailItems"
+                errors.bind="error.DOReturnDetailItems" read-only.bind="readOnly"
+                item-template="modules/sales/do-return/template/do-return-detail-item">
+            </au-collection>
+
+            <au-textbox error.bind="error.DOReturnDetailItem" read-only.bind="true"></au-textbox>
+
+            <au-textbox show.bind="error.TotalNotNull" error.bind="error.TotalNotNull" read-only.bind="true">
+            </au-textbox>
+
+            <au-collection columns.bind="doReturnItemsInfo.columns" items.bind="data.DOReturnItems"
+                view-model.ref="ItemCollections" errors.bind="error.DOReturnItems" read-only.bind="readOnly"
+                remove.bind="doReturnItemsInfo.onRemove"
+                item-template="modules/sales/do-return/template/do-return-item">
+            </au-collection>
+
+            <au-textbox error.bind="error.DOReturnItem" read-only.bind="true"></au-textbox>
+
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

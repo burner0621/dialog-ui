@@ -1,0 +1,60 @@
+<template>
+	<tr>
+
+        <td class="col-sm-3 bg-primary">
+			<au-textbox 
+                error.bind="error.Inventory" 
+                value.bind="data.Inventory" 
+				read-only.bind="readOnly"
+                placeholder="Inventory"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+        <td class="col-sm-3 bg-primary">
+			<au-textbox 
+                error.bind="error.SpecificationDetail" 
+                value.bind="data.SpecificationDetail" 
+				read-only.bind="readOnly"
+                placeholder="SpecificationDetail"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+		<td class="col-sm-3 bg-primary">
+			<au-numeric 
+                error.bind="error.Quantity" 
+                value.bind="data.Quantity" 
+                format="0.00"
+				read-only.bind="readOnly"
+                options.bind="controlOptions">
+			</au-numeric>
+		</td>
+
+		<td class="col-sm-1 bg-primary">
+			<au-autocomplete 
+                value.bind="data.Uom" 
+                error.bind="error.Uom"
+				loader.bind="uomLoader" 
+                text="Unit" 
+                placeholder="Satuan"
+				read-only.bind="readOnly" 
+                options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+        
+        <td class="col-sm-5 bg-primary">
+			<au-textbox 
+                error.bind="error.Remark" 
+                value.bind="data.Remark" 
+				read-only.bind="readOnly"
+                placeholder="Remark"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+
+		<td if.bind="!readOnly" class="col-sm-1">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+	</tr>
+</template>

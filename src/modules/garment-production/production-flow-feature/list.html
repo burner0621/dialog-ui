@@ -1,0 +1,131 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+      <style>
+          table>tbody>tr>td {
+              white-space: pre;
+          }
+      </style>
+  
+      <h1 class="page-header">Fitur Flow Barang Produksi</h1>
+  
+      <form class="form-horizontal">
+        <!-- <au-autocomplete 
+            value.bind="roNo" 
+            label="No RO" 
+            loader.bind="roLoader"
+            placeholder="Cari RO" 
+            text="RONo"
+            options.bind="controlOptions">
+        </au-autocomplete> -->
+
+        <au-textbox
+            value.bind="roNo" 
+            label="No. RO"
+            placeholder="Masukkan RO" 
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="article" 
+            label="Artikel"
+            if.bind="article"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="comodity" 
+            label="Komoditi"
+            if.bind="comodity"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="buyer" 
+            label="Buyer"
+            if.bind="buyer"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="quantity" 
+            label="Jumlah Order"
+            if.bind="quantity"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+    <br> </br>
+    <div class="row">
+        <div class="col-md-6">
+                <div class="table-responsive" if.bind="data">
+                    <h4 if.bind="data"> <b>Preparing</b>  </h4>
+                    <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="data"> <b>Jumlah Total Preparing :  ${totalQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+                <div class="table-responsive" if.bind="cuttingData">
+                    <h4 if.bind="cuttingData"> <b>Cutting</b>  </h4>
+                    <table ref="cuttingTable" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="cuttingData"> <b>Jumlah Total Cutting :  ${totalCutQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+                <div class="table-responsive" if.bind="loadingData">
+                    <h4 if.bind="loadingData"> <b>Loading</b>  </h4>
+                    <table ref="loadingTable" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="loadingData"> <b>Jumlah Total Loading :  ${totalLoadingQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+        </div>
+            <div class="col-md-6">
+                <div class="table-responsive" if.bind="sewingData">
+                    <h4 if.bind="sewingData"> <b>Sewing</b>  </h4>
+                    <table ref="sewingTable" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="sewingData"> <b>Jumlah Total Sewing :  ${totalSewingQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+                <div class="table-responsive" if.bind="finishingData">
+                    <h4 if.bind="finishingData"> <b>Finishing</b>  </h4>
+                    <table ref="finishingTable" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="finishingData"> <b>Jumlah Total Finishing :  ${totalFinishingQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+                <div class="table-responsive">
+                    <h4 if.bind="expenditureData"> <b>Gudang Jadi</b>  </h4>
+                    <table if.bind="data" ref="expenditureTable" class="table table-bordered table-hover" border="1" id="myTable"></table>
+                    <h5 if.bind="expenditureData"> <b>Jumlah Total Barang Jadi :  ${totalExpenditureQuantity}</b> </h5>
+                </div>
+                <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+                    Tidak ada data.
+                </div>
+            <hr/>
+        </div>
+    </div>
+    </au-input-form>
+    <div class="row"></div>
+  </template>

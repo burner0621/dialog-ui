@@ -1,0 +1,22 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-dropdown value.bind="month" items.bind="itemMonths" error.bind="error.Month" label="Bulan"
+            read-only.bind="readOnly" options.bind="controlOptions" key="value" text="text">
+        </au-dropdown>
+        
+        <au-dropdown value.bind="year" items.bind="itemYears" error.bind="error.Year" label="Tahun"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-numeric label="Jumlah Tenaga Kerja Langsung"  error.bind="error.LaborTotal" value.bind="data.LaborTotal" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="Total Besar Upah 1 Bulan" error.bind="error.WageTotal" value.bind="data.WageTotal" read-only.bind="readOnly"
+        options.bind="controlOptions">
+    </au-numeric>
+
+    </au-input-form>
+</template>

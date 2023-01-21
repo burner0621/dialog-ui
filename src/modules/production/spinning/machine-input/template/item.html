@@ -1,0 +1,47 @@
+<template>
+    <tr>
+        <td show.bind="false">
+            <au-textbox show.bind="false" value.bind="data.Id" error.bind="error.Id" read-only.bind="true"
+                options.bind="controlOptions"></au-textbox>
+
+        </td>
+
+        <td show.bind="false">
+            <au-textbox show.bind="false" value.bind="data.InputMachineHeaderId" error.bind="error.InputMachineHeaderId" read-only.bind="true"
+                options.bind="controlOptions"></au-textbox>
+
+        </td>
+        <td show.bind="false">
+            <au-textbox show.bind="false" value.bind="data.MachineSpinning.Id" error.bind="error.MachineSpinning.Id"
+                read-only.bind="true" options.bind="controlOptions"></au-textbox>
+
+        </td>
+        <td>
+
+            <au-textbox value.bind="data.MachineSpinning.No" error.bind="error.MachineSpinning.No" read-only.bind="true"
+                options.bind="controlOptions"></au-textbox>
+
+        </td>
+        <td>
+            <au-textbox value.bind="data.MachineSpinning.Name" error.bind="error.MachineSpinning.Name" read-only.bind="true"
+                options.bind="controlOptions"></au-textbox>
+
+        </td>
+        <td class="alert alert-warning" show.bind="data.ExistedItem==true && isEdit">
+            <au-numeric format="0,000.0000"  value.bind="data.Input" error.bind="error.Input" read-only.bind="options.readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td show.bind="data.ExistedItem!=true"> 
+            <au-numeric format="0,000.0000" value.bind="data.Input" error.bind="error.Input" read-only.bind="options.readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox  value.bind="data.MachineSpinning.UomUnit" error.bind="error.MachineSpinning.UomUnit"
+                read-only.bind="true" options.bind="controlOptions"></au-textbox>
+
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(context.data)">-</button>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,32 @@
+<template>
+	<div class="row">
+		<div class="col-md-8">
+			<au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+				<au-textbox 
+					label="Kode" 
+					value.bind="data.Code" 
+					error.bind="error.Code" 
+					read-only.bind="readOnly"
+					placeholder="Ketik kode">
+					
+				</au-textbox>
+
+				<au-textbox 
+					label="Nama" 
+					value.bind="data.AccountingBookType" 
+					error.bind="error.AccountingBookType" 
+					read-only.bind="readOnly"
+					placeholder="Ketik nama">
+				</au-textbox>
+
+				<au-multiline 
+					label="Keterangan" 
+					value.bind="data.Remarks" 
+					error.bind="error.Remarks" 
+					read-only.bind="readOnly"
+					placeholder="Tambah keterangan">
+				</au-multiline>
+			</au-input-form>
+		</div>
+	</div>
+</template>

@@ -1,0 +1,69 @@
+<template>
+    <h1 class="page-header">Monitoring Validasi Purchase Request Master</h1>
+    <form class="form-horizontal">
+        <au-autocomplete  value.bind="unit" label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+        <au-autocomplete 
+            label="Seksi"
+            value.bind="filterSection"
+            error.bind="error.Section"
+            loader.bind="sectionLoader"
+            text.bind = "sectionView"
+            key="SectionCode"
+            aria-placeholder="Cari Seksi"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-datepicker label="Tanggal Validasi Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Validasi Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">Nomor RO</th>
+                    <th class="text-center">Nama Staff</th>                    
+                    <th class="text-center">Nama Unit</th>
+                    <th class="text-center">Tgl PR Master</th>
+                    <th class="text-center">Seksi</th>
+                    <th class="text-center">Kode Brand</th>
+                    <th class="text-center">Nama Brand Buyer</th>
+                    <th class="text-center">Article / Style</th>
+                    <th class="text-center">Tgl Shipment</th>        
+                    <th class="text-center">Kadiv Merchandiser</th>     
+                    <th class="text-center">Tgl Valid Kadiv Merchandiser</th>                            
+                 </tr>
+            </thead>
+            <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${item.RO_Number}</td>
+                        <td>${item.StaffName}</td>
+                        <td>${item.UnitName}</td>
+                        <td>${item.PRDate}</td>                        
+                        <td>${item.SectionName}</td>
+                        <td>${item.BuyerCode}</td>
+                        <td>${item.BuyerName}</td>
+                        <td>${item.Article}</td>
+                        <td>${item.DeliveryDate}</td>
+                        <td>${item.ValidatedKadiv}</td>
+                        <td>${item.ValidatedDate}</td>                                                
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

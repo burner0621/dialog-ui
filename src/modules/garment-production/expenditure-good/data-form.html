@@ -1,0 +1,218 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+        <div class="row">
+            <div class="col-md-6">
+                <au-textbox
+                    if.bind="data.ExpenditureGoodNo"
+                    value.bind="data.ExpenditureGoodNo"
+                    label="No Bon Pengeluaran"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete
+                    value.bind="selectedUnit"
+                    error.bind="error.Unit"
+                    label="Unit Pengeluaran"
+                    loader.bind="unitLoader"
+                    text.bind="unitView"
+                    placeholder="Unit"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-dropdown
+                    label="Tipe Pengeluaran"
+                    value.bind="data.ExpenditureType"
+                    error.bind="error.ExpenditureType"
+                    read-only.bind="readOnly || isEdit"
+                    items.bind="expenditureTypes"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-autocomplete
+                    value.bind="selectedRO"
+                    error.bind="error.RONo"
+                    label="No RO"
+                    loader.bind="roLoader"
+                    show.bind="data.Unit"
+                    text.bind="ROView"
+                    placeholder="nomor RO"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions"
+                    view-model.ref="selectedROViewModel">
+                </au-autocomplete>
+
+                <au-textbox
+                    value.bind="data.Article"
+                    error.bind="error.Article"
+                    label="No Artikel"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    value.bind="data.Comodity.Name"
+                    label="Komoditi"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    value.bind="data.BuyerView"
+                    label="Buyer"
+                    read-only="true"
+                    if.bind="data.Buyer"
+                    options.bind="controlOptions">
+                </au-textbox> 
+
+                <au-datepicker 
+                    label="Tanggal Proses"
+                    value.bind="data.ExpenditureDate"
+                    error.bind="error.ExpenditureDate"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker> 
+            </div>
+            <div class="col-md-6">
+                <!-- <au-checkbox
+                    label="Manual?"
+                    value.bind="manual"
+                    change.delegate="manualChanged($event)"
+                    if.bind="!readOnly"
+                    options.bind="controlOptions">
+                </au-checkbox> -->
+                <!-- <au-textbox
+                    value.bind="data.Invoice"
+                    error.bind="error.Invoice"
+                    label="Invoice"
+                    read-only.bind="readOnly"
+                    if.bind="manual"
+                    options.bind="controlOptions">
+                </au-textbox> -->
+                <au-autocomplete
+                    value.bind="selectedInvoice"
+                    error.bind="error.Invoice"
+                    label="Invoice"
+                    loader.bind="plLoader"
+                    text="invoiceNo"
+                    placeholder="cari no invoice"
+                    read-only.bind="readOnly"
+                    
+                    options.bind="controlOptions"
+                    
+                    view-model.ref="selectedInvoiceViewModel">
+                </au-autocomplete>
+
+                <au-textbox
+                    value.bind="data.ContractNo"
+                    error.bind="error.ContractNo"
+                    label="No Kontrak"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-numeric
+                    value.bind="data.Carton"
+                    error.bind="error.Carton"
+                    label="Karton"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions"
+                    format="0">
+                </au-numeric>
+
+                <au-multiline
+                    value.bind="data.Description"
+                    error.bind="error.Description"
+                    label="Keterangan"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-multiline>
+            </div>
+
+        </div>
+        <hr>
+        <br>
+        <div  class="row" if.bind="isCreate">
+            <div class="col-md-6">
+                <au-dropdown
+                    label="Size"
+                    value.bind="selectedSize"
+                    error.bind="error.ExpenditureType"
+                    read-only.bind="readOnly || isEdit"
+                    items.bind="sizes"
+                    text="SizeName"
+                    if.bind="selectedRO"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-numeric
+                    value.bind="selectedSize.RemainingQuantity"
+                    label="Jumlah Tersedia"
+                    read-only.bind="true"
+                    show.bind="selectedRO"
+                    options.bind="controlOptions"
+                    format="0">
+                </au-numeric>
+
+                <au-numeric
+                    value.bind="data.Quantity"
+                    label="Jumlah Keluar"
+                    read-only.bind="readOnly"
+                    show.bind="selectedRO"
+                    options.bind="controlOptions"
+                    format="0">
+                </au-numeric>
+
+                <au-dropdown
+                    label="Keterangan"
+                    value.bind="selectedColor"
+                    read-only.bind="readOnly || isEdit"
+                    items.bind="data.colors"
+                    if.bind="selectedRO"
+                    options.bind="controlOptions">
+                </au-dropdown>
+                
+                <button class="btn btn-success" click.delegate="addProduct()"  show.bind="selectedRO"
+                    disabled.bind="!selectedRO|| data.Quantity==0 || selectedSize.RemainingQuantity==0">Tambah Item</button>
+            
+            </div>
+            <div class="col-md-6">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                    <p if.bind="error.Price" class="help-block text-center">${error.Price}</p>
+                </div>
+                <h4 if.bind="selectedRO">Detail Pengeluaran Barang</h4>
+                <au-collection
+                    items.bind="data.Items"
+                    errors.bind="error.Items"
+                    columns.bind="itemsInfo.columns"
+                    read-only.bind="readOnly"
+                    options.bind="itemOptions"
+                    remove.bind="removeItems"
+                    item-template="modules/garment-production/expenditure-good/template/item"
+                    if.bind="selectedRO">
+                </au-collection>
+            </div>
+        </div>
+        
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="itemsInfo.columns"
+            read-only.bind="true"
+            options.bind="itemOptions"
+            item-template="modules/garment-production/expenditure-good/template/item"
+            if.bind="readOnly || isEdit">
+        </au-collection>
+        
+
+        <p if.bind="data.Items"><b>Jumlah Total Pengeluaran Barang Jadi : ${totalQuantity} PCS</b></p>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

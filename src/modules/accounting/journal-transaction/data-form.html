@@ -1,0 +1,54 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+
+        <au-textbox value.bind="data.Description"
+                    error.bind="error.Description"
+                    read-only.bind="readOnly"
+                    label="Deskripsi"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker value.bind="data.Date"
+                       error.bind="error.Date"
+                       read-only.bind="readOnly"
+                       label="Tanggal"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox value.bind="data.ReferenceNo"
+                    error.bind="error.ReferenceNo"
+                    read-only.bind="readOnly"
+                    label="No. Referensi"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox error.bind="error.Item"
+                    show.bind="error.Item"
+                    read-only.bind="true">
+        </au-textbox>
+
+        <au-collection items.bind="data.Items"
+                       errors.bind="error.Items"
+                       columns.bind="columns"
+                       add.bind="addItems"
+                       remove.bind="onremove"
+                       read-only.bind="readOnly"
+                       footer-template="modules/accounting/journal-transaction/templates/item-footer"
+                       item-template="modules/accounting/journal-transaction/templates/item">
+        </au-collection>
+
+        <au-textbox error.bind="error.Differences"
+                    show.bind="error.Differences"
+                    read-only.bind="true">
+        </au-textbox>
+
+        <div class="btn-group pull-right">
+            <button class="btn btn-success"
+                    click.delegate="postingCallback($event)"
+                    if.one-way="hasPosting">Posting</button>
+        </div>
+
+    </au-input-form>
+</template>

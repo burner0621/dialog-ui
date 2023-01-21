@@ -1,0 +1,106 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Monitoring Bea Cukai</h1>
+        <form class="form-horizontal">
+
+            <au-textbox 
+                label="Nomor Bea Cukai" 
+                value.bind="no"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-textbox>
+
+            <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-dropdown
+                label="Tipe Bea Cukai"
+                value.bind="customsType"
+                read-only.bind="readOnly"
+                items.bind="typeCustoms"
+                options.bind="controlOptions">
+            </au-dropdown>
+
+            <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>Jenis Dokumen</td>
+                        <td>Nomor Dokumen Pabean</td>
+                        <td>Tgl Dokumen Pabean</td>
+                        <td>Nomor Bukti Penerimaan Barang</td>
+                        <td>Tgl Bukti Penerimaan Barang</td>
+                        <td>Pemasok / Pengirim</td>
+                        <td>Nomor Surat Jalan</td>
+                        <td>Tgl Surat Jalan</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah</td>
+                        <td>Satuan</td>
+                        <td>Nilai Barang</td>
+                        <td>Mata Uang</td>
+                        <td>User Input</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <require from="../../../lib/number-format-value-converter"></require>
+                    <tr repeat.for="item of data">
+                        <td class="text-center">${item._id.customsType}</td>
+                        <td class="text-center">${item._id.no}</td>
+                        <td class="text-center">${item._id.customsDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">${item._id.supplier}</td>
+                        <td class="text-center">${item._id.deliveryOrderNo}</td>
+                        <td class="text-center">${item._id.deliveryOrderDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td class="text-center">${item._id.productCode}</td>
+                        <td class="text-center">${item._id.productName}</td>
+                        <td class="text-right">${item.quantity}</td>
+                        <td class="text-center">${item._id.uom}</td>
+                        <td class="text-right">${item.price | numberFormat:"0,000.00"}</td>
+                        <td class="text-center">${item._id.currency}</td>
+                        <td class="text-center">${item._id._createdBy}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

@@ -1,0 +1,20 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="machine"
+                error.bind="error.name"
+                loader.bind="machineLoader"
+                placeholder="search mesin"
+                key="Name"
+                text="Name"
+                read-only.bind="(readOnly || isEdit)"
+                query.bind="filterMachine"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+        </td>
+     </tr>
+</template>

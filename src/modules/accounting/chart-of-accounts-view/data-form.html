@@ -1,0 +1,39 @@
+<template>
+
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox label="Kode" value.bind="data.code" error.bind="error.code" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-textbox label="Nama" value.bind="data.name" error.bind="error.name" read-only.bind="readOnly"></au-textbox>
+
+        <au-multiline label="Alamat" value.bind="data.address" error.bind="error.address" read-only.bind="readOnly">
+        </au-multiline>
+
+        <au-textbox label="Kota" value.bind="data.city" error.bind="error.city" read-only.bind="readOnly"></au-textbox>
+
+        <au-dropdown label="Negara" value.bind="data.country" error.bind="error.country" read-only.bind="readOnly"
+          items.bind="countries"></au-dropdown>
+
+        <au-textbox label="Kontak" value.bind="data.contact" error.bind="error.contact" read-only.bind="readOnly">
+        </au-textbox>
+
+        <au-numeric label="Tempo" value.bind="data.tempo" error.bind="error.tempo" format="0" read-only.bind="readOnly">
+        </au-numeric>
+
+        <au-textbox label="NPWP" value.bind="data.NPWP" error.bind="error.NPWP" read-only.bind="readOnly"></au-textbox>
+
+        <au-dropdown label="Jenis Buyer" value.bind="data.type" error.bind="error.type" read-only.bind="readOnly"
+          items.bind="types"></au-dropdown>
+
+        <au-dropdown label="Saldo" value.bind="data.Balance" error.bind="error.type" read-only.bind="readOnly"
+          items.bind="types"></au-dropdown>
+
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+
+</template>

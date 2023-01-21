@@ -1,0 +1,8 @@
+<template>
+  <h3>Settings</h3>
+  <au-textbox label="error" value.two-way="error" options.bind="settingOptions"></au-textbox>
+  <au-textbox label="label" value.two-way="label" options.bind="settingOptions"></au-textbox>
+  <au-range label="options.label.length" value.bind="options.label.length" max.bind="labelMaxLength" options.bind="settingOptions"></au-range>
+  <au-dropdown label="options.label.align" value.bind="options.label.align" options.bind="settingOptions" items.bind="alignments"></au-dropdown>
+  <au-range label="options.control.length" value.bind="options.control.length" max.bind="controlMaxLength" options.bind="settingOptions"></au-range>
+</template>

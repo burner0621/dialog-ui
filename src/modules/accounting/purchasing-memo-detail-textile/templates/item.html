@@ -1,0 +1,31 @@
+<template>
+  <tr>
+    <!-- <require from="../../../../lib/number-format-value-converter"></require> -->
+    <td>
+      <au-autocomplete value.bind="disposition"
+                       error.bind="error.Disposition"
+                       loader.bind="dispositionLoader"
+                       placeholder="cari disposisi"
+                       query.bind="dispositionLoaderQuery"
+                       text.bind="dispositionTextView"
+                       read-only.bind="readOnly">
+      </au-autocomplete>
+    </td>
+    <td class="col-sm-1"
+        if.bind="!readOnly">
+      <button class="btn btn-danger pull-right"
+              click.delegate="onremove(data, $event)">-
+      </button>
+    </td>
+  </tr>
+  <tr>
+    <au-collection items.bind="data.Disposition.Details"
+                   errors.bind="error.Details"
+                   columns.bind="detailColumns"
+                   add.bind="addDetails"
+                   read-only.bind="readOnly"
+                   options.bind="itemOptions"
+                   item-template="modules/accounting/purchasing-memo-detail-textile/templates/item-inklaring">
+    </au-collection>
+  </tr>
+</template>

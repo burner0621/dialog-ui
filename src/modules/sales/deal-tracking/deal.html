@@ -1,0 +1,146 @@
+<template>
+    <require from="./styles/deal-style.css"></require>
+    <require from="../../../lib/number-format-value-converter"></require>
+
+    <div id="dragula">
+        <au-input-form title="Rincian Deal" options.bind="formOptions">
+            <div class="row">
+                <div class="col-sm-4">
+                    <au-textbox value.bind="deal.Name" read-only="true" label="Judul Deal"></au-textbox>
+                    <au-textbox value.one-time="stageName" read-only="true" label="Stage"></au-textbox>
+                    <!-- <au-textbox value.bind="deal.product.name" read-only="true" label="Barang"></au-textbox> -->
+                    <au-textbox value.bind="deal.Quantity | numberFormat: '0,000'" read-only="true" label="Jumlah"></au-textbox>  
+                    <!-- <au-textbox value.bind="deal.product.uom.unit" read-only="true" label="Satuan"></au-textbox>                   -->
+                    <au-textbox value.bind="deal.Uom.Unit" read-only="true" label="Satuan"></au-textbox>                  
+                    <au-textbox value.bind="deal.Amount | numberFormat: '0,000.00'" read-only="true" label="Total Harga"></au-textbox>
+                    <au-textbox value.one-time="board.Currency.Code" read-only="true" label="Mata Uang"></au-textbox>
+                    <au-textbox value.bind="deal.Company.Name" read-only="true" label="Perusahaan"></au-textbox>
+                    <au-textbox value.bind="deal.fullName" read-only="true" label="Kontak"></au-textbox>
+                    <au-datepicker value.bind="deal.CloseDate" read-only="true" label="Tanggal Tutup"></au-datepicker>  
+                    <au-multiline value.bind="deal.Description" read-only="true" label="Deskripsi"></au-multiline>
+                    <au-textbox value.bind="deal.Reason" read-only="true" label="Alasan"></au-textbox>                                                          
+                </div>
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input id="notes-tab" type="radio" name="tabs" checked change.delegate="resetField()">
+                            <label for="notes-tab" class="tab-label"><i class="fa fa-sticky-note" aria-hidden="true"></i> Buat Catatan</label>
+                                
+                            <input id="task-tab" type="radio" name="tabs" change.delegate="resetField()">
+                            <label for="task-tab" class="tab-label"><i class="fa fa-tasks" aria-hidden="true"></i> Buat Tugas</label>
+                            
+                            <section id="notes-content">
+                                <div id="notes-box" contentEditable=true data-text="Catatan" innerhtml.bind="notes"></div>
+                                <div class="margin-bottom"><span class="error-text" show.bind="error.notes">${error.notes}</span></div>
+
+                                <div>
+                                    <i class="fa fa-link fa-2x" title="Hyperlink" aria-hidden="true" click.delegate="createHyperlink()"></i>
+
+                                    <input type="file" id="fileUpload" change.delegate="uploadFile()" show.bind="false" multiple>
+                                    <label for="fileUpload"><i class="fa fa-paperclip fa-2x" title="Attachment" aria-hidden="true"></i></label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4" repeat.for="attachment of attachments">
+                                        <div class="attachment-box">
+                                            <div class="col-sm-3">
+                                                <i class="fa fa-file-o fa-2x" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                ${attachment.name & oneTime}
+                                                <br>
+                                                ${attachment.newSize & oneTime}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <i class="fa fa-window-close-o" aria-hidden="true" click.delegate="deleteAttachment($index)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-success" click.delegate="create()">Buat</button>
+                                </div>
+                            </section>
+
+                            <section id="task-content">
+                                <au-textbox value.bind="title" error.bind="error.TaskTitle" placeholder="Judul tugas"></au-textbox>
+                                <au-multiline value.bind="notes" error.bind="error.Notes" placeholder="Catatan"></au-multiline>
+                                <au-autocomplete 
+                                    value.bind="assignedTo" 
+                                    error.bind="error.AssignedTo"
+                                    label="Ditugaskan Kepada" 
+                                    loader.one-time="accountLoader"
+                                    placeholder="Ditugaskan kepada" 
+                                    text="username">
+                                </au-autocomplete>
+                                <au-datetimepicker value.bind="dueDate" label="Batas tanggal terakhir" placeholder="Batal tanggal terahkir" error.bind="error.DueDate"></au-datetimepicker>
+
+                                <div class="btn-group pull-right">
+                                    <button class="btn btn-success" click.delegate="create()">Buat</button>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-12">
+                            <h3>Aktivitas</h3>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-4"><input type="checkbox" id="cbxNotes" checked.bind="filter.notes"> <label for="cbxNotes">Catatan</label></div>
+                                <div class="col-sm-4"><input type="checkbox" id="cbxTask" checked.bind="filter.task"> <label for="cbxTask">Tugas</label></div>
+                                <div class="col-sm-4"><input type="checkbox" id="cbxMove" checked.bind="filter.move"> <label for="cbxMove">Pemindahan</label></div>
+                            </div>
+                            <div class="divScroll">
+                                <ul class="cbp_tmtimeline">
+                                    <li repeat.for="activity of activities" show.bind="activity.type == 'NOTES' ? filter.notes : activity.type == 'TASK' ? filter.task : activity.type == 'MOVE' ? filter.move : true">
+                                        <time class="cbp_tmtime"><span>${activity.date}</span> <span>${activity.time}</span></time>
+                                        <div class="cbp_tmicon"><i class="${activity.icon}" aria-hidden="true"></i></div>
+                                        <div class="cbp_tmlabel">
+                                            <h4 if.bind="activity.title">
+                                                ${activity.title}
+                                                <div class="pull-right">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true" title="Ubah" click.delegate="editActivity(activity)"></i>
+                                                    <i class="fa fa-trash-o" aria-hidden="true" title="Hapus" click.delegate="deleteActivity(activity.Id)"></i>
+                                                </div>
+                                            </h4>
+                                            <h4 if.bind="activity.taskTitle"><input type="checkbox" id.bind="activity.code" change.delegate="updateTaskStatus(activity.Id, $event.target.checked)" checked.bind="activity.status"> <label for.bind="activity.code">${activity.taskTitle}</label></h4>
+                                            <div innerhtml.bind="activity.notes"></div>
+
+                                            <div class="row" if.bind="activity.type == 'NOTES'">
+                                                <div class="col-sm-6" repeat.for="attachment of activity.attachments">
+                                                    <div class="activity-attachment-box">
+                                                        <div class="col-sm-10 downloadFile" click.delegate="getFile(attachment.FilePath)">
+                                                            <i class="fa fa-file-o" aria-hidden="true"> ${attachment.FileName}</i> 
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <i class="fa fa-window-close-o" aria-hidden="true" click.delegate="deleteFile($index, activity)"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" if.bind="activity.type == 'TASK'">
+                                                <br>
+                                                <div class="col-sm-6">
+                                                    <p if.bind="activity.assignedTo">Ditugaskan kepada:<br> ${activity.assignedTo}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p if.bind="activity.dueDate">Tanggal batas akhir:<br> ${activity.dueDate}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="text-center">
+                                    <button class="circle-btn" click.delegate="loadMore()" if.bind="!isActivitiesEqualTotal">
+                                        Load more<br>
+                                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </au-input-form>
+    </div>
+</template>

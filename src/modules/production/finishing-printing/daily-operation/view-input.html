@@ -1,0 +1,14 @@
+<template>
+    <h1 class="page-header">Finishing - Printing</br>Detail Input Operasional Harian setiap Mesin</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" machine.bind="machine" step.bind="step" kanban.bind="kanban" error.bind="error" read-only="true" read-only-input="true" input="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a show.bind="!data.HasOutput" click.delegate="createOutput()" class='btn btn-primary btn-sm'>Buat Output</a>
+            <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+            <a click.delegate="edit()" class='btn btn-primary btn-sm'>Ubah</a>
+            <a show.bind="data.IsChangeable" click.delegate="delete()" class='btn btn-danger btn-sm'>Hapus</a>
+        </div>
+    </block>
+</template>

@@ -1,0 +1,12 @@
+<template>
+    <tr>
+		<td colspan="2" class="text-left">
+            <require from="../../../../lib/number-format-value-converter"></require>
+            <b>Total Perhitungan NW : ${itemSumNW | numberFormat:"0.00"} </b>
+        </td>
+		<td colspan="2" class="text-left">
+            <require from="../../../../lib/number-format-value-converter"></require>
+            <b>Total Perhitungan GW : ${itemSumGW | numberFormat:"0.00"} </b>
+        </td>
+	</tr>
+</template>

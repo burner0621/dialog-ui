@@ -1,0 +1,70 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                placeholder="Pilih No Bon Pengeluaran Barang Jadi"
+                value.bind="selectedExpenditureGood" 
+                error.bind="error.ExpenditureGoodNo" 
+                loader.bind="expenditureGoodLoader"
+                text="ExpenditureGoodNo" 
+                read-only.bind="readOnly || data.Id" 
+                query.bind="filter"
+                view-model.ref="ExpenditureGoodViewModel">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.RONo" 
+                read-only="true" 
+                show.bind="selectedExpenditureGood">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Article" 
+                read-only="true" 
+                show.bind="selectedExpenditureGood">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.BuyerName || data.Buyer.Name" 
+                read-only="true" 
+                show.bind="selectedExpenditureGood">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.ComodityName || data.Comodity.Name" 
+                read-only="true" 
+                show.bind="selectedExpenditureGood">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.Quantity" 
+                read-only="true" 
+                show.bind="selectedExpenditureGood">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    <tr >
+        <td colspan="6">
+            <au-collection
+                items.bind="data.dataDetails"
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly"
+                options.bind="itemOptions"
+                add.bind="addDetails" 
+                remove.bind="removeDetails"
+                show.bind="data.ExpenditureGoodNo"
+                footer-template="modules/inventory/garment-leftover-warehouse/receipt/finished-good/template/item-footer" 
+                item-template="modules/inventory/garment-leftover-warehouse/receipt/finished-good/template/detail">
+        </au-collection>
+        </td>
+    </tr>
+    
+</template>

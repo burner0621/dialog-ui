@@ -1,0 +1,78 @@
+
+<template>
+  
+        <h1 class="page-header">Laporan Pertanggungjawaban Mutasi Bahan Baku Unit</h1>
+        <form class="form-horizontal">
+            <au-dropdown 
+                label="Konveksi" 
+                value.bind="unit"
+                items.bind="units"
+                options.bind="controlOptions" >
+            </au-dropdown>
+             
+            <au-datepicker 
+            label="Tanggal Awal Laporan" 
+            value.bind="dateFrom" error.bind="error.dateFrom"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-datepicker 
+            label="Tanggal Akhir Laporan" 
+            value.bind="dateTo" error.bind="error.dateTo"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+             <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+           <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Satuan</td>
+                        <td>Saldo Awal</td>
+                        <td>Pemasukan</td>
+                        <td >Pengeluaran</td>
+                        <td >Penyesuaian</td>
+                        <td >Saldo Akhir</td>
+                        <td>Stock Opname</td>
+                        <td>Selisih</td>   
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                    <tr repeat.for="item of data">
+                            <td class="text-left">${item.ItemCode}</td>
+                            <td class="text-left">${item.ItemName}</td>
+                            <td class="text-left">${item.UnitQtyName}</td>
+                            <td class="text-right">${item.BeginQty}</td>
+                            <td class="text-right">${item.ReceiptQty}</td>
+                            <td class="text-right">${item.ExpenditureQty}</td>
+                            <td class="text-right">${item.AdjustmentQty}</td>
+                            <td class="text-right">${item.LastQty}</td>
+                            <td class="text-right">${item.OpnameQty}</td>
+                            <td class="text-right">${item.Diff}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="info.total>info.size"  info.bind="info" change.delegate="changePage($event)"></pagination>
+        <hr/>
+    </au-input-form> 
+</template>

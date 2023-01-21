@@ -1,0 +1,116 @@
+<template>
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.one-way="'Total Harga'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getAmountTotal"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.bind="'PPn'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getAmountVAT"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.bind="'PPh'"
+                        read-only.bind="true">
+            </au-textbox>
+
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getIncomeTax"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.bind="'Total Keseluruhan'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getAmountAll"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.bind="'Jumlah VB'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getAmountVB"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+
+    <tr>
+        <td colspan="6"
+            class="text-right">
+            <au-textbox value.bind="status"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.one-way="getValueReqReal"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+
+    </tr>
+</template>

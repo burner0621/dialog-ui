@@ -1,0 +1,106 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+    
+        <div class="row">
+                <au-textbox 
+                    label="Nomor Pembayaran" 
+                    value.bind="data.InvoicePaymentNo" 
+                    read-only="true"
+                    options.bind="controlOptions" 
+                    if.bind="readOnly || data.Id">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal Bayar" 
+                    value.bind="data.PaymentDate" 
+                    error.bind="error.PaymentDate"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete 
+                    label="Buyer" 
+                    placeholder="Pilih buyer" 
+                    value.bind="selectedBuyer"
+                    error.bind="error.Buyer" 
+                    loader.bind="buyerLoader" 
+                    text.bind="buyerView"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Nomor BG" 
+                    value.bind="data.BGNo" 
+                    error.bind="error.BGNo" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete 
+                    label="Mata Uang" 
+                    placeholder="Pilih mata uang" 
+                    value.bind="selectedCurrency"
+                    error.bind="error.Currency" 
+                    loader.bind="currencyLoader" 
+                    text.bind="currencyView"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-numeric 
+                    label="Rate" 
+                    value.bind="data.Currency.Rate"
+                    read-only.bind="true" 
+                    if.bind="selectedCurrency"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric 
+                    label="Amount" 
+                    value.bind="totalAmount"
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric 
+                    label="Amount IDR" 
+                    value.bind="totalAmountIDR"
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-multiline 
+                    label="Keterangan" 
+                    value.bind="data.Remark"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-multiline>
+                
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+           
+                
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+        </div>
+                <au-collection 
+                    items.bind="data.Items" 
+                    errors.bind="error.Items" 
+                    columns.bind="invoicesColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removeInvoices"
+                    add.bind="addInvoices"
+                    options.bind="Options"
+                    show.bind="data.Buyer && data.Currency"
+                    item-template="modules/expedition/garment-invoice-payment/template/item">
+                </au-collection>
+            </div>
+        </div>
+        
+        
+        <br>
+    </au-input-form>
+</template>

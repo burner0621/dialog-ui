@@ -1,0 +1,86 @@
+<template>
+    <h1 class="page-header">Monitoring Letter Of Credit</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Applicant"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Applicant"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="L/C No"
+            value.bind="lcNo"
+            error.bind="error.DocumentCreditNo"
+            loader.bind="shippinglcLoader"
+            text.bind = "shippinglcNoView"
+            key="DocumentCreditNo"
+            placeholder="Cari LC No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal L/C Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal L/C Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">No L/C</th>
+                    <th class="text-center">Tgl L/C</th>
+                    <th class="text-center">Issued Bank</th>
+                    <th class="text-center">Applicant</th>
+                    <th class="text-center">Expired Date</th>
+                    <th class="text-center">Exired Place</th>
+                    <th class="text-center">Latest Shipment</th>
+                    <th class="text-center">L/C Condition</th>
+                    <th class="text-center">No Invoice</th>  
+                    <th class="text-center">Amount To Be Paid</th>
+                    <th class="text-center">Tgl Trucking</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Satuan</th>
+                    <th class="text-center">Amount L/C</th>   
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${item.lcNo}</td>
+                        <td>${item.lcDate}</td>
+                        <td>${item.issuedBank}</td>
+                        <td>${item.applicantName}</td>
+                        <td>${item.expiredDate}</td>
+                        <td>${item.expiredPlace}</td>
+                        <td>${item.latestShipment}</td>
+                        <td>${item.lcCondition}</td>
+                        <td>${item.invoiceNo}</td>                       
+                        <td class="text-right"><strong>${item.amountToBePaid}</strong></td>
+                        <td>${item.truckingDate}</td>
+                        <td class="text-right"><strong>${item.quantity}</strong></td>
+                        <td>${item.uomUnit}</td>
+                        <td class="text-right"><strong>${item.amountLC}</strong></td>
+                    </tr>                                      
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

@@ -1,0 +1,113 @@
+<template>
+    <h1 class="page-header">Monitoring Purchase Request</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+                value.bind="purchaseRequest" 
+                label="Nomor PR" 
+                loader.bind="prLoader"
+                placeholder="Cari Nomor PR" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="no"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        <au-autocomplete 
+                value.bind="unit" 
+                label="Unit" 
+                loader.bind="unitLoader"
+                placeholder="Cari Unit" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+            </au-autocomplete>
+        <au-autocomplete 
+                value.bind="category" 
+                label="Kategori" 
+                loader.bind="categoryLoader"
+                placeholder="Cari Kategori" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        <au-autocomplete 
+                value.bind="buyer" 
+                label="Buyer" 
+                loader.bind="buyerLoader"
+                placeholder="Cari Buyer" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        <au-datepicker                     label="Tanggal Awal"    value.bind="dateFrom"   ></au-datepicker>
+        <au-datepicker                     label="Tanggal Akhir"   value.bind="dateTo"     ></au-datepicker>
+        <au-dropdown                       label="Status"          value.bind="prState" items.bind="prStates"></au-dropdown>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="prMonitor">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td rowspan="2">Unit</td>
+                        <td rowspan="2">Kategori</td>
+                        <td rowspan="2">Tanggal PR</td>
+                        <td rowspan="2">Tanggal Shipment</td>
+                        <td rowspan="2">Nomor RO</td>
+                        <td rowspan="2">Buyer</td>
+                        <td rowspan="2">Artikel</td>
+                        <td rowspan="2">Nomor PR</td>
+                        <td rowspan="2">Nomor Referensi PR</td>
+                        <td colspan="4">Barang yang diminta</td>
+                        <!--<td rowspan="2">Tanggal diminta Datang</td>-->
+                        <td rowspan="2">Keterangan</td>
+                        <td rowspan="2">Status</td>
+                    </tr>
+                    <tr>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah</td>
+                        <td>Satuan</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="pr of data">
+                        <td>${$index + 1}</td>
+                        <td>${pr.unit}</td>
+                        <td>${pr.category}</td>
+                        <td>${pr.prDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${pr.shipmentDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${pr.roNo}</td>
+                        <td>${pr.buyer}</td>
+                        <td>${pr.artikel}</td>
+                        <td>${pr.prNo}</td>
+                        <td>${pr.refNo}</td>
+                        <td>${pr.productCode}</td>
+                        <td>${pr.productName}</td>
+                        <td>${pr.productQty}</td>
+                        <td>${pr.productUom}</td>
+                        <!--<td if.bind="pr.expected!=''">${pr.expected | dateFormat:'D MMM YYYY'}</td>-->
+                        <!--<td if.bind="pr.expected==''|| pr.expected=='undefined'"> - </td>-->
+                        <td>${pr.remark}</td>
+                        <td>${pr.status}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

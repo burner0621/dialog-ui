@@ -1,0 +1,33 @@
+<template>
+    <h1 class="page-header">Laporan Order Belum Diproduksi Mesin</h1>
+    <form class="form-horizontal" id="machineQueue">
+        <au-dropdown label="Jenis Order" value.bind="orderType" items.bind="orderTypeList"></au-dropdown>
+        <au-dropdown label="Tahun" value.bind="year" items.bind="yearList"></au-dropdown>
+        <au-autocomplete
+            value.bind="machine"
+            error.bind="error.machine"
+            label="Mesin"
+            loader.one-time="machineLoader"
+            placeholder="Pilih Mesin"
+            query.bind="filter"
+            text="name">
+        </au-autocomplete>
+
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button> 
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <au-table 
+            view-model.ref="machineQueueTable"
+            data.bind="data" 
+            columns.bind="columns"
+            options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+    </form>
+</template>

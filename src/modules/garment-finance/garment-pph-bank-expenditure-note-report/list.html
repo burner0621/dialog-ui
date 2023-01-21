@@ -1,0 +1,146 @@
+<template>
+  <h1 class="page-header">Laporan Pengajuan Pembayaran PPH</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete
+      value.bind="pphBankExpenditureNote"
+      loader.one-time="pphBankExpenditureNoteLoader"
+      text="Name"
+      label="No Bukti Pengeluaran Bank"
+      options.bind="controlOptions"
+      placeholder="Masukkan No Bukti Pengeluaran Bank"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      value.bind="internNote"
+      loader.one-time="internNoteLoader"
+      text="Name"
+      label="No. NI"
+      options.bind="controlOptions"
+      placeholder="Masukkan No. NI"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      value.bind="invoice"
+      loader.one-time="invoiceLoader"
+      text="Name"
+      label="No. Invoice"
+      options.bind="controlOptions"
+      placeholder="Masukkan No. Invoice"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      value.bind="supplier"
+      loader.one-time="supplierLoader"
+      text="Name"
+      label="Supplier"
+      options.bind="controlOptions"
+      placeholder="Masukkan Supplier"
+    >
+    </au-autocomplete>
+    <!-- <au-autocomplete
+      value.bind="supplier"
+      loader.one-time="supplierLoader"
+      label="Supplier"
+      options.bind="controlOptions"
+      placeholder="Masukkan Nama Supplier"
+      select.bind="selectSupplier"
+      
+    > -->
+    </au-autocomplete>
+
+    <au-datepicker
+      value.bind="dateFrom"
+      label="Tanggal Awal"
+      error.bind="error.dateFrom"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <au-datepicker
+      value.bind="dateTo"
+      label="Tanggal Akhir"
+      error.bind="error.dateTo"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+  <!-- <div id="pph-bank-table">
+    <au-table
+      view-model.ref="tableList"
+      data.bind="loader"
+      columns.bind="columns"
+      page-size="25"
+      options.bind="tableOptions"
+    >
+      <div slot="toolbar" class="btn-group">
+        <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+      </div>
+    </au-table>
+  </div> -->
+  <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+    </div>
+  <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="pph-bank-table">
+        <thead>
+          <tr>
+            <th>No Bukti Pengeluaran Bank</th>
+            <th>Tgl Bayar PPH</th>
+            <th>Category</th>
+            <th>PPH</th>
+            <th>Mata Uang</th>
+            <th>Bank Bayar PPH</th>
+            <th>Supplier</th>
+            <th>No. NI</th>
+            <th>No Invoice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr show.bind="data.length == 0">
+            <td colspan="9">
+              <div class="alert alert-info">There are no data</div>
+            </td>
+          </tr>
+          <tbody repeat.for="item of data">
+          <tr
+            css="background-color: ${item.status === 'NonActive' ? 'lightgray': ''}"
+          >
+            <td rowspan="${item.InvoiceItems.length}">${item.InvoiceOutNo}</td>
+            
+            <td rowspan="${item.InvoiceItems.length}">${item.PaidDateView}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.Category}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.PPH}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.CurrencyCode}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.BankName}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.SupplierName}</td>
+            <td rowspan="${item.InvoiceItems.length}">${item.INNO}</td>
+            <td>${item.InvoiceItems[0].NoInvoice}</td>
+          </tr>
+          
+            <tr repeat.for="invoice of item.InvoiceItems" if.bind="$index !=0">
+              <td>${invoice.NoInvoice}</td>
+            </tr>
+
+        </tbody>
+        </tbody>
+      </table>
+    </div>
+    <pagination
+      if.bind="info.total>info.size"
+      info.bind="info"
+      change.delegate="changePage($event)"
+      id="pager"
+    ></pagination>
+</template>

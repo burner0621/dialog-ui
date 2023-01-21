@@ -1,0 +1,69 @@
+<template>
+    <style>
+        #dailyReport td {
+            white-space: pre;
+        }
+    </style>
+    <h1 show.bind="production == 'ALL'" class="page-header">Laporan Produksi</h1>
+    <h1 show.bind="production == 'INPUT'" class="page-header">Laporan Input</h1>
+    <h1 show.bind="production == 'OUTPUT'" class="page-header">Laporan Output</h1>
+    <form class="form-horizontal">
+        <au-dropdown label="Produksi" value.bind="production" error.bind="error.Production" read-only.bind="readOnly"
+            items.bind="prodOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Jenis Proses" value.bind="processType" error.bind="error.ProcessType"
+            read-only.bind="readOnly" items.bind="typeOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Nomor Mesin" value.bind="machineNo" error.bind="error.MachineNo"
+            loader.bind="machineNoLoader" key="No" text="No" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Merk Mesin" value.bind="machineName" error.bind="error.MachineName"
+            loader.bind="machineNameLoader" key="Name" text="Name" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Tipe Benang" value.bind="materialType" error.bind="error.MaterialTypeId"
+            loader.bind="materialTypeLoader" key="Id" text="Name" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom" read-only.bind="readOnly"
+            options.bind="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" read-only.bind="readOnly"
+            options.bind="controlOptions"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+    <br>
+
+    <div>
+        <au-table data.bind="allLoader" columns.bind="allColumns" options.bind="tableOptions" view-model.ref="allTable"
+            context.bind="contextTable" show.bind="production == 'ALL'">
+        </au-table>
+        <au-table data.bind="outputLoader" columns.bind="outputColumns" options.bind="tableOptions"
+            view-model.ref="outputTable" context.bind="contextTable" show.bind="production == 'OUTPUT'">
+        </au-table>
+        <au-table data.bind="inputLoader" columns.bind="inputColumns" options.bind="tableOptions"
+            view-model.ref="inputTable" context.bind="contextTable" show.bind="production == 'INPUT'">
+        </au-table>
+    </div>
+
+    </form>
+
+</template>

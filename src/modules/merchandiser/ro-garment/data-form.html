@@ -1,0 +1,175 @@
+<template>
+  <style>
+    .large-textarea>div>div>textarea {
+      height: 25em !important;
+    }
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions"> <!-- formOptions untuk ro-validation-ppic -->
+    <div class="row" if.bind="!readOnly">
+      <div class="col-md-6">
+        <au-autocomplete label="No RO" placeholder="Cari RO" value.bind="costCalculationGarment" error.bind="error.CostCalculationGarment"
+          loader.one-time="costCalculationGarmentLoader" query.bind="filterCostCalculationGarment" options.bind="length4"
+          text="RO_Number" read-only.bind="readOnly || isEdit"></au-autocomplete>
+        <au-textbox label="Article" value.bind="data.CostCalculationGarment.Article" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Description" value.bind="data.CostCalculationGarment.CommodityDescription" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+      </div>
+      <div class="col-md-6">
+        <!--<au-numeric label="Kuantitas RO" value.bind="total" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-numeric>-->
+        <div class="row">
+          <div class="col-md-4">
+            <au-numeric label="Kuantitas RO" value.bind="data.CostCalculationGarment.Quantity" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-numeric>
+          </div>
+          <div class="col-md-4">
+            <au-textbox label="Satuan RO" value.bind="data.CostCalculationGarment.UOM.Unit" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-textbox>
+          </div>
+        </div>
+        
+        <au-datepicker label="Delivery Date" value.bind="data.CostCalculationGarment.DeliveryDate" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-datepicker>
+      </div>
+    </div>
+    <div class="row" if.bind="readOnly">
+      <div class="col-md-4">
+        <au-textbox label="No RO" value.bind="data.CostCalculationGarment.RO_Number" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Article" value.bind="data.CostCalculationGarment.Article" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Unit" value.bind="data.CostCalculationGarment.Unit.Name" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Description" value.bind="data.CostCalculationGarment.CommodityDescription" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+      </div>
+      <div class="col-md-4">
+        <au-textbox label="Seksi" value.bind="data.CostCalculationGarment.Section" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Buyer" value.bind="data.CostCalculationGarment.BuyerBrand.Name" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <!--<au-numeric label="Kuantitas RO" value.bind="total" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-numeric>-->
+      
+      <div class="row">
+          <div class="col-md-6">
+            <au-numeric label="Kuantitas RO" value.bind="data.CostCalculationGarment.Quantity" 
+              read-only.bind="disabled" options.bind="length4" 
+              show.bind="hasCostCalculationGarment"></au-numeric>
+          </div>
+          <div class="col-md-6">
+            <au-textbox label="Satuan RO" 
+              value.bind="data.CostCalculationGarment.UOM.Unit" 
+              read-only.bind="disabled" options.bind="length4" 
+              show.bind="hasCostCalculationGarment"></au-textbox>
+          </div>
+        </div>
+      
+      </div>
+      <div class="col-md-4">
+        <au-datepicker label="Created Date" value.bind="data.CostCalculationGarment.CreatedUtc" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-datepicker>
+        <au-datepicker label="Delivery Date" value.bind="data.CostCalculationGarment.DeliveryDate" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-datepicker>
+        <au-textbox label="Size Range" value.bind="data.CostCalculationGarment.SizeRange" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="row" show.bind="hasCCG_M_Fabric">
+        <au-collection title="Fabric" items.bind="CCG_M_Fabric" columns.bind="CCG_M_FabricInfo.columns" item-template="modules/merchandiser/ro-garment/template/ro-garment-material"
+          read-only.bind="readOnly || isCopy">
+        </au-collection>
+      </div>
+      <div class="row" show.bind="hasCCG_M_Accessories">
+        <au-collection title="Accessories Dan Lain-Lain" items.bind="CCG_M_Accessories" columns.bind="CCG_M_AccessoriesInfo.columns" item-template="modules/merchandiser/ro-garment/template/ro-garment-material"
+          read-only.bind="readOnly || isCopy">
+        </au-collection>
+      </div>
+      <!-- <div class="row" show.bind="hasCCG_M_Rate">
+        <au-collection title="Ongkos" items.bind="CCG_M_Rate" columns.bind="CCG_M_RateInfo.columns" item-template="modules/merchandiser/ro-garment/template/ro-garment-material"
+          read-only.bind="readOnly">
+        </au-collection>
+      </div> -->
+    </div>
+    <div class="col-md-2" if.bind="hasCostCalculationGarment">
+      <img src.bind="data.CostCalculationGarment.ImageFile || 'https://bateeqstorage.blob.core.windows.net/other/no-image.jpg'"
+        class="center-block" height="auto" width="60%">
+      <br>
+    </div>
+    <div class="row" if.bind="hasCostCalculationGarment">
+      <div class="col-md-12">
+        <au-textbox error.bind="error.SizeBreakdowns" read-only.bind="true"></au-textbox>
+        <au-collection title="Size Breakdown" 
+          errors.bind="error.SizeBreakdownItems"
+          items.bind="data.RO_Garment_SizeBreakdowns" columns.bind="RO_Garment_SizeBreakdownsInfo.columns"
+          options.bind="RO_Garment_SizeBreakdownsInfo.options"
+          add.bind="RO_Garment_SizeBreakdownsInfo.onAdd" 
+          remove.bind="RO_Garment_SizeBreakdownsInfo.onRemove" 
+          item-template="modules/merchandiser/ro-garment/template/ro-garment-sizebreakdown"
+          footer-template="modules/merchandiser/ro-garment/template/ro-garment-sizebreakdown-footer" 
+          read-only.bind="readOnly">
+        </au-collection>
+        <span show.bind="shown">${total}</span>
+        <au-textbox error.bind="error.TotalQuantity" read-only.bind="true"></au-textbox>
+      </div>
+    </div>
+    <div class="row" show.bind="hasCostCalculationGarment">
+      <div class="col-md-8">
+        <au-multiline class="large-textarea" label="Instruksi" placeholder="Isi Instruksi" value.bind="data.Instruction" 
+        options.bind="length2" error.bind="error.Instruction"
+          read-only.bind="readOnly"></au-multiline>
+      </div>
+    </div>
+
+    <div class="row" if.bind="hasCostCalculationGarment">
+      <div class="col-md-6">
+        <h4>File Dokumen</h4>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <th class="col-md-11">File</th>
+            <th if.bind="!readOnly" class="col-md-1">
+              <button click.delegate="onAddDocument()" class="btn btn-success pull-right">+</button>
+            </th>
+          </thead>
+          <tbody>
+            <tr if.bind="!data.DocumentsFileName || data.DocumentsFileName.length < 1">
+              <td colspan="2">
+                Tidak ada file
+              </td>
+            </tr>
+            <tr if.bind="data.DocumentsFileName" repeat.for="doc of data.DocumentsFileName">
+              <td if.bind="readOnly">
+                <button class="btn btn-primary justify-content-center" click.delegate="downloadDocument($index)">${doc}</button>
+              </td>
+              <td if.bind="!readOnly">
+                <input if.bind="!documentsPathTemp[$index]" type="file" id="documentInput${$index}" value.bind="documentUpload" change.delegate="documentInputChanged($index)" accept=".pdf, .xls, .xlsx, .doc, .docx">
+                <button if.bind="documentsPathTemp[$index]" class="btn btn-primary justify-content-center" click.delegate="downloadDocument($index)">${doc}</button>
+                <span class="text-danger" if.bind="error.DocumentsFile[$index]">${error.DocumentsFile[$index]}</span>
+              </td>
+              <td if.bind="!readOnly">
+                  <button class="btn btn-danger pull-right" click.delegate="onRemoveDocument($index)">-</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row" show.bind="hasCostCalculationGarment">
+      <div class="col-md-12">
+        <h4>File Gambar</h4>
+        <input type="file" id="imageInput" value.bind="imageUpload" accept="image/*" style="display: none;">
+        <button type="button" if.bind="!readOnly" onclick="document.getElementById('imageInput').click()">Add Image</button>
+        <br>
+        <br>
+        <template repeat.for="imageSrc of imagesSrc">
+          <div style="display: inline-block; height: 250px; width: auto; margin-right:20px;">
+            <img src.bind="imageSrc" class="center-block" height="200px">
+            <br>
+            <au-textbox class="center-block" value.bind="data.ImagesName[$index]" read-only.bind="readOnly"></au-textbox>
+            <br>
+            <button type="button" class="btn btn-danger center-block" if.bind="!readOnly" click.delegate="removeImage($index)">Remove</button>
+          </div>
+        </template>
+        <au-textbox error.bind="error.ImageFile" read-only.bind="true"></au-textbox>
+      </div>
+    </div>
+  </au-input-form>
+</template>

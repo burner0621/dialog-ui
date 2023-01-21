@@ -1,0 +1,10 @@
+<template> 
+  <require from="./_layout.css"></require>
+  <div class.one-way="_style.group">
+    <label for="name" class.bind="_style.label" if.bind="hasLabel">${label}</label>
+    <div class.one-way="_style.control">
+      <slot></slot>
+      <span class="help-block" if.bind="hasError">${error}</span>
+    </div>
+  </div>
+</template>

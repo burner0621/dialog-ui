@@ -1,0 +1,136 @@
+<template>
+  <!--<div class="display-wrapper">-->
+  <h1 class="page-header">Laporan Stock Dyeing/Printing</h1>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <!-- <au-datepicker if.bind="!isAval" options.bind="controlOptions" label="Tanggal Awal" value.bind="dateFrom"
+      error.bind="error.dateFrom">
+    </au-datepicker> -->
+
+    <!-- <au-datepicker if.bind="!isAval" options.bind="controlOptions" label="Tanggal Akhir" value.bind="dateTo"
+      error.bind="error.dateTo">
+    </au-datepicker> -->
+
+    <au-datepicker options.bind="controlOptions" value.bind="dateReport" error.bind="error.dateReport"
+      read-only.bind="readOnly" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Zona" value.bind="zona" error.bind="error.Zone"
+      read-only.bind="readOnly" items.bind="zoneList"></au-dropdown>
+
+    <au-dropdown if.bind="!isAval" options.bind="controlOptions" label="Unit" value.bind="unit"
+      read-only.bind="readOnly" items.bind="units"></au-dropdown>
+
+      <au-dropdown if.bind="!isAval && isPackingType" options.bind="controlOptions" label="Jenis Gudang" value.bind="inventoryType"
+      read-only.bind="readOnly" items.bind="inventoryTypes"></au-dropdown>
+
+    <au-dropdown if.bind="!isAval && isPackingType" options.bind="controlOptions" label="Jenis" value.bind="packingType"
+      read-only.bind="readOnly" items.bind="packingTypes"></au-dropdown>
+
+    <au-autocomplete if.bind="!isAval" value.bind="selectedConstruction" loader.bind="constructionLoader" text="Code"
+      label="Material" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete if.bind="!isAval" value.bind="selectedBuyer" loader.bind="buyerLoader" text="Name" label="Buyer"
+      read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete if.bind="!isAval" label="No SPP" value.bind="selectedProductionOrder"
+      loader.bind="productionOrderLoader" text="OrderNo" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <div class="btn-group col-md-offset-5">
+      <button class="btn btn-success" click.delegate="search()">Cari</button>
+      <button class="btn btn-default" click.delegate="reset()">Reset</button>
+    </div>
+  </au-input-form>
+
+  <br>
+  <br>
+
+  <au-table if.bind="!isAval && !isPackingType && !isStockOpname" view-model.ref="table" data.bind="loader" columns.bind="columns" context.bind="context"
+    options.bind="tableOptions" context-click.delegate="contextClickCallback($event)"
+    context-show.call="contextShowCallback(index, context, data)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="export()">Excel</button>
+    </div>
+  </au-table>
+
+  <au-table if.bind="isAval" view-model.ref="table" data.bind="avalLoader" columns.bind="avalColumns"
+    context.bind="context" options.bind="tableOptions">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="exportAval()">Excel</button>
+    </div>
+  </au-table>
+
+  <au-table if.bind="!isAval  && isPackingType" view-model.ref="table" data.bind="loader" columns.bind="columns2" context.bind="context"
+    options.bind="tableOptions" context-click.delegate="contextClickCallback($event)"
+    context-show.call="contextShowCallback(index, context, data)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="export()">Excel</button>
+    </div>
+  </au-table>
+
+  <!-- <au-table if.bind="isStockOpname" view-model.ref="table" data.bind="loader" columns.bind="columns3" context.bind="context"
+    options.bind="tableOptions" context-click.delegate="contextClickCallback($event)"
+    context-show.call="contextShowCallback(index, context, data)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="export()">Excel</button>
+    </div>
+  </au-table> -->
+
+  <div class="row" if.bind="isStockOpname">
+    <div class="col-md-12" style="overflow-x: auto">
+      <!--Table-->
+      <table class="table table-bordered" context.bind="context"
+      options.bind="tableOptions" context-click.delegate="contextClickCallback($event)"
+      context-show.call="contextShowCallback(index, context, data)">
+        <!--Table head-->
+        <thead>
+          <tr>
+            <th>No. SPP</th>
+            <th>Material</th>
+            <th>Unit</th>
+            <th>Motif</th>
+            <th>Buyer</th>
+            <th>Warna</th>
+            <th>Grade</th>
+            <th>Jenis</th>
+            <th>Stock Opname</th>
+            <th>Saldo Gudang</th>
+            <th>Selisih</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+        <!--Table body-->
+        <tbody>
+          <tr show.bind="isEmpty">
+            <td colspan="11">
+              <div class="alert alert-info">Tidak ada data</div>
+            </td>
+          </tr>
+          <tr repeat.for="datum of data">
+            <td
+              repeat.for="key of datum | keys"
+            >
+              ${datum[key]}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right" colspan="8">TOTAL</td>
+            <td>${sumStockOpname}</td>
+            <td>${sumStorageBalance}</td>
+            <td>${sumDifference}</td>
+          </tr>
+        </tbody>
+        <!--Table body-->
+        <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+          <button class="btn btn-primary" click.delegate="export()">
+            Excel
+          </button>
+        </div>
+      </table>
+      <!--Table-->
+    </div>
+  </div>
+</template>

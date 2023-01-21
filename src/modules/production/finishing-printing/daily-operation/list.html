@@ -1,0 +1,66 @@
+<template>
+    <style>
+        #daily-operation .col-sm-12 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        #daily-operation .padding-left {
+            padding-left: 0 !important;
+        }
+    </style>
+    <h1 class="page-header">Finishing - Printing</br>Monitoring Operasional Harian Setiap Mesin</h1>
+    <br>
+    <!-- <au-dropdown class="pull-right" style="margin-top: 10px;" value.bind="selectedSearch" items.bind="searchList">
+    </au-dropdown> -->
+    <div class="row">
+        <!-- <div class="col-sm-6">
+            <au-dropdown value.bind="selectedSearch" items.bind="searchList">
+            </au-dropdown>
+        </div> -->
+        <div class="col-sm-1" style="padding-left: 0;">
+            <au-textbox value.bind="machine" placeholder="mesin">
+            </au-textbox>
+        </div>
+        <div class="col-sm-2" style="padding-left: 0;">
+            <au-textbox value.bind="stepProcess" placeholder="step / proses">
+            </au-textbox>
+        </div>
+        <div class="col-sm-2" style="padding-left: 0;">
+            <au-textbox value.bind="orderNo" placeholder="nomor spp">
+            </au-textbox>
+        </div>
+        <div class="col-sm-1" style="padding-left: 0;">
+            <au-textbox value.bind="cartNo" placeholder="kereta">
+            </au-textbox>
+        </div>
+        <div class="col-sm-2" style="padding-left: 0;">
+            <au-datepicker label="From:" value.bind="startDate"></au-datepicker>
+        </div>
+        <div class="col-sm-2" style="padding-left: 0;">
+            <au-datepicker label="To:" value.bind="endDate"></au-datepicker>
+        </div>
+        <div class="col-sm-1" style="padding-left: 0;padding-top: 15px;">
+            <au-button class="btn btn-success" click.delegate="search()">Cari</au-button>
+        </div>
+    </div>
+    <div id="daily-operation">
+
+        <au-table view-model.ref="dailyOperationTable" data.bind="loader" context.bind="context"
+            context-click.delegate="contextClickCallback($event)" columns.bind="columns" sortable.bind="true"
+            options.bind="tableOptions" page-size="25">
+
+
+
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-success" click.delegate="createInput()">Buat Input</button>
+
+
+                <br>
+
+            </div>
+
+        </au-table>
+    </div>
+    <hr />
+</template>

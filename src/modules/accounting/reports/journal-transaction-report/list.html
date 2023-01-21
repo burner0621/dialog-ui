@@ -1,0 +1,93 @@
+<template>
+    <h1 class="page-header">Laporan Jurnal Transaksi</h1>
+
+    <form class="form-horizontal">
+        <au-datepicker value.bind="dateFrom"
+                       label="Tanggal Awal"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker value.bind="dateTo"
+                       label="Tanggal Akhir"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact"
+                   class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()"
+                        class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()"
+                        class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>Deskripsi</th>
+                        <th>No Referensi</th>
+                        <th>Remark</th>
+                        <th>Tanggal</th>
+                        <th>Nama Akun</th>
+                        <th>No Akun</th>
+                        <th>Keterangan</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr show.bind="isEmpty">
+                        <td colspan="10">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of data">
+                        <!-- <td repeat.for="key of datum | keys" style="white-space: pre;" colspan="1">${datum[key]}</td> -->
+                        <td if.bind="datum.isHeader"
+                            rowspan.bind="datum.rowspanNumber">
+                            ${datum.header.Description}
+                        </td>
+                        <td if.bind="datum.isHeader"
+                            rowspan.bind="datum.rowspanNumber">
+                            ${datum.header.ReferenceNo}</td>
+                        <td if.bind="datum.isHeader"
+                            rowspan.bind="datum.rowspanNumber">
+                            ${datum.header.HeaderRemark}</td>
+
+                        <td>${datum.Date}</td>
+                        <td>${datum.COAName}</td>
+                        <td>${datum.COACode}</td>
+                        <td>${datum.Remark}</td>
+                        <td class="text-right">${datum.Debit}</td>
+                        <td class="text-right">${datum.Credit}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"
+                            colspan="7">TOTAL </td>
+                        <td class="text-right">${totalDebit}</td>
+                        <td class="text-right">${totalCredit}</td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+                <div style="margin-bottom: 1%"
+                     slot="toolbar"
+                     class="btn-group">
+                    <button class='btn btn-primary'
+                            click.delegate="excel()">Cetak Excel</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+
+</template>

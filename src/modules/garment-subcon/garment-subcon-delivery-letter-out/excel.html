@@ -1,0 +1,36 @@
+<template>
+    <h1 class="page-header">EXPORT EXCEL SURAT JALAN SUBKON KELUAR</h1>
+ 
+    <form class="form-horizontal">
+        <au-dropdown
+            label="Jenis Subcon Contract"
+            value.bind="selectedContractType"
+            error.bind="error.ContractType"
+            read-only.bind="readOnly || isEdit"
+            change.delegate = "selectedContractTypeChanged"
+            items.bind="contractTypes"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown 
+            label="Kategori Subcon" 
+            value.bind="selectedSubconCategory" 
+            error.bind="error.SubconCategory" 
+            read-only.bind="readOnly || isEdit"
+            if.bind="selectedContractType"
+            items.bind="SubconCategoryTypeOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-datepicker label="Tanggal Awal Surat Jalan" value.bind="dateFrom" options.bind="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir Surat Jalan" value.bind="dateTo" options.bind="controlOptions"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                 <button class='btn btn-success' click.delegate="ExportToExcel()">Excel</button>
+                 <button class='btn btn-default' click.delegate="BackToList()">Kembali</button>
+            </div>
+        </div>
+    </form>    
+</template>

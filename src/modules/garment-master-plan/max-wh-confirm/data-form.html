@@ -1,0 +1,38 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-datepicker 
+            label="Tanggal Update"
+            value.bind="data.CreatedUtc"
+            error.bind="error.date" 
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-numeric  
+            label="Maksimal WH Confirm Unit" 
+            value.bind="data.UnitMaxValue"
+            error.bind="error.Unitwh"
+            read-only.bind="readOnly"
+            options.bind="controlOptions2"
+            format="0.00">
+        </au-numeric>
+
+        <au-numeric  
+            label="Maksimal WH Confirm SK" 
+            value.bind="data.SKMaxValue"
+            error.bind="error.SKwh"
+            read-only.bind="readOnly"
+            options.bind="controlOptions2"
+            format="0.00">
+        </au-numeric>
+
+    </au-input-form>
+</template>

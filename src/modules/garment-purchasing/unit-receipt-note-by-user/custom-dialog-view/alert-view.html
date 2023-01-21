@@ -1,0 +1,22 @@
+<template>
+        <ai-dialog style="width:500px;" if.bind="!data.verifiedAlert">
+    
+            <block>
+    
+                <ai-dialog-body>
+                    <au-multiline label="Alasan" placeholder="masukan alasan" value.bind="data.DeletedRemark" error.bind="error.DeletedRemark">
+                    </au-multiline>
+                </ai-dialog-body>
+    
+                <ai-dialog-footer>
+                    <div class="text-center" style="margin:100px 0px 10px 0px;">
+                        <button click.delegate="controller.cancel()" class='btn btn-default btn-sm'>Kembali</button>
+                        <button click.delegate="save()" class='btn btn-success btn-sm'>Submit</button>
+                    </div>
+                </ai-dialog-footer>
+    
+            </block>
+    
+        </ai-dialog>
+    
+    </template>

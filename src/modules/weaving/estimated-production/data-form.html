@@ -1,0 +1,65 @@
+<template>
+  <!-- CSS Styling -->
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions" part="actions">
+    <div class="col-md-12">
+      <!-- Estimated Production Number -->
+      <div class="row">
+        <div class="col-md-4">
+          <au-textbox label="No. Estimasi Produksi" value.bind="data.EstimatedNumber"
+            error.bind="error.EstimatedNumber" read-only.bind="true" show.bind="dataExist">
+          </au-textbox>
+        </div>
+      </div>
+
+      <!-- Period -->
+      <div class="row">
+        <div class="col-md-4" style="white-space: nowrap;">
+          <au-dropdown label="Bulan" value.bind="Month" error.bind="error.Month" read-only.bind="editable"
+            items.bind="months" options.bind="controlOptions">
+          </au-dropdown>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4" style="white-space: nowrap;">
+          <au-dropdown label="Tahun" value.bind="Year" error.bind="error.Year" read-only.bind="editable"
+            items.bind="years" options.bind="controlOptions">
+          </au-dropdown>
+        </div>
+      </div>
+
+      <!-- Unit -->
+      <div class="row">
+        <div class="col-md-4" style="white-space: nowrap;">
+          <au-autocomplete label="Unit" value.bind="Unit" error.bind="error.UnitId" read-only.bind="editable"
+            loader.bind="units" text="Name" options.bind="controlOptions">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1">
+          <button class="btn btn-success btn-block" click.delegate="searchOrderProductions()"
+            style="margin-bottom: 16px;" show.bind="searchButton">
+            Cari
+          </button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom: 24px;">
+        <au-collection view-model.ref="orderProductionsItems" items.bind="data.EstimatedDetails"
+          error.bind="error.EstimatedDetails" columns.bind="orderProductionsColumns"
+          options.bind="orderProductionsTableOptions" read-only.bind="readOnly"
+          item-template="modules/weaving/estimated-production/templates/items">
+        </au-collection>
+      </div>
+    </div>
+  </au-input-form>
+</template>

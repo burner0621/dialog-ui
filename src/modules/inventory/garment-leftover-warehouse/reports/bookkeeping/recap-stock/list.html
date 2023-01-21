@@ -1,0 +1,102 @@
+<template>
+    <h1 class="page-header">Laporan Rekap Persediaan Gudang Sisa</h1>
+
+    <form class="form-horizontal">
+
+        <au-datepicker value.bind="dateFrom"
+                       label="Tanggal Awal"
+                       options.bind="controlOptions"
+                       error.bind="error.date">
+        </au-datepicker>
+
+        <au-datepicker value.bind="dateTo"
+                       label="Tanggal Akhir"
+                       options.bind="controlOptions"
+                       error.bind="error.date">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact"
+                   class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()"
+                        class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()"
+                        class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <div>
+            <a click.delegate="ExportToExcel()"
+               class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover"
+                   id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">KETERANGAN</td>
+                        <td colspan="3">BARANG JADI</td>
+                        <td colspan="3">BAHAN BAKU</td>
+                        <td rowspan="1">ACCESSORIES</td>
+                        <td rowspan="2">JUMLAH</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="1">QTY</td>
+                        <td rowspan="1">SAT</td>
+                        <td rowspan="1">JUMLAH RP</td>
+                        <td rowspan="1">QTY</td>
+                        <td rowspan="1">SAT</td>
+                        <td rowspan="1">JUMLAH RP</td>
+                        <td rowspan="1">JUMLAH RP</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-left"
+                            style="font-weight: ${item.Description.includes('PENERIMAAN') || item.Description.includes('SALDO') || item.Description.includes('TOTAL') || item.Description.includes('PENGELUARAN') ? 'bold' : '' }">
+                            ${item.Description}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FinishedGoodQty}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FinishedGoodUom}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FinishedGoodPrice}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FabricQty}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FabricUom}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.FabricPrice}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.AccPrice}</td>
+                        <td class="text-right"
+                            style="font-weight: ${item.Description.includes('SALDO') || item.Description.includes('TOTAL')  ? 'bold' : '' }">
+                            ${item.Nominal}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center"
+             role="alert"
+             if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size"
+                    info.bind="info"
+                    change.delegate="changePage($event)"
+                    id="pager"></pagination>
+        <hr />
+    </form>
+
+</template>

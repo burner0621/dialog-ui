@@ -1,0 +1,587 @@
+/* Layout */
+.wrapper {
+    min-height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+    .wrapper:before,
+    .wrapper:after {
+        content: " ";
+        display: table;
+    }
+
+    .wrapper:after {
+        clear: both;
+    }
+
+.content-wrapper,
+router-view > div > router-view
+{
+    display: block;
+    padding: 25px 15px;
+}
+/*
+ * Content Wrapper - contains the main content
+ */
+router-view > div > router-view,
+.content-wrapper,
+.main-footer {
+    -webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+    -moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+    -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+    margin-left: 230px;
+    z-index: 820;
+}
+
+router-view > div > router-view,
+.content-wrapper {
+    min-height: 100%;
+    background-color: #eee;
+    z-index: 800;
+}
+
+.main-footer {
+    background: #fff;
+    padding: 15px;
+    color: #666;
+    border-top: 1px solid #d2d6de;
+    font-size: 10px;
+    text-align: right;
+}
+
+/* Fixed layout */
+.fixed .main-header,
+.fixed .main-sidebar {
+    position: fixed;
+}
+
+.fixed .main-header {
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
+.fixed .content-wrapper {
+    padding-top: 50px;
+}
+
+/*
+ * Component: Main Header
+ * ----------------------
+ */
+.main-header {
+    position: relative;
+    max-height: 100px;
+    z-index: 1030;
+}
+
+    .main-header .navbar {
+        -webkit-transition: margin-left 0.3s ease-in-out;
+        -o-transition: margin-left 0.3s ease-in-out;
+        transition: margin-left 0.3s ease-in-out;
+        margin-bottom: 0;
+        /*margin-left: 230px;*/
+        border: none;
+        min-height: 50px;
+        border-radius: 0;
+        background-color: #061B30;
+    }
+
+.layout-top-nav .main-header .navbar {
+    margin-left: 0;
+}
+
+.main-header #navbar-search-input.form-control {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: transparent;
+}
+
+    .main-header #navbar-search-input.form-control:focus,
+    .main-header #navbar-search-input.form-control:active {
+        border-color: rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .main-header #navbar-search-input.form-control::-moz-placeholder {
+        color: #ccc;
+        opacity: 1;
+    }
+
+    .main-header #navbar-search-input.form-control:-ms-input-placeholder {
+        color: #ccc;
+    }
+
+    .main-header #navbar-search-input.form-control::-webkit-input-placeholder {
+        color: #ccc;
+    }
+
+.main-header .navbar-custom-menu,
+.main-header .navbar-right {
+    float: right;
+}
+
+.main-header .navbar .nav > li.user > a > .fa,
+.main-header .navbar .nav > li.user > a > .glyphicon,
+.main-header .navbar .nav > li.user > a > .ion {
+    margin-right: 5px;
+}
+
+.main-header .navbar .nav > li > a > .label {
+    position: absolute;
+    top: 9px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 3px;
+    line-height: .9;
+}
+
+.main-header .logo {
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    width: 230px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 0 15px;
+    font-weight: 300;
+    overflow: hidden;
+}
+
+    .main-header .logo .logo-lg {
+        display: block;
+    }
+
+    .main-header .logo .logo-mini {
+        display: none;
+    }
+
+.main-header .navbar-brand {
+    /*background-image: url('http://www.danliris.com/Content/image/logo.png');*/
+    color: #fff;
+}
+
+.content-header {
+    position: relative;
+    padding: 25px 15px;
+    /*background-color: #CCCACB;*/
+}
+
+    .content-header > h1 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        /*color: #173250;*/
+        color: #2a2a2a;
+        text-transform: uppercase;
+    }
+
+        .content-header > h1 > small {
+            font-size: 15px;
+            display: inline-block;
+            padding-left: 4px;
+            font-weight: 300;
+        }
+
+    .content-header > .breadcrumb {
+        float: right;
+        background: transparent;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 12px;
+        padding: 7px 5px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        border-radius: 2px;
+    }
+
+        .content-header > .breadcrumb > li > a {
+            color: #444;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .content-header > .breadcrumb > li > a > .fa,
+            .content-header > .breadcrumb > li > a > .glyphicon,
+            .content-header > .breadcrumb > li > a > .ion {
+                margin-right: 5px;
+            }
+
+        .content-header > .breadcrumb > li + li:before {
+            content: '>\00a0';
+        }
+
+@media (max-width: 991px) {
+    .content-header > .breadcrumb {
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        right: 0;
+        float: none;
+        background: #d2d6de;
+        padding-left: 10px;
+    }
+
+        .content-header > .breadcrumb li:before {
+            color: #97a0b3;
+        }
+}
+
+.navbar-toggle {
+    color: #fff;
+    border: 0;
+    margin: 0;
+    padding: 15px 15px;
+}
+
+@media (max-width: 991px) {
+    .navbar-custom-menu .navbar-nav > li {
+        float: left;
+    }
+
+    .navbar-custom-menu .navbar-nav {
+        margin: 0;
+        float: left;
+    }
+
+        .navbar-custom-menu .navbar-nav > li > a {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            line-height: 20px;
+        }
+}
+
+/*
+ * Component: Sidebar
+ * ------------------
+ */
+.main-sidebar,
+.secondary-sidebar {
+    background-color: #173250;
+    color: #fff;
+    margin-top: 50px;
+    border: 1px solid #285A8F;
+    border-left: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    width: 230px;
+    -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    height: 100%;
+}
+
+.main-sidebar {
+    z-index: 810;
+}
+
+.secondary-sidebar {
+    z-index: 809;
+    left: -230px;
+}
+
+.sidebar {
+    padding-bottom: 10px;
+}
+
+.sidebar-form input:focus {
+    border-color: transparent;
+}
+
+.user-panel {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+}
+
+    .user-panel:before,
+    .user-panel:after {
+        content: " ";
+        display: table;
+    }
+
+    .user-panel:after {
+        clear: both;
+    }
+
+    .user-panel > .image > img {
+        width: 100%;
+        max-width: 45px;
+        height: auto;
+    }
+
+    .user-panel > .info {
+        padding: 5px 5px 5px 15px;
+        line-height: 1;
+        position: absolute;
+        left: 55px;
+    }
+
+        .user-panel > .info > p {
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .user-panel > .info > a {
+            text-decoration: none;
+            padding-right: 5px;
+            margin-top: 3px;
+            font-size: 11px;
+        }
+
+            .user-panel > .info > a > .fa,
+            .user-panel > .info > a > .ion,
+            .user-panel > .info > a > .glyphicon {
+                margin-right: 3px;
+            }
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: calc(100% - 100px);
+    overflow-y: hidden;
+}
+
+.sidebar-menu:hover,
+.sidebar-menu:focus {
+    overflow-y: auto !important;
+
+}
+
+    .sidebar-menu > li {
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
+        .sidebar-menu > li:hover {
+            background-color: #214566;
+        }
+
+        .sidebar-menu > li.active {
+            background-color: #23527c;
+        }
+
+
+        .sidebar-menu > li > a {
+            padding: 12px 15px 12px 15px;
+            display: block;
+            width: 100%;
+            white-space: normal;
+        }
+
+            .sidebar-menu > li > a > .fa,
+            .sidebar-menu > li > a > .glyphicon,
+            .sidebar-menu > li > a > .ion {
+                width: 20px;
+            }
+
+            .sidebar-menu > li > a:hover,
+            .sidebar-menu > li > a:active,
+            .sidebar-menu > li > a:focus {
+                color: #fff;
+            }
+
+        .sidebar-menu > li .label,
+        .sidebar-menu > li .badge {
+            margin-right: 5px;
+        }
+
+        .sidebar-menu > li .badge {
+            margin-top: 3px;
+        }
+
+    .sidebar-menu li.header {
+        padding: 10px 25px 10px 15px;
+        font-size: 12px;
+    }
+
+    .sidebar-menu li > a > .fa-angle-left,
+    .sidebar-menu li > a > .pull-right-container > .fa-angle-left {
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin-right: 10px;
+    }
+
+    .sidebar-menu li.active > a > .fa-angle-left,
+    .sidebar-menu li.active > a > .pull-right-container > .fa-angle-left {
+        -webkit-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .sidebar-menu,
+    .main-sidebar .user-panel,
+    .sidebar-menu > li.header {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+        .sidebar-menu:hover {
+            overflow: visible;
+        }
+
+        .sidebar-form,
+        .sidebar-menu > li.header {
+            overflow: hidden;
+            text-overflow: clip;
+        }
+
+        .sidebar-menu li > a {
+            position: relative;
+        }
+
+            .sidebar-menu li > a > .pull-right-container {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                margin-top: -7px;
+            }
+
+.sidebar-header {
+    height: 45px;
+    text-transform: uppercase;
+    background-color: #25456B;
+    line-height: 45px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    padding-left: 15px;
+    border-bottom: 1px solid #285A8F;
+}
+
+.sidebar-toggle {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+}
+
+    .sidebar-toggle .icon-bar {
+        background: #fff;
+        display: block;
+        width: 18px;
+        height: 2px;
+        border-radius: 1px;
+    }
+
+        .sidebar-toggle .icon-bar + .icon-bar {
+            margin-top: 3px;
+        }
+
+.side-nav-bar.minimized > .main-sidebar {
+    width: 55px;
+}
+
+.side-nav-bar.expand + router-view > div > router-view,
+.side-nav-bar.expand + router-view > .content-wrapper {
+    margin-left: 460px;
+}
+
+
+.side-nav-bar.minimized.expand > .secondary-sidebar {
+    transform: translateX(285px);
+}
+
+.side-nav-bar.expand .secondary-sidebar {
+    transform: translateX(460px);
+}
+
+.side-nav-bar.minimized + router-view > .content-wrapper,
+.side-nav-bar.minimized + router-view > div > router-view {
+    margin-left: 55px;
+}
+
+.side-nav-bar.minimized.expand + router-view > .content-wrapper,
+.side-nav-bar.minimized.expand + router-view > div > router-view {
+    margin-left: 280px;
+}
+
+/*
+ * Component: Table
+ * ------------------
+ */
+
+.table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid #aaa;
+}
+.table {
+    margin-top: 10px;
+}
+
+.table th {
+    font-weight: 400;
+    /*letter-spacing: -1px;*/
+    text-align: center;
+}
+
+.table thead {
+    background-color: #173250;
+    color: #fff;
+}
+
+.table > tbody > tr {
+    background: #fefefe;
+    color: #2a2a2a;
+}
+
+    .table > tbody > tr:hover {
+        background: #fafafa;
+    }
+
+/*
+ * Component: Link-box
+ * ------------------
+ */
+a.link-box {
+    display: inline-block;
+    float: left;
+    text-align: center;
+    background-color: #ccc;
+    padding: 20px 30px;
+    color: #fff;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+    a.link-box img {
+        margin: auto;
+        width: 120px;
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    a.link-box span {
+    }
+
+    a.link-box:hover {
+        background-color: #c0c0c0;
+    }
+
+    a.link-box:active,
+    a.link-box:focus {
+        background-color: #bbb;
+    }
+
+/*
+ * Component: Horizontal Line
+ * ------------------
+ */
+
+hr {
+    border-color: #ddd;
+}

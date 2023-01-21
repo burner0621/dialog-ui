@@ -1,0 +1,252 @@
+<template>
+    <h1 class="page-header">Laporan Rekap BUM</h1>
+    <form class="form-horizontal">
+        <au-dropdown label="Jenis Bahan" value.bind="categoryselect" items.bind="reprosesOption"></au-dropdown>
+                
+        <au-dropdown label="Unit" value.bind="unitselect" items.bind="unitOption"></au-dropdown>
+       
+        
+        
+        <au-datepicker 
+                    label="Tanggal Awal" 
+                    value.bind="dateFrom">
+                </au-datepicker>
+        <au-datepicker 
+                label="Tanggal Akhir" 
+                value.bind="dateTo">
+            </au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover" border="1" id="doReport">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>No PO</td>
+                    <td>Keterangan Barang</td>
+                    <td>No RO</td>
+                    <td>Artikel</td>
+                    <td>Kode Buyer</td>
+                    <td>Jenis</td>
+                    <td>Asal</td>
+                    <td>Nomor Bukti</td>
+                    <td>Tanggal</td>
+                    <td>Jumlah Beli</td>
+                    <td>Satuan Beli</td>
+                    <td>Jumlah Terima</td>
+                    <td>Satuan Terima</td>
+                    <td>Jumlah Harga</td>
+                    <td>Metode Pembayaran</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="IN of data">
+                    <td>${$index + 1}</td>
+                    <td>${IN.kdbarang}</td>
+                    <td>${IN.nmbarang}</td>
+                    <td>${IN.nopo}</td>
+                    <td>${IN.keterangan}</td>
+                    <td>${IN.noro}</td>
+                    <td>${IN.artikel }</td>
+                    <td>${IN.kdbuyer}</td>
+                    <td>${IN.Jenis}</td>
+                    <td>${IN.asal}</td>
+                    <td>${IN.nobukti}</td>
+                    <td>${IN.tanggal | dateFormat:'DD MMMM YYYY' }</td>
+                    <td>${IN.jumlahbeli}</td>
+                    <td>${IN.satuanbeli}</td>
+                    <td>${IN.jumlahterima}</td>
+                    <td>${IN.satuanterima}</td>
+                    <td>${IN.jumlah}</td>
+                    <td>${IN.tipepembayaran}</td>
+                    <!--<td>${SJ['Satuan Barang']}</td>-->
+                </tr>
+                <tr class="active">
+                    <td class="text-center" colspan="14"><strong>T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                    <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                    <td></td>
+                    <td class="text-right"><strong>${AmountTotal2}</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+    <!-- <au-input-form title.bind="title"> -->
+        <!-- <style> -->
+            <!-- table>tbody>tr>td { -->
+                <!-- white-space: pre; -->
+            <!-- } -->
+        <!-- </style> -->
+
+        <!-- <h1 class="page-header">Laporan Rekap BUM</h1> -->
+        <!-- <div class="form-group"> -->
+            
+            <!-- <div class="col-sm-6"> -->
+                
+                <!--<au-autocomplete 
+                value.bind="no" 
+                label="No Bon Terima Unit" 
+                loader.bind="unitReceiptLoader"
+                placeholder="Cari No Bon Terima Unit"
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+             <au-textbox  
+                value.bind="poRefPR"
+                label="Nomor Ref. PR"
+                placeholder="masukkan nomor referensi PR"  >
+            </au-textbox>
+
+            <au-textbox  
+                value.bind="roNo"
+                label="Nomor RO"
+                placeholder="masukkan nomor RO"  >
+            </au-textbox>
+
+            <au-textbox  
+                value.bind="doNo"
+                label="Nomor SJ"
+                placeholder="masukkan nomor SJ"  >
+            </au-textbox>
+-->
+            <!-- <au-dropdown label="Jenis Bahan" value.bind="categoryselect" items.bind="reprosesOption"></au-dropdown> -->
+            <!-- <au-dropdown label="Unit" value.bind="unitselect" items.bind="unitOption"></au-dropdown> -->
+            <!-- <au-autocomplete 
+                value.bind="unit" 
+                label="Unit" 
+                loader.bind="unitLoader"
+                placeholder="Cari Unit"
+                read-only.bind="readOnly" 
+                text.bind = "unitView" 
+                options.bind="controlOptions">
+            </au-autocomplete> -->
+            
+            <!--
+            <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="name" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>-->
+
+                <!-- <au-datepicker 
+                    label="Tanggal Awal" 
+                    value.bind="dateFrom">
+                </au-datepicker> -->
+
+                <!-- <au-datepicker 
+                    label="Tanggal Akhir" 
+                    value.bind="dateTo">
+                </au-datepicker> -->
+
+                <!-- <div class="form-group">
+                    <label for="contact" class="col-sm-6 control-label"></label>
+                    <div class="col-sm-3">
+                        <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                        <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <br></br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>No PO</td>
+                        <td>Keterangan Barang</td>
+                        <td>No RO</td>
+                        <td>Artikel</td>
+                        <td>Kode Buyer</td>
+                        <td>Jenis</td>
+                        <td>Asal</td>
+                        <td>Nomor Bukti</td>
+                        <td>Tanggal</td>
+                        <td>Jumlah Beli</td>
+                        <td>Satuan Beli</td>
+                        <td>Jumlah Terima</td>
+                        <td>Satuan Terima</td>
+                        <td>Jumlah Harga</td>
+                        <td>Metode Pembayaran</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                        <td>${$index + 1}</td>
+                        <td>${IN.kdbarang}</td>
+                        <td>${IN.nmbarang}</td>
+                        <td>${IN.nopo}</td>
+                        <td>${IN.keterangan}</td>
+                        <td>${IN.noro}</td>
+                        <td>${IN.artikel }</td>
+                        <td>${IN.kdbuyer}</td>
+                        <td>${IN.Jenis}</td>
+                        <td>${IN.asal}</td>
+                        <td>${IN.nobukti}</td>
+                        <td>${IN.tanggal | dateFormat:'DD MMMM YYYY' }</td>
+                        <td>${IN.jumlahbeli}</td>
+                        <td>${IN.satuanbeli}</td>
+                        <td>${IN.jumlahterima}</td>
+                        <td>${IN.satuanterima}</td>
+                        <td>${IN.jumlah}</td>
+                        <td>${IN.tipepembayaran}</td>
+                        <!--<td>${SJ['Satuan Barang']}</td>-->
+                    <!-- </tr> -->
+                    <!-- <tr class="active">
+                        <td class="text-center" colspan="14"><strong>T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                        <td></td>
+                        <td class="text-right"><strong>${AmountTotal2}</strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table> -->
+        <!-- </div> -->
+        <!-- <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div> -->
+        <!-- <div class="table-responsive">
+            <au-table 
+                view-model.ref="table" 
+                data.bind="loader" 
+                columns.bind="columns" 
+                sortable.bind="true" 
+                page-size="25" 
+                options.bind="tableOptions" >
+                <div slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+                </div>
+            </au-table>
+        </div> -->
+        <!-- <hr/>
+    </au-input-form> -->
+</template>

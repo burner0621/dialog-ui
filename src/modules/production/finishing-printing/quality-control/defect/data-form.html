@@ -1,0 +1,135 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+      <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <au-datepicker label="Tanggal IM" value.bind="data.DateIm" error.bind="error.DateIm" read-only.bind="readOnly" options.bind="layoutOptions2"></au-datepicker>
+          </div>
+          <div class="col-md-6">
+            <au-dropdown label="Shift" value.bind="data.ShiftIm" items.bind="shiftOptions" error.bind="error.ShiftIm" read-only.bind="readOnly"
+              options.bind="layoutOptions2"></au-dropdown>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <au-textbox label="Operator IM" value.bind="data.OperatorIm" error.bind="error.OperatorIm" read-only.bind="readOnly" options.bind="layoutOptions2"></au-textbox>
+          </div>
+          <div class="col-md-6">
+            <au-textbox label="No. Mesin IM" value.bind="data.MachineNoIm" error.bind="error.MachineNoIm" read-only.bind="readOnly" options.bind="layoutOptions2"></au-textbox>
+          </div>
+        </div>
+
+        <au-autocomplete value.bind="selectedKanban" label="Nomor Order / Kereta" read-only.bind="readOnly || isEdit" error.bind="error.Kanban"
+          loader.bind="kanbanLoader" text.bind="kanbanTextFormatter">
+        </au-autocomplete>
+
+        <div class="row">
+          <div class="col-md-6">
+            <au-textbox label="Konstruksi" value.one-way="construction" read-only.bind="true" options.bind="layoutOptions2"></au-textbox>
+          </div>
+        </div>
+        <au-textbox label="Warna" value.one-way="colorRequest" read-only.bind="true"></au-textbox>
+        <au-textbox label="Jumlah Order" value.one-way="orderQuantity" read-only.bind="true"></au-textbox>
+        <au-textbox label="Instruksi Packing" value.one-way="packingInstruction" read-only.bind="true"></au-textbox>
+        <au-dropdown label="Point System" value.bind="selectedPointSystem" items.bind="pointSystemOptions" read-only.bind="readOnly"></au-dropdown>
+        <au-textbox label="Point Limit" value.bind="selectedPointLimit" if.bind="selectedPointSystem == 4" read-only.bind="readOnly || isEdit"
+          error.bind="error.PointLimit" change.delegate="colChanged($event)"></au-textbox>
+
+        <au-table with.bind="_this" view-model.ref="fabricGradeTestTable" data.bind="fabricGradeTestLoader" columns.bind="fabricGradeTestColumns"
+          context.bind="fabricGradeTestContextMenu" context-click.delegate="__fabricGradeTestContextMenuCallback($event)" sortable.bind="true"
+          page-size="25" row-click.delegate="__fabricGradeTestRowClickCallback($event)" options.bind="tableOptions">
+          <button slot="toolbar" class="btn btn-success" click.delegate="__fabricGradeTestCreateCallback()" if.bind="selectedKanban && !readOnly">Tambah Kain</button>
+        </au-table>
+
+        <au-table with.bind="_this" data.bind="testo" columns.bind="testoColumns" view-model.ref="totalTable" options.bind="tableOptions"
+          show.bind="fabricGradeTestLoader">
+        </au-table>
+      </div>
+      <div class="col-md-6" if.bind="selectedFabricGradeTest">
+        <au-textbox label="Nomor Pcs" value.bind="selectedPcsNo" error.bind="selectedFabricGradeTestError.PcsNo" read-only.bind="readOnly"></au-textbox>
+        <div class="row">
+          <div class="col-md-6">
+            <au-numeric label="Panjang" value.bind="selectedPcsLength" error.bind="selectedFabricGradeTestError.InitLength" read-only.bind="readOnly"
+              options.bind="layoutOptions2"></au-numeric>
+          </div>
+          <div class="col-md-6">
+            <au-numeric label="Lebar" value.bind="selectedPcsWidth" error.bind="selectedFabricGradeTestError.Width" read-only.bind="readOnly"
+              options.bind="layoutOptions2"></au-numeric>
+          </div>
+        </div>
+        <div style="max-height: 500px; margin-bottom:10px; overflow-y: scroll">
+          <au-collection columns.one-way="criteriaColumns" if.bind="selectedFabricGradeTest" items.bind="selectedFabricGradeTest.Criteria & signal:'u'"
+            read-only.bind="readOnly">
+            <template replace-part="thead">
+              <thead>
+                <tr>
+                  <th width="40%">Kriteria</th>
+                  <th>${criteriaColumns[1]}</th>
+                  <th>${criteriaColumns[2]}</th>
+                  <th>${criteriaColumns[3]}</th>
+                  <th>${criteriaColumns[4]}</th>
+                </tr>
+              </thead>
+            </template>
+            <template replace-part="item">
+              <td>
+                <au-textbox value.bind="data.Name" error.bind="error.Name" read-only="true"></au-textbox>
+              </td>
+              <td>
+                <au-numeric value.bind="data.Score.A" error.bind="error.Score.A" read-only.bind="readOnly"></au-numeric>
+              </td>
+              <td>
+                <au-numeric value.bind="data.Score.B" error.bind="error.Score.B" read-only.bind="readOnly"></au-numeric>
+              </td>
+              <td>
+                <au-numeric value.bind="data.Score.C" error.bind="error.Score.C" read-only.bind="readOnly"></au-numeric>
+              </td>
+              <td>
+                <au-numeric value.bind="data.Score.D" error.bind="error.Score.D" read-only.bind="readOnly"></au-numeric>
+              </td>
+            </template>
+          </au-collection>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <au-numeric label="Aval (Meter)" value.bind="selectedAvalLength" error.bind="error.AvalLength" read-only.bind="readOnly"
+              options.bind="layoutOptions2"></au-numeric>
+          </div>
+          <div class="col-md-6">
+            <au-numeric label="Sample (Meter)" value.bind="selectedSampleLength" error.bind="error.SampleLength" read-only.bind="readOnly"
+              options.bind="layoutOptions2"></au-numeric>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <au-numeric label="Score" value.bind="selectedFabricGradeTest.FinalScore" error.bind="error.FinalScore" read-only.bind="true"
+              options.bind="layoutOptions2"></au-numeric>
+            <au-numeric label="Total Defect" value.bind="selectedFabricGradeTest.Score" error.bind="error.Score" read-only.bind="true"
+              options.bind="layoutOptions2"></au-numeric>
+          </div>
+          <div class="col-md-6">
+            <au-textbox label="Grade" value.bind="selectedFabricGradeTest.Grade" error.bind="error.Grade" read-only.bind="true" options.bind="layoutOptions2"></au-textbox>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6"></div>
+          <div class="col-md-6"></div>
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+
+</template>

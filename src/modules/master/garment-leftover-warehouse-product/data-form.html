@@ -1,0 +1,34 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox label="Kode" placeholder="Kode" value.bind="data.Code" error.bind="error.Code"
+                    read-only.bind="(readOnly || isEdit)">
+                </au-textbox>
+
+                <au-textbox label="Nama" placeholder="Nama" value.bind="data.Name" error.bind="error.Name"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-autocomplete label="Satuan" value.bind="filterUom" error.bind="error.Unit"
+                    loader.bind="uomLoader" text.bind = "uomView" key="Unit"
+                    placeholder="Satuan" options.bind="controlOptions" read-only.bind="readOnly">
+                </au-autocomplete>
+
+                <au-autocomplete label="Jenis Barang" value.bind="filterTrxType" error.bind="error.Code"
+                    loader.bind="trxtypeLoader" text.bind = "trxtypeView" key="Code"
+                    placeholder="Jenis Barang" options.bind="controlOptions" read-only.bind="readOnly">
+                </au-autocomplete>
+
+                <au-textbox label="Keterangan" value.bind="data.ProductTypeName"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

@@ -1,0 +1,86 @@
+<template>
+  <h1 class="page-header">Laporan Ekspedisi Pembelian Garment</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete
+      value.bind="garmentNotaIntern"
+      loader.one-time="garmentNotaInternLoader"
+      text="inNo"
+      label="No Nota Intern"
+      options.bind="controlOptions"
+      placeholder="Masukkan No Nota Intern"
+      select.bind="selectNI"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      value.bind="supplier"
+      loader.one-time="garmentSupplierLoader"
+      text="name"
+      label="Supplier"
+      options.bind="controlOptions"
+      placeholder="Masukkan Nama Supplier"
+      select.bind="selectSupplier"
+    >
+    </au-autocomplete>
+
+    <au-dropdown
+      value.bind="status"
+      label="Status"
+      options.bind="controlOptions"
+      items.bind="itemsStatus"
+      key="value"
+      text="text"
+    >
+    </au-dropdown>
+
+    <au-datepicker
+      value.bind="dateFrom"
+      label.bind="startDateLabel"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <au-datepicker
+      value.bind="dateTo"
+      label.bind="endDateLabel"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+
+    <au-datepicker
+      value.bind="dateFromAccounting"
+      label.bind="startDateAccountingLabel"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <au-datepicker
+      value.bind="dateToAccounting"
+      label.bind="endDateAccountingLabel"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <au-table
+    view-model.ref="tableList"
+    data.bind="loader"
+    columns.bind="columns"
+    page-size="25"
+    options.bind="tableOptions"
+  >
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-primary" click.delegate="xls()">Cetak</button>
+    </div>
+  </au-table>
+</template>

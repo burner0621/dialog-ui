@@ -1,0 +1,40 @@
+<template>
+  <tr>
+    <td style="white-space: nowrap;">
+      <au-dropdown value.bind="selectedAvalType" read-only.bind="readOnly || !isPenjualan" error.bind="error.AvalType"
+        items.bind="avalTypes" change.delegate="selectedAvalTypeChanged">
+      </au-dropdown>
+    </td>
+
+    <td style="white-space: nowrap;" show.bind="!readOnly" if.bind="isPenjualan">
+      <au-textbox value.bind="data.AvalQuantity" read-only.bind="true" error.bind="error.AvalQuantity">
+      </au-textbox>
+    </td>
+
+    <td style="white-space: nowrap;" show.bind="!readOnly" if.bind="isPenjualan">
+      <au-textbox value.bind="data.AvalQuantityKg" read-only.bind="true" error.bind="error.AvalQuantityKg">
+      </au-textbox>
+    </td>
+
+    <td style="white-space: nowrap;">
+      <au-numeric value.bind="data.AvalOutSatuan" read-only.bind="readOnly || !isPenjualan"
+        error.bind="error.AvalOutSatuan">
+      </au-numeric>
+    </td>
+
+    <td style="white-space: nowrap;">
+      <au-numeric value.bind="data.AvalOutQuantity" read-only.bind="readOnly || !isPenjualan"
+        error.bind="error.AvalOutQuantity">
+      </au-numeric>
+    </td>
+    <td style="white-space: nowrap;" if.bind="!isPenjualan">
+      <au-textbox value.bind="data.DeliveryNote" read-only.bind="readOnly" error.bind="error.DeliveryNote">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" if.bind="!readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">
+        -
+      </button>
+    </td>
+  </tr>
+</template>

@@ -1,0 +1,34 @@
+<template>
+  <tr>
+    <td>
+      <au-autocomplete 
+            value.bind="deliveryOrder"
+            loader.bind="BPLoader"
+            placeholder="cari nomor BP" 
+            key="_id"
+            text.bind="DOView"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+    </td>
+    <td>
+      <au-textbox value.bind="data.deliveryOrder.internNo" read-only.bind="true" options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.deliveryOrder.paymentType" read-only.bind="true" options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="data.valas" read-only.bind="readOnly" format="0.00">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="data.IDR" read-only.bind="readOnly" format="0.00">
+      </au-numeric>
+    </td>
+    <td if.bind="!readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(context.data)">-</button>
+    </td>
+  </tr>
+</template>

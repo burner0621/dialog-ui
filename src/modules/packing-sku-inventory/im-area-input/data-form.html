@@ -1,0 +1,39 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown label="Area" value.bind="data.area" error.bind="error.Area" read-only.bind="readOnly"
+      items.bind="areas" show.bind="false"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-textbox options.bind="controlOptions" show.bind="isEdit" value.bind="data.bonNo" label="Nomor Bon"
+      read-only.bind="true" error.bind="error.BonNo">
+    </au-textbox>
+
+    <au-textbox show.bind="error.InspectionMaterialProductionOrder" read-only.bind="true"
+      value.bind="error.InspectionMaterialProductionOrder" style="color: red;"></au-textbox>
+    <au-collection columns.bind="itemColumns" items.bind="data.inspectionMaterialProductionOrders" if.bind="!isEdit"
+      options.bind="detailOptions" errors.one-way="error.InspectionMaterialProductionOrders" add.bind="addItemCallback"
+      remove.bind="onremove" read-only.bind="readOnly"
+      item-template="modules/packing-sku-inventory/im-area-input/template/item">
+    </au-collection>
+
+    <au-collection columns.bind="itemColumns" items.bind="data.inspectionMaterialProductionOrders" if.bind="isEdit"
+      options.bind="detailOptions" errors.one-way="error.InspectionMaterialProductionOrders" remove.bind="onremove"
+      read-only.bind="readOnly" item-template="modules/packing-sku-inventory/im-area-input/template/item">
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+
+
+</template>

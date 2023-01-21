@@ -1,0 +1,18 @@
+<template>
+    <tr> 
+        <td>
+            <au-textbox value.bind="data.name" error.bind="error.name"></au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.age" error.bind="error.age"></au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.email" error.bind="error.email"></au-textbox>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <au-collection items.bind="data.hobbies" columns.bind="columns" add.bind="addCallback"></au-collection>
+        </td>
+    </tr>
+</template>

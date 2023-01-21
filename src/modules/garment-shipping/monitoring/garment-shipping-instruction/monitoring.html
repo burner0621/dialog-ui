@@ -1,0 +1,102 @@
+<template>
+    <h1 class="page-header">Monitoring Shipping Instruction</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+ 
+       <au-datepicker label="Tanggal Shippiing Instruction Awal" value.bind="dateFrom"></au-datepicker>
+       <au-datepicker label="Tanggal Shippiing Instruction Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">No Invoice</th>
+                    <th class="text-center">Tanggal SI</th>
+                    <th class="text-center">Tgl Trucking</th>
+                    <th class="text-center">Forwarder</th>
+                    <th class="text-center">Nama Forwarder</th>
+                    <th class="text-center">Staff Shipping</th>
+                    <th class="text-center">Buyer Agent</th>
+                    <th class="text-center">Nama Buyer Agent</th>
+                    <th class="text-center">Port Of Discharge</th>
+                    <th class="text-center">Place Of Delivery</th>
+                    <th class="text-center">Qty PCS</th>
+                    <th class="text-center">Qty Sets</th>
+                    <th class="text-center">Qty Pack</th>
+                    <th class="text-center">Qty Carton</th>
+                    <th class="text-center">Gross Weight</th>
+                    <th class="text-center">Nett Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.invoiceNo}</td>
+                        <td>${data.siDate}</td>
+                        <td>${data.truckingDate}</td>
+                        <td>${data.forwarderCode}</td>
+                        <td>${data.forwarderName}</td>
+                        <td>${data.shippingStaffName}</td>
+                        <td>${data.buyerAgentCode}</td>
+                        <td>${data.buyerAgentName}</td>
+                        <td>${data.portOfDischarge}</td>
+                        <td>${data.placeOfDelivery}</td>                        
+                        <td class="text-right"><strong>${data.pcsQuantity}</strong></td>
+                        <td class="text-right"><strong>${data.setsQuantity}</strong></td>
+                        <td class="text-right"><strong>${data.packQuantity}</strong></td>
+                        <td class="text-right"><strong>${data.cartonNo}</strong></td>
+                        <td class="text-right"><strong>${data.grossWeight}</strong></td>
+                        <td class="text-right"><strong>${data.nettWeight}</strong></td>
+
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td colspan="8"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal1}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal2}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal3}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal6}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal4}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal5}</strong></td>                        
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="11"><strong>T   O   T   A   L   . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${TotPcs}</strong></td>
+                        <td class="text-right"><strong>${TotSets}</strong></td>
+                        <td class="text-right"><strong>${TotPack}</strong></td>
+                        <td class="text-right"><strong>${TotCtns}</strong></td>
+                        <td class="text-right"><strong>${TotGross}</strong></td>
+                        <td class="text-right"><strong>${TotNett}</strong></td>                        
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

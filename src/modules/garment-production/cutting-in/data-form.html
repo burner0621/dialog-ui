@@ -1,0 +1,176 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox
+            if.bind="data.CutInNo"
+            value.bind="data.CutInNo"
+            label="No Cutting In"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Unit"
+            error.bind="error.Unit"
+            label="Unit"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Tipe Cutting"
+            value.bind="data.CuttingType"
+            error.bind="error.CuttingType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="cuttingTypes"
+            options.bind="controlOptions"
+            change.delegate="selectedPreparing = null"
+            show.bind="!fromSewing">
+        </au-dropdown>
+
+        <au-textbox
+            value.bind="data.CuttingFrom"
+            label="Asal Cutting"
+            read-only="true"
+            options.bind="controlOptions"
+            show.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tanggal Cutting In"
+            value.bind="data.CuttingInDate"
+            error.bind="error.CuttingInDate"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-autocomplete
+            value.bind="selectedPreparing"
+            error.bind="error.RONo"
+            label="RO"
+            loader.bind="preparingLoader"
+            query.bind="preparingFilter"
+            text="RONo"
+            placeholder="Nomor RO"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedPreparingViewModel">
+        </au-autocomplete>
+
+        <au-textbox
+            value.bind="data.Article"
+            error.bind="error.Article"
+            label="No Artikel"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.FC.toFixed(2)"
+            label="FC"
+            read-only="true"
+            options.bind="controlOptions"
+            if.bind="readOnly && !fromSewing">
+        </au-textbox>
+
+        <au-numeric
+            label="FC"
+            value.bind="dataFC"
+            error.bind="error.FC"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            if.bind="!(readOnly)">
+        </au-numeric>
+
+        <div class="form-group has-error">
+            <p if.bind="error.Price" class="help-block text-center">${error.Price}</p>
+        </div>
+
+        <table class="table table-hover table-bordered" if.bind="readOnly && !fromSewing">
+            <thead>
+                <tr>
+                    <th repeat.for="column of detailsColumnsView"><label>${column.header}</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="i of data.Items.length">
+                    <tr repeat.for="detail of data.Items[i].Details">
+                        <td repeat.for="column of detailsColumnsView">
+                            <au-textbox
+                                value.bind="detail[column.value]"
+                                read-only="true">
+                            </au-textbox>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <table class="table table-hover table-bordered" if.bind="readOnly && fromSewing">
+            <thead>
+                <tr>
+                    <th repeat.for="column of detailsColumnsViewSewing"><label>${column.header}</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="i of data.Items.length">
+                    <tr repeat.for="detail of data.Items[i].Details">
+                        <td repeat.for="column of detailsColumnsViewSewing">
+                            <au-textbox
+                                value.bind="detail[column.value]"
+                                read-only="true">
+                            </au-textbox>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <table class="table table-hover table-bordered" if.bind="!readOnly">
+            <thead>
+                <tr>
+                    <th>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked.bind="checkedAll"
+                                change.delegate="changeCheckedAll()"
+                                disabled.bind="readOnly || isEdit" />
+                        </label>
+                    </th>
+                    <template repeat.for="column of detailsColumns">
+                        <th><label>${column}</label></th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <!--No data to display-->
+                <tr if.bind="!data.Items || data.Items.length < 1">
+                    <td colspan="${detailsColumns.length + 1}">
+                        <div class="alert alert-info"> No data.</div>
+                    </td>
+                </tr>
+
+                <!--with-template-->
+                <template repeat.for="i of data.Items.length" if.bind="data.Items && data.Items.length > 0">
+                    <tr
+                        repeat.for="detail of data.Items[i].Details"
+                        as-element="compose"
+                        view="modules/garment-production/cutting-in/template/detail.html"
+                        view-model="modules/garment-production/cutting-in/template/detail"
+                        model.bind="{ isEdit: isEdit, data: detail, error: error.Items[i].Details[$index], items: data.Items, fc: data.FC, context: context }"
+                        containerless>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

@@ -1,0 +1,28 @@
+<template>
+  <require from="./autocomplete.css"></require>
+  <require from="./suggestion-text"></require>
+  <require from="../_layout"></require>
+  <au-layout options.bind="options" label.bind="label" error.bind="error">
+    <div class="autocomplete-container" if.bind="!readOnly">
+      <input ref="element" type="search" class="form-control autocomplete-input ${additionalClass}" autocomplete="off"
+        value.bind="editorValue & debounce:250" placeholder.bind="placeholder" focus.trigger="_showSuggestions($event)"
+        blur.trigger="_hideSuggestions($event)" change.trigger="changeCallback($event)" keydown.trigger="keyPressed($event)"
+        disabled.bind="disabled" />
+      <div ref="list" class="list-group autocomplete-suggestion" if.bind="_suggestionVisible || _isLoading">
+        <a class="list-group-item" if.bind="_isLoading">Loading...</a>
+        <a data-index="${$index}" class="list-group-item ${$index == _index ? 'active' : ''}" repeat.for="item of _suggestions"
+          if.bind="!_isLoading" mousedown.delegate="_selectSuggestion(item)">
+          <template with.bind="item">
+            <template replaceable part="item">
+              <span if.bind="!template">${item | suggestionText: text}</span>
+            </template>
+          </template>
+          <compose if.bind="template" view="${template}.html" view-model="${template}" model.bind="item"></compose>
+        </a>
+        <a class="list-group-item disabled" if.bind="_noSuggestions">No Result...</a>
+        <a class="list-group-item disabled" if.bind="_lessThanFourCharacters">Masukkan 4 karakter atau lebih...</a>
+      </div>
+    </div>
+    <p class="form-control-static" if.bind="readOnly">${value | suggestionText: text}</p>
+  </au-layout>
+</template>

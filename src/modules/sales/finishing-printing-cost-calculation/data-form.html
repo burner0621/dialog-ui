@@ -1,0 +1,205 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div class="row">
+            <div class="col-md-3">
+                <au-autocomplete label="No Pre Sales Contract" value.bind="selectedSalesContract"
+                    error.bind="error.PreSalesContract" loader.bind="salesContractLoader" text="No"
+                    placeholder="No. Sales Contract " query.bind="preSCQuery" options.bind="length4"
+                    read-only.bind="readOnly">
+                </au-autocomplete>
+
+                <au-textbox label="Unit" value.bind="data.Unit" read-only.bind="true" options.bind="length4">
+                </au-textbox>
+
+                <au-textbox label="Buyer" value.bind="data.Buyer" read-only.bind="true" options.bind="length4">
+                </au-textbox>
+
+                <au-autocomplete label="Material" query.bind="materialQuery" loader.bind="materialLoader" text="Name"
+                    error.bind="error.Material" value.bind="selectedMaterial" read-only.bind="readOnly"
+                    options.bind="length4">
+                </au-autocomplete>
+
+                <au-textbox label="Warna" error.bind="error.Color" value.bind="data.Color" read-only.bind="readOnly"
+                    options.bind="length4">
+                </au-textbox>
+
+                <au-autocomplete label="Instruksi" value.bind="selectedInstruction" error.bind="error.Instruction"
+                    loader.bind="instructionLoader" text="Name" placeholder="Master Instruksi" options.bind="length4"
+                    read-only.bind="readOnly">
+                </au-autocomplete>
+            </div>
+            <div class="col-md-3">
+                <au-numeric label="Jumlah Order" format="0" value.bind="orderQuantity" read-only.bind="true"
+                    options.bind="length4"></au-numeric>
+
+                <au-autocomplete label="Satuan" value.bind="selectedUOM" error.bind="error.UOM" loader.bind="uomLoader"
+                    text="Unit" placeholder="Master Satuan" options.bind="length4" read-only.bind="readOnly">
+                </au-autocomplete>
+
+                <au-autocomplete label="Sales" value.bind="selectedSales" error.bind="error.Sales" text.bind="salesText"
+                    read-only.bind="readOnly" options.bind="length4" loader.bind="accountLoader"></au-autocomplete>
+
+                <au-datepicker read-only.bind="readOnly" label="Tanggal" value.bind="date" options.bind="length4">
+                </au-datepicker>
+
+            </div>
+            <div class="col-md-3">
+                <au-numeric label="Kurs" format="0,000.00" value.bind="data.CurrencyRate"
+                    error.bind="error.CurrencyRate" options.bind="length4" read-only.bind="readOnly"></au-numeric>
+
+                <au-numeric label="Produksi Unit" format="0,000.00" value.bind="data.ProductionUnitValue"
+                    error.bind="error.ProductionUnitValue" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Pemb. Jasa Ongkosan" format="0,000.00" value.bind="data.ManufacturingServiceCost"
+                    error.bind="error.ManufacturingServiceCost" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Bahan Pembantu" format="0,000.00" value.bind="data.HelperMaterial"
+                    error.bind="error.HelperMaterial" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Bahan Lain-Lain" format="0,000.00" value.bind="data.MiscMaterial"
+                    error.bind="error.MiscMaterial" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+            </div>
+            <div class="col-md-3">
+                <au-numeric label="Olie/Pelumas" format="0,000.00" value.bind="data.Lubricant"
+                    error.bind="error.Lubricant" options.bind="length4" read-only.bind="readOnly"></au-numeric>
+
+                <au-numeric label="Spare Part" format="0,000.00" value.bind="data.SparePart"
+                    error.bind="error.SparePart" options.bind="length4" read-only.bind="readOnly"></au-numeric>
+
+                <au-numeric label="Pemeliharaan Gedung" format="0,000.00" value.bind="data.StructureMaintenance"
+                    error.bind="error.StructureMaintenance" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Pemeliharaan Mesin" format="0,000.00" value.bind="data.MachineMaintenance"
+                    error.bind="error.MachineMaintenance" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Confirm Price" format="0,000.00" value.bind="data.ConfirmPrice"
+                    error.bind="error.ConfirmPrice" options.bind="length4" read-only.bind="readOnly"></au-numeric>
+            </div>
+        </div>
+        </div>
+
+        <h4>Greige</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <au-autocomplete label="Greige" value.bind="selectedGreige" error.bind="error.Greige"
+                    loader.bind="productLoader" text="Name" placeholder="pilih greige" options.bind="length4">
+                </au-autocomplete>
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <au-numeric label="Berat Kain Prep" format="0,000.00" value.bind="data.PreparationFabricWeight"
+                            error.bind="error.PreparationFabricWeight" options.bind="length4" read-only.bind="readOnly">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-12">
+                        <au-numeric label="Harga Master" format="0,000.00" value.bind="selectedGreige.Price"
+                            options.bind="length4" read-only.bind="true"></au-numeric>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <au-numeric show.bind="!isPrinting" label="Berat Kain RFD" format="0,000.00" value.bind="data.RFDFabricWeight"
+                            error.bind="error.RFDFabricWeight" options.bind="length4" read-only.bind="readOnly">
+                        </au-numeric>
+                        <au-numeric show.bind="isPrinting" label="Berat Kain RFP" format="0,000.00" value.bind="data.RFDFabricWeight"
+                            error.bind="error.RFDFabricWeight" options.bind="length4" read-only.bind="readOnly">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-12">
+                        <au-numeric label="Harga Real" format="0,000.00" value.bind="data.ActualPrice"
+                            error.bind="error.ActualPrice" options.bind="length4" read-only.bind="readOnly">
+                        </au-numeric>
+                    </div>
+                </div>
+
+            </div>
+            <div show.bind="isPrinting" class="col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <au-numeric label="Biaya Screen" format="0,000.00" value.bind="data.ScreenCost"
+                            error.bind="error.ScreenCost" options.bind="length4" read-only.bind="readOnly">
+                        </au-numeric>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <au-textbox label="No Dokumen" value.bind="data.ScreenDocumentNo"
+                            error.bind="error.ScreenDocumentNo" options.bind="length4" read-only.bind="readOnly">
+                        </au-textbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4>Mesin</h4>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <au-collection view-model.ref="machineCollection" items.bind="data.Machines"
+                    errors.bind="error.Machines" columns.bind="machines.columns" options.bind="machineOptions"
+                    item-template="modules/sales/finishing-printing-cost-calculation/template/data-form/cost-calculation-machine"
+                    footer-template="modules/sales/finishing-printing-cost-calculation/template/data-form/cost-calculation-machine-footer">
+                </au-collection>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <au-numeric label="Biaya Angkut" format="0,000.00" value.bind="data.FreightCost"
+                    error.bind="error.FreightCost" options.bind="length4" read-only.bind="readOnly"></au-numeric>
+
+                <au-numeric label="Embalase" format="0,000.00" value.bind="data.Embalase" error.bind="error.Embalase"
+                    options.bind="length4" read-only.bind="readOnly"></au-numeric>
+            </div>
+            <div class="col-md-3">
+                <au-numeric label="Upah TKL" format="0,000.00" value.bind="directLaborWage" options.bind="length4"
+                    read-only.bind="true">
+                </au-numeric>
+
+                <au-numeric label="Gaji TKTL" format="0,000.00" value.bind="indirectLaborWage" options.bind="length4"
+                    read-only.bind="true">
+                </au-numeric>
+            </div>
+            <div class="col-md-3">
+                <au-numeric label="Biaya Umum & Administrasi" format="0,000.00"
+                    value.bind="data.GeneralAdministrationCost" error.bind="error.GeneralAdministrationCost"
+                    options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+                <au-numeric label="Biaya Dir & Kantor Panin" format="0,000.00" value.bind="data.DirectorOfficeCost"
+                    error.bind="error.DirectorOfficeCost" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+                <au-numeric label="Biaya Bank & Lain-Lain" format="0,000.00" value.bind="data.BankMiscCost"
+                    error.bind="error.BankMiscCost" options.bind="length4" read-only.bind="readOnly">
+                </au-numeric>
+
+            </div>
+            <div class="col-md-3">
+                <div show.bind="isPrinting">
+                    <input type="file" id="imageInput" class="center-block" value.bind="imageUpload"
+                        accept="image/png, image/jpeg, image/pjpeg" style="width: 60%">
+                    <br>
+                    <img src.bind="imageSrc" class="center-block" height="auto" width="60%">
+                </div>
+                <br>
+                <div>
+                    <au-multiline label="Keterangan" placeholder="Keterangan" value.bind="data.Remark"
+                        error.bind="error.Remark" options.bind="length4"></au-multiline>
+                </div>
+            </div>
+
+        </div>
+        <br>
+    </au-input-form>
+</template>

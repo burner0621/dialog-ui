@@ -1,0 +1,358 @@
+
+<template>
+    <style>
+        .tab {
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 6px solid #ccc;
+        }
+    
+        .tab:hover {
+            background-color: #ddd;
+        }
+    
+        .tab.active {
+            border-color: #173250 !important;
+        }
+
+        .tbl{
+            margin-left:25px;
+            margin-right:25px;
+        }
+    </style>
+
+    <au-input-form  title.bind="title"  title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <div class="row">
+            <div class="col-sm-4 tab ${activeTab === 0 ? 'active' : ''}" click.delegate="changeRole(0)">
+                DESCRIPTION
+            </div>
+            <div class="col-sm-4 tab ${activeTab === 1 ? 'active' : ''}" click.delegate="changeRole(1)">
+                DETAIL MEASUREMENT
+            </div>
+            <div class="col-sm-4 tab ${activeTab === 2 ? 'active' : ''}" click.delegate="changeRole(2)">
+                SHIPPING MARK - SIDE MARK - REMARK
+            </div>
+        </div>
+        <br>
+
+        <!-- DESC -->
+        <div class="row" if.bind="activeTab==0">
+            <div class="row">
+                <div class="col-sm-6">
+                    <au-textbox 
+                        label="No Invoice" 
+                        value.bind="data.invoiceNo" 
+                        read-only="true"
+                        options.bind="controlOptions" >
+                    </au-textbox>
+
+                    <au-dropdown
+                        label="Jenis Invoice"
+                        value.bind="data.invoiceType"
+                        error.bind="error.InvoiceType"
+                        read-only="true"
+                        items.bind="InvoiceTypeOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-dropdown
+                        label="Jenis Packing List"
+                        value.bind="data.packingListType"
+                        error.bind="error.Type"
+                        read-only="true"
+                        items.bind="PackingTypeOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown> 
+
+                    <au-datepicker 
+                        label="TGL" 
+                        value.bind="data.date" 
+                        error.bind="error.Date"
+                        read-only="true" 
+                        options.bind="controlOptions">
+                    </au-datepicker>
+                </div>
+                <div class="col-sm-6">
+                    <au-dropdown
+                        label="Shipment Mode"
+                        value.bind="data.shipmentMode"
+                        error.bind="error.ShipmentMode"
+                        read-only="true"
+                        items.bind="ShipmentModeOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown> 
+
+                    <au-datepicker 
+                        label="Tgl Trucking / Ex-fty" 
+                        value.bind="data.truckingEstimationDate" 
+                        error.bind="error.TruckingEstimationDate"
+                        read-only="true"
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                    <au-textbox 
+                        label="Negara Asal Fabric" 
+                        value.bind="data.fabricCountryOrigin" 
+                        error.bind="error.FabricCountryOrigin"
+                        read-only="true"
+                        options.bind="controlOptions" >
+                    </au-textbox>
+
+                    <au-textbox 
+                        label="Komposisi Fabric" 
+                        value.bind="data.fabricComposition" 
+                        error.bind="error.FabricComposition"
+                        read-only="true"
+                        options.bind="controlOptions" >
+                    </au-textbox>
+                    
+                    <au-multiline
+                        value.bind="data.description"
+                        label="Keterangan Unit"
+                        read-only="true"
+                        options.bind="controlOptions">
+                    </au-multiline>
+
+                    <au-multiline
+                        label="Keterangan dari Md"
+                        value.bind="data.remarkMd"
+                        error.bind="error.RemarkMd" 
+                        read-only="true"
+                        options.bind="controlOptions">
+                    </au-multiline>
+                </div>
+                <div class="col-sm-6">
+                    <au-dropdown
+                        label="Payment Term"
+                        value.bind="data.paymentTerm"
+                        error.bind="error.PaymentTerm"
+                        read-only.bind="readOnly || isEdit"
+                        items.bind="PaymentTermOptions"
+                        change.delegate="paymentTermChanged()"
+                        options.bind="controlOptions">
+                    </au-dropdown> 
+
+                    <au-autocomplete 
+                        label="LC No" 
+                        value.bind="selectedLC" 
+                        error.bind="error.LCNo"
+                        loader.bind="lcLoader"
+                        text="documentCreditNo"
+                        read-only.bind="readOnly"
+                        show.bind="data.paymentTerm == 'LC'"
+                        options.bind="controlOptions" >
+                    </au-autocomplete>
+
+                    <au-datepicker 
+                        label="Tgl. LC" 
+                        value.bind="data.lcDate" 
+                        error.bind="error.LCDate"
+                        read-only.bind="readOnly"
+                        show.bind="data.paymentTerm == 'LC'"
+                        options.bind="controlOptions" >
+                    </au-datepicker>
+
+                    <au-multiline 
+                        label="Issued By" 
+                        value.bind="data.issuedBy"
+                        error.bind="error.IssuedBy"
+                        read-only.bind="readOnly" 
+                        show.bind="data.paymentTerm == 'LC'"
+                        options.bind="controlOptions">
+                    </au-multiline>
+                </div>
+                <div class="col-sm-6">
+                    <au-dropdown
+                        label="Destination"
+                        value.bind="data.destination"
+                        error.bind="error.Destination"
+                        read-only.bind="readOnly"
+                        items.bind="countries"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+
+                    <au-datepicker 
+                        label="TGL Trucking Actual" 
+                        value.bind="data.truckingDate" 
+                        error.bind="error.TruckingDate"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                    
+                    <au-datepicker 
+                        label="TGL Perkiraan Export" 
+                        value.bind="data.exportEstimationDate" 
+                        error.bind="error.ExportEstimationDate"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                    <au-checkbox
+                        label="Omzet"
+                        value.bind="data.omzet"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </au-checkbox>
+                    
+                    <au-checkbox
+                        label="Accounting"
+                        value.bind="data.accounting"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </au-checkbox>
+                </div>
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <div class="tbl">
+                    <au-collection 
+                        items.bind="data.items" 
+                        errors.bind="error.Items" 
+                        columns.bind="itemsColumns"
+                        read-only.bind="readOnly" 
+                        options.bind="Options"
+                        item-template="modules/garment-shipping/packing-list-approval/template/detail-ro">
+                    </au-collection>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- DETAIL MEASURE -->
+        <div class="row" if.bind="activeTab==1">
+            <div class="row">
+                <div class="col-sm-3">
+                    <numeric
+                        label="GROSS WEIGHT"
+                        value.bind="data.grossWeight"
+                        error.bind="error.GrossWeight"
+                        read-only="true" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+                <div class="col-sm-3">
+                    <numeric
+                        label="NETT WEIGHT"
+                        value.bind="data.nettWeight"
+                        error.bind="error.NettWeight"
+                        read-only="true" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+                <div class="col-sm-3">
+                  <numeric
+                      label="NET NET WEIGHT"
+                      value.bind="data.netNetWeight"
+                      error.bind="error.NetNetWeight"
+                      read-only="true" 
+                      options.bind="controlOptions">
+                  </numeric>
+              </div>
+                <div class="col-sm-3">
+                    <numeric
+                        label="TOTAL CARTONS"
+                        value.bind="totalCartons"
+                        error.bind="error.totalCartons"
+                        read-only="true" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <au-textbox
+                        label="TOTAL QUANTITY"
+                        value.bind="totalQuantities"
+                        error.bind="error.totalQuantities"
+                        read-only="true" 
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </div>
+            </div>
+            <div class="row">
+                <au-textbox
+                    label="SAY"
+                    value.bind="say"
+                    read-only.bind="true" >
+                </au-textbox>
+                <au-textbox
+                    value.bind="data.sayUnit"
+                    error.bind="error.SayUnit"
+                    read-only="true" 
+                    options.bind="controlOptions">
+                </au-textbox>
+            </div>
+            <div>
+                <p class="help-block text-left tbl">MEASUREMENT</p>
+            </div>
+            <div class="form-group has-error">
+                <p if.bind="error.MeasurementsCount" class="help-block text-center">${error.MeasurementsCount}</p>
+            </div>
+            <div class="tbl">
+                <au-collection 
+                    items.one-way="data.measurements" 
+                    errors.bind="error.Measurements" 
+                    columns.bind="measureColumns"
+                    read-only="true" 
+                    options.bind="Options"
+                    item-template="modules/garment-production/packing-list-items/template/detail-measurement">
+                </au-collection>
+            </div>
+            
+            <p class="tbl" if.bind="data.measurements"><b>TOTAL CBM : ${totalCBM} </b></p>
+        </div>
+
+        <!-- MARK -->
+        <div class="row" if.bind="activeTab==2">
+            <div class="row">
+                <label class="col-sm-3 text-right">SHIPPING MARK</label>
+                <div class="col-sm-7">
+                    <div class="thumbnail">
+                        <img src.bind="shippingMarkImageSrc">
+                        <au-multiline
+                            placeholder="Tambah Keterangan"
+                            value.bind="data.shippingMark"
+                            error.bind="error.ShippingMark" 
+                            read-only.bind="readOnly">
+                        </au-multiline>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3 text-right">SIDE MARK</label>
+                <div class="col-sm-7">
+                    <div class="thumbnail">
+                        <img src.bind="sideMarkImageSrc">
+                        <au-multiline
+                            placeholder="Tambah Keterangan"
+                            value.bind="data.sideMark"
+                            error.bind="error.SideMark"
+                            read-only.bind="readOnly">
+                        </au-multiline>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <label class="col-sm-3 text-right">REMARK</label>
+                <div class="col-sm-7">
+                    <div class="thumbnail">
+                        <img src.bind="remarkImageSrc">
+                        <au-multiline
+                            placeholder="Tambah Keterangan"
+                            value.bind="data.remark"
+                            error.bind="error.Remark" 
+                            read-only.bind="readOnly">
+                        </au-multiline>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            
+    </au-input-form >
+</template>

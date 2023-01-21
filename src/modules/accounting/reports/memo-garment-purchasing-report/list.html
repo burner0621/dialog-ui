@@ -1,0 +1,90 @@
+<template>
+    <h1 class="page-header">Laporan Memo Pembelian Job Garment</h1>
+
+    <form class="form-horizontal">
+
+        <au-dropdown label="Bulan" value.bind="info.month" items.bind="monthOptions" key="value" text="text" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown label="Tahun" value.bind="info.year" items.bind="yearOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete
+            value.bind="info.AccountingBook"
+            error.bind="error.AccountingBook"
+            label="Jenis Buku"
+            loader.bind="accountingBookLoader"
+            text.bind = "accountingBookView"
+            placeholder="pilih jenis buku"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-checkbox label="Valas?" show.bind="info.AccountingBook.Type.toLowerCase() == 'pembelian lokal' ? true : false" value.bind="isValas" change.delegate="onClickValas($event)" options.bind="controlOptions"></au-checkbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>Nomor Memo</th>
+                        <th>Tanggal Memo</th>
+                        <th>Account No</th>
+                        <th>Nama Perkiraan</th>
+                        <th>Keterangan</th>
+                        <th>Debit</th>
+                        <th>Kredit</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr show.bind="isEmpty">
+                        <td colspan="7">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of data">
+                        <!-- <td repeat.for="key of datum | keys" style="white-space: pre;" colspan="1">${datum[key]}</td> -->
+                        <!-- <td if.bind="datum.isHeader" rowspan.bind="datum.rowspanNumber">
+                            ${datum.header.Description}
+                        </td>
+                        <td if.bind="datum.isHeader" rowspan.bind="datum.rowspanNumber">
+                            ${datum.header.ReferenceNo}</td> -->
+
+                        <td>${datum.MemoGarmentPurchasing.MemoNo}</td>
+                        <td>${datum.MemoGarmentPurchasing.MemoDate}</td>
+                        <td>${datum.COA.No}</td>
+                        <td>${datum.COA.Name}</td>
+                        <td>${datum.MemoGarmentPurchasing.Remarks}</td>
+                        <td class="text-right">${datum.DebitNominal}</td>
+                        <td class="text-right">${datum.CreditNominal}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="5">TOTAL </td>
+                        <td class="text-right">${totalDebit}</td>
+                        <td class="text-right">${totalCredit}</td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+                <div slot="toolbar" class="btn-group">
+                    <button class="btn btn-primary" click.delegate="pdf()">PDF</button>
+                    <button class="btn btn-success" click.delegate="excel()">Excel</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+
+</template>

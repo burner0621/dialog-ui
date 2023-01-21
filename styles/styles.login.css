@@ -1,0 +1,67 @@
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #2a2a2a;
+}
+
+.login {
+    /*background-image: url('../images/JPEG-danliris-login.jpg');*/
+    background-color: #173250;
+    background-size: cover;
+    padding-top: 120px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.panel-login {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 50px;
+    width: 400px;
+    -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.5);
+}
+
+.panel-login .panel-body {
+    padding: 0px;
+}
+
+.panel-login form {
+    margin-bottom: 35px;
+}
+
+.panel-login .form-title {
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+/* General Links */
+a {
+    color: inherit;
+    /*text-decoration: underline;*/
+}
+
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    color: #000;
+}

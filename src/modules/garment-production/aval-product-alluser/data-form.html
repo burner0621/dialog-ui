@@ -1,0 +1,74 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+        </div>
+
+        <au-autocomplete
+            value.bind="selectedUnit"
+            error.bind="error.Unit"
+            label="Unit"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="RO"
+            value.bind="roNo"
+            error.bind="error.RONo"
+            loader.bind="roLoader"
+            text.bind = "roView"
+            key="RONo"
+            query.bind="filter"
+            aria-placeholder="Cari No RO"
+            read-only.bind="readOnly"
+            if.bind="data.Unit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox
+            label="No. Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            if.bind="data.Article"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tgl. Aval"
+            value.bind="data.AvalDate"
+            error.bind="error.AvalDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group has-error">
+            <p if.bind="error.Item" class="help-block text-center">${error.Item}</p>
+        </div>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsInfo.columns" 
+            options.bind="options"
+            read-only.bind="readOnly"
+            show.bind="data.RONo"
+            view-model.ref="ItemsCollection"
+            header-template="modules/garment-production/aval-product/template/aval-item-header"
+            item-template="modules/garment-production/aval-product/template/aval-item"
+            view-model.ref="ItemsCollection">
+        </au-collection>
+
+        <p if.bind="data.Items"><b>Jumlah Total Barang Aval: ${totalQuantity} PCS</b></p>
+
+    </au-input-form>
+</template>

@@ -1,0 +1,13 @@
+<template>
+    <tr>
+        <td class="col-sm-9">
+            <au-textbox value.bind="data.unitCode" read-only.bind="true" error.bind="error.AdjustmentDescription"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-3">
+            <au-numeric value.one-way="amount" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

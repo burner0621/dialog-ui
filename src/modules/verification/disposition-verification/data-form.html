@@ -1,0 +1,70 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-datepicker label="Tanggal Verifikasi" value.bind="data.VerifyDate" error.bind="error.VerifyDate"
+            read-only.bind="true" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="No Disposisi" value.bind="DispositionNo" error.bind="error.DispositionNo" query.bind="dispositionNoQuery"
+            select.bind="selectDispositionNo" loader.one-time="dispositionLoader" read-only.bind="readOnly" options.bind="controlOptions"
+            placeholder="Cari No Disposisi" text="DispositionNo">
+        </au-autocomplete>
+
+        <div show.bind="data.Id">
+            <au-textbox label="Supplier" value.bind="supplierName" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Mata Uang" value.bind="data.Currency.code" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Bank Tujuan" value.bind="data.Bank" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="No Order Confirmation" value.bind="data.ConfirmationOrderNo" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+
+            <!--<au-textbox label="No Invoice" value.bind="data.InvoiceNo" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>-->
+
+            <au-textbox label="Term Pembayaran" value.bind="data.PaymentMethod" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-datepicker label="Tanggal Jatuh Tempo" value.bind="data.PaymentDueDate" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-multiline label="Perhitungan" value.bind="data.Calculation" read-only.bind="true" options.bind="controlOptions">
+            </au-multiline>
+
+            <au-multiline label="Keterangan" value.bind="data.Remark" read-only.bind="true" options.bind="controlOptions">
+            </au-multiline>
+
+            <au-textbox value.bind="data.ProformaNo" label="No Proforma / Invoice" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <!--<au-textbox value.bind="data.Investation" label="Investasi" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>-->
+
+            <au-textbox value.bind="data.IncomeTaxBy" label="PPH Ditanggung oleh" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-numeric value.bind="data.DPP" label="DPP" read-only.bind="true" format="0,0.0000" options.bind="controlOptions">>
+            </au-numeric>
+
+            <au-numeric value.bind="data.VatValue" label="PPN" read-only.bind="true" format="0,0.0000" options.bind="controlOptions">>
+            </au-numeric>
+
+            <au-numeric value.bind="data.IncomeTaxValue" label="PPH" read-only.bind="true" format="0,0.0000" options.bind="controlOptions">>
+            </au-numeric>
+
+            <au-numeric value.bind="data.PayToSupplier" label="Amount" read-only.bind="true" format="0,0.0000" options.bind="controlOptions">>
+            </au-numeric>
+
+            <au-collection  items.bind="data.Items" columns.bind="itemsColumns" read-only.bind="readOnly" item-template="modules/verification/disposition-verification/template/item">
+            </au-collection>
+        </div>
+    </au-input-form>
+
+
+</template>

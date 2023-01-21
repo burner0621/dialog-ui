@@ -1,0 +1,73 @@
+<template>
+    <h1 class="page-header">Laporan Bon Hasil Re-grading</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            label="Unit"
+            placeholder="Cari Unit"
+            value.bind="unit"
+            query.bind="unitQuery"
+            loader.one-time="unitLoader"
+            options.bind="controlOptions"
+            text="name">
+        </au-autocomplete>
+
+        <au-autocomplete
+            label="No. Bon Hasil Regrading"
+            placeholder="Cari No. Bon Hasil Regrading"
+            value.bind="doc"
+            loader.one-time="fpRegradingResultDocLoader"
+            options.bind="controlOptions"
+            text="Code">
+        </au-autocomplete>
+
+        <au-autocomplete
+            label="Nama Barang"
+            placeholder="Cari Nama Barang"
+            value.bind="product"
+            loader.one-time="productLoader"
+            options.bind="controlOptions"
+            text="name">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Status Retur"
+            value.bind="returnStatus"
+            options.bind="controlOptions"
+            items.bind="returnStatusItems">
+        </au-dropdown>
+        
+        <au-dropdown
+            label="Sudah Retur"
+            value.bind="alreadyReturn"
+            options.bind="controlOptions"
+            items.bind="alreadyReturnItems">
+        </au-dropdown>
+
+        <au-datepicker
+            label="Tanggal Awal"
+            value.bind="dateFrom"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            label="Tanggal Akhir"
+            value.bind="dateTo"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <au-table
+        data.bind="loader"
+        sortable="true"
+        columns.bind="columns"
+        options.bind="tableOptions"
+        view-model.ref="fpRegradingResultDocTable">
+    </au-table>
+</template>

@@ -1,0 +1,109 @@
+<template>
+  <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-primary" click.delegate="context.unpost($event)" if.one-way="context.hasUnpost">Unpost</button>
+        </div>
+
+        <au-textbox 
+            label="No. PR" 
+            value.bind="data.no" 
+            error.bind="error.no" 
+            read-only.bind="true"
+            if.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl. PR" 
+            value.bind="data.date" 
+            error.bind="error.date" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Diminta Datang" 
+            value.bind="data.expectedDeliveryDate" 
+            error.bind="error.expectedDeliveryDate" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="data.budget" 
+            error.bind="error.budget"
+            label="Budget" 
+            change.delegate="budgetChanged($event)" 
+            loader.bind="budgetLoader"
+            placeholder="cari budget" 
+            key="code" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="data.unit" 
+            error.bind="error.unit"
+            label="Unit" 
+            change.delegate="unitChanged($event)" 
+            query.bind="unitQuery"
+            loader.bind="unitLoader"
+            placeholder="cari unit" 
+            key="Code"
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="data.category" 
+            error.bind="error.category"
+            label="Kategori" 
+            change.delegate="categoryChanged($event)" 
+            loader.bind="categoryLoader"
+            placeholder="cari kategori" 
+            key="code"
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+<!--         <au-checkbox 
+            label="Pembelian Internal ?" 
+            value.bind="prInternal" 
+            error.bind="error.prInternal" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-checkbox> -->
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.items" 
+            errors.bind="error.items" 
+            columns.bind="itemsColumns" 
+            add.bind="addItems" 
+            remove.bind="removeItems"
+            read-only.bind="readOnly" 
+            item-template="modules/purchasing/purchase-request/template/purchase-request-item">
+        </au-collection>
+
+  </au-input-form>
+</template>

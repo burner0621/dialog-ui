@@ -1,0 +1,122 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-textbox 
+            label="No Bon Penerimaan" 
+            value.bind="data.FinishedGoodExpenditureNo" 
+            read-only="true"
+            options.bind="controlOptions" 
+            if.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl Pengeluaran Gudang" 
+            value.bind="data.ExpenditureDate" 
+            error.bind="error.ExpenditureDate"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown
+            label="Tujuan Pengeluaran"
+            value.bind="data.ExpenditureTo"
+            error.bind="error.ExpenditureTo"
+            read-only.bind="readOnly || isEdit"
+            items.bind="expenditureToOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete 
+            label="Unit Tujuan" 
+            placeholder="Pilih Unit" 
+            value.bind="selectedUnit"
+            error.bind="error.ExpenditureTo"
+            loader.bind="unitLoader" 
+            read-only.bind="readOnly || isEdit" 
+            options.bind="controlOptions"
+            if.bind="data.ExpenditureTo == 'UNIT'" 
+            view-model.ref="selectedUnitViewModel">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Buyer" 
+            placeholder="Pilih Buyer" 
+            value.bind="data.Buyer"
+            error.bind="error.Buyer" 
+            loader.bind="buyerLoader" 
+            text.bind="buyerView"
+            if.bind="data.ExpenditureTo=='JUAL LOKAL'"
+            read-only.bind="readOnly || isEdit" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Keterangan Lain-lain" 
+            value.bind="data.OtherDescription" 
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions" 
+            if.bind="data.ExpenditureTo=='LAIN-LAIN'">
+        </au-textbox>
+
+        <au-checkbox
+            label="Titip Jual"
+            value.bind="data.Consignment"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-checkbox
+            label="Manual?"
+            value.bind="manual"
+            change.delegate="manualChanged($event)"
+            if.bind="!readOnly && data.ExpenditureTo == 'JUAL LOKAL' && !isEdit"
+            options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-autocomplete 
+            label="No Nota Penjualan Lokal" 
+            placeholder="Pilih Nota Penjualan Lokal" 
+            error.bind="error.LocalSalesNoteNo" 
+            loader.bind="localSalesNoteLoader" 
+            value.bind="selectedSalesNote"
+            if.bind="data.ExpenditureTo == 'JUAL LOKAL' && !manual"
+            text="noteNo"
+            read-only.bind="readOnly || isEdit" 
+            options.bind="controlOptions"
+            view-model.ref="selectedSalesNoteViewModel">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="No Nota Penjualan Lokal" 
+            value.bind="data.LocalSalesNoteNo" 
+            error.bind="error.LocalSalesNoteNo" 
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions" 
+            if.bind="data.ExpenditureTo == 'JUAL LOKAL' && manual ">
+        </au-textbox>
+
+        <au-multiline 
+            label="Keterangan" 
+            placeholder="Masukkan Keterangan" 
+            value.bind="data.Description"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-multiline>
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+        </div>
+ 
+        <au-collection 
+                items.bind="data.Items" 
+                errors.bind="error.Items" 
+                columns.bind="readOnly ? viewItemsColumns : itemsColumns"
+                read-only.bind="readOnly" 
+                add.bind="addItems" 
+                remove.bind="removeItems"
+                options.bind="Options"
+                
+                item-template="modules/inventory/garment-leftover-warehouse/expenditure/finished-good/template/item">
+        </au-collection>
+        
+    </au-input-form>
+</template>

@@ -1,0 +1,108 @@
+<template>
+    <require from="../../../lib/number-format-value-converter.js"></require>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+        <au-datepicker value.bind="dateFrom"
+                       label="Tanggal Awal Jatuh Tempo"
+                       if.bind="!readOnly && !isEdit"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker value.bind="dateTo"
+                       label="Tanggal Akhir Jatuh Tempo"
+                       if.bind="!readOnly && !isEdit"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete value.bind="data.Division"
+                         error.bind="error.Division"
+                         label="Divisi"
+                         placeholder="Cari Divisi"
+                         loader.one-time="divisionLoader"
+                         text="Name"
+                         read-only.bind="readOnly || isEdit"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <!-- <au-textbox value.bind="data.IncomeTax.rate"
+                    read-only="true"
+                    label="Rate"
+                    options.bind="controlOptions"
+                    read-only="true"
+                    show.bind="data.IncomeTax">
+        </au-textbox> -->
+
+        <au-autocomplete value.bind="bank"
+                         error.bind="error.Bank"
+                         label="Bank"
+                         placeholder="Cari Bank"
+                         text.bind="bankView"
+                         read-only.bind="readOnly || isEdit"
+                         loader.one-time="accountBankLoader"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox value.bind="data.Bank.AccountNumber ? data.Bank.AccountNumber : data.Bank.accountNumber"
+                    read-only="true"
+                    label="No Rekening"
+                    options.bind="controlOptions"
+                    show.bind="data.Bank">
+        </au-textbox>
+
+        <au-textbox value.bind="data.Bank.Currency ? data.Bank.Currency.Code : data.Bank.currency.code"
+                    read-only="true"
+                    label="Currency"
+                    options.bind="controlOptions"
+                    show.bind="data.Bank">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal"
+                       value.bind="data.Date"
+                       error.bind="error.Date"
+                       read-only.bind="readOnly"
+                       show.bind="data.UnitPaymentOrders.length > 0"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <!-- <au-textbox
+            value.bind="data.BGNo"
+            label="No BG/Cek"
+            placeholder="Masukkan No BG/Cek"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox> -->
+
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <au-dropdown value.bind="selectedSortOption"
+                             label="Urutkan Berdasar :"
+                             options.bind="sortingControlOptions"
+                             items.bind="sortingOptions">
+                </au-dropdown>
+                <au-dropdown value.bind="selectedSortTypeOption"
+                             options.bind="sortingControlOptions"
+                             items.bind="sortingTypeOptions">
+                </au-dropdown>
+            </div>
+        </div>
+
+        <au-textbox error.bind="error.PPHBankExpenditureNoteItems"
+                    show.bind="error.PPHBankExpenditureNoteItems"
+                    read-only="true">
+        </au-textbox>
+
+        <au-collection items.bind="data.UnitPaymentOrders"
+                       errors.bind="error.UnitPaymentOrders"
+                       columns.bind="columns"
+                       options.bind="options"
+                       view-model.ref="ItemsCollection"
+                       read-only.bind="readOnly"
+                       checkall.delegate="onClickAllDataSource($event)"
+                       item-template="modules/expedition/pph-bank-expenditure-note/templates/item">
+        </au-collection>
+
+        TOTAL BAYAR PPH ${PPHTotal | numberFormat: '0,000.0000'} ${Currency}
+    </au-input-form>
+</template>

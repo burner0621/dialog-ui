@@ -1,0 +1,29 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <au-textbox label="Kode" placeholder="Kode Material" value.bind="data.Code" error.bind="error.Code"
+            read-only.bind="readOnly" loader.bind="materialType"></au-textbox>
+        </div>
+
+        <div class="row">
+          <au-textbox label="Nama" placeholder="Nama Material" value.bind="data.Name" error.bind="error.Name"
+            read-only.bind="readOnly"></au-textbox>
+        </div>
+
+        <div class="row">
+          <au-multiline label="Keterangan" placeholder="Keterangan" value.bind="data.Description"
+            error.bind="error.Description" read-only.bind="readOnly"></au-multiline>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </au-input-form>
+</template>

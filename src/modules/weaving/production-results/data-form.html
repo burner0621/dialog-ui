@@ -1,0 +1,73 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style><au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <div class="col-md-12">
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Tanggal" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-datepicker
+            value.bind="data.DateOrdered"
+            error.bind="error.DateOrdered"
+            read-only.bind="readOnly"
+          ></au-datepicker>
+        </div>
+      </div>
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Shift" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete
+            value.bind="data.Shift"
+            error.bind="error.Shift"
+            read-only.bind="readOnly"
+          ></au-autocomplete>
+        </div>
+      </div>
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Unit Weaving" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete
+            value.bind="data.WeavingUnit"
+            error.bind="error.WeavingUnit"
+            read-only.bind="readOnly"
+            loader.bind="units"
+          ></au-autocomplete>
+        </div>
+      </div>
+      <div class="row">
+        <au-collection
+          items.bind="data.Items"
+          errors.bind="error.Items"
+          columns.bind="columns"
+          add.bind="addProductionResults"
+          options.bind="ProductionResultsOptions"
+          remove.bind="onremove"
+          read-only.bind="readOnly"
+          item-template="modules/weaving/production-results/templates/items"
+        >
+        </au-collection>
+        <!-- <au-table
+          style="white-space: nowrap; margin-top: 26px;"
+          data.bind="loader"
+          columns.bind="columns"
+          sortable.bind="true"
+          view-model.ref="DailyOperationalMachineTable"
+          page-size="25"
+          options.bind="tableOptions"
+          context.bind="context"
+          >
+      </au-table> -->
+      </div></au-input-form>
+</template>

@@ -1,0 +1,111 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <au-input-form title.bind="title" with.bind="context">
+
+                <div slot="actions" class="btn-group">
+                    <button class="btn btn-success" click.delegate="context.approve()" if.bind="context.approve">Approve</button>
+                    <button class="btn btn-danger" click.delegate="context.reject()" if.bind="context.reject">Reject</button>
+                    <button class="btn" click.delegate="context.cancel()" if.bind="context.cancel">Cancel</button>
+                </div>
+                
+                <au-textbox label="No Nota Penjualan" value.bind="data.noteNo" read-only="true"
+                    options.bind="controlOptions" if.bind="readOnly || isEdit">
+                </au-textbox>
+
+                <au-autocomplete label="No Sales Contract Lokal" placeholder="Pilih No Sales Contract"
+                    value.bind="selectedSalesContract" error.bind="error.salesContract"
+                    loader.bind="salesContractLoader" text="salesContractNo" query.bind="filterSC"
+                    read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-datepicker label="Tgl Penjualan" value.bind="data.date" error.bind="error.date"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Jenis Transaksi" placeholder="Pilih Jenis Transaksi"
+                    value.bind="data.transactionType" error.bind="error.transactionType"
+                    loader.bind="transactionTypeLoader" text.bind="transactionTypeView"
+                    read-only.bind="true" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="Buyer" placeholder="Pilih Buyer" value.bind="data.buyer"
+                    error.bind="error.buyer" loader.bind="buyerLoader" text.bind="buyerView"
+                    read-only.bind="true" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="NPWP Buyer" value.bind="data.buyer" text.bind="buyerNPWPView" read-only="true"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="Status Buyer" value.bind="data.buyer" text.bind="buyerKaberView" read-only="true"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-dropdown label="Jenis Pembayaran" value.bind="selectedPaymentType"
+                    error.bind="error.paymentType" read-only.bind="readOnly"
+                    items.bind="paymentTypeOptions" options.bind="controlOptions">
+                </au-dropdown> 
+
+                <div class="row" show.bind="data.paymentType=='TEMPO'">
+                    <div class="col-sm-3">
+                        <p class="form-control-static text-right">Tempo Pembayaran</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <au-numeric value.bind="data.tempo" error.bind="error.tempo" format="0"
+                            read-only.bind="readOnly">
+                        </au-numeric>
+                    </div>
+                    <p class="form-control-static">Hari</p>
+                </div>
+
+                <au-datepicker label="Tgl Jatuh Tempo" value.to-view="dueDate" error.bind="error.dueDate"
+                    read-only="true" options.bind="controlOptions" show.bind="data.paymentType=='TEMPO'">
+                </au-datepicker>
+
+                <au-textbox label="No Bon Keluar" placeholder="No Bon Keluarr" value.bind="data.expenditureNo"
+                    error.bind="error.expenditureNo" read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox label="No Disposisi" placeholder="No Disposisi" value.bind="data.dispositionNo"
+                    error.bind="error.dispositionNo" read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-checkbox label="Apakah kena PPN ?" value.bind="data.useVat" error.bind="error.useVat"
+                    read-only.bind="true" options.bind="controlOptions">
+                </au-checkbox>
+
+                <au-numeric label="Total Amount" value.to-view="total" error.bind="error.amount" read-only="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-multiline label="Keterangan" value.bind="data.remark" placeholder="Keterangan"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-multiline>
+
+                <au-textbox error.bind="error.itemsCount" read-only.bind="true" show.bind="error.itemsCount"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-collection columns.bind="items.columns" items.bind="data.items" errors.bind="error.items"
+                    read-only.bind="readOnly || !data.transactionType"
+                    options.bind="items.options"
+                    item-template="modules/garment-shipping/local-sales-note/template/item">
+                </au-collection>
+
+                <au-numeric value.to-view="subtotal" read-only.bind="true" options.bind="controlOptions"
+                    label="Sub Total">
+                </au-numeric>
+                <au-numeric value.to-view="ppn" read-only.bind="true" options.bind="controlOptions"
+                    label="PPN 10%">
+                </au-numeric>
+                <au-numeric value.to-view="total" read-only.bind="true" options.bind="controlOptions"
+                    label="TOTAL">
+                </au-numeric>
+
+            </au-input-form>
+        </div>
+    </div>
+    
+</template>

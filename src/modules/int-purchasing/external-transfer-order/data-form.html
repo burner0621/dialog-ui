@@ -1,0 +1,93 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <button slot="actions" class="btn btn-success" click.delegate="context.unpost($event)" if.one-way="context.hasUnpost">Unpost</button>
+        <button slot="actions" class="btn btn-primary" click.delegate="context.close($event)" if.one-way="context.hasClose">Close</button>
+        <button slot="actions" class="btn btn-danger" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Cancel</button>
+        <!-- <button slot="actions" class="btn btn-default" click.delegate="oncancel($event)" if.one-way="hasCancel">${__currentOptions.cancelText}</button> -->
+
+        <au-textbox
+            if.bind="data.ETONo"
+            value.bind="data.ETONo"
+            label="No"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="selectedOrderDivision"
+            error.bind="error.OrderDivision"
+            label="Divisi Pemesan"
+            loader.bind="divisionLoader"
+            text.bind="divisionView"
+            placeholder="Divisi Pemesan"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedDeliveryDivision"
+            error.bind="error.DeliveryDivision"
+            label="Divisi Pengirim"
+            loader.bind="divisionLoader"
+            text.bind="divisionView"
+            placeholder="Divisi Pengirim"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Order"
+            value.bind="data.OrderDate"
+            error.bind="error.OrderDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-datepicker 
+            label="Tanggal Kirim"
+            value.bind="data.DeliveryDate"
+            error.bind="error.DeliveryDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-autocomplete
+            value.bind="selectedCurrency"
+            error.bind="error.Currency"
+            label="Mata Uang"
+            text.bind="currencyView"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-multiline
+            label="Keterangan"
+            value.bind="data.Remark"
+            placeholder="Tambah Keterangan"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="error.ExternalTransferOrderItemsCount"
+            error.bind="error.ExternalTransferOrderItemsCount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection
+            items.bind="data.ExternalTransferOrderItems"
+            errors.bind="error.ExternalTransferOrderItems"
+            columns.bind="externalTransferOrderItemsColumns"
+            options.bind="externalTransferOrderItemsOptions"
+            add.bind="addExternalTransferOrderItems"
+            read-only.bind="readOnly || !data.OrderDivision"
+            item-template="modules/int-purchasing/external-transfer-order/template/external-transfer-order-item">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

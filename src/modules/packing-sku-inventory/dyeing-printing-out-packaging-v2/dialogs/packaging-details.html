@@ -1,0 +1,19 @@
+<template>
+        <ai-dialog style="width:500px;">
+          <ai-dialog-header>
+            <h4>Daftar Packaging</h4>
+          </ai-dialog-header>
+          <ai-dialog-body>
+            <au-collection columns.bind="columns" items.bind="data.packagingProductionOrdersDetails"
+            errors.one-way="error.packagingProductionOrdersDetails" add.bind="addItemCallbackPackaging" remove.bind="onremove"
+            read-only.bind="false" item-template="modules/packing-sku-inventory/dyeing-printing-out-packaging-v2/template/item-details"
+            footer-template="modules/packing-sku-inventory/dyeing-printing-out-packaging-v2/template/item-details-footer">
+          </au-collection>
+          </ai-dialog-body>
+      
+          <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Tutup</button>
+          </ai-dialog-footer>
+        </ai-dialog>
+      </template>
+      

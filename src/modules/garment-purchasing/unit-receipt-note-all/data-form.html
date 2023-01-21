@@ -1,0 +1,315 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit && false">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox
+            label="No. Bon Terima Unit"
+            value.bind="data.URNNo"
+            read-only.bind="true"
+            if.bind="readOnly || isEdit"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tgl. Bon Terima Unit"
+            value.bind="data.ReceiptDate"
+            read-only.bind="true"
+            if.bind="(readOnly || isEdit)"
+            options.bind="auInputOptions">
+        </au-datepicker>
+
+        <au-dropdown 
+            label="Jenis Bon Terima Unit" 
+            value.bind="URNType" 
+            error.bind="error.URNType" 
+            read-only.bind="readOnly || isEdit"
+            items.bind="typeOptions"
+            options.bind="auInputOptions">
+        </au-dropdown>
+
+        <au-dropdown 
+            label="Kategori" 
+            value.bind="category" 
+            error.bind="error.Category" 
+            read-only.bind="readOnly || isEdit"
+            items.bind="categoryOptions"
+            if.bind="URNType=='GUDANG SISA'"
+            options.bind="auInputOptions">
+        </au-dropdown>
+
+        <au-autocomplete 
+            value.bind="expenditure"
+            label="No Pengeluaran Gudang Sisa" 
+            loader.bind="fabricLoader" 
+            read-only.bind="readOnly || isEdit"
+            error.bind="error.ExpenditureNo"
+            options.bind="auInputOptions"
+            placeholder="cari no pengeluaran gudang sisa"
+            query.bind="filterExpend"
+            options.bind="auInputOptions"
+            if.bind="URNType=='GUDANG SISA' && data.Category=='FABRIC'"
+            text="ExpenditureNo">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="expenditure"
+            label="No Pengeluaran Gudang Sisa" 
+            loader.bind="accLoader" 
+            read-only.bind="readOnly || isEdit"
+            error.bind="error.ExpenditureNo"
+            options.bind="auInputOptions"
+            placeholder="cari no pengeluaran gudang sisa"
+            query.bind="filterExpend"
+            options.bind="auInputOptions"
+            if.bind="URNType=='GUDANG SISA' && data.Category!='FABRIC'"
+            text="ExpenditureNo">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="No Bon Pengeluaran Unit" 
+            value.bind="data.UENNo" 
+            if.bind="isDiffStorage && URNType!='GUDANG SISA'"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+    
+
+        <au-autocomplete 
+            value.bind="deliveryReturn"
+            label="No Retur Proses" 
+            loader.bind="deliveryReturnLoader" 
+            read-only.bind="readOnly || isEdit"
+            error.bind="error.DeliveryReturn"
+            options.bind="auInputOptions"
+            placeholder="cari no retur proses"
+            query.bind="filterDR"
+            options.bind="auInputOptions"
+            if.bind="isProcess"
+            text="DRNo">
+        </au-autocomplete>
+        
+        <au-textbox
+            label="Jenis Pengembalian"
+            value.bind="data.ReturnType"
+            error.bind="error.ReturnType"
+            read-only.bind="true"
+            if.bind="isProcess"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="unit"
+            label="Unit" 
+            loader.bind="unitLoader" 
+            text.bind="unitView"
+            if.bind="isProcess"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+        
+        <au-textbox 
+            label="Storage" 
+            value.bind="data.Storage.name" 
+            error.bind="error.Storage" 
+            if.bind="isProcess"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.UnitDONo"
+            error.bind="error.UnitDONo"
+            label="No Unit DO"
+            if.bind="isProcess"
+            loader.bind="unitDOLoader"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="RO"
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            if.bind="data.RONo"
+            read-only.bind="true"
+            if.bind="isProcess"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            if.bind="data.Article"
+            read-only.bind="true"
+            if.bind="isProcess"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="data.UnitFrom"
+            label="Unit Asal" 
+            loader.bind="unitLoader" 
+            text.bind="unitView"
+            if.bind="data.UnitFrom"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+        
+        <au-textbox 
+            label="Gudang Asal" 
+            value.bind="data.StorageFrom.name" 
+            error.bind="error.Storage" 
+            if.bind="data.StorageFrom"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal Pengembalian"
+            value.bind="data.ReturnDate"
+            error.bind="error.ReturnDate"
+            if.bind="data.ReturnDate"
+            read-only.bind="true"
+            if.bind="isProcess"
+            options.bind="auInputOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="unit"
+            label="Unit" 
+            loader.bind="unitLoader" 
+            text.bind="unitView"
+            read-only.bind="readOnly || isEdit || URNType=='GUDANG SISA'"
+            error.bind="error.Unit"
+            placeholder="cari unit"
+            show.bind= "!isProcess || URNType=='GUDANG SISA'"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+       
+       <au-autocomplete 
+            value.bind="supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader" 
+            text.bind="supplierView"
+            read-only.bind="readOnly || isEdit"
+            error.bind="error.Supplier"
+            placeholder="cari supplier"
+            options.bind="auInputOptions"
+            show.bind="!isProcess && !isDiffStorage && URNType!='GUDANG SISA' && URNType!='SISA SUBCON'">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="deliveryOrder"
+            label="Surat Jalan" 
+            loader.bind="deliveryOrderLoader" 
+            read-only.bind="readOnly || isEdit"
+            error.bind="error.DeliveryOrder"
+            options.bind="auInputOptions"
+            query.bind="filter"
+            show.bind="data.Supplier && data.Unit && !isProcess && !isDiffStorage && URNType!='GUDANG SISA' && URNType!='SISA SUBCON'"
+            text="doNo"
+            placeholder="cari surat jalan"
+            view-model.ref="deliveryOrderAU">
+        </au-autocomplete>
+
+        <!-- <au-checkbox 
+            label="Simpan ke gudang?" 
+            value.bind="data.IsStorage" 
+            error.bind="error.IsStorage" 
+            change.delegate="isStorageChanged($event)"
+            read-only.bind="readOnly"
+            options.bind="auInputOptions">
+        </au-checkbox> -->
+
+        <au-autocomplete 
+            label="Storage" 
+            value.bind="storage" 
+            loader.bind="storageLoader"
+            error.bind="error.Storage" 
+            read-only.bind="readOnly"
+            query.bind="filterUnit"
+            placeholder="cari nama storage" 
+            text.bind="storageView"
+            show.bind="data.DOId || data.DRId || data.ExpenditureId || data.UENId"
+            if.bind="!isProcess"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Unit yang Mengirim" 
+            value.bind="data.UnitSender" 
+            if.bind="isDiffStorage"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Gudang yang Mengirim" 
+            value.bind="data.StorageSender" 
+            if.bind="isDiffStorage"
+            read-only.bind="true"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-multiline 
+            label="Keterangan"
+            value.bind="data.Remark"
+            error.bind="error.Remark"
+            read-only.bind="readOnly"
+            placeholder="tambah keterangan"
+            options.bind="auInputOptions">
+        </au-multiline>
+
+        <au-textbox
+            read-only.bind="true"
+            if.bind="error.ItemsCount"
+            error.bind="error.ItemsCount">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            columns.bind="deliveryOrderItem.columns"
+            remove.bind="deliveryOrderItem.onRemove"
+            errors.bind="error.Items"
+            read-only.bind="readOnly || isEdit"
+            show.bind="!isProcess"
+            item-template="modules/garment-purchasing/unit-receipt-note-by-user/template/delivery-order-item"
+            if.bind="deliveryOrder && data.URNType!='GUDANG SISA' && URNType!='SISA SUBCON'">
+        </au-collection>
+
+        <au-collection 
+            items.bind="data.DRItems" 
+            columns.bind="deliveryReturnItem.columns"
+            remove.bind="deliveryReturnItem.onRemove"
+            errors.bind="error.Items"
+            read-only.bind="readOnly || isEdit"
+            item-template="modules/garment-purchasing/unit-receipt-note-by-user/template/delivery-return-item"
+            if.bind="deliveryReturn"
+            show.bind="isProcess">
+        </au-collection>
+
+        <au-collection 
+            items.bind="data.Items" 
+            columns.bind="expenditureItem.columns"
+            errors.bind="error.Items"
+            read-only.bind="readOnly || isEdit"
+            item-template="modules/garment-purchasing/unit-receipt-note-by-user/template/expenditure-item"
+            if.bind="expenditure && data.URNType=='GUDANG SISA'">
+        </au-collection>
+
+        <au-collection 
+            items.bind="data.Items" 
+            columns.bind="expenditureItem.columns"
+            errors.bind="error.Items"
+            read-only.bind="readOnly || isEdit"
+            item-template="modules/garment-purchasing/unit-receipt-note-by-user/template/uen-item"
+            if.bind="uen && data.URNType=='SISA SUBCON'">
+        </au-collection>
+    </au-input-form>
+</template>

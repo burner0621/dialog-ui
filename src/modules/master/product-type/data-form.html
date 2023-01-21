@@ -1,0 +1,32 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+          <au-input-form 
+            title.bind="title"
+            with.bind="context"
+            options.bind="formOptions"
+          >
+
+          <au-textbox 
+            label="Jenis Produk"
+            value.bind="data.Name"
+            error.bind="error.Name"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+          ></au-textbox>
+         
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            placeholder="Tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+            
+          <template replaceable part="actions"></template>
+          </au-input-form>
+        </div>
+    </div>
+      
+  </template>

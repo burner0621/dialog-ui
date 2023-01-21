@@ -1,0 +1,42 @@
+<template>
+    <tr>
+        <td >
+            <au-autocomplete 
+                value.bind="productionOrder" 
+                loader.bind="productionOrderLoader"
+                text="OrderNo"
+                placeholder="cari nomor production order" 
+                error.bind="error.ProductionOrder"
+                read-only.bind="options.readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+            <!--query.bind="filter"-->
+
+            <au-collection 
+                title = "Data Barang"
+                items.bind="data.Items" 
+                errors.bind="error.Items" 
+                columns.bind="itemColumns"
+                read-only.bind="options.readOnly"
+                if.bind = "hasProductionOrder"
+                item-template="modules/inventory/finishing-printing/fp-retur-from-buyer/template/item">
+            </au-collection>
+
+            <au-collection 
+                title = "Tambah Data Barang"
+                items.bind="data.newProducts" 
+                errors.bind="error.newProducts" 
+                columns.bind="newProductColumns"
+                read-only.bind="options.readOnly"
+                add.bind="addNewProducts" 
+                if.bind = "hasNewProduct"
+                item-template="modules/inventory/finishing-printing/fp-retur-from-buyer/template/new-product">
+            </au-collection>
+        
+            <au-layout error.bind="error.dataItems" if.bind="error.dataItems"></au-layout>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-left" click.delegate="onremove(data, $event)" if.bind="!options.readOnly">-</button>
+        </td>
+    </tr>
+</template>

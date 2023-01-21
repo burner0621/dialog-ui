@@ -1,0 +1,18 @@
+<template>
+    <h1 class="page-header">Packing List</h1>
+    <au-table
+        view-model.ref="table"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable.bind="true"
+        page-size="25"
+        context.bind="context"
+        selections.bind="dataToBePosted"
+        row-formatter.bind="rowFormatter"
+        context-click.delegate="contextClickCallback($event)">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="create()">Buat</button>
+            <button class="btn btn-primary" disabled.bind="!dataToBePosted.length > 0" click.delegate="posting()">Posting</button>
+        </div>
+    </au-table>
+</template>

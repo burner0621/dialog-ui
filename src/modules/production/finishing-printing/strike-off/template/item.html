@@ -1,0 +1,46 @@
+<template replace-part="StrikeOffItems">
+    <tr>
+        <td>
+            <au-textbox value.bind="data.ColorCode" error.bind="error.ColorCode" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+            <button class="btn btn-info pull-right" click.delegate="toggle()">i</button>
+
+        </td>
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="2">
+            <au-textbox show.bind="error.DyeStuffItem" read-only.bind="true" value.bind="error.DyeStuffItem"
+                style="color: red;"></au-textbox>
+
+            <au-collection columns.bind="dyeStuffColumns" view-model.ref="DyeStuffCollections"
+                items.bind="data.DyeStuffItems" add.bind="addItemCallback" remove.bind="removeDetails"
+                read-only.bind="readOnly" errors.bind="error.DyeStuffItems" options.bind ="listTypeOptions"
+                item-template="modules/production/finishing-printing/strike-off/template/dyestuff">
+            </au-collection>
+
+        </td>
+    </tr>
+    <tr if.bind="isShowing && showChemical">
+        <td colspan="2">
+            <au-textbox show.bind="error.ChemicalItem" read-only.bind="true" value.bind="error.ChemicalItem"
+                style="color: red;"></au-textbox>
+
+            <au-collection columns.bind="chemicalColumns" items.bind="data.ChemicalItems" read-only.bind="readOnly"
+                options.bind="chemicalOptions" errors.bind="error.ChemicalItems"
+                item-template="modules/production/finishing-printing/strike-off/template/chemical">
+            </au-collection>
+
+        </td>
+    </tr>
+    <au-textbox value.bind="totalDyeStuff" read-only.bind="true" show.bind="false" options.bind="controlOptions">
+    </au-textbox>
+    <au-textbox value.bind="totalChemical" read-only.bind="true" show.bind="false" options.bind="controlOptions">
+    </au-textbox>
+    <au-textbox value.bind="totalDetail" read-only.bind="true" show.bind="false" options.bind="controlOptions">
+    </au-textbox>
+</template>

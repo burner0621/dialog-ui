@@ -1,0 +1,136 @@
+<template>
+    <require from="lib/number-format-value-converter"></require>
+    <h1 class="page-header">Report Omzet Per Tahun Per Unit</h1>
+    <form class="form-horizontal">
+        <au-dropdown label="Tahun" value.bind="selectedYear" read-only.bind="readOnly" items.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset</button>
+            </div>
+        </div>
+
+        <button class='btn btn-primary' click.delegate="ExportToExcel()">Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td align="center" rowspan="2">Bulan</td>
+                    <td align="center" colspan="2">UNIT C1A</td>
+                    <td align="center" colspan="2">UNIT C1B</td>
+                    <td align="center" colspan="2">UNIT C2A</td>
+                    <td align="center" colspan="2">UNIT C2B</td>
+                    <td align="center" colspan="2">UNIT C2C</td>                  
+                </tr>
+                <tr>
+                    <td align="center">Amount USD</td>
+                    <td align="center">Amount IDR</td>
+                    <td align="center">Amount USD</td>
+                    <td align="center">Amount IDR</td>
+                    <td align="center">Amount USD</td>
+                    <td align="center">Amount IDR</td>
+                    <td align="center">Amount USD</td>
+                    <td align="center">Amount IDR</td>
+                    <td align="center">Amount USD</td>
+                    <td align="center">Amount IDR</td>
+                </tr>                    
+                </tr>
+            </thead>
+                <tbody>
+                     <template repeat.for="invoice of invoices">
+                     <tr repeat.for="item of invoice.data">
+                        <td>${item.monthName}</td>                                                
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount1" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount1IDR" read-only="true"></au-numeric>
+                            </strong>
+                        </td>   
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount2" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount2IDR" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount3" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount3IDR" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount4" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount4IDR" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount5" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                        <td align="right">
+                            <strong>
+                            <au-numeric value.bind="item.amount5IDR" read-only="true"></au-numeric>
+                            </strong>
+                        </td>
+                                                                        
+                     </tr>  
+                 </template>    
+                    <tr class="active">
+                        <td class="text-center"><strong>T O T A L . . . . . . :</strong></td>
+                        <td class="text-right"><strong>${AmountTtlUSD1}</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTtlIDR1}</strong></td>                     
+                        <td class="text-right"><strong>${AmountTtlUSD2}</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTtlIDR2}</strong></td>                     
+                        <td class="text-right"><strong>${AmountTtlUSD3}</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTtlIDR3}</strong></td>                     
+                        <td class="text-right"><strong>${AmountTtlUSD4}</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTtlIDR4}</strong></td>                     
+                        <td class="text-right"><strong>${AmountTtlUSD5}</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTtlIDR5}</strong></td>                     
+                    </tr>
+                    
+                    <tr class="active">
+                        <td class="text-center"><strong>AVERAGE . . . . . . :</strong></td>
+                        <td class="text-right"><strong>${AvgTtlUSD1}</strong></td>                                             
+                        <td class="text-right"><strong>${AvgTtlIDR1}</strong></td>                     
+                        <td class="text-right"><strong>${AvgTtlUSD2}</strong></td>                                             
+                        <td class="text-right"><strong>${AvgTtlIDR2}</strong></td>                     
+                        <td class="text-right"><strong>${AvgTtlUSD3}</strong></td>                                             
+                        <td class="text-right"><strong>${AvgTtlIDR3}</strong></td>                     
+                        <td class="text-right"><strong>${AvgTtlUSD4}</strong></td>                                             
+                        <td class="text-right"><strong>${AvgTtlIDR4}</strong></td>                     
+                        <td class="text-right"><strong>${AvgTtlUSD5}</strong></td>                                             
+                        <td class="text-right"><strong>${AvgTtlIDR5}</strong></td>                     
+                    </tr>
+                </tbody>
+            </table>   
+            
+            <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+                Tidak Ada Data Yang Ditemukan.
+           </div>
+        
+        <hr />
+    </form>
+</template>

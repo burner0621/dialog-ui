@@ -1,0 +1,125 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Monitoring Surat Jalan</h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete 
+                value.bind="deliveryOrder" 
+                label="Nomor Surat Jalan" 
+                loader.bind="deliveryOrderLoader"
+                placeholder="Cari Nomor Surat Jalan" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="no"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete 
+                value.bind="purchaseOrderExternal" 
+                label="Nomor PO Eksternal" 
+                loader.bind="poEksLoader"
+                placeholder="Cari Nomor PO Eksternal" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="no"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Nomor Surat Jalan</td>
+                        <td>Tanggal Surat Jalan</td>
+                        <td>Tanggal Tiba</td>
+                        <td>Supplier</td>
+                        <td>Jenis Supplier</td>
+                        <td>Pengiriman</td>
+                        <td>Nomor BL</td>
+                        <td>Dikenakan Bea Cukai</td>
+                        <td>Nomor PO Eksternal</td>
+                        <td>Nomor PR</td>
+                        <td>Nomor Referensi PR</td>
+                        <td>Nomor RO</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah Dipesan</td>
+                        <td>Jumlah Diterima</td>
+                        <td>Satuan</td>
+                        <td>Harga</td>
+                        <td>Mata Uang</td>
+                        <td>Keterangan</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <require from="../../../lib/number-format-value-converter"></require>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td >${item.no}</td>
+                        <td >${item.doDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.arrivedDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.supplier}</td>
+                        <td >${item.supplierType}</td>
+                        <td >${item.shipmentType}</td>
+                        <td >${item.shipmentNo}</td>
+                        <td >${item.customs}</td>
+                        <td >${item.poEksNo}</td>
+                        <td >${item.prNo}</td>
+                        <td >${item.prRefNo}</td>
+                        <td >${item.roNo}</td>
+                        <td >${item.productCode}</td>
+                        <td >${item.productName}</td>
+                        <td >${item.qty}</td>
+                        <td >${item.delivered}</td>
+                        <td >${item.uom}</td>
+                        <td >${item.price}</td>
+                        <td >${item.currency}</td>
+                        <td >${item.remark}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

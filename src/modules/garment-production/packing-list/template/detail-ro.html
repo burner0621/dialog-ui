@@ -1,0 +1,183 @@
+<template>
+    <tr>
+        <td class="bg-primary col-md-1">
+            <au-autocomplete
+                value.bind="selectedRO"
+                error.bind="error.RONo"
+                loader.bind="roLoader"
+                text.bind="roView"
+                placeholder="cari RO"
+                query.bind="filter"
+                read-only.bind="readOnly || (isEdit && data.id)">
+            </au-autocomplete>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.scNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.buyerAgent.Name || data.buyerAgent.name ||''"
+                error.bind="error.BuyerAgent"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.buyerBrand.Name || data.buyerBrand.name ||''"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.section.code"
+                error.bind="error.Section"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary col-md-3">
+            <au-textbox
+                value.bind="data.comodityDescription"
+                error.bind="error.comodityDescription"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td class="bg-primary col-md-1">
+            <au-numeric
+                value.bind="data.quantity"
+                error.bind="error.Quantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-autocomplete
+                value.bind="data.uom"
+                error.bind="error.Uom"
+                loader.bind="uomLoader"
+                text.bind="uomView"
+                placeholder="cari satuan"
+                read-only.bind="readOnly">
+            </au-autocomplete>
+        </td>
+        <td class="bg-primary">
+            <au-numeric
+                value.bind="data.priceRO"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.valas"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="amount"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.unit.Code || data.unit.code || ''"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+        <td>
+            <button class="btn btn-info pull-right" if.bind= "data.details" click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing" style="background-color:#C2B5B2;">
+        <td colspan="3">
+            <au-textbox
+                label = "Artikel"
+                value.bind="data.article"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        
+        <td colspan="4">
+            <au-textbox
+                label = "PO Buyer"
+                error.bind="error.OrderNo"
+                value.bind="data.orderNo"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        
+        <td colspan="5">
+            <au-multiline
+                label = "Description"
+                value.bind="data.description"
+                error.bind="error.Description"
+                read-only.bind="readOnly">
+            </au-multiline>
+        </td>
+    </tr>
+    <tr >
+        <td colspan="13">
+            <p if.bind="error.DetailsCount" class="help-block text-center" style='color:red;'>${error.DetailsCount}</p>
+        </td>
+    </tr>
+    <tr  show.bind="isShowing">
+        <td colspan="1" style='border:none;'>
+        </td>
+        <td colspan="10" style='border:none;'>
+            <au-collection 
+                items.bind="data.details" 
+                errors.bind="error.Details" 
+                columns.bind="detailsColumns"
+                read-only.bind="readOnly" 
+                add.bind="addDetails" 
+                remove.bind="removeDetails"
+                options.bind="itemOptions"
+                item-template="modules/garment-production/packing-list/template/detail-carton">
+            </au-collection>
+        </td>
+        <td colspan="2" style='border:none;'>
+        </td>
+    </tr >
+    <tr show.bind="isShowing" style="background-color:#C2B5B2;">
+        <td colspan="2">
+            <au-numeric
+                label = "TOTAL QTY"
+                value.bind="totalQty"
+                error.bind="error.totalQty"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        
+        <td colspan="2">
+            <au-numeric
+                label = "TOTAL CARTON"
+                value.bind="totalCtn"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        
+        <td colspan="3">
+            <au-numeric
+                label = "AVG GW"
+                value.bind="avG_GW"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td colspan="4">
+            <au-numeric
+                label = "AVG NW"
+                value.bind="avG_NW"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+    </tr>
+    <tr show.bind="isShowing" style='border:none;'>
+        <td colspan="13">
+        </td>
+    </tr>
+</template>

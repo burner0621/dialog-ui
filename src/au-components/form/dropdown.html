@@ -1,0 +1,10 @@
+<template>
+  <require from="./dropdown-text"></require>
+  <require from="./_layout"></require>
+  <au-layout options.bind="options" label.bind="label" error.bind="error">
+    <select ref="element" value.bind="value" class="form-control" matcher.bind="_matcher" if.bind="!readOnly">
+        <option repeat.for="item of items" model.bind="item">${item | dropdownText : text}</option>
+    </select>
+    <p class="form-control-static" if.bind="readOnly">${value}</p>
+  </au-layout>
+</template>

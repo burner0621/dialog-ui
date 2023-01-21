@@ -1,0 +1,8 @@
+<template> 
+    <td>
+        <au-textbox value.bind="data.name" error.bind="error.name"></au-textbox> 
+    </td>
+    <td>
+        <au-numeric value.bind="data.age" error.bind="error.age" read-only.bind="selection.value == 'C'"></au-numeric> 
+    </td> 
+</template>

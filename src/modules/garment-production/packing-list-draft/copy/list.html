@@ -1,0 +1,17 @@
+<template>
+    <au-input-form title="Copy Draft Packing List">
+        <au-autocomplete
+            value.bind="data"
+            label="Nomor Invoice"
+            loader.bind="loader"
+            query.bind="filter"
+            text="invoiceNo"
+            placeholder="Nomor Invoice"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div>
+            <span class="col-sm-2"></span>
+            <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+        </div>
+    </au-input-form>
+</template>

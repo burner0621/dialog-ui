@@ -1,0 +1,65 @@
+<template>
+    <tr>
+        <td  class="col-sm-3">
+            <au-textbox
+				value.one-way="data.purchaseOrder.purchaseOrderExternal.no"
+				read-only="true">
+			</au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox
+				value.one-way="data.purchaseOrder.purchaseRequest.no"
+				read-only="true">
+			</au-textbox>
+        </td>
+        <td style="text-align:center;" class="col-sm-2">
+            <au-textbox
+				value.one-way="product"
+				read-only="true">
+			</au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.deliveredQuantity" 
+                read-only.bind="true" 
+                options.bind="controlOptions"
+                format="0,000">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="quantity" 
+                error.bind="error.quantity"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions"
+                format="0,000">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox 
+                value.bind="data.uom.unit" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.pricePerUnit" 
+                error.bind="error.pricePerUnit"
+                read-only.bind="true" 
+                options.bind="controlOptions"
+                format="0,000.0000">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.priceTotal" 
+                error.bind="error.priceTotal"
+                read-only.bind="true" 
+                options.bind="controlOptions"
+                format="0,000.0000">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2" if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button></td>
+    </tr>
+</template>

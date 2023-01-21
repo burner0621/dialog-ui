@@ -1,0 +1,44 @@
+<template>
+  <h1 class="page-header">Daftar Laporan Perencanaan Mesin</h1>
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-autocomplete label="Unit Weaving" value.bind="WeavingUnit" error.bind="error.WeavingUnit"
+        read-only.bind="readOnly" loader.bind="units" text="Name" options.bind="controlOptions"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-autocomplete label="No. Mesin" value.bind="MachineDocument" error.bind="error.MachineDocument"
+        readonly.bind="readOnly" loader.bind="machines" text="MachineNumber" options.bind="controlOptions"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-dropdown label="Blok" value.bind="Block" error.bind="error.Block" read-only.bind="readOnly" items.bind="blocks"
+        options.bind="controlOptions"></au-dropdown>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+      <button class="btn btn-primary" click.delegate="exportToExcel()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+        Print Laporan
+      </button>
+      <button class="btn btn-success" click.delegate="searchMachinePlannings()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 56px; border: 1px solid #777777;">
+        Cari
+      </button>
+      <button class="btn btn-success" click.delegate="reset()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 96px; border: 1px solid #777777;">
+        Atur Ulang
+      </button>
+    </div>
+  </div>
+  <au-table style="white-space: nowrap; margin-top: 26px;" data.bind="loader" columns.bind="columns"
+    sortable.bind="true" view-model.ref="machinePlanningReportsTable" page-size="25" options.bind="tableOptions"
+    context.bind="context">
+  </au-table>
+</template>

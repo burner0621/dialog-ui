@@ -1,0 +1,75 @@
+<template>
+    <h1 class="page-header">Laporan Rekapitulasi Stock GREY - Jenis</h1>
+
+    <form class="form-horizontal">
+        <!-- <au-datepicker options.bind="controlOptions" label="Tanggal Awal" value.bind="dateFrom">
+        </au-datepicker> -->
+        <au-datepicker options.bind="controlOptions" label="Per Tanggal" value.bind="dateTo">
+        </au-datepicker>
+        <!-- <au-dropdown options.bind="controlOptions" label="Tujuan" value.bind="destination"
+            error.bind="error.DestinationArea" read-only.bind="readOnly || isEdit" items.bind="bonTypes">
+        </au-dropdown> -->
+        <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <!--<au-table
+            view-model.ref="doTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Cetak Excel</button>
+            </div>
+        </au-table>-->
+        <!--<hr/>
+    </form>
+</template>-->
+         <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Konstruksi</td>
+                        <td>Jml. Piece</td>
+                        <td>Jml. Meter</td>
+                        <td>Keterangan</td>
+                        
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                       
+                        <td>${IN.Nomor}</td>
+                        <td>${IN.Construction}</td>
+                        <td>${IN.QtyPiece}</td>
+                        <td>${IN.Qty}</td>
+                        <td></td>
+                        
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+    
+</template> 

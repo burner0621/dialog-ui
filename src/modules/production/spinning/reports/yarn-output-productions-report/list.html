@@ -1,0 +1,55 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <form class="form-horizontal">
+
+            <au-autocomplete
+                placeholder="pilih unit spinning"
+                label="Spinning"
+                value.bind="selectedSpinning"
+                read-only.bind="readOnly"
+                loader.bind="spinningLoader"
+                query.bind="spinningFilter"
+                key="name"
+                text="name">
+            </au-autocomplete>
+
+            <au-autocomplete
+                placeholder="pilih benang"
+                label="Benang"
+                value.bind="selectedYarn"
+                read-only.bind="readOnly"
+                loader.bind="yarnsLoader"
+                key="Name"
+                text="Name">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <br>
+            </br>
+
+            <div class="btn-group">
+                <button class='btn btn-primary' click.delegate="exportExcel()">Excel</button>
+            </div>
+
+            <au-table
+                data.bind="loader"
+                columns.bind="columns"
+                options.bind="tableOptions"
+                view-model.ref="yarnOutputTable"
+                row-formatter.bind="rowFormatter">
+            </au-table>
+
+    </au-input-form>
+
+</template>

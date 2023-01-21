@@ -1,0 +1,21 @@
+<template>
+    <tr>
+        <require from="../../../../../lib/number-format-value-converter"></require>
+        <td show.bind="false">
+            <au-textbox show.bind="false" value.bind="data.Id" error.bind="error.Id" read-only.bind="true" options.bind="controlOptions"></au-textbox>
+
+        </td>
+
+        <td>
+            <au-numeric format="0,000.0000"  value.bind="output" error.bind="error.Output" read-only.bind="options.readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        
+        <td>
+            <au-textbox value.bind="uomUnit" error.bind="error.MachineSpinning.UomUnit"
+                read-only.bind="true" options.bind="controlOptions"></au-textbox>
+
+        </td>
+        
+    </tr>
+</template>

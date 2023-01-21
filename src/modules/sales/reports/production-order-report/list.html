@@ -1,0 +1,110 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Rangkuman Order Finishing Printing</h1>
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <!-- <au-textbox 
+                    label="Nomor Sales Contract" 
+                    value.bind="salesContractNo"
+                    placeholder="masukkan nomor Sales Contract">
+                </au-textbox> -->
+
+                <!-- <au-textbox 
+                    label="Nomor Order Produksi" 
+                    value.bind="orderNo"
+                    placeholder="Pilih Nomor SPP">
+                </au-textbox> -->
+
+                <au-autocomplete 
+                    value.bind="productionOrder" 
+                    label="Nomor Order Produksi" 
+                    placeholder="Pilih Nomor SPP" 
+                    loader.one-time="productionOrderLoader" 
+                    key="OrderNo" 
+                    text="OrderNo">
+                </au-autocomplete>
+
+                <au-autocomplete 
+                    value.bind="orderType" 
+                    label="Jenis Order" 
+                    placeholder="Pilih Jenis Order" 
+                    loader.one-time="orderTypeLoader" 
+                    key="Code" 
+                    text="Name">
+                </au-autocomplete>
+                
+                <au-autocomplete 
+                    value.bind="processType" 
+                    label="Jenis Proses" 
+                    filter.bind="filterOrder"
+                    show.bind="orderType"
+                    placeholder="Pilih Jenis Proses"
+                    loader.one-time="processTypeLoader" 
+                    key="Code" 
+                    text="Name">
+                </au-autocomplete>
+
+                <au-autocomplete 
+                    value.bind="buyer"
+                    label="Buyer" 
+                    placeholder="Pilih Buyer" 
+                    loader.one-time="buyerLoader" 
+                    key="Code" 
+                    text="Name">
+                </au-autocomplete>
+
+                <au-autocomplete 
+                    value.bind="account" 
+                    label="Staff Penjualan" 
+                    placeholder="Pilih Staff" 
+                    filter.bind="filterAccount"
+                    loader.one-time="accountLoader" 
+                    key="_id"
+                    text="username">
+                </au-autocomplete>
+
+                <au-datepicker 
+                    label="Tanggal Awal" 
+                    value.bind="sdate">
+                </au-datepicker>
+
+                <au-datepicker 
+                    label="Tanggal Akhir" 
+                    value.bind="edate">
+                </au-datepicker>
+
+                <div class="form-group">
+                    <label for="contact" class="col-sm-6 control-label"></label>
+                    <div class="col-sm-12 text-center">
+                        <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                        <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br></br>
+        <div class="table-responsive">
+            <au-table 
+                view-model.ref="table" 
+                data.bind="loader" 
+                columns.bind="columns" 
+                sortable.bind="true" 
+                page-size="25" 
+                context.bind="context"
+                context-click.delegate="contextClickCallback($event)"
+                options.bind="tableOptions">
+                <div slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+                </div>
+            </au-table>
+        </div>
+        <hr/>
+    </au-input-form>
+</template>

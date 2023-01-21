@@ -1,0 +1,30 @@
+<template>
+    <!-- <h1 class="page-header">${title}</h1> -->
+    <au-input-form title.bind="title">
+        <au-autocomplete
+            label="Section"
+            value.bind="section"
+            placeholder="Section"
+            options.bind="controlOptions"
+            text="Code"
+            loader.bind="sectionLoader"
+            if.bind="sectionVisibility">
+        </au-autocomplete>
+    </au-input-form>
+    <au-table 
+        data.bind="loader" 
+        columns.bind="columns" 
+        sortable.bind="true" 
+        page-size="25" 
+        view-model.ref="table"
+        context.bind="context" 
+        context-click.delegate="contextCallback($event)" >
+        <!-- <div slot="toolbar">
+            <au-autocomplete
+                label="Section"
+                placeholder="Section"
+                if.bind="type=='MD2'">
+            </au-autocomplete>
+        </div> -->
+    </au-table>
+</template>

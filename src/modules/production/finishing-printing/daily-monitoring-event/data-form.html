@@ -1,0 +1,71 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete value.bind="machine" label="Mesin" read-only.bind="readOnly" error.bind="error.Machine"
+            loader.bind="machineLoader" text="Name" options.bind="controlOptions">
+        </au-autocomplete>
+
+
+        <au-datepicker options.bind="controlOptions" value.bind="data.Date" error.bind="error.Date"
+            read-only.bind="readOnly" label="Tanggal">
+        </au-datepicker>
+
+        <au-dropdown label="Jam Kerja" value.bind="data.Shift" error.bind="error.Shift" read-only.bind="readOnly"
+            items.bind="shiftOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+
+        <au-dropdown label="Area" value.bind="area" error.bind="error.ProcessArea" read-only.bind="readOnly"
+            items.bind="areaOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+
+
+        <au-dropdown label="group" value.bind="group" error.bind="error.Group" read-only.bind="readOnly "
+            items.bind="groupOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox value.bind="data.Kasie" label="Kasie" read-only.bind="readOnly || isSelected"
+            error.bind="error.Kasie" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox value.bind="data.Kasubsie" label="Kasubsie" read-only.bind="readOnly  || isSelected"
+            error.bind="error.Kasubsie" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox value.bind="data.ElectricMechanic" label="Mekanik/Elektrik" read-only.bind="readOnly"
+            error.bind="error.ElectricMechanic" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline label="Catatan" value.bind="data.Notes" error.bind="error.Notes" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <br>
+        <div>
+            <au-textbox show.bind="error.DailyMonitoringEventProductionOrderItem" read-only.bind="true"
+                value.bind="error.DailyMonitoringEventProductionOrderItem" style="color: red;"></au-textbox>
+
+            <au-collection columns.bind="productionOrderItemColumns"
+                items.bind="data.DailyMonitoringEventProductionOrderItems" options.bind="detailOptions"
+                errors.one-way="error.DailyMonitoringEventProductionOrderItems"
+                add.bind="addProductionOrderItemCallback" remove.bind="onremove" read-only.bind="readOnly"
+                item-template="modules/production/finishing-printing/daily-monitoring-event/template/productionOrderitem">
+            </au-collection>
+        </div>
+        <br>
+        <div>
+            <au-textbox show.bind="error.DailyMonitoringEventLossEventItem" read-only.bind="true"
+                value.bind="error.DailyMonitoringEventLossEventItem" style="color: red;"></au-textbox>
+
+            <au-collection columns.bind="lossEventItemColumns" items.bind="data.DailyMonitoringEventLossEventItems"
+                options.bind="detailOptions" errors.one-way="error.DailyMonitoringEventLossEventItems"
+                add.bind="addLossEventItemCallback" remove.bind="onremove" read-only.bind="readOnly"
+                item-template="modules/production/finishing-printing/daily-monitoring-event/template/lossEventItem"
+                footer-template="modules/production/finishing-printing/daily-monitoring-event/template/item-footer">
+            </au-collection>
+        </div>
+
+    </au-input-form>
+</template>

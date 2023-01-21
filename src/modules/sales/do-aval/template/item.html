@@ -1,0 +1,21 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-dropdown value.bind="data.AvalType" read-only.bind="readOnly || isEdit" error.bind="error.AvalType"
+                items.bind="avalTypes">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Packing" error.bind="error.Packing" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Weight" error.bind="error.Weight" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

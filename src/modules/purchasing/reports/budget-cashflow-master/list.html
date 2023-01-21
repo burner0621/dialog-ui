@@ -1,0 +1,41 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Konfigurasi Layout Laporan Budget Cashflow</h1>
+        <div class="form-group">
+
+            <div class="form-group">
+                <label for="contact"
+                       class="col-sm-6 control-label"></label>
+                <!-- <div class="col-sm-12 text-center">
+                    <button click.delegate="addCasfhlowType()"
+                            class='btn btn-success'>Tambah Tipe</button>
+                    <button click.delegate="addCashflowCategory()"
+                            class='btn btn-success'>Tambah Kategori</button>
+                    <button click.delegate="addCashflowSubCategory()"
+                            class='btn btn-success'>Tambah Sub-Kategori</button>
+                </div> -->
+            </div>
+
+            <au-table view-model.ref="tableList"
+                      data.bind="loader"
+                      columns.bind="columns"
+                      options.bind="tableOptions">
+                <!-- <div slot="toolbar"
+                     class="btn-group">
+                    <button click.delegate="addCashflowType()"
+                            class='btn btn-success'>Tambah Tipe</button>
+                    <button click.delegate="addCashflowCategory()"
+                            class='btn btn-primary'>Tambah Kategori</button>
+                    <button click.delegate="addCashflowSubCategory()"
+                            class='btn btn-info'>Tambah Sub-Kategori</button>
+                </div> -->
+            </au-table>
+        </div>
+    </au-input-form>
+</template>

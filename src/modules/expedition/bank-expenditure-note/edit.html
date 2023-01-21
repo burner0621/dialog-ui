@@ -1,0 +1,90 @@
+<template>
+    <require from="../../../lib/number-format-value-converter"></require>
+    <au-input-form title="Buat Bukti Pengeluaran Bank DPP + PPN"
+                   options.bind="formOptions">
+
+        <au-textbox label="Bank"
+                    value.bind="bankView"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="No. Rekening"
+                    value.bind="data.Bank.AccountNumber"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Mata Uang"
+                    value.bind="data.Bank.Currency.Code"
+                    read-only.bind="true"
+                    options.bind="controlOptions"
+                    show.bind="!IDR">
+        </au-textbox>
+
+        <au-textbox label="Mata Uang"
+                    value.bind="data.CurrencyCode"
+                    read-only.bind="true"
+                    options.bind="controlOptions"
+                    show.bind="IDR">
+        </au-textbox>
+
+        <au-numeric label="Rate"
+                    value.bind="data.CurrencyRate"
+                    read-only.bind="true"
+                    options.bind="controlOptions"
+                    show.bind="IDR">
+        </au-numeric>
+
+        <!-- <au-textbox label="Mata Uang"
+                    value.bind="data.Bank.currency.code"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox> -->
+
+        <au-textbox label="Supplier"
+                    value.bind="data.Supplier.name"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="No. BG/Cek"
+                    value.bind="data.BGCheckNumber"
+                    error.bind="error.BGCheckNumber"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal"
+                       value.bind="data.Date"
+                       error.bind="error.Date"
+                       options.bind="controlOptions1">
+        </au-datepicker>
+
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <au-dropdown value.bind="selectedSortOption"
+                             label="Urutkan Berdasar :"
+                             options.bind="sortingControlOptions"
+                             items.bind="sortingOptions">
+                </au-dropdown>
+                <au-dropdown value.bind="selectedSortTypeOption"
+                             options.bind="sortingControlOptions"
+                             items.bind="sortingTypeOptions">
+                </au-dropdown>
+            </div>
+        </div>
+
+
+        <au-collection items.bind="UPOResults"
+                       view-model.ref="ItemsCollectionRate"
+                       errors.bind="error.Details"
+                       columns.bind="collection.columns"
+                       checkall.delegate="onCheckAll($event)"
+                       item-template="modules/expedition/bank-expenditure-note/templates/item"
+                       options.bind="collectionOptions">
+        </au-collection>
+
+        TOTAL BAYAR DPP + PPN ${grandTotal | numberFormat: '0,000.0000'} ${data.Bank.Currency.Code}
+    </au-input-form>
+</template>

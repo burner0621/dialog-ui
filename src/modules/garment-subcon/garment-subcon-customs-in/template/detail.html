@@ -1,0 +1,19 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete
+                value.bind="selectedCustomsOut"
+                error.bind="error.CustomsOutNo"
+                loader.bind="customsOutLoader"
+                read-only.bind="readOnly"
+                placeholder="nomor BC Keluar"
+                text="CustomsOutNo"
+                query.bind="filter">
+            </au-autocomplete>
+        </td>
+        <td if.bind="!readOnly || isEdit" class="col-sm-1">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

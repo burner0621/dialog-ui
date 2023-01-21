@@ -1,0 +1,114 @@
+<template>
+  <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <button slot="actions" class="btn btn-primary" click.delegate="context.unpostCallback($event)" if.one-way="context.hasUnpost">Unpost</button>
+        
+        <au-textbox 
+            label="Nomor PR" 
+            value.bind="data.PRNo" 
+            read-only.bind="true"
+            options.bind="controlOptions"
+            if.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-textbox 
+            label="Nomor RO" 
+            value.bind="data.RONo"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            if.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-dropdown
+            label="Jenis PR"
+            value.bind="data.PRType"
+            error.bind="error.PRType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="prTypes"
+            options.bind="controlOptions"
+            change.delegate="changePRType($event)">
+        </au-dropdown>
+
+        <au-autocomplete
+            value.bind="selectedPreSalesContract"
+            error.bind="error.SalesContract"
+            label="No Sales Contract"
+            loader.bind="preSalesContractLoader"
+            text="SCNo"
+            query.bind="salesContractFilter"
+            placeholder="No Sales Contract"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedPreSalesContractViewModel">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Buyer" 
+            value.bind="buyer"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="data.Unit" 
+            error.bind="error.Unit"
+            label="Unit"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="unitViewModel">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Artikel" 
+            placeholder="Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl. PR" 
+            value.bind="data.Date" 
+            error.bind="error.Date" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Shipment" 
+            value.bind="data.ShipmentDate" 
+            error.bind="error.ShipmentDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox  error.bind="error.ItemsCount" read-only="true"></au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsColumns"
+            read-only.bind="readOnly" 
+            add.bind="addItems" 
+            remove.bind="removeItems"
+            options.bind="itemOptions"
+            item-template="modules/merchandiser/garment-purchase-request-master/template/purchase-request-item" >
+        </au-collection>
+
+  </au-input-form>
+</template>

@@ -1,0 +1,90 @@
+<template>
+    <style>
+        .disabled {
+            pointer-events: none;
+        }
+    </style>
+    <tr>
+        <td show.bind="isComplete">
+            <au-checkbox
+                show.bind="isComplete"
+                value.bind="data.ProductionOrder.IsCompleted">
+            </au-checkbox>
+        </td>
+        <td show.bind="!isTest">
+            <au-autocomplete
+                show.bind="!isTest"
+                value.bind="data.ProductionOrder"
+                error.bind="error.ProductionOrderId"
+                change.delegate="productionOrderChanged($event)"
+                loader.bind="productionOrderLoader"
+                placeholder="cari surat perintah produksi"
+                query.bind="productionOrderFilter"
+                key="OrderNo"
+                text="OrderNo"
+                read-only.bind="options.readOnly || isComplete"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="data.Product" 
+                error.bind="error.ProductId"
+                change.delegate="productChanged($event)"
+                loader.bind="productLoader"
+                placeholder="cari barang" 
+                key="Name"
+                text="Name"
+                read-only.bind="options.readOnly || isComplete"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox
+                placholder="masukkan grade"
+                value.bind="data.Grade"
+                error.bind="error.Grade"
+                read-only.bind="options.readOnly || isComplete"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!isTest">
+            <au-numeric
+                if.bind="data.ProductionOrder"
+                value.bind="data.ProductionOrder.OrderQuantity"
+                read-only="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.Length"
+                error.bind="error.Length"
+                read-only.bind="options.readOnly || isComplete"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td show.bind="isAwal && (isView || isComplete)">
+            <au-numeric
+                show.bind="isAwal && (isView || isComplete)"
+                value.bind="data.DistributedLength"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                placholder="masukkan keterangan"
+                value.bind="data.Remark"
+                read-only.bind="options.readOnly || isComplete"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td show.bind="!isEdit && isAwal || isComplete">
+            <p show.bind="!isEdit && isAwal || isComplete">${ data.ProductionOrder.IsCompleted ? 'Sudah Complete' : 'Belum Complete' }</p>
+        </td>
+        <td show.bind="!options.readOnly">
+            <button show.bind="!options.readOnly" class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

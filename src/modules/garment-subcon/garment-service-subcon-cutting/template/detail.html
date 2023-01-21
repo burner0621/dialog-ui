@@ -1,0 +1,59 @@
+<template >
+    <tr >
+        <!-- <td>
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td> -->
+        <td style="background-color:#a7a0a0">
+            <au-multiline
+                value.bind="data.DesignColor"
+                read-only.bind="readOnly">
+            </au-multiline>
+        </td>
+        <td if.bind="isCreate" style="background-color:#a7a0a0">
+            <au-numeric 
+                value.bind="data.CuttingInQuantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>                    
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-numeric 
+                value.bind="Quantity"
+                error.bind = "error.Quantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>                    
+        </td>
+        <!-- <td if.bind="isCreate">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)" >-</button>
+        </td> -->
+        <td class="col-sm-1">
+            <div>
+                <button class="btn btn-info pull-right" if.bind= "data.Sizes" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+    </tr>
+    <tr if.bind="error.SizesCount">
+        <div class="form-group has-error" if.bind="error.SizesCount">
+            <p if.bind="error.SizesCount" class="help-block text-center">${error.SizesCount}</p>
+        </div>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="4">
+            <au-collection 
+                items.bind="data.Sizes" 
+                errors.bind="error.Sizes" 
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly || isEdit" 
+                options.bind="itemOptions"
+                remove.bind="removeSize"
+                add.bind="addSize"
+                item-template="modules/garment-subcon/garment-service-subcon-cutting/template/size-breakdown" >
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,12 @@
+<template>
+    <h1 class="page-header">Stock Opname Garment</h1>
+    <au-table view-model.ref="table" data.bind="loader" columns.bind="columns" sortable.bind="true" page-size="25"
+        context.bind="context" context-click.delegate="contextClickCallback($event)">
+
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-primary" click.delegate="download()">Download</button>
+            <button class="btn btn-primary" click.delegate="upload()">Upload</button>
+            <!-- <button class="btn btn-primary" click.delegate="createStock()">Tambah Stock</button> -->
+        </div>
+    </au-table>
+</template>

@@ -1,0 +1,71 @@
+<template>
+    <tr>
+        <td>
+			<au-textbox
+				value.bind="data.PRNo"
+				read-only="true">
+			</au-textbox>
+		</td>
+        <td>
+            <au-textbox 
+                value.bind="data.Unit.name"
+                read-only="true">
+            </au-textbox>
+        </td>
+		<td>
+			<au-textbox
+				value.bind="data.Category.name"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.bind="dataProduct"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.DealQuantity"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.DealUom.unit"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.PaidQuantity"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.PricePerDealUnit"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.PriceTotal"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.PaidPrice"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+		
+        
+    </tr>
+</template>

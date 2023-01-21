@@ -1,0 +1,18 @@
+<template>
+    <tr>
+        <td colspan="7">
+            <au-textbox
+                label="TOTAL"
+                options.bind="controlOptions"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td colspan="3">
+            <au-textbox
+                value.bind="totalQuantity"
+                error.bind="error"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+</template>

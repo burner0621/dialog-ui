@@ -1,0 +1,66 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-textbox label="No Bon Penerimaan" value.bind="data.ExpenditureNo" read-only="true"
+            options.bind="controlOptions" if.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-datepicker label="Tgl Pengeluaran" value.bind="data.ExpenditureDate" error.bind="error.ExpenditureDate"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown label="Tujuan Pengeluaran" items.bind="expenditureDestinations"
+            value.bind="data.ExpenditureDestination" error.bind="error.ExpenditureDestination"
+            read-only.bind="readOnly || isEdit" options.bind="controlOptions"
+            change.delegate="expenditureDestinationsChanged($event)">
+        </au-dropdown>
+
+        <au-autocomplete label="Unit Tujuan" placeholder="Pilih Unit" value.bind="selectedUnit"
+            error.bind="error.UnitExpenditure" loader.bind="unitLoader" text.bind="unitView"
+            read-only.bind="readOnly || isEdit" options.bind="controlOptions"
+            show.bind="data.ExpenditureDestination == 'UNIT'" view-model.ref="selectedUnitViewModel">
+        </au-autocomplete>
+
+        <au-autocomplete label="Buyer" placeholder="Pilih Buyer" value.bind="selectedBuyer" error.bind="error.Buyer"
+            loader.bind="buyerLoader" text.bind="buyerView" read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions" show.bind="data.ExpenditureDestination == 'JUAL LOKAL'"
+            view-model.ref="selectedBuyerViewModel">
+        </au-autocomplete>
+
+        <au-checkbox label="Manual?" value.bind="manual" change.delegate="manualChanged($event)" if.bind="!readOnly"
+            read-only.bind="readOnly" options.bind="controlOptions"
+            show.bind="data.ExpenditureDestination == 'JUAL LOKAL' && isCreate">
+        </au-checkbox>
+
+        <au-textbox value.bind="data.LocalSalesNoteNo" error.bind="error.LocalSalesNoteNo"
+            label="No Nota Penjualan Lokal" read-only.bind="readOnly || isEdit" if.bind="manual"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete label="No Nota Penjualan Lokal" placeholder="Pilih Nota Penjualan Lokal"
+            error.bind="error.LocalSalesNoteNo" loader.bind="localSalesNoteLoader" value.bind="selectedSalesNote"
+            text="noteNo" if.bind="data.ExpenditureDestination == 'JUAL LOKAL' && !manual"
+            read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+        </au-autocomplete>
+
+
+        <au-textbox label="Keterangan Lain-lain" placeholder="Masukkan Keterangan" value.bind="data.EtcRemark"
+            error.bind="error.EtcRemark" read-only.bind="readOnly || isEdit" options.bind="controlOptions"
+            show.bind="data.ExpenditureDestination == 'LAIN-LAIN'">
+        </au-textbox>
+
+        <au-multiline label="Keterangan" placeholder="Masukkan Keterangan" value.bind="data.Remark"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox error.bind="error.ItemsCount" read-only.bind="true" show.bind="error.ItemsCount"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-collection columns.bind="items.columns" items.bind="data.Items" errors.bind="error.Items"
+            add.bind="items.onAdd" read-only.bind="readOnly" options.bind="items.options"
+            item-template="modules/inventory/garment-leftover-warehouse/expenditure/accessories/template/item">
+        </au-collection>
+
+    </au-input-form>
+</template>

@@ -1,0 +1,37 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-autocomplete label="Unit Asal" placeholder="Pilih Unit" value.bind="selectedUnitFrom"
+        error.bind="error.RequestUnitName" loader.bind="unitLoader" text.bind="unitView"
+        read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+        </au-autocomplete>
+
+
+        <au-autocomplete label="No Bon Pengeluaran Unit" placeholder="Pilih No Bon Pengeluaran Unit"
+            value.bind="selectedUnitExpenditureNote" error.bind="error.UENNo" loader.bind="unitExpenditureNoteLoader"
+            text="UENNo" read-only.bind="readOnly || isEdit" query.bind="unitExpenditureNoteFilter"
+            options.bind="controlOptions" view-model.ref="UnitExpenditureNoteViewModel">
+        </au-autocomplete>
+
+        <au-textbox label="Gudang Asal" value.bind="data.StorageFromName" error.bind="error.StorageFromName"
+        read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl Pengeluaran Unit" value.bind="data.ExpenditureDate" error.bind="error.ExpenditureDate"
+            read-only="true" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker label="Tgl Penerimaan Gudang" value.bind="data.StorageReceiveDate" error.bind="error.StorageReceiveDate"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline label="Keterangan" placeholder="Masukkan Keterangan" value.bind="data.Remark"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-multiline>
+
+        <au-collection columns.bind="itemsColumns" items.bind="data.Items" errors.bind="error.Items"
+            read-only.bind="true">
+        </au-collection>
+
+    </au-input-form>
+</template>

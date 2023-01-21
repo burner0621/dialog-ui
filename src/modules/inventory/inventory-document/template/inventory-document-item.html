@@ -1,0 +1,57 @@
+<template>
+    <tr>
+        <td  class="col-sm-3">
+                <au-autocomplete 
+                    value.bind="selectedProduct" 
+                    error.bind="error.productId"
+                    change.delegate="selectedProductChanged($event)"
+                    loader.bind="productLoader"
+                    placeholder="cari barang" 
+                    key="_id"
+                    read-only.bind="options.readOnly"
+                    text.bind="productView"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+            <!--<au-textbox 
+                    value.bind="data.quantity" 
+                    error.bind="error.quantity"
+                    read-only.bind="options.readOnly" 
+                    format = "-0.0000"
+                    options.bind="controlOptions">
+                </au-textbox>-->
+                <au-numeric 
+                    value.bind="data.quantity" 
+                    error.bind="error.quantity"
+                    read-only.bind="options.readOnly" 
+                    format = "0,0.0000"
+                    options.bind="controlOptions">
+                </au-numeric>
+                
+        </td>
+        <td class="col-sm-2">
+                <au-autocomplete 
+                    value.bind="selectedUom" 
+                    error.bind="error.uomId"
+                    change.delegate="selectedUomChanged($event)"
+                    loader.bind="uomLoader"
+                    placeholder="cari satuan" 
+                    key="_id"
+                    read-only.bind="options.readOnly"
+                    text.bind="uomView"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+                <au-textbox 
+                    value.bind="data.remark" 
+                    error.bind="error.remark"
+                    read-only.bind="options.readOnly" 
+                    placeholder="tambah keterangan" 
+                    options.bind="controlOptions">
+                </au-textbox>
+        </td>
+        <td class="col-sm-1" if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button></td>
+    </tr>
+</template>

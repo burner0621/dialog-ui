@@ -1,0 +1,27 @@
+<template>
+    <tr>
+        <td align='center'>
+            <au-textbox
+                label="Jumlah C"
+                options.bind="controlOptions"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='right'>
+            <au-numeric
+                value.bind="totalPercentage"
+                error.bind="error"
+                format="0.00"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td align='right'>
+            <au-numeric
+                value.bind="totalValue"
+                error.bind="error"
+                format="0.0000"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

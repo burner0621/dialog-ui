@@ -1,0 +1,193 @@
+
+<template>
+    <style>
+        .tab {
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 6px solid #ccc;
+        }
+    
+        .tab:hover {
+            background-color: #ddd;
+        }
+    
+        .tab.active {
+            border-color: #173250 !important;
+        }
+
+        .tbl{
+            margin-left:25px;
+            margin-right:25px;
+        }
+    </style>
+
+    <au-input-form  title.bind="title"  title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <div class="alert ${statusActivityAlert}" role="alert" if.bind="statusActivityRemark" innerhtml.bind="statusActivityRemark"></div>
+          
+        <div class="row">
+            <div class="col-sm-4 tab ${activeTab === 0 ? 'active' : ''}" click.delegate="changeRole(0)">
+                DESCRIPTION
+            </div>
+            <div class="col-sm-4 tab ${activeTab === 1 ? 'active' : ''}" click.delegate="changeRole(1)">
+                DETAIL MEASUREMENT
+            </div>
+            <div class="col-sm-4 tab ${activeTab === 2 ? 'active' : ''}" click.delegate="changeRole(2)">
+                SHIPPING MARK - SIDE MARK - REMARK
+            </div>
+        </div>
+        <br>
+
+        <!-- DESC -->
+        <div class="row" if.bind="activeTab==0">
+            <div class="row">
+                <div class="col-sm-6">
+                    <au-textbox 
+                        label="No Invoice" 
+                        value.bind="data.invoiceNo" 
+                        read-only="true"
+                        options.bind="controlOptions" 
+                        if.bind="readOnly || isEdit">
+                    </au-textbox>
+
+                    <au-dropdown
+                        label="Jenis Invoice"
+                        value.bind="data.invoiceType"
+                        error.bind="error.InvoiceType"
+                        read-only.bind="readOnly || isEdit"
+                        items.bind="InvoiceTypeOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+                </div>
+                <div class="col-sm-6">
+                    <au-dropdown
+                        label="Jenis Packing List"
+                        value.bind="data.packingListType"
+                        error.bind="error.Type"
+                        read-only.bind="readOnly || isEdit"
+                        items.bind="PackingTypeOptions"
+                        options.bind="controlOptions">
+                    </au-dropdown> 
+
+                    <au-datepicker 
+                        label="TGL" 
+                        value.bind="data.date" 
+                        error.bind="error.Date"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </au-datepicker>
+
+                </div>
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <div class="tbl">
+                    <au-collection 
+                        items.bind="data.items" 
+                        errors.bind="error.Items" 
+                        columns.bind="itemsColumns"
+                        read-only.bind="readOnly" 
+                        add.bind="addItems" 
+                        remove.bind="removeItems"
+                        options.bind="Options"
+                        item-template="modules/garment-production/packing-list/template/detail-ro">
+                    </au-collection>    
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- DETAIL MEASURE -->
+        <div class="row" if.bind="activeTab==1">
+            <div class="row">
+                <div class="col-sm-4">
+                    <numeric
+                        label="GROSS WEIGHT"
+                        value.bind="data.grossWeight"
+                        error.bind="error.GrossWeight"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+                <div class="col-sm-4">
+                    <numeric
+                        label="NETT WEIGHT"
+                        value.bind="data.nettWeight"
+                        error.bind="error.NettWeight"
+                        read-only.bind="readOnly" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+                <div class="col-sm-4">
+                    <numeric
+                        label="TOTAL CARTONS"
+                        value.bind="totalCartons"
+                        error.bind="error.totalCartons"
+                        read-only.bind="true" 
+                        options.bind="controlOptions">
+                    </numeric>
+                </div>
+            </div>
+            <div class="row">
+                <au-textbox
+                    label="SAY"
+                    value.bind="say"
+                    read-only.bind="true" >
+                </au-textbox>
+                <au-textbox
+                    value.bind="data.sayUnit"
+                    error.bind="error.SayUnit"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+            </div>
+            <div>
+                <p class="help-block text-left tbl">MEASUREMENT</p>
+            </div>
+            <div class="form-group has-error">
+                <p if.bind="error.MeasurementsCount" class="help-block text-center">${error.MeasurementsCount}</p>
+            </div>
+            <div class="tbl">
+                <au-collection 
+                    items.one-way="data.measurements" 
+                    errors.bind="error.Measurements" 
+                    columns.bind="measureColumns"
+                    read-only="true" 
+                    options.bind="Options"
+                    item-template="modules/garment-production/packing-list/template/detail-measurement">
+                </au-collection>
+            </div>
+            
+            <p class="tbl" if.bind="data.measurements"><b>TOTAL CBM : ${totalCBM} </b></p>
+        </div>
+
+        <!-- MARK -->
+        <div class="row" if.bind="activeTab==2">
+            <au-multiline
+                label="SHIPPING MARK"
+                value.bind="data.shippingMark"
+                error.bind="error.ShippingMark" 
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-multiline>
+
+            <au-multiline
+                label="SIDE MARK"
+                value.bind="data.sideMark"
+                error.bind="error.SideMark"
+                read-only.bind="readOnly"  
+                options.bind="controlOptions">
+            </au-multiline>
+
+            <au-multiline
+                label="REMARK"
+                value.bind="data.remark"
+                error.bind="error.Remark" 
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-multiline>
+        </div>
+            
+    </au-input-form >
+</template>

@@ -1,0 +1,29 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedProductionOrder" read-only.bind="readOnly"
+                error.bind="error.ProductionOrder" loader.bind="productionOrderLoader" text="OrderNo">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ConstructionName" read-only.bind="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.UnitOrCode" error.bind="error.UnitOrCode" read-only.bind="readOnly">
+            </au-textbox>
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Packing" error.bind="error.Packing" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Length" error.bind="error.Length" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

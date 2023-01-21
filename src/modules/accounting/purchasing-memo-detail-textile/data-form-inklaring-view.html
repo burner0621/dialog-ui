@@ -1,0 +1,97 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context">
+      <au-textbox value.bind="data.DocumentNo"
+                  if.bind="data.DocumentNo"
+                  label="No Dokumen"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-textbox>
+  
+      <au-datepicker label="Tanggal Memo"
+                     value.bind="data.Date"
+                     error.bind="error.Date"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+      </au-datepicker>
+  
+      <au-autocomplete value.bind="division"
+                       error.bind="error.Division"
+                       label="Divisi"
+                       loader.one-time="divisionLoader"
+                       text="Name"
+                       read-only.bind="readOnly"
+                       options.bind="controlOptions">
+      </au-autocomplete>
+  
+      <au-autocomplete label="Mata Uang"
+                       value.bind="currency"
+                       error.bind="error.Currency"
+                       loader.one-time="currencyLoader"
+                       text="Code"
+                       read-only.bind="readOnly || isVB"
+                       options.bind="controlOptions">
+      </au-autocomplete>
+  
+      <!-- <au-numeric value.bind="data.Currency.Rate"
+                  if.bind="data.Currency"
+                  label="Rate"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-numeric> -->
+  
+      <au-checkbox label="Import"
+                   value.bind="supplierIsImport"
+                   read-only.bind="readOnly"
+                   options.bind="controlOptions">
+      </au-checkbox>
+  
+      <au-multiline label="Keterangan"
+                    value.bind="data.Remark"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+      </au-multiline>
+  
+      <au-textbox if.bind="error.Detail"
+                  error.bind="error.Detail"
+                  read-only.bind="true"
+                  options.bind="itemOptions">
+      </au-textbox>
+  
+      <au-collection items.bind="data.Details"
+                     errors.bind="error.Details"
+                     columns.bind="columns"
+                     add.bind="addItems"
+                     remove.bind="onremove"
+                     read-only.bind="readOnly"
+                     options.bind="itemOptions"
+                     show.bind="division && currency"
+                     view-model.ref="ItemCollection"
+                     item-template="modules/accounting/purchasing-memo-detail-textile/templates/item-inklaring">
+      </au-collection>
+  
+      <div slot="actions"
+           class="btn-group">
+        <button class="btn btn-default"
+                click.delegate="context.cancel($event)"
+                if.one-way="context.hasCancel">
+          Kembali
+        </button>
+        <button class="btn btn-primary"
+                click.delegate="context.edit($event)"
+                if.one-way="context.hasEdit">
+          Ubah
+        </button>
+        <button class="btn btn-success"
+                click.delegate="context.save($event)"
+                if.one-way="context.hasSave">
+          Simpan
+        </button>
+        <button class="btn btn-danger"
+                click.delegate="context.delete($event)"
+                if.one-way="context.hasDelete">
+          Hapus
+        </button>
+      </div>
+    </au-input-form>
+  </template>

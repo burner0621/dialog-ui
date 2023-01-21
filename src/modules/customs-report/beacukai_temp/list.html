@@ -1,0 +1,88 @@
+<template>
+    <h1 class="page-header">Unggah Data</h1>
+    <form class="form-horizontal">
+        <!-- <au-dropdown label="Area" value.bind="infoArea" items.bind="areaOptions" key="value" text="text" options.bind="controlOptions">
+        </au-dropdown>
+        <div class="row" show.bind="showMonth">
+        <au-dropdown label="Periode" value.bind="info.month" key="value" text="text" items.bind="monthOptions" options.bind="controlOptions">
+        </au-dropdown>
+        </div>
+        <au-dropdown label.bind="yearLabel" value.bind="info.year" key="value" text="text" items.bind="yearOptions" options.bind="controlOptions">
+        </au-dropdown> -->
+        <div class="${error.file ? 'has-error':''}">
+            <label for="dataFile" class="col-sm-4 control-label">File Path</label>
+            <div class="col-sm-4">
+                <input type="file" id="fileCsv" name="fileUpload">
+                <span class="help-block">${error.file}</span>
+            </div>
+        </div>
+    </form>
+
+       
+
+    
+
+    
+    <block>
+        <hr/>
+        <div class="btn-group pull-right">
+            <!-- <button class="btn btn-default" click.delegate="reset()" options.bind="controlOptions">Kembali</button> -->
+            <button class="btn btn-success" disabled.bind="disabled" click.delegate="saveCallback()" options.bind="controlOptions">Tampilkan Data</button>
+        </div>
+    </block>
+<br>
+<br>
+<div class="row">
+    <div class="table-responsive">
+        <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+    </div>
+    <!-- <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+        Tidak ada data.
+    </div> -->
+    <hr/> 
+            
+            <!-- <thead align="center">
+                <tr>
+                    <td>No Aju</td>
+                    <td>Jenis Dokumen</td>
+                    <td >Pemasok / Pengirim</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>Jumlah</td>
+                    <td>Sat</td>
+                    <td>Nilai Barang</td>
+                    <td>Mata Uang</td>          
+                </tr>
+            </thead>
+            <tbody>
+             
+                <tr repeat.for="item of data">
+                        <td class="text-left">${item.noAju}</td>
+                        <td class="text-left">${item.BonDate | dateFormat:'D MMM YYYY'}</td>
+                        <td class="text-left">${item.SupplierName}</td>
+                        <td class="text-left">${item.ItemCode}</td>
+                        <td class="text-left">${item.ItemName}</td>
+                        <td class="text-right">${item.Quantity}</td>
+                        <td class="text-left">${item.UnitQtyName}</td>
+                        <td class="text-right">${item.Nominal}</td>
+                        <td class="text-left">${item.CurrencyCode}</td>
+                </tr>
+            </tbody> -->
+        <!-- </table> -->
+    </div>
+    <div class="row">
+        <div class = "col-sm-6">
+            <au-datepicker
+                label="Pilih Tanggal"
+                value.bind="date"
+                error.bind="error.date"
+                options.bind="controlOptions"
+                if.bind="data"
+            ></au-datepicker>
+        </div>
+        <div class ="col-sm-3" if.bind="data">
+            <button class="btn btn-info" click.delegate="save()" options.bind="controlOptions">Simpan</button>
+            <button class="btn btn-default" click.delegate="reset()" options.bind="controlOptions">Reset</button>
+        </div>
+    </div>
+</template>

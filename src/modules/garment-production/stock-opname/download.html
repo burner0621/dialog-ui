@@ -1,0 +1,22 @@
+<template>
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title="Download Stock Opname Garment" options.bind="formOptions">
+
+                <au-datepicker label="Tanggal Stock Opname" value.bind="data.date" error.bind="error.date"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Unit" value.bind="unit" error.bind="error.unit" loader.bind="unitLoader"
+                    text.bind="unitView" placeholder="Unit" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="Nama Gudang" value.bind="data.storage" error.bind="error.storage"
+                    loader.bind="storageLoader" query.bind="storageFilter" text.bind="storageView"
+                    placeholder="Nama Gudang" options.bind="controlOptions" view-model.ref="storageViewModel">
+                </au-autocomplete>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

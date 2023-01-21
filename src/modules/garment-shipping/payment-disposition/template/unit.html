@@ -1,0 +1,42 @@
+<template>
+    <tr>
+        <td >
+            <au-autocomplete 
+                placeholder="Unit" 
+                value.bind="data.unit"
+                error.bind="error.unit" 
+                loader.bind="unitLoader" 
+                text.bind="unitView"
+                read-only.bind="readOnly || data.id" >
+            </au-autocomplete>
+        </td>
+        <td  if.bind="headerData.paymentType!='COURIER'">
+            <au-numeric
+                value.bind="amountPercentage"
+                error.bind="error.amountPercentage"
+                if.bind="headerData.paymentType!='COURIER'"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="headerData.paymentType!='COURIER'">
+            <au-numeric
+                value.one-way="billAmount"
+                error.bind="error.billAmount"
+                if.bind="headerData.paymentType!='COURIER'"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="headerData.paymentType=='COURIER'">
+            <au-numeric
+                value.bind="data.billAmount"
+                error.bind="error.billAmount"
+                if.bind="headerData.paymentType=='COURIER'"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

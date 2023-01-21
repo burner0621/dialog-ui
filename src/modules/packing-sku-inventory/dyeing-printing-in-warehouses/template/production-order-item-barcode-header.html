@@ -1,0 +1,13 @@
+<template>
+    <tr>
+        <th show.bind="!readOnly">
+            <au-checkbox value.bind="options.checkedAll"
+                         disabled.bind="readOnly"
+                         change.delegate=changeCheckedAll(items,options)>
+            </au-checkbox>
+        </th>
+        <th repeat.for="column of columns">
+            <label>${column}</label>
+        </th>
+    </tr>
+</template>

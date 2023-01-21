@@ -1,0 +1,18 @@
+<template>
+    <tr>
+        <td align='center' if.bind="options.isCreate || options.isEdit || options.readOnly" class="col-sm-1">
+            <au-checkbox value.bind="data.IsSave" if.bind="options.isCreate || options.isEdit || options.readOnly"
+                options.bind="controlOptions" change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.SubconDLOutNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Quantity" read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+
+</template>

@@ -1,0 +1,44 @@
+<template>
+    <style>
+        .weight {
+            font-weight: bold;
+        }
+
+        table>tbody>tr>td {
+            white-space: pre;
+        }
+    </style>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <form class="form-horizontal">
+
+            <au-dropdown label="Jenis Order" value.bind="orderType" items.bind="orderTypeList"></au-dropdown>
+            <au-dropdown label="Tahun" value.bind="year" items.bind="yearList"></au-dropdown>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+          
+            <br>
+            </br>
+
+            <div class="btn-group">
+                <button class='btn btn-primary' click.delegate="exportToExcel()">Excel</button>
+            </div>
+
+            <au-table
+                data.bind="loader"
+                columns.bind="columns"
+                options.bind="tableOptions"
+                view-model.ref="orderStatusTable"
+                context.bind="contextTable"
+                context-click.delegate="contextCallback($event)"
+                row-formatter.bind="rowFormatter">
+            </au-table>
+
+    </au-input-form>
+</template>

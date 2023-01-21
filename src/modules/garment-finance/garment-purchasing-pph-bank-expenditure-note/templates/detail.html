@@ -1,0 +1,21 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.InvoiceNo" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <require from="../../../../lib/date-format-value-converter.js"></require>
+            <au-textbox value.bind="data.InvoiceDate | dateFormat: 'DD-MMM-YYYY'" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.productNameView" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ProductCategory" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <require from="../../../../lib/number-format-value-converter.js"></require>
+            <au-numeric value.bind="data.PriceTotal | numberFormat: '0,000.0000'" read-only="true"></au-numeric>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,26 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context">
+
+        <au-textbox label="Nama Barang"
+                    value.bind="data.productSKU.name"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions"></au-textbox>
+
+        <au-textbox label="Jenis Pack"
+                    value.bind="data.productPacking.packType"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions"></au-textbox>
+
+        <au-textbox value.bind="data.productPacking.quantity"
+                    read-only.bind="readOnly"
+                    label="Jumlah"
+                    options.bind="controlOptions"></au-textbox>
+
+        <au-textbox label="Satuan SKU"
+                    value.bind="data.productSKU.uomUnit"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions"></au-textbox>
+
+    </au-input-form>
+</template>

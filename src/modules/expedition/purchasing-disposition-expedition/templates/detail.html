@@ -1,0 +1,20 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-textbox value.bind="data.unit.name" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.product.name" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.quantity" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.uom.unit" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.price | numberFormat: '0,000.0000'" read-only="true"></au-textbox>
+        </td>
+    </tr>
+</template>

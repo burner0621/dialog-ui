@@ -1,0 +1,16 @@
+<template>
+  <require from="./_input"></require>
+  <require from="../../../lib/date-format-value-converter"></require>
+
+  <au-input view-model.ref="input" type="datetime-local" value.bind="value" options.bind="options" read-only.bind="readOnly" error.bind="error"
+    label.bind="label" placeholder.bind="placeholder" input-options.one-way="inputOptions">
+    <template replace-part="input">
+
+      <!--inside this template, all bindable properties of au-input can be accessed-->
+      <input ref="element" type.bind="type" value.bind="value | dateFormat:'YYYY-MM-DDTHH:mm'" placeholder.bind="placeholder" class="form-control"
+        if.bind="!readOnly" />
+
+      <p class="form-control-static" if.bind="readOnly">${value| dateFormat:format}</p>
+    </template>
+    <au-input>
+</template>

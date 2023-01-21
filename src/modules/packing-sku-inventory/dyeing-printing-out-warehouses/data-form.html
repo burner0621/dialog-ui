@@ -1,0 +1,77 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+    
+    .btn-primary {
+    margin-bottom: 4px;
+}
+  </style>
+
+  <au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <au-datepicker
+      options.bind="controlOptions"
+      value.bind="data.date"
+      error.bind="error.Date"
+      read-only.bind="readOnly"
+      label="Tanggal"
+    >
+    </au-datepicker>
+
+    <au-dropdown
+      options.bind="controlOptions"
+      label="Shift"
+      value.bind="data.shift"
+      error.bind="error.Shift"
+      read-only.bind="readOnly"
+      items.bind="shifts"
+    ></au-dropdown>
+
+    <au-dropdown
+      options.bind="controlOptions"
+      label="Group"
+      value.bind="data.group"
+      error.bind="error.Group"
+      read-only.bind="readOnly"
+      items.bind="groups"
+    ></au-dropdown>
+
+    <au-dropdown
+      options.bind="controlOptions"
+      label="Zona"
+      value.bind="data.destinationArea"
+      error.bind="error.DestinationArea"
+      read-only.bind="readOnly"
+      items.bind="destinationAreas"
+    ></au-dropdown>
+
+    <br />
+    <button
+      show.bind="data.id"
+      class="btn btn-primary"
+      click.delegate="ExportToExcel()"
+    >
+      Excel
+    </button>
+    <br />
+
+    <au-collection
+      columns.bind="itemColumns"
+      items.bind="data.warehousesProductionOrders"
+      errors.one-way="error.WarehousesProductionOrders"
+      read-only.bind="readOnly"
+      options.bind="detailOptions"
+      header-template="modules/packing-sku-inventory/dyeing-printing-out-warehouses/template/item-header"
+      item-template="modules/packing-sku-inventory/dyeing-printing-out-warehouses/template/item"
+    >
+      
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

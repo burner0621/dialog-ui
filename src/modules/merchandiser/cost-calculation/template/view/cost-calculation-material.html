@@ -1,0 +1,40 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.MaterialIndex + 1" options.bind="controlOptions" read-only="true"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Category.name" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Product.Code" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-2">
+            <au-textbox value.bind="data.Product.Composition" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Product.Construction" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Product.Yarn" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Product.Width" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Description" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.ProductRemark" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.QuantityInUnit" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.PricePerUnit" options.bind="controlOptions" format = "0,0.00"  read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-numeric value.bind="data.Total" options.bind="controlOptions" format = "0,0.00"  read-only.bind="readOnly"></au-numeric>
+        </td>
+    </tr>
+</template>

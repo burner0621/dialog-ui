@@ -1,0 +1,30 @@
+<template>
+    <style>
+        table .btn-success { float: none !important; }
+        .col-sm-12 { margin-top: 0px !important; }
+    </style>
+    <au-input-form title="Buat Penyerahan Dokumen Disposisi Garment" options.bind="formOptions">
+        <!--
+            <au-datepicker
+                label="Tanggal Penyerahan"
+                value.bind="data.SubmissionDate"
+                error.bind="error.SubmissionDate"
+                options.bind="controlOptions">
+            </au-datepicker>
+        -->
+
+        <au-textbox
+            show.bind="error.Item"
+            error.bind="error.Item"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection
+            items.bind="data.Items" 
+            errors.bind="error.Items"
+            columns.bind="collection.columns"
+            add.bind="collection.onAdd"
+            item-template="modules/garment-finance/garment-disposition-to-verification/templates/item">
+        </au-collection>
+    </au-input-form>
+</template>

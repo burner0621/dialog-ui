@@ -1,0 +1,52 @@
+<template>
+    <tr>
+        <td>
+            <au-checkbox value.bind="data.check">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.roNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.no" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.items.refNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.buyer" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="unit" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.artikel" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td >
+            <au-textbox  value.bind="data.items.remark" read-only.bind="true" >
+            </au-textbox>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.shipmentDate" read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.items.product" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.items.quantity" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.items.uom" read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+</template>

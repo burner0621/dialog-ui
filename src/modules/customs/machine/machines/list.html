@@ -1,0 +1,89 @@
+
+<template>
+  <h1 class="page-header">Monitoring Mesin</h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+
+        <au-autocomplete value.bind="category" label="Kategori" loader.bind="categoryLoader" text.bind="categoryView"
+          placeholder="Pilih Kategory">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="tipe" label="Tipe" loader.bind="tipeLoader" text.bind="tipeView"
+          query.bind="Filter" placeholder="Pilih Tipe">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="serial" label="Serial Number" loader.bind="serialLoader" text.bind="serialView"
+          query.bind="FilterSerial" placeholder="Pilih Serial Number">
+        </au-autocomplete>
+
+        <div class="form-group">
+          <label for="contact" class="col-sm-6 control-label"></label>
+          <div class="col-sm-3">
+            <button click.delegate="search()" class='btn btn-success'>Cari</button>
+            <button click.delegate="reset()" class='btn btn-danger'>Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div> -->
+  </form>
+  <br>
+  </br>
+
+  <div id="machine-table">
+    <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              sortable="true"
+              page-size="25"
+              options.bind="tableOptions"
+              context.bind="context" 
+              context-click.delegate="contextClickCallback($event)"
+              selectable.bind="true">
+    </au-table>
+  </div>
+
+  <!-- <div class="table-responsive">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+      <thead align="center">
+        <tr>
+          <td>No</td>
+          <td>KLASIFIKASI</td>
+          <td>BRAND</td>
+          <td>KATEGORY</td>
+          <td>TIPE</td>
+          <td>SERIAL</td>
+          <td>JUMLAH</td>
+          <td>SATUAN</td>
+          <td>TAHUN BELI</td>
+          <td>SUPPLIER</td>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr repeat.for="item of data" click.delegate="ClickCallback(item)">
+          <td class="text-left">${$index + 1}</td>
+          <td class="text-left">${item.Classification}</td>
+          <td class="text-left">${item.MachineBrand}</td>
+          <td class="text-left">${item.MachineCategory}</td>
+          <td class="text-left">${item.MachineType}</td>
+          <td class="text-left">${item.IDNumber}</td>
+          <td class="text-right">${item.MachineQuantity}</td>
+          <td class="text-left">${item.UnitQuantity}</td>
+          <td class="text-left">${item.PurchaseYear}</td>
+          <td class="text-left">${item.SupplierType}</td>
+        </tr>
+
+    </table>
+  </div>
+  <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+    Tidak ada data.
+  </div>
+  <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)"></pagination>
+  <hr />
+  </au-input-form> -->
+</template>

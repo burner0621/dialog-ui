@@ -1,0 +1,73 @@
+<template>
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Sales Monthly Report / Laporan Sales Per Bulan</h1>
+    <form class="form-horizontal">
+        <account-auto-suggest label="Staff Penjualan" value.bind="account" change.delegate="accountChanged($event)" filter.bind="filterAccount"></account-auto-suggest>
+        <order-type-auto-suggest label="Jenis Order" value.bind="orderType" change.delegate="orderTypeChanged($event)"></order-type-auto-suggest>
+        <datepicker label="Tanggal Awal" value.bind="dateFrom"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo"></datepicker>
+                
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td rowspan="2">Sales</td>
+                        <td rowspan="2">Jan</td>
+                        <td rowspan="2">Feb</td>
+                        <td rowspan="2">Mar</td>
+                        <td rowspan="2">Apr</td>
+                        <td rowspan="2">Mei</td>
+                        <td rowspan="2">Jun</td>
+                        <td rowspan="2">Jul</td>
+                        <td rowspan="2">Agu</td>
+                        <td rowspan="2">Sep</td>
+                        <td rowspan="2">Okt</td>
+                        <td rowspan="2">Nov</td>
+                        <td rowspan="2">Des</td>
+                        <td rowspan="2">Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center">${$index + 1}</td>
+                        <td class="text-left">${item._id.sales}</td>
+                        <td class="text-left">${item.jan.toFixed(2)}</td>
+                        <td class="text-left">${item.feb.toFixed(2)}</td>
+                        <td class="text-left">${item.mar.toFixed(2)}</td>
+                        <td class="text-left">${item.apr.toFixed(2)}</td>
+                        <td class="text-left">${item.mei.toFixed(2)}</td>
+                        <td class="text-left">${item.jun.toFixed(2)}</td>
+                        <td class="text-left">${item.jul.toFixed(2)}</td>
+                        <td class="text-left">${item.agu.toFixed(2)}</td>
+                        <td class="text-left">${item.sep.toFixed(2)}</td>
+                        <td class="text-left">${item.okt.toFixed(2)}</td>
+                        <td class="text-left">${item.nov.toFixed(2)}</td>
+                        <td class="text-left">${item.des.toFixed(2)}</td>
+                        <td class="text-left">${item.totalOrder.toFixed(2)}</td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

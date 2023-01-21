@@ -1,0 +1,18 @@
+<template>
+  <!--<div class="display-wrapper">-->
+  <h1 class="page-header">Penerimaan Gudang Barang Jadi Dyeing/Printing</h1>
+  <au-table
+    data.bind="loader"
+    columns.bind="columns"
+    sortable.bind="true"
+    page-size="25"
+    context.bind="context"
+    context-click.delegate="contextCallback($event)"
+  >
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-success" click.delegate="create()">Buat</button>
+      <button class="btn btn-primary" click.delegate="generatedExcel()">Download Excel</button>
+      
+    </div>
+  </au-table>
+</template>

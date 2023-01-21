@@ -1,0 +1,65 @@
+<template>
+    <h1 class="page-header">Detail Monitoring Ketepatan Kedatangan Barang </h1> 
+    
+    <form class="form-horizontal">
+           <div>
+            <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</button>
+        </div>
+         <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+                        <td>No</td>
+                        <td>Supplier</td>
+                        <td>Plan PO </td>
+                        <td>Tgl Purchase Request</td>
+                        <td>Tgl PO Internal</td>
+                        <td>Tgl Pembelian</td>
+                        <td>No SJ</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Keterangan Barang</td>
+                        <td>Artikel</td>
+                        <td>RO</td>
+                        <td>Tgl Shipment</td>
+                        <td>Tgl Datang</td>
+                        <td>+ /- Datang</td>
+                        <td>Staff</td>
+                        <td>Kategori</td>
+                    </tr>
+        </thead>
+        <tbody>
+                    <tr repeat.for="pr of data"  >
+                        <td>${$index + 1}</td>
+                        <td>${pr.SupplierName}</td>
+                        <td>${pr.POSerialNumber}</td>
+                        <td>${pr.PRDate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${pr.DODate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${pr.EPODate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${pr.DONo}</td>
+                        <td>${pr.ProductCode}</td>
+                        <td>${pr.ProductName}</td>
+                        <td>${pr.ProductRemark}</td>
+                        <td>${pr.Article}</td>
+                        <td>${pr.RONo}</td>
+                        <td>${pr.ShipmentDate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${pr.DODate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${pr.OKStatus}</td>
+                        <td>${pr.Staff}</td>
+                        <td>${pr.ProductName}</td>  
+                    </tr>
+                </tbody>
+    </table>
+    </div>
+        
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+     
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list(dateFrom,dateTo,kategori)" class='btn btn-default btn-sm'>Kembali</a>
+        </div>
+    </form>
+        
+</template>

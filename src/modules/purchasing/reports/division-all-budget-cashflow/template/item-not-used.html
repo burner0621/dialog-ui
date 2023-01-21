@@ -1,0 +1,8 @@
+<template>
+  <tr if.bind="!isObject">
+    <td colspan="${colspan}"></td>
+  </tr>
+  <tr if.bind="isObject" class="dynamic">
+    <td class="text-right" repeat.for="prop of data | objectKeys">${prop}</td>
+  </tr>
+</template>

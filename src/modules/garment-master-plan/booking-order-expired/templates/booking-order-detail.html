@@ -1,0 +1,52 @@
+<template>
+<tr if.bind="!data.IsCanceled"> <!-- add data.isCanceled = undefined if not exist -->
+  
+  <td width="20%">
+    <au-autocomplete 
+    value.bind="selectedComodity" 
+    error.bind="error.Comodity" 
+    text.bind = "comoView"
+    read-only.bind="options.readOnly" 
+    loader.bind="comodityLoader"
+    options.bind="controlOption" >
+    </au-autocomplete>
+  </td>
+  
+  <td width="15%">
+    <au-numeric 
+    value.bind="data.ConfirmQuantity" 
+    error.bind="error.ConfirmQuantity" 
+    read-only.bind="options.readOnly" 
+    options.bind="controlOption">
+    </au-numeric>
+  </td>
+
+  <td width="15%">
+    <au-datepicker 
+        value.bind="data.DeliveryDate" 
+        error.bind="error.DeliveryDate" 
+        read-only.bind="options.readOnly" 
+        options.bind="controlOptions">
+    </au-datepicker>
+  </td>
+
+   <td width="15%">
+    <au-datepicker 
+        value.bind="data.ConfirmDate" 
+        error.bind="error.ConfirmDate" 
+        read-only="true" 
+        options.bind="controlOptions">
+    </au-datepicker>
+  </td>
+
+  <td width="25%">
+    <au-multiline 
+    value.bind="data.Remark" 
+    error.bind="error.Remark" 
+    read-only.bind="options.readOnly" 
+    options.bind="controlOption">
+    </au-multiline >
+
+  </td>
+</tr>
+</template>

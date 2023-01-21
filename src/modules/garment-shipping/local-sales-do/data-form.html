@@ -1,0 +1,79 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-textbox 
+            label="No DO Penjualan Lokal" 
+            value.bind="data.localSalesDONo" 
+            read-only="true"
+            options.bind="controlOptions" 
+            if.bind="readOnly || data.id">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl DO" 
+            value.bind="data.date" 
+            error.bind="error.date"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            label="No Nota Penjualan" 
+            placeholder="Pilih nota penjualan" 
+            value.bind="selectedSalesNote"
+            error.bind="error.localSalesNoteNo" 
+            loader.bind="salesNoteLoader" 
+            text="noteNo"
+            query.bind="filter"
+            read-only.bind="readOnly || data.id" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Buyer" 
+            value.bind="data.buyer.name || ''" 
+            error.bind="error.buyerAgent" 
+            read-only.bind="true"
+            options.bind="controlOptions" >
+        </au-textbox>
+
+        <au-textbox 
+            label="Kepada" 
+            value.bind="data.to" 
+            error.bind="error.to" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions" >
+        </au-textbox>
+
+        
+        <au-textbox 
+            label="Bag Gudang" 
+            value.bind="data.storageDivision"
+            error.bind="error.storageDivision" 
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.remark"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <div class="form-group has-error">
+            <p if.bind="error.itemsCount" class="help-block text-center">${error.itemsCount}</p>
+        </div>
+
+        <au-collection 
+            items.bind="data.items" 
+            errors.bind="error.items" 
+            columns.bind="itemsColumns"
+            read-only.bind="readOnly" 
+            remove.bind="removeItems"
+            options.bind="Options"
+            item-template="modules/garment-shipping/local-sales-do/template/item">
+        </au-collection>
+        
+    </au-input-form>
+</template>

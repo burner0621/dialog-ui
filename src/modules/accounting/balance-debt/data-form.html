@@ -1,0 +1,100 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+      <div slot="actions" class="btn-group">
+        <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+        <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      </div>
+      <au-autocomplete 
+          value.bind="supplier" 
+          error.bind="error.supplier" 
+          label="Supplier" 
+          loader.bind="supplierLoader"
+          text.bind="supplierView" 
+          placeholder="cari supplier" 
+          key="code" 
+          read-only.bind="readOnly || isEdit"
+          options.bind="controlOptions" >
+      </au-autocomplete>
+      <au-textbox 
+          label="Jenis Supplier" 
+          value.bind="supplierType" 
+          read-only.bind="true" 
+          if.bind="data.supplier"
+          options.bind="controlOptions">
+      </au-textbox>
+      <!-- <au-dropdown 
+          label="Bulan" 
+          value.bind="selectedmonth" 
+          error.bind="error.Month" 
+          read-only.bind="readOnly"
+          items.bind="itemMonths" 
+          key="value"
+          text="text"
+          options.bind="controlOptions">
+      </au-dropdown> -->
+      <au-dropdown 
+          label="Tahun" 
+          value.bind="Year" 
+          error.bind="error.Month" 
+          read-only.bind="readOnly"
+          items.bind="itemYears" 
+          options.bind="controlOptions">
+      </au-dropdown>
+      <au-dropdown 
+          label="Jenis Bahan" 
+          value.bind="data.codeRequirment" 
+          error.bind="error.codeRequirment" 
+          read-only.bind="readOnly"
+          items.bind="itemCode" 
+          if-bind = "isImport"
+          options.bind="controlOptions">
+      </au-dropdown>
+      <au-autocomplete 
+          value.bind="currency" 
+          error.bind="error.currency" 
+          label="Mata Uang" 
+          loader.bind="currencyLoader"
+          placeholder="cari Mata Uang" 
+          key="code" 
+          if.bind="data.supplier"
+          text.bind="currencyView"
+          read-only.bind="readOnly || isEdit"
+          options.bind="controlOptions">
+      </au-autocomplete>
+      <au-numeric 
+          label= "Kurs Penyesuaian"
+          value.bind="data.dOCurrencyRate" 
+          read-only.bind="readOnly || isEdit" 
+          options.bind="controlOptions"
+          format="0.00">
+      </au-numeric>
+      <au-textbox 
+          show.bind="error.itemscount" 
+          error.bind="error.itemscount" 
+          read-only="true">
+      </au-textbox>
+      <au-collection 
+          items.bind="data.items"
+          errors.bind="error.items" 
+          columns.bind="itemsInfo.columns"
+          add.bind="itemsInfo.onAdd" 
+          remove.bind="removeItems" 
+          options.bind="options" 
+          read-only.bind="readOnly"
+          if.bind="data.currency" 
+          view-model.ref="ItemsCollection"
+          item-template="modules/accounting/balance-debt/template/balance-debt-item"
+          footer-template="modules/accounting/balance-debt/template/balance-debt-item-footer"
+
+          view-model.ref="ItemsCollection">
+      </au-collection>
+      <!-- <au-collection items.bind="data.items" errors.bind="error.items" columns.bind="itemsInfoReadOnly.columnsReadOnly"
+        show.bind="data.items.length > 0 && readOnly" read-only.bind="readOnly" options.bind="options"
+        checkall.delegate="onClickAllDataSource($event)"
+        item-template="modules/accounting/balance-debt/template/balance-debt-item">
+      </au-collection> -->
+  </au-input-form>
+  </template>
+
+
+         <!-- footer-template="modules/accounting/balance-debt/template/balance-debt-item-footer" -->

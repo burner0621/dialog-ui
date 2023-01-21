@@ -1,0 +1,102 @@
+<template>
+  <h1 class="page-header">Laporan Ekspedisi Realisasi VB</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete
+      placeholder="pilih VB request"
+      value.bind="info.vbRequest"
+      loader.bind="vbRequestLoader"
+      options.bind="controlOptions"
+      label="No. VB"
+      text="DocumentNo"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      placeholder="pilih VB realisasi"
+      value.bind="info.vbRealization"
+      loader.bind="vbRealizationLoader"
+      options.bind="controlOptions"
+      label="No. Realisasi VB"
+      text="DocumentNo"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      placeholder="pilih nama pemohon"
+      value.bind="info.account"
+      loader.bind="accountLoader"
+      options.bind="controlOptions"
+      label="Pemohon VB"
+      text="username"
+    >
+    </au-autocomplete>
+
+    <au-autocomplete
+      placeholder="pilih bagian"
+      value.bind="info.unit"
+      loader.bind="unitLoader"
+      options.bind="controlOptions"
+      label="Bagian"
+      text="Name"
+    >
+    </au-autocomplete>
+
+    <au-datepicker
+      value.bind="info.dateFrom"
+      label="Tanggal Awal Realisasi VB"
+      options.bind="controlOptions"
+      error.bind="error.dateFrom"
+    >
+    </au-datepicker>
+
+    <au-datepicker
+      value.bind="info.dateTo"
+      label="Tanggal Akhir Realisasi VB"
+      options.bind="controlOptions"
+      error.bind="error.dateTo"
+    >
+    </au-datepicker>
+
+    <au-autocomplete
+      placeholder="pilih divisi"
+      value.bind="info.division"
+      loader.bind="divisionLoader"
+      options.bind="controlOptions"
+      label="Divisi"
+      text="Name"
+    >
+    </au-autocomplete>
+
+    <au-dropdown
+      label="Posisi"
+      value.bind="info.status"
+      items.bind="statusOptions"
+      options.bind="controlOptions"
+    >
+    </au-dropdown>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="sales-receipt-table">
+    <au-table
+      data.bind="loader"
+      columns.bind="columns2"
+      sortable.bind="true"
+      page-size="25"
+      view-model.ref="tableList"
+      options.bind="tableOptions"
+    >
+      <div slot="toolbar" class="btn-group">
+        <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+      </div>
+    </au-table>
+  </div>
+</template>

@@ -1,0 +1,67 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="data.InternalNote"
+                             error.bind="error.InternalNote"
+                             loader.one-time="internalNoteLoader"
+                             query.bind="checkExist"
+                             read-only.bind="isEdit"
+                             text="DocumentNo" >
+
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.InternalNote.Date"
+                           read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.InternalNote.DueDate"
+                           read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InternalNote.SupplierName"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.AmountDPP"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.VAT"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.IncomeTax"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.TotalPaid"
+                        read-only.bind="true"
+                        format="0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InternalNote.CurrencyCode"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Remark"
+                        read-only.bind="false">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-danger"
+                    click.delegate="onremove(data)">-</button>
+        </td>
+    </tr>
+</template>

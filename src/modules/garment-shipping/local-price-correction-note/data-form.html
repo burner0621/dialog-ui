@@ -1,0 +1,77 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <au-input-form title.bind="title" with.bind="context">
+
+                <au-textbox label="No Nota Koreksi" value.bind="data.correctionNoteNo" read-only="true"
+                    options.bind="controlOptions" if.bind="readOnly">
+                </au-textbox>
+
+                <au-autocomplete label="No Nota Penjualan" value.bind="selectedSalesNote" error.bind="error.salesNote"
+                    text="noteNo" loader.bind="salesNoteLoader" placeholder="No Nota Penjualan"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-datepicker label="Tgl Penjualan" value.bind="data.salesNote.date" read-only="true"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-datepicker label="Tgl Koreksi Harga" value.bind="data.correctionDate"
+                    error.bind="error.correctionDate" read-only.bind="readOnly" options.bind=" controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Jenis Transaksi" placeholder="Pilih Jenis Transaksi"
+                    value.bind="data.salesNote.transactionType" loader.bind="transactionTypeLoader"
+                    text.bind="transactionTypeView" read-only="true" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="Buyer" placeholder="Pilih Buyer" value.bind="data.salesNote.buyer"
+                    loader.bind="buyerLoader" text.bind="buyerView" read-only="true" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-autocomplete label="NPWP Buyer" value.bind="data.buyer" text.bind="buyerNPWPView" read-only="true"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <p class="form-control-static text-right">Tempo Pembayaran</p>
+                    </div>
+                    <div class="col-sm-3">
+                        <au-numeric value.bind="data.salesNote.tempo" format="0" read-only="true">
+                        </au-numeric>
+                    </div>
+                    <p class="form-control-static">Hari</p>
+                </div>
+
+                <au-datepicker label="Tgl Jatuh Tempo" value.to-view="dueDate" read-only="true"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox label="No Disposisi" placeholder="No Disposisi" value.bind="data.salesNote.dispositionNo"
+                    read-only="true" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-checkbox label="Apakah kena PPN ?" value.bind="data.salesNote.useVat" read-only="true"
+                    options.bind="controlOptions">
+                </au-checkbox>
+
+                <au-multiline label="Keterangan" value.bind="data.remark" read-only.bind="readOnly"
+                    placeholder="Keterangan" options.bind="controlOptions">
+                </au-multiline>
+
+                <au-textbox error.bind="error.itemsCount" read-only.bind="true" show.bind="error.itemsCount"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-collection columns.bind="items.columns" items.bind="data.items" errors.bind="error.items"
+                    read-only.bind="readOnly" options.bind="items.options"
+                    header-template="modules/garment-shipping/local-price-correction-note/template/header"
+                    item-template="modules/garment-shipping/local-price-correction-note/template/item">
+                </au-collection>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

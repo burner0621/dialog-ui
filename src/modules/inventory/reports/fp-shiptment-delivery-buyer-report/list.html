@@ -1,0 +1,31 @@
+<template>
+    <h1 class="page-header">Laporan Pengiriman Buyer</h1>
+    <form class="form-horizontal">
+
+        <!-- <au-dropdown label="Bulan" value.bind="month" items.bind="monthList" options.bind="auInputOptions"></au-dropdown> -->
+        <!-- <au-dropdown label="Tahun" value.bind="year" items.bind="yearList" options.bind="auInputOptions"></au-dropdown>-->
+        <!-- <au-dropdown label="Area" value.bind="area" items.bind="areaList" options.bind="auInputOptions"></au-dropdown> -->
+        <au-dropdown label="Tahun" value.bind="year" items.bind="yearList" options.bind="auInputOptions"></au-dropdown>
+        <au-dropdown label="Bulan" value.bind="month" items.bind="monthList" options.bind="auInputOptions"></au-dropdown>
+        <!-- <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind="auInputOptions" error.bind="error.dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind="auInputOptions" error.bind="error.dateTo"></au-datepicker> -->
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-4 control-label"></label>
+            <div class="col-sm-4">
+                <button click.delegate="searchData(info)" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <au-table view-model.ref="table" data.bind="data" columns.bind="columns" sortable.bind="true"  options.bind="tableOptions">
+
+            <div slot="toolbar" class="btn-group">
+                <button class='btn btn-primary' click.delegate="exportToExcel()">Excel</button>
+            </div>
+        </au-table>
+    </div>
+
+</template>

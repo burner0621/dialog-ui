@@ -1,0 +1,73 @@
+<template>
+  <h1 class="page-header">Daftar Laporan Putus Warping</h1>
+
+  <div class="row">
+    <div class="col-md-3" style="white-space: nowrap;">
+      <au-dropdown label="Bulan" value.bind="Month" error.bind="error.Month" read-only.bind="readOnly"
+        items.bind="months" options.bind="controlOptions">
+      </au-dropdown>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" style="white-space: nowrap;">
+      <au-dropdown label="Tahun" value.bind="Year" error.bind="error.Year" read-only.bind="readOnly" items.bind="years"
+        options.bind="controlOptions">
+      </au-dropdown>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" style="white-space: nowrap;">
+      <au-autocomplete label="Unit Weaving" value.bind="WeavingUnit" error.bind="error.WeavingUnit"
+        read-only.bind="readOnly" loader.bind="units" text="Name" options.bind="controlOptions"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+      <button class="btn btn-primary" click.delegate="exportToExcel()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+        Print Laporan
+      </button>
+      <button class="btn btn-success" click.delegate="searchWarpingBrokens()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 56px; border: 1px solid #777777;">
+        Cari
+      </button>
+      <button class="btn btn-success" click.delegate="reset()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 96px; border: 1px solid #777777;">
+        Atur Ulang
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive" if.bind="data.GroupedItems.length > 0">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+      <thead align="center" style="vertical-align: middle;">
+        <tr>
+          <td colspan="2">Penyebab</td>
+          <td rowspan="2" repeat.for="headerBroken of data.HeaderBrokens">${headerBroken}</td>
+          <td rowspan="2">Total</td>
+          <td rowspan="2">Max</td>
+          <td rowspan="2">Min</td>
+          <td rowspan="2">Rata-rata ${data.LastMonth}</td>
+        </tr>
+        <tr>
+          <td>Asal Benang</td>
+          <td>Jenis & No. Benang</td>
+        </tr>
+      </thead>
+
+      <tbody align="center" style="vertical-align: middle;" repeat.for="groupItems of data.GroupedItems">
+          <tr repeat.for="itemValue of groupItems.ItemsValue">
+            <td if.bind="$first" rowspan.bind="itemValue.ItemsValueLength">${itemValue.SupplierName}</td>
+            <td repeat.for="itemKey of data.bodyKeys">${itemValue[itemKey]}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert alert-info text-center" role="alert" if.bind="data.GroupedItems.length === 0">
+    Tidak ada data.
+  </div>
+  
+</template>

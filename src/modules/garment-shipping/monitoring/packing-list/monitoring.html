@@ -1,0 +1,35 @@
+<template>
+    <h1 class="page-header">Monitoring Packing List</h1>
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="selectedBuyer" error.bind="error.BuyerAgent" label="Buyer Agent"
+            loader.bind="buyerLoader" text.bind="buyerView" placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Jenis Invoice" value.bind="selectedInvoiceType" error.bind="error.InvoiceType"
+            read-only.bind="readOnly || isEdit" items.bind="invoiceTypeOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-datepicker value.bind="selectedDateFrom" label="Tgl Awal" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker value.bind="selectedDateTo" label="Tgl Akhir" options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset</button>
+            </div>
+        </div>
+
+        <au-table view-model.ref="table" data.bind="loader" columns.bind="columns" sortable.bind="true"
+            options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class='btn btn-primary' click.delegate="xls()">Cetak</button>
+            </div>
+        </au-table>
+        <hr />
+    </form>
+</template>

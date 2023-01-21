@@ -1,0 +1,122 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <au-autocomplete
+      placeholder="pilih unit spinning"
+      label="Spinning"
+      value.bind="selectedSpinning"
+      error.bind="error.SpinningId"
+      read-only.bind="readOnly"
+      loader.bind="spinningLoader"
+      query.bind="spinningFilter"
+      key="name"
+      text="name">
+    </au-autocomplete>
+
+    <au-datepicker
+      label="Tanggal"
+      value.bind="data.Date"
+      error.bind="error.Date"
+      read-only.bind="readOnly">
+    </au-datepicker>
+    
+    <au-dropdown
+      label="Shift"
+      value.bind="data.Shift"
+      items.bind="shiftItems"
+      error.bind="error.Shift"
+      read-only.bind="readOnly">
+    </au-dropdown>
+
+    <au-autocomplete
+      placeholder="pilih mesin"
+      label="Mesin"
+      value.bind="selectedMachine"
+      error.bind="error.MachineId"
+      read-only.bind="readOnly"
+      loader.bind="machineLoader"
+      key="name"
+      text="name"
+      query.bind="machineFilter"
+      show.bind="data.Spinning">
+    </au-autocomplete>
+
+    <au-autocomplete
+      placeholder="pilih benang"
+      label="Benang"
+      value.bind="selectedYarn"
+      error.bind="error.YarnId"
+      read-only.bind="readOnly"
+      loader.bind="yarnsLoader"
+      key="Name"
+      text="Name"
+      show.bind="data.Spinning">
+    </au-autocomplete>
+
+    <au-autocomplete
+      placeholder="pilih lot benang"
+      label="Lot Benang"
+      value.bind="selectedLotYarn"
+      error.bind="error.LotYarnId"
+      read-only.bind="true"
+      key="Lot"
+      text="Lot"
+      show.bind="data.Spinning">
+    </au-autocomplete>
+
+    <au-numeric
+      value.bind="data.YarnWeightPerCone"
+      label="Berat Benang per Cone (kg)"
+      read-only.bind="readOnly"
+      error.bind="error.YarnWeightPerCone"
+      if.bind="isView || isEdit"
+      options.bind="numberOptions">
+    </au-numeric>
+
+    <au-numeric
+      label="Good Output (cone)"
+      value.bind="data.GoodOutput"
+      error.bind="error.GoodOutput"
+      read-only.bind="readOnly"
+      if.bind="isView || isEdit"
+      options.bind="numberOptions">
+    </au-numeric>
+
+    <au-numeric
+      label="Bad Output (cone)"
+      value.bind="data.BadOutput"
+      error.bind="error.BadOutput"
+      read-only.bind="readOnly"
+      if.bind="isView || isEdit"
+      options.bind="numberOptions">
+    </au-numeric>
+
+    <au-numeric
+      label="Jumlah Drum"
+      value.bind="data.DrumTotal"
+      error.bind="error.DrumTotal"
+      read-only.bind="readOnly"
+      if.bind="isView || isEdit"
+      options.bind="numberOptions">
+    </au-numeric>
+
+    <au-textbox
+      if.bind="data.YarnOutputItems.length == 0"
+      error.bind="error.YarnOutputItems"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-collection
+      columns.bind="YarnOutputItemsInfo.columns"
+      items.bind="data.YarnOutputItems"
+      errors.bind="error.YarnOutputItems"
+      add.bind="YarnOutputItemsInfo.onAdd"
+      remove.bind="YarnOutputItemsInfo.onRemove"
+      read-only.bind="readOnly"
+      item-template="modules/production/spinning/yarn-output-production/template/yarn-output-item"
+      if.bind="isCreate">
+    </au-collection>
+    
+  </au-input-form>
+
+</template>

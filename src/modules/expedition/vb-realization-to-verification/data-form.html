@@ -1,0 +1,61 @@
+<template>
+  <au-input-form title.bind="title"
+                 options.bind="formOptions">
+
+    <div class="row">
+      <!-- <div class="col-sm-6">
+                      <au-dropdown value.bind="selectedSearch" items.bind="searchList">
+                      </au-dropdown>
+                  </div> -->
+      <div class="col-sm-2">
+        <au-autocomplete placeholder="pilih permintaan vb"
+                         value.bind="data.vbRequest"
+                         loader.bind="vbRequestLoader"
+                         text="DocumentNo">
+        </au-autocomplete>
+      </div>
+      <div class="col-sm-2">
+        <au-autocomplete placeholder="pilih realisasi vb"
+                         value.bind="data.vbRealization"
+                         loader.bind="vbRealizationLoader"
+                         text="DocumentNo">
+        </au-autocomplete>
+      </div>
+      <div class="col-sm-3">
+        <au-datepicker value.bind="data.realizationDate"
+                       label="Tanggal Realisasi">
+        </au-datepicker>
+        <!-- <au-textbox value.bind="'tanggal realisasi'"
+                    read-only.bind="true">
+        </au-textbox> -->
+      </div>
+      <div class="col-sm-2">
+        <au-autocomplete placeholder="pilih nama pemohon"
+                         value.bind="data.account"
+                         loader.bind="accountLoader"
+                         text="username">
+        </au-autocomplete>
+      </div>
+      <div class="col-sm-2">
+        <au-autocomplete placeholder="pilih unit"
+                         value.bind="data.unit"
+                         loader.bind="unitLoader"
+                         text="Name">
+        </au-autocomplete>
+      </div>
+      <div class="col-sm-1">
+        <au-button class="btn btn-success"
+                   click.delegate="search()">Cari</au-button>
+      </div>
+    </div>
+
+    <au-table view-model.ref="realizationTable"
+              data.bind="loader"
+              columns.bind="columns"
+              selectable.bind="true"
+              options.bind="tableOptions"
+              selections.bind="dataToBeSubmitted">
+    </au-table>
+
+  </au-input-form>
+</template>

@@ -1,0 +1,136 @@
+<template>
+    <h1 class="page-header">Display Budget Master / Sample</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="selectedGarmentPurchaseRequest" 
+            label="Nomor RO" 
+            loader.bind="garmentPurchaseRequestLoader"
+            placeholder="Cari Nomor RO" 
+            text="RONo"
+            query.bind="garmentPurchaseRequestFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="prMonitor">
+                <thead align="center">
+                    <tr>
+                        <th><label>Urut</label></th>
+                        <th><label>Nomor RO</label></th>
+                        <th><label>Kode Brand</label></th>
+                        <th><label>Nama Brand Buyer</label></th>
+                        <th><label>Article</label></th>                        
+                        <th><label>Tgl Shipment</label></th>                            
+                        <th><label>Kode Barang</label></th>
+                        <th><label>Keterangan</label></th>
+                        <th><label>Quantity</label></th>
+                        <th><label>Satuan Barang</label></th>
+                        <th><label>Harga</label></th>
+                        <th><label>Jumlah</label></th>
+                        <th><label>Nomor PO</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="13">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="index of tableData.length">
+                        <tr>
+                            <td width="5%" align="center">
+                                <au-textbox
+                                    value.bind="index + 1"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%">
+                                <au-textbox
+                                    value.bind="tableData[index].RO_Number"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%">
+                                <au-textbox
+                                    value.bind="tableData[index].BuyerCode"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="30%">
+                                <au-textbox
+                                    value.bind="tableData[index].BuyerName"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="30%">
+                                <au-textbox
+                                    value.bind="tableData[index].Article"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="15%">
+                                <au-textbox
+                                    value.bind="tableData[index].DeliveryDate"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%">
+                                <au-textbox
+                                    value.bind="tableData[index].ProductCode"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="30%">
+                                <au-textbox
+                                    value.bind="tableData[index].Remark"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%" align="right">
+                                <au-textbox
+                                    value.bind="tableData[index].Quantity"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%">
+                                <au-textbox
+                                    value.bind="tableData[index].Uom"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                            <td width="10%" align="right">
+                                <au-numeric
+                                    value.bind="tableData[index].Price"
+                                    read-only="true">
+                                </au-numeric>
+                            </td>
+                            <td width="15%" align="right">
+                                <au-numeric
+                                    value.bind="tableData[index].Quantity * tableData[index].Price"
+                                    read-only="true">
+                                </au-numeric>
+                            </td>
+                            <td width="10%">
+                                <au-textbox
+                                    value.bind="tableData[index].POSerialNumber"
+                                    read-only="true">
+                                </au-textbox>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

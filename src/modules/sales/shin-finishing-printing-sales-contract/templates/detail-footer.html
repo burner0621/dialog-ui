@@ -1,0 +1,16 @@
+<template>
+  <tr>
+    <td class="text-right" style="padding-right:10%">
+      Total
+    </td>
+    <td class="text-left">
+      <require from="../../../../lib/number-format-value-converter"></require>
+      ${itemSum | numberFormat:"0,000.000"}
+    </td>
+    <td>
+      <au-textbox value.one-way="currency" error.bind="error.currency" read-only.bind="true"
+        options.bind="controlOption"></au-textbox>
+    </td>
+    <td></td>
+  </tr>
+</template>

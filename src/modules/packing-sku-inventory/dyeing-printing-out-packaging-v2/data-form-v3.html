@@ -1,0 +1,38 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Zona" value.bind="data.destinationArea"
+      error.bind="error.DestinationArea" read-only.bind="readOnly" items.bind="destinationAreas"></au-dropdown>
+
+    <au-textbox options.bind="controlOptions" show.bind="isEdit" value.bind="data.bonNo" label="Nomor Bon"
+      read-only.bind="true" error.bind="error.BonNo">
+    </au-textbox>
+    <div class="row">
+      <div class="col-md-12">
+    <h5>List Packaging</h5>
+    <au-collection columns.bind="itemColumns" items.bind="data.packagingProductionOrders"
+      errors.one-way="error.packagingProductionOrders" add.bind="addItemCallback" remove.bind="onremove"
+      read-only.bind="readOnly" item-template="modules/packing-sku-inventory/dyeing-printing-out-packaging-v2/template/item-v3">
+    </au-collection>
+    </div>
+  </div>
+  <!-- <div class="row">
+          <div class="col-md-6">
+            <h5 if.bind="detailShow">List SPP</h5>
+            <au-collection if.bind="detailShow" columns.bind="itemColumnsDetail" items.bind="data.packagingProductionOrdersDetails"
+              errors.one-way="error.packagingProductionOrdersDetails" add.bind="addItemDetailsCallback" remove.bind="onremove"
+              read-only.bind="readOnly" item-template="modules/packing-sku-inventory/dyeing-printing-out-packaging-v2/template/item-details">
+            </au-collection>
+          </div>
+  </div> -->
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

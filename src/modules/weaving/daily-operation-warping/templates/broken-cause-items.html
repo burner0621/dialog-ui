@@ -1,0 +1,18 @@
+<template>
+    <tr>
+      <td class="col-sm-1" style="white-space: nowrap;">
+        <au-autocomplete placeholder="Penyebab Putus" value.bind="data.WarpingBrokenCause" error.bind="error.WarpingBrokenCause" loader.bind="brokenCauses" text="WarpingBrokenCauseName" read-only.bind="readOnly">
+        </au-autocomplete>
+      </td>
+      <td class="col-sm-1" style="white-space: nowrap;">
+        <au-numeric value.bind="data.TotalBroken" error.bind="error.TotalBroken" read-only.bind="readOnly">
+        </au-numeric>
+      </td>
+      <td class="col-sm-1" if.bind="!readOnly">
+        <button class="btn btn-danger pull-right" click.delegate="onremove(brokenCauseData, $event)">
+          -
+        </button>
+      </td>
+    </tr>
+  </template>
+  

@@ -1,0 +1,93 @@
+<template>
+    <h1 class="page-header">Monitoring Invoice Export Garment History</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Invoice No"
+            value.bind="invoiceNo"
+            error.bind="error.InvoiceNo"
+            loader.bind="shippinginvoiceLoader"
+            text.bind = "shippinginvoiceNoView"
+            key="InvoiceNo"
+            placeholder="Cari Invoice No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Trucking Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Trucking Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>                    
+                    <th class="text-center">No</th>
+                    <th class="text-center">No Invoice</th>
+                    <th class="text-center">Tgl Packing List</th>                
+                    <th class="text-center">Tgl Invoice</th>
+                    <th class="text-center">Tgl Trucking</th>
+                    <th class="text-center">Nama Buyer</th>
+                    <th class="text-center">Consignee</th>
+                    <th class="text-center">Seksi</th>
+                    <th class="text-center">Destination</th>  
+                    <th class="text-center">Term Payment</th>
+                    <th class="text-center">No L/C</th>
+                    <th class="text-center">Status</th>                
+                    <th class="text-center">Staff Shipping</th>
+                    <th class="text-center">No PEB</th>                
+                    <th class="text-center">Tgl PEB</th>
+                    <th class="text-center">Tgl Shipping Instruction</th>
+                    <th class="text-center">Tgl Surat Pengantar</th>
+                    <th class="text-center">Tgl Credit Advice</th>
+                    <th class="text-center">Tgl Payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${item.invoiceNo}</td>
+                        <td>${item.plDate}</td>
+                        <td>${item.invoiceDate}</td>
+                        <td>${item.truckingDate}</td>
+                        <td>${item.buyerAgentName}</td>
+                        <td>${item.consigneeName}</td>
+                        <td>${item.sectionCode}</td>
+                        <td>${item.destination}</td>
+                        <td>${item.paymentTerm}</td>
+                        <td>${item.lcNo}</td>
+                        <td>${item.status}</td>
+                        <td>${item.shippingStaff}</td>
+                        <td>${item.pebNo}</td>
+                        <td>${item.pebDate}</td>
+                        <td>${item.siDate}</td>
+                        <td>${item.clDate}</td>
+                         <td>${item.caDate}</td>
+                        <td>${item.paymentDate}</td>
+                    </tr>                
+            </tbody>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="item.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

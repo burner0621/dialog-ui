@@ -1,0 +1,81 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Monitoring PO External Garment Over Budget</h1>
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                
+                <au-autocomplete 
+                value.bind="epono" 
+                label="Nomor PO Eksternal"
+                placeholder="masukkan nomor PO Eksternal" 
+                loader.bind="poexternalLoader" 
+                key="EPONo"
+                text="EPONo">
+            </au-autocomplete>
+                <au-autocomplete 
+                    value.bind="unit" 
+                    label="Unit yang mengajukan" 
+                    placeholder="cari unit" 
+                    loader.bind="unitLoader" 
+                    key="Code" 
+                    text="Name">
+                </au-autocomplete>
+
+                <au-autocomplete 
+                    value.bind="supplier" 
+                    label="Supplier" 
+                    placeholder="cari supplier" 
+                    loader.bind="supplierLoader" 
+                    key="code" 
+                    text="name">
+                </au-autocomplete>
+
+                <au-dropdown
+                    label="Status Approve"
+                    value.bind="isApproved"
+                    items.bind="statusApprove">
+                </au-dropdown>
+
+                <au-datepicker 
+                    label="Tanggal Awal" 
+                    value.bind="dateFrom">
+                </au-datepicker>
+
+                <au-datepicker 
+                    label="Tanggal Akhir" 
+                    value.bind="dateTo">
+                </au-datepicker>
+
+                <div class="form-group">
+                    <label for="contact" class="col-sm-6 control-label"></label>
+                    <div class="col-sm-3">
+                        <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                        <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br></br>
+        <div class="table-responsive">
+            <au-table 
+                view-model.ref="table" 
+                data.bind="loader" 
+                columns.bind="columns" 
+                sortable.bind="true" 
+                page-size="25" 
+                options.bind="tableOptions" >
+                <div slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+                </div>
+            </au-table>
+        </div>
+        <hr/>
+    </au-input-form>
+</template>

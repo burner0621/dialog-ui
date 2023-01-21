@@ -1,0 +1,92 @@
+<template>
+
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Laporan Monitoring Spesifikasi Mesin </h1>
+    <form class="form-horizontal">
+        
+        <au-autocomplete label="Mesin" value.bind="machine" error.bind="error.machine" loader.bind="machineLoader" placeholder="Cari machine"
+                key="Code" text="Name" >
+            </au-autocomplete>
+        <au-autocomplete label="Nomor Order Produksi" value.bind="productionOrder" loader.bind="productionOrderLoader"
+                placeholder="Cari No Surat Produksi Order" key="OrderNo" text="OrderNo" >
+            </au-autocomplete>
+        
+
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div class="btn-group pull-left" >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+
+    <br>
+    </br>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <!--thead before search-->
+            <thead align="center" if.bind="!data">
+                <tr>
+                    <td rowspan="3">No</td>
+                    <td rowspan="3">Nama Mesin</td>
+                    <td colspan="2">Waktu Input</td>
+                    <td rowspan="3">No Surat Order Produksi</td>
+                    <td rowspan="3">Nomor Kereta</td>
+                    <td rowspan="3">Indikator(satuan)</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Tanggal</td>
+                    <td rowspan="2">Jam</td>
+
+                </tr>
+            </thead>
+            <!--thead after search-->
+            <thead align="center" repeat.for="item of data" if.bind="$first">
+                <tr>
+                    <td rowspan="3">No</td>
+                    <td rowspan="3">Nama Mesin</td>
+                    <td colspan="2">Waktu Input</td>
+                    <td rowspan="3">No Surat Order Produksi</td>
+                    <td rowspan="3">Nomor Kereta</td>
+                    <td rowspan="3" repeat.for="indicator of item.items">${indicator.indicator}(${indicator.uom})</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Tanggal</td>
+                    <td rowspan="2">Jam</td>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center">${$index + 1}</td>
+                    <td>${item.machine}</td>
+                    <td>${item.DateTimeInput | dateFormat:'DD MMMM YYYY'}</td>
+                    <td>${item.DateTimeInput | dateFormat:'HH:mm'}</td>
+                    <td>${item.orderNo}</td>
+                    <td>${item.cartNumber}</td>
+                    <td repeat.for="indicator of item.items">${indicator.value}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Tidak ada data ditemukan.
+    </div>
+    <hr/>
+    </form>
+</template>

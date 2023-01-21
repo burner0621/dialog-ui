@@ -1,0 +1,107 @@
+<template>
+  <au-input-form title.bind="title"
+                 with.bind="context">
+
+    <div slot="actions"
+         class="btn-group">
+      <button class="btn btn-default"
+              click.delegate="context.cancel($event)"
+              if.one-way="context.hasCancel">Kembali</button>
+      <button class="btn btn-primary"
+              click.delegate="context.edit($event)"
+              if.one-way="context.hasEdit">Ubah</button>
+      <button class="btn btn-success"
+              click.delegate="context.save($event)"
+              if.one-way="context.hasSave">Simpan</button>
+      <button class="btn btn-danger"
+              click.delegate="context.delete($event)"
+              if.one-way="context.hasDelete">Hapus</button>
+    </div>
+
+    <au-textbox value.bind="data.VBRealizationNo"
+                if.bind="data.VBRealizationNo"
+                label="No VB Realisasi"
+                read-only.bind="true"
+                options.bind="controlOptions">
+    </au-textbox>
+
+    <au-datepicker label="Tanggal"
+                   value.bind="data.Date"
+                   error.bind="error.Date"
+                   read-only.bind="readOnly || isEdit"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-dropdown if.bind="!isEdit"
+                 label="Tipe VB"
+                 items.bind="NumberVbOptions"
+                 value.bind="selectedTypeVB"
+                 error.bind="error.TypeVBNonPO"
+                 read-only.bind="readOnly"
+                 placeholder="Pilih Nomor VB"
+                 options.bind="controlOptions">
+    </au-dropdown>
+
+    <au-autocomplete if.bind="selectedTypeVB == 'Dengan Nomor VB'"
+                     value.bind="numberVB"
+                     error.bind="error.VBCode"
+                     label="No VB"
+                     loader.one-time="vbLoader"
+                     text="VBNo"
+                     query.bind="filter"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions"
+                     placeholder="Cari Kode VB">
+    </au-autocomplete>
+
+    <!-- <au-autocomplete 
+              value.bind="purchaseRequest" 
+              error.bind="error.purchaseRequestId"
+              label="No. PR"
+              loader.bind="purchaseRequestPostedLoader"
+              placeholder="cari purchase request" 
+              key="no"
+              read-only.bind="prReadOnly"
+              options.bind="controlOptions">
+          </au-autocomplete> -->
+
+    <au-datepicker if.bind="data.numberVB && selectedTypeVB == 'Dengan Nomor VB'"
+                   label="Estimasi Tanggal Realisasi"
+                   value.bind="data.numberVB.DateEstimate"
+                   read-only.bind="true"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-datepicker if.bind="selectedTypeVB == 'Tanpa Nomor VB'"
+                   label="Estimasi Tanggal Realisasi"
+                   value.bind="data.DateEstimate"
+                   read-only.bind="readOnly"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-textbox error.bind="error.Item"
+                show.bind="error.Item"
+                read-only.bind="true">
+    </au-textbox>
+
+    <!-- <au-collection items.bind="data.Items"
+                   errors.bind="error.Items"
+                   columns.bind="columns"
+                   read-only.bind="readOnly"
+                   item-template="modules/purchasing/realization-vb-with-po/template/item"
+                   header-template="modules/purchasing/realization-vb-with-po/template/item-header">
+    </au-collection> -->
+
+    <au-collection view-model.ref="collectionVM"
+                   items.bind="data.Items"
+                   errors.bind="error.Items"
+                   columns.bind="columns"
+                   add.bind="addItems"
+                   remove.bind="onremove"
+                   read-only.bind="readOnly"
+                   options.bind="collectionOptions"
+                   item-template="modules/purchasing/realization-vb-with-po/template/new-item">
+    </au-collection>
+
+  </au-input-form>
+</template>

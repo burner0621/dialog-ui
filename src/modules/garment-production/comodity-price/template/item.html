@@ -1,0 +1,25 @@
+<template >
+    <tr>
+        <td>
+            <au-autocomplete
+                value.bind="selectedComodity"
+                error.bind="error.Comodity"
+                loader.bind="comodityLoader"
+                text.bind="comodityView"
+                placeholder="comodity"
+                read-only.bind="readOnly || isEdit">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Price"
+                error.bind = "error.Price"
+                read-only.bind="readOnly"
+                format="0,000.00">
+            </au-numeric>                    
+        </td>
+        <td if.bind="!readOnly || isEdit" class="col-sm-1">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

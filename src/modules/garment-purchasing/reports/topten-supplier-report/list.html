@@ -1,0 +1,94 @@
+<template>
+    <h1 class="page-header">Laporan Top Ten Supplier</h1>
+    <form class="form-horizontal">
+        <!--<au-autocomplete  value.bind="unit" error.bind="error.unit" label="Unit"  loader.bind="unitLoader"></au-autocomplete>-->
+        <au-autocomplete  value.bind="unit" label="Unit"  loader.bind="unitLoader" options.bind="controlOptions"></au-autocomplete>
+                
+        <au-dropdown 
+                label="Jenis Supplier" 
+                value.bind="JenisSpl"
+                items.bind="SupplierType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentImport"  
+                options.bind="controlOptions"
+                if.bind="jnsSpl">
+        </au-dropdown>
+
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentLocal"  
+                options.bind="controlOptions"
+                if.bind="!jnsSpl">
+        </au-dropdown>
+        
+        <au-dropdown 
+                label="Kategori" 
+                value.bind="KtgrItem"
+                items.bind="KategoriItem"
+                options.bind="controlOptions" >
+        </au-dropdown>
+        
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind ="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind ="controlOptions"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr if.bind="!jnsSpl">
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">Supplier</th>
+                    <th class="text-center">Nominal [IDR]</th>
+                    <th class="text-center">Tipe Bahan</th>                    
+                </tr>
+
+                <tr if.bind="jnsSpl">
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">Supplier</th>
+                    <th class="text-center">Mata Uang</th>
+                    <th class="text-center">Nominal [VALAS]</th>
+                    <th class="text-center">Nominal [IDR]</th>
+                    <th class="text-center">Tipe Bahan</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr if.bind="!jnsSpl" repeat.for="item of data">                   
+                    <td class="text-center"> ${$index + 1}</td>
+                    <td>${item.SupplierName}</td>
+                    <td align="right">${item.AmountIDR}</td>
+                    <td>${item.ProductName}</td>
+                </tr>   
+
+                <tr if.bind="jnsSpl" repeat.for="item of data">                   
+                    <td class="text-center"> ${$index + 1}</td>
+                    <td>${item.SupplierName}</td>
+                    <td>${item.CurrencyCode}</td>                    
+                    <td align="right">${item.Amount}</td>
+                    <td align="right">${item.AmountIDR}</td>                    
+                    <td>${item.ProductName}</td>
+                </tr>      
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

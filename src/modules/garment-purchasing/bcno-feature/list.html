@@ -1,0 +1,74 @@
+<template>
+    <h4>FITUR PENCARIAN NO BC</h4>
+    <form class="form-horizontal">
+        <au-dropdown 
+              label="Jenis" 
+              value.bind="SearchItem"
+              items.bind="SearchItems"
+              options.bind="controlOptions" >
+      </au-dropdown>
+        <au-textbox label="No BC" value.bind="BCNo" if.bind="SearchItem == 'No BC'"
+            options.bind="controlOptions">
+        </au-textbox>
+        <au-textbox label="No PO" value.bind="pono" if.bind="SearchItem == 'No PO'"
+            options.bind="controlOptions">
+        </au-textbox>
+        <au-textbox label="No RO" value.bind="rono" if.bind="SearchItem == 'No RO'"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <!-- <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div> -->
+        <br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td >No RO</td>
+                        <td >Tipe BC</td>
+                        <td >No BC</td>
+                        <td >Tanggal BC</td>
+                        <td >No Surat Jalan</td>
+                        <td >No PO</td>
+                        <td >Quantity</td>
+                        <td >Kode Barang</td>
+                        <td >Komposisi</td>
+                        <td >Konstruksi</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td >${item.RONo}</td>
+                        <td >${item.BCNo}</td>
+                        <td >${item.BCType}</td>
+                        <td >${item.BCDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td >${item.DONo}</td>
+                        <td>${item.PO}</td>
+                        <td >${item.QtyBC}</td>
+                        <td >${item.ProductCode}</td>
+                        <td >${item.Composition}</td>
+                        <td >${item.Construction}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+    </form>
+
+
+</template>

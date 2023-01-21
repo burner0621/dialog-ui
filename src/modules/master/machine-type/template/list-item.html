@@ -1,0 +1,41 @@
+<template>
+  <tr>
+      <td>
+        <au-textbox 
+          value.bind="data.Indicator" 
+          error.bind="error.Indicator"
+          read-only.bind="readOnly">
+        </au-textbox>
+      </td>
+      <td>
+        <au-dropdown
+          value.bind="data.DataType"
+          items.bind="dropDownMenu"
+          read-only.bind="readOnly"
+          key="data.DataType"
+          text="data.DataType"
+          error.bind="error.DataType"
+          change.delegate="handleDataTypeChange($event)"
+        ></au-dropdown>
+      </td>
+      <td>
+        <au-textbox 
+          value.bind="data.DefaultValue"
+          error.bind="error.DefaultValue"
+          read-only.bind="data.DataType == 'input teks' || data.DataType == 'input angka' || readOnly"
+        ></au-textbox>
+      </td>
+      <td>
+        <au-textbox 
+          value.bind="data.Uom"
+          error.bind="error.Uom"
+          read-only.bind="readOnly"
+        ></au-textbox>
+      </td>
+      <td if.bind="!readOnly">
+        <button 
+          class="btn btn-danger pull-right" 
+          click.delegate="onremove(data, $event)">-</button>
+      </td>
+  </tr>
+</template>

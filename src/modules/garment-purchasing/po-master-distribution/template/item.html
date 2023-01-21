@@ -1,0 +1,107 @@
+<template>
+    <tr>
+        <td style="width:10%" class="bg-primary">
+            <au-textbox
+                value.bind="data.EPONo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:10%" class="bg-primary">
+            <au-textbox
+                value.bind="data.PRNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:10%" class="bg-primary">
+            <au-textbox
+                value.bind="data.POSerialNumber"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:15%" class="bg-primary">
+            <au-textbox
+                value.bind="dataProduct"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-numeric
+                value.bind="data.DealQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-numeric
+                value.bind="data.DOQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-textbox
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-numeric
+                value.bind="data.Conversion"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-numeric
+                value.bind="data.SmallQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-textbox
+                value.bind="data.SmallUom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-textbox
+                value.bind="data.PricePerDealUnit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-numeric
+                value.bind="data.PriceTotal"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td style="width:5%" class="bg-primary">
+            <au-textbox
+                value.bind="data.Currency.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="width:10%" class="bg-primary">
+            <au-textbox
+                value.bind="data.Remark"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="15">
+            <au-collection 
+                items.bind="data.Details" 
+                errors.bind="error.Details" 
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly" 
+                remove.bind="removeItems"
+                options.bind="itemOptions"
+                item-template="modules/garment-purchasing/po-master-distribution/template/detail"
+                footer-template="modules/garment-purchasing/po-master-distribution/template/detail-footer" >
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+    <!-- <tr>
+        <td colspan="15" style="background-color: #173250;"></td>
+    </tr> -->
+    
+</template>

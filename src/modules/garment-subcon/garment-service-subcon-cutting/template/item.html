@@ -1,0 +1,65 @@
+<template >
+    <tr>
+        <td class="col-sm-2 bg-primary">
+            <au-autocomplete
+                value.bind="selectedCuttingIn"
+                error.bind="error.RONo"
+                loader.bind="cuttingInLoader"
+                text="RONo"
+                query.bind="cuttingInFilter"
+                placeholder="Nomor RO"
+                read-only.bind="readOnly|| isEdit"
+                options.bind="controlOptions"
+                view-model.ref="selectedCuttingInViewModel">
+            </au-autocomplete>
+
+        </td>
+        <td class="col-sm-5 bg-primary">
+            <au-textbox
+                value.bind="data.Article"
+                error.bind="error.Article"
+                read-only="true"
+                if.bind="data.Article"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-5 bg-primary">
+            <au-autocomplete
+                value.bind="data.Comodity"
+                error.bind="error.Comodity"
+                text.bind="comodityView"
+                read-only.bind="true"
+                if.bind="data.Comodity"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td if.bind="isCreate" class="col-sm-1">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)" >-</button>
+        </td>
+        <td class="col-sm-1">
+            <div>
+                <button class="btn btn-info pull-right" if.bind= "data.Details" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+    </tr>
+    <tr if.bind="error.DetailsCount">
+        <div class="form-group has-error" if.bind="error.DetailsCount">
+            <p if.bind="error.DetailsCount" class="help-block text-center">${error.DetailsCount}</p>
+        </div>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="1" style='border:none;'>
+        </td>
+        <td colspan="3" >
+            <au-collection 
+                items.bind="data.Details" 
+                errors.bind="error.Details" 
+                columns.bind="isCreate ? itemsColumnsCreate : itemsColumns"
+                read-only.bind="readOnly || isEdit" 
+                options.bind="itemOptions"
+                item-template="modules/garment-subcon/garment-service-subcon-cutting/template/detail" >
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+</template>

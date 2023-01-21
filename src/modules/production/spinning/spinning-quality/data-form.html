@@ -1,0 +1,158 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-dropdown label="Jenis Proses" value.bind="processType" error.bind="error.ProcessType"
+            read-only.bind="readOnly" items.bind="processTypeList" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Jenis Benang" value.bind="yarnType" error.bind="error.MaterialTypeIdentity"
+            loader.bind="materialTypeLoader" placeholder="Cari jenis benang" key="Id" text="Name" 
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Grade" value.bind="data.Grade" error.bind="error.Grade" read-only.bind="readOnly"
+            items.bind="gradeList" options.bind="controlOptions">
+        </au-dropdown>
+        <div class="col-lg-12" style="padding-left:140px">
+            <div class="col-lg-2">
+                <au-numeric label="Std Berat" value.bind="stdWeight" read-only.bind="readOnly" error.bind="error.Eff"
+                    options.bind="controlOptions2">
+                </au-numeric>
+            </div>
+            <div class="col-lg-2">
+                <au-autocomplete label="UOM" value.bind="uomWeight" error.bind="error.UomWeightIdentity" loader.bind="uomWeightLoader"
+                    text.bind="uomWeightView" key="Unit" read-only.bind="readOnly" options.bind="controlOptions2">
+                </au-autocomplete>
+            </div>
+            <div class="col-lg-2">
+                <au-numeric label="Std Panjang" value.bind="data.StdLength" read-only.bind="readOnly" error.bind="error.Eff"
+                    options.bind="controlOptions2">
+                </au-numeric>
+            </div>
+            <div class="col-lg-2">
+                <au-autocomplete label="UOM" value.bind="uomLength" error.bind="error.UomLengthIdentity" loader.bind="uomLengthLoader"
+                    text.bind="uomLengthView" key="Unit" read-only.bind="readOnly" options.bind="controlOptions2">
+                </au-autocomplete>
+            </div>
+        </div>
+        <div class="col-lg-12" style="padding-left:140px">
+            <div class="col-lg-2">
+                <au-numeric label="Grain" value.bind="data.Grain" read-only.bind="true" error.bind="error.Grain"
+                    options.bind="controlOptions2">
+                </au-numeric>
+            </div>
+            <div class="col-lg-2">
+                <au-numeric label="Toleransi (%)" value.bind="data.Tolerance" read-only.bind="readOnly" error.bind="error.Tolerance"
+                    options.bind="controlOptions2">
+                </au-numeric>
+            </div>
+        </div>
+        <div show.bind="processType && (data.ProcessType=='Ring Spinning'||data.ProcessType=='Winder')">
+            <div class="col-lg-12" style="padding-left:140px">
+                <div class="col-lg-2">
+                    <au-numeric label="CV% Ne" value.bind="data.CVNe" read-only.bind="readOnly" error.bind="error.CVNe"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="CV% m" value.bind="data.CVm" read-only.bind="readOnly" error.bind="error.CVm"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="U%" value.bind="data.U" read-only.bind="readOnly" error.bind="error.U"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+            </div>
+            <div class="col-lg-12" style="padding-left:140px">
+                <div class="col-lg-2">
+                    <au-numeric label="Thin" value.bind="thin" read-only.bind="readOnly" error.bind="error.Thin"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="Thick" value.bind="thick" read-only.bind="readOnly" error.bind="error.Thick"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="Neps" value.bind="neps" read-only.bind="readOnly" error.bind="error.Neps"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="IPI" value.bind="data.TotalIPI" read-only.bind="true" error.bind="error.TotalIPI"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+            </div>
+            <div class="col-lg-12" style="padding-left:140px">
+                <div class="col-lg-2">
+                    <au-numeric label="SYS [cN/tex]" value.bind="data.SYSCnTex" read-only.bind="readOnly" error.bind="error.SYSCnTex"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="SYS [grf]" value.bind="data.SYSGrf" read-only.bind="readOnly" error.bind="error.SYSGrf"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="CV% SYS" value.bind="data.CVSys" read-only.bind="readOnly" error.bind="error.CVSys"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="Elongation" value.bind="data.Elongation" read-only.bind="readOnly" error.bind="error.Eff"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+            </div>
+            <div class="col-lg-12" style="padding-left:140px">
+                <div class="col-lg-2">
+                    <au-numeric label="Hairiness" value.bind="data.Hairiness" read-only.bind="readOnly" error.bind="error.Hairiness"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                    </div>
+                <div class="col-lg-2">
+                    <au-numeric label="SH" value.bind="data.SH" read-only.bind="readOnly" error.bind="error.SH"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="Twist/m" value.bind="data.TwistM" read-only.bind="readOnly" error.bind="error.TwistM"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="Twist/inch" value.bind="data.TwistInch" read-only.bind="readOnly" error.bind="error.TwistInch"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+            </div>
+            <div class="col-lg-12" style="padding-left:140px">
+                <div class="col-lg-2">
+                    <au-numeric label="CV% Twist" value.bind="data.CVTwist" read-only.bind="readOnly" error.bind="error.EfCVTwist"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="&alpha; m" value.bind="data.AlphaM" read-only.bind="readOnly" error.bind="error.AlphaM"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+                <div class="col-lg-2">
+                    <au-numeric label="&alpha; inch" value.bind="data.AlphaInch" read-only.bind="readOnly" error.bind="error.AlphaInch"
+                        options.bind="controlOptions2">
+                    </au-numeric>
+                </div>
+            </div>
+        </div>
+    </au-input-form>
+</template>

@@ -1,0 +1,38 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <!-- <au-textbox value.bind="data.ProductionOrder.OrderNo" error.bind="error.ProductionOrder"
+                read-only.bind="true">
+            </au-textbox> -->
+
+            <au-autocomplete value.bind="selectedProductionOrder" query.bind="filter"
+                read-only.bind="readOnly || isEdit" error.bind="error.ProductionOrder"
+                loader.bind="productionOrderLoader" key="OrderNo" text.bind="productionOrderTextFormatter">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ConstructionName" read-only.bind="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.UnitOrCode" error.bind="error.UnitOrCode" read-only.bind="readOnly"
+                placeholder="Input Jenis / Code"></au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Packing" error.bind="error.Packing" format="0,0" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="Length" error.bind="error.Length" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.ConvertionValue" error.bind="error.ConvertionValue" format="0,0.00"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

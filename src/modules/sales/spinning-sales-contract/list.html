@@ -1,0 +1,52 @@
+<template>
+
+    <div class="display-wrapper">
+        <h1 class="page-header">Sales Contract - Spinning</h1>
+        <br>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" click.delegate="loadPage()"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" click.delegate="activate()"> Tampilkan Semua </button>    
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="pull-right">
+                    <button class="btn btn-primary" click.delegate="create()">Buat</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="text-align:center">Nomor Sales Contract</th>
+                        <th style="text-align:center">Buyer</th>
+                        <th style="text-align:center">Jenis Buyer</th>
+                        <th style="text-align:center">Tanggal Pengiriman</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td>${item.SalesContractNo}</td>
+                        <td style="text-align:center">${item.Buyer.Name}</td>
+                        <td style="text-align:center">${item.Buyer.Type}</td>
+                        <td style="text-align:center">${item.DeliverySchedule | dateFormat: 'D MMM YYYY'}</td>
+                        <td><button class="btn btn-default" click.delegate="view(item)">Rincian</button>
+                            <button class="btn btn-primary" click.delegate="exportPDF(item)">Cetak Pdf</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Data Surat Perintah Produksi Tidak Ditemukan.
+        </div>
+        <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+        <hr/>
+    </div>
+</template>

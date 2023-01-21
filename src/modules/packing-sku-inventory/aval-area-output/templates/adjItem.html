@@ -1,0 +1,37 @@
+<template replace-part="inspectionMaterialProductionOrders">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedAval" error.bind="error.AvalType" loader.bind="avalLoader"
+                text.bind="adjAvalFormatter" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td show.bind="!readOnly">
+            <au-numeric value.bind="data.avalQuantityBalance" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td show.bind="!readOnly"> 
+            <au-numeric value.bind="data.avalWeightBalance" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.avalQuantity" format="0.00" read-only.bind="readOnly"
+                options.bind="controlOptions" error.bind="error.AvalQuantity">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.avalQuantityKg" format="0.00" read-only.bind="readOnly"
+                options.bind="controlOptions" error.bind="error.AvalQuantityKg">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.adjDocumentNo" read-only.bind="readOnly" error.bind="error.AdjDocumentNo"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

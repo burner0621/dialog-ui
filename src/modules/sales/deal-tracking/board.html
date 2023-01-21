@@ -1,0 +1,54 @@
+<template>
+    <require from="./styles/board-style.css"></require>
+    <require from="../../../lib/number-format-value-converter"></require>
+
+    <div id="dragula">
+        <au-input-form title.bind="board.Title" options.bind="formOptions">
+            <dragula-and-drop drop-fn.call="itemDropped(item, target, source, sibling, itemVM, siblingVM)"></dragula-and-drop>
+
+            <div class="row">
+                <div class="col-sm-2 padding-right">
+                    <div class="btn-board list" click.delegate="createStage()">
+                        <h5>Buat Stage <i class="fa fa-plus" aria-hidden="true"></i></h5>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 padding-right" if.bind="hasStages">
+                    <div class="btn-board list" click.delegate="createDeal()">
+                        <h5>Buat Deal <i class="fa fa-plus" aria-hidden="true"></i></h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="kanban">
+                <div class="col-sm-3" repeat.for="stage of stages">
+                    <div class="kanban kanban__box ${type[$index % 4]}">
+                        <div class="kanban__title">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true" title="Ubah" click.delegate="editStage(stage)"></i> <i if.bind="stage.map.length == 0" class="fa fa-trash-o" aria-hidden="true" title="Hapus" click.delegate="deleteStage(stage.Id)"></i>
+                            <h3>${stage.name}</h3>
+                        </div>
+
+                        <ol class="kanban drag-source drop-target" data-code.bind="stage.code">
+                            <li class="kanbanDd-item" repeat.for="i of stage.map" data-index.bind="$index" data-id.bind="i.Id" click.delegate="detail(i.Id, stage.name)">
+                                <div class="kanbanTitle">
+                                    ${i.Name}<br>
+                                </div>
+                                <div class="kanbanText">
+                                    <!-- ${i.product.name} - ${i.quantity} - ${i.product.uom.unit}<br> -->
+                                    ${i.Quantity} - ${i.UomUnit}<br>
+                                    ${board.Currency.Symbol} ${i.Amount | numberFormat: '0,000'}<br>
+                                    PIC: ${i.ContactName}<br>
+                                    Seller: ${i.CreatedBy}<br>
+                                    Tanggal Tutup: ${i.CloseDate}
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="total">
+                            <h4>Total: ${board.Currency.Symbol} ${stage.total | numberFormat: '0,000'}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </au-input-form>
+    </div>
+</template>

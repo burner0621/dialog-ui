@@ -1,0 +1,15 @@
+<template>
+  <tr>
+    <td colspan="4" class="text-right" style="padding-right:10%">
+      Total
+    </td>
+    <td>
+      <au-textbox value.one-way="currency" error.bind="error.currency" read-only.bind="true"></au-textbox>
+    </td>
+    <td colspan.bind="readOnly ? 1 : 2" class="text-left">
+      <require from="../../../../../lib/number-format-value-converter"></require>
+      ${itemSum | numberFormat:"0,000.00"}
+    </td>
+    
+  </tr>
+</template>

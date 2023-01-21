@@ -1,0 +1,34 @@
+<template>
+  <tr>
+       
+     
+      <td  class="col-sm-9">
+            <au-autocomplete 
+                value.bind="addCharges" 
+                loader.bind="addChargesLoader"
+                text.bind = "chargesView"
+                placeholder ="Cari additional charges"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete> 
+          <!-- <au-textbox 
+              value.bind="data.adjustmentDescription"
+              read-only.bind="readOnly || isEdit"
+              error.bind="error.AdjustmentDescription" 
+              options.bind="controlOptions">
+          </au-textbox> -->
+      </td>
+        <td class="col-sm-3">
+          <au-numeric 
+              value.bind="data.adjustmentValue" 
+              read-only.bind="readOnly || isEdit || isUpdated"
+              options.bind="controlOptions"
+              error.bind="error.AdjustmentValue" 
+              format="0.0000">
+          </au-numeric>
+      </td>
+      <td if.bind="!readOnly">
+        <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)" >-</button>
+    </td>
+   </tr>
+</template>

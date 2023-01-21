@@ -1,0 +1,54 @@
+<template>
+
+    <ai-dialog style="width:750px; height: 300px;">
+
+        <block>
+
+            <ai-dialog-body>
+                <div class="row">
+                    <au-autocomplete label="Jenis Cashflow"
+                                     value.bind="cashflowType"
+                                     loader.one-time="cashflowTypeLoader"
+                                     error.bind="CashflowTypeId"
+                                     text="Name">
+                    </au-autocomplete>
+
+                    <au-dropdown label="Cash-In/Cash-Out"
+                                 value.bind="selectedType"
+                                 items.bind="typesOption"
+                                 text="value"
+                                 error.bind="error.Type">
+                    </au-dropdown>
+
+                    <au-textbox label="Nama"
+                                value.bind="data.Name"
+                                error.bind="error.Name">
+                    </au-textbox>
+
+                    <au-numeric label="Nomor Urut"
+                                value.bind="data.LayoutOrder"
+                                error.bind="error.LayoutOrder"
+                                format="0">
+                    </au-numeric>
+
+                    <au-checkbox label="Hanya Label"
+                                 value.bind="data.IsLabelOnly">
+                    </au-checkbox>
+                </div>
+            </ai-dialog-body>
+
+            <ai-dialog-footer>
+                <div class="text-center"
+                     style="margin:100px 0px 10px 0px;">
+                    <button click.delegate="controller.cancel()"
+                            class='btn btn-default btn-sm'>Kembali</button>
+                    <button click.delegate="save()"
+                            class='btn btn-success btn-sm'>Simpan</button>
+                </div>
+            </ai-dialog-footer>
+
+        </block>
+
+    </ai-dialog>
+
+</template>

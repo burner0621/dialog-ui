@@ -1,0 +1,17 @@
+<template>
+
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox label="Jenis Lusi" value.bind="data.type" error.bind="error.Type" read-only.bind="readOnly">
+        </au-textbox>
+        
+        <au-textbox label="Kode" value.bind="data.code" error.bind="error.Code" read-only.bind="readOnly"></au-textbox>
+
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+
+</template>

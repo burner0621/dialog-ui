@@ -1,0 +1,49 @@
+<template>
+    <tr>
+        <td class="text-center">${data.no}</td>
+        <td>${data.code}</td>
+        <td>${data.productionOrderNo}</td>
+        <td>${data.productionOrderType}</td>
+        <td>${data.cartNo}</td>
+        <td>${data.dateIm | dateFormat:'DD MMMM YYYY'}</td>
+        <td>${data.shiftIm}</td>
+        <td>${data.operatorIm}</td>
+        <td>${data.machineNoIm}</td>
+        <td>${data.construction}</td>
+        <td>${data.buyer}</td>
+        <td>${data.color}</td>
+        <td>${data.orderQuantity}</td>
+        <td>${data.packingInstruction}</td>
+        <td class="text-center"><button class="btn btn-info" click.delegate="toggle()">i</button></td>
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="14">
+            <au-collection columns.one-way="detailFQCColumns" items.bind="data.details" read-only="true">
+                <template replace-part="thead">
+                    <thead>
+                        <tr>
+                            <th>${detailFQCColumns[0]}</th>
+                            <th>${detailFQCColumns[1]}</th>
+                            <th>${detailFQCColumns[2]}</th>
+                            <th>${detailFQCColumns[3]}</th>
+                            <th>${detailFQCColumns[4]}</th>
+                            <th>${detailFQCColumns[5]}</th>
+                            <th>${detailFQCColumns[6]}</th>
+                            <th>${detailFQCColumns[7]}</th>
+                        </tr>
+                    </thead>
+                </template>
+                <template replace-part="item">
+                    <td class="text-center">${data.no}</td>                    
+                    <td>${data.pcsNo}</td>
+                    <td>${data.initLength}</td>
+                    <td>${data.width}</td>
+                    <td>${data.finalScore}</td>
+                    <td>${data.grade}</td>
+                    <td>${data.avalLength}</td>
+                    <td>${data.sampleLength}</td>
+                </template>
+            </au-collection>
+        </td>
+    </tr>
+</template>

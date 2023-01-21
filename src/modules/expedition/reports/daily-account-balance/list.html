@@ -1,0 +1,109 @@
+<template>
+  <h1 class="page-header">Saldo Bank Harian</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete
+      value.bind="info.bank"
+      error.bind="error.bank"
+      label="Bank"
+      loader.bind="bankLoader"
+      text.bind="bankView"
+      placeholder="cari bank"
+      read-only.bind="readOnly"
+      options.bind="controlOptions"
+    >
+    </au-autocomplete>
+
+    <au-textbox
+      label="No. Rekening"
+      value.bind="info.bank && info.bank.AccountNumber ? info.bank.AccountNumber : ''"
+      read-only.bind="true"
+      options.bind="controlOptions"
+    >
+    </au-textbox>
+
+    <au-textbox
+      label="Currency"
+      value.bind="info.bank && info.bank.Currency && info.bank.Currency.Code ? info.bank.Currency.Code : ''"
+      read-only.bind="true"
+      options.bind="controlOptions"
+    >
+    </au-textbox>
+
+    <!-- <au-dropdown
+            label="Bulan"
+            value.bind="info.month"
+            error.bind="error.month"
+            read-only.bind="readOnly"
+            items.bind="monthList"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown
+            label="Tahun"
+            value.bind="info.year"
+            error.bind="error.year"
+            read-only.bind="readOnly"
+            items.bind="yearList"
+            options.bind="controlOptions">
+        </au-dropdown> -->
+
+    <au-datepicker
+      value.bind="info.startDate"
+      label="Tanggal Awal"
+      options.bind="controlOptions"
+      error.bind="error.startDate"
+    >
+    </au-datepicker>
+
+    <au-datepicker
+      value.bind="info.endDate"
+      label="Tanggal Akhir"
+      options.bind="controlOptions"
+      error.bind="error.endDate"
+    >
+    </au-datepicker>
+
+    <au-dropdown
+      label="Nama Divisi"
+      value.bind="info.divisionName"
+      error.bind="error.divisionName"
+      read-only.bind="(readOnly)"
+      keypress.delegate="enterDelegate($event)"
+      items.bind="divisionOptions"
+      options.bind="controlOptions"
+    ></au-dropdown>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="daily-balance">
+    <au-table
+      view-model.ref="tableList"
+      data.bind="loader"
+      columns.bind="columns"
+      sortable="true"
+      page-size="25"
+      options.bind="tableOptions"
+    >
+      <div slot="toolbar" class="btn-group">
+        <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+      </div>
+    </au-table>
+    <br /><br />
+    <au-table
+      view-model.ref="currencyTableList"
+      data.bind="currencyLoader"
+      columns.bind="currencyColumns"
+      sortable="true"
+      options.bind="tableOptions"
+    >
+    </au-table>
+  </div>
+</template>

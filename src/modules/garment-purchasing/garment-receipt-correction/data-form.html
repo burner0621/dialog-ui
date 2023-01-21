@@ -1,0 +1,84 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox 
+            value.bind="data.CorrectionNo" 
+            label="Nomor Koreksi"
+            read-only.bind="true"
+            if.bind="isView"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal Koreksi"
+            value.bind="data.CorrectionDate"
+            options.bind="controlOptions"
+            if.bind="isView"
+            read-only.bind="true">
+        </au-datepicker>
+
+
+        <au-autocomplete 
+            value.bind="unitReceiptNote" 
+            error.bind="error.URNNo"
+            label="Nomor Bon Terima Unit"
+            loader.one-time="unitReceiptNoteLoader"
+            placeholder="Cari Bon Terima Unit"
+            options.bind="controlOptions"
+            query.bind="filter"
+            text.bind="urnView"
+            read-only.bind="readOnly">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Jenis Koreksi"
+            value.bind="correctionType"
+            error.bind="error.CorrectionType"
+            items.bind="typeData"
+            options.bind="controlOptions"
+            read-only.bind="readOnly">
+        </au-dropdown>
+
+        <au-textbox 
+            value.bind="data.Unit.Name" 
+            label="Unit"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+        
+        <au-textbox 
+            value.bind="data.Storage.name" 
+            label="Gudang"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline
+            label="Keterangan"
+            value.bind="data.Remark"
+            error.bind="error.Remark"
+            options.bind="controlOptions"
+            read-only.bind="readOnly"
+            placeholder=" ">
+        </au-multiline>
+        
+        <au-textbox
+            read-only="true"
+            error.bind="error.ItemsCount">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            columns.bind="itemHeader.columns"
+            read-only.bind="readOnly" 
+            options.bind="collectionOptions"
+            errors.bind="error.Items"
+            header-template="modules/garment-purchasing/garment-receipt-correction/template/receipt-correction-item-header"
+            item-template="modules/garment-purchasing/garment-receipt-correction/template/receipt-correction-item"
+            show.bind="hasItems">
+        </au-collection>
+    </au-input-form>
+</template>

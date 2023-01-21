@@ -1,0 +1,34 @@
+<template>
+    <style>
+        #status-order-form .panel-body {
+            display: none;
+        }
+
+        #status-order-form #table {
+            overflow: auto;
+        }
+
+        #status-order-form table > thead > tr > th > label {
+            white-space: pre;
+        }
+    </style>
+
+    <div id="status-order-form">
+        <au-input-form title.bind="title" options.bind="formOptions">
+            <au-textbox value.bind="year" label="Tahun" read-only="true"></au-textbox>
+            <au-textbox value.bind="month" label="Bulan" read-only="true"></au-textbox>
+            <au-textbox value.bind="orderType" label="Jenis Order" read-only="true"></au-textbox>
+
+            <br>
+
+            <div id="table">
+                <au-collection              
+                    items.bind="data"
+                    columns.bind="columns"
+                    errors.bind="errors"
+                    item-template="modules/production/finishing-printing/reports/order-status-report/templates/detail-item">
+                </au-collection>
+            </div>
+        </au-input-form>
+    </div>
+</template>

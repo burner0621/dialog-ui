@@ -1,0 +1,41 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.MeasurementIndex + 1" options.bind="controlOptions" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.length"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.width"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.height"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric
+                value.bind="data.cartonsQuantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td >
+            <div class="form-group">
+                <p class="form-control-static text-right">${cmb}</p>
+            </div>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

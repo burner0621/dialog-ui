@@ -1,0 +1,355 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-primary" click.delegate="context.cancelPO($event)"   if.one-way="context.hasCancelPo">Cancel PO</button>
+            <button class="btn btn-primary" click.delegate="context.unpostPO($event)"     if.one-way="context.hasUnpost">Unpost</button>
+            <button class="btn btn-primary" click.delegate="context.closePO($event)"    if.one-way="context.hasClosePo">Close PO</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <au-textbox 
+                    label="No" 
+                    value.bind="data.EPONo" 
+                    error.bind="error.EPONo" 
+                    read-only.bind="true"
+                    if.bind="(readOnly || isEdit)"
+                    options.bind="controlOptions">
+                </au-textbox>
+        
+                <au-autocomplete 
+                    value.bind="selectedSupplier" 
+                    error.bind="error.Supplier"
+                    label="Supplier" 
+                    loader.bind="supplierLoader"
+                    text.bind = "supplierView"
+                    placeholder="cari supplier" 
+                    key="code" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+        
+                <au-textbox 
+                    label="Jenis Supplier" 
+                    value.bind="supplierType" 
+                    read-only.bind="true"
+                    if.bind="data.Supplier"
+                    options.bind="controlOptions">
+                </au-textbox>
+        
+                <au-datepicker 
+                    label="Tgl. Order" 
+                    value.bind="data.OrderDate" 
+                    error.bind="error.OrderDate" 
+                    read-only.bind="true"
+                    if.bind="(readOnly || isEdit)"
+                    options.bind="controlOptions">
+                </au-datepicker>
+        
+                <au-datepicker 
+                    label="Tgl. Delivery" 
+                    value.bind="data.DeliveryDate" 
+                    error.bind="error.DeliveryDate" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+                
+                <au-dropdown
+                    label="Ongkos Kirim Ditanggung oleh"
+                    value.bind="data.FreightCostBy"
+                    error.bind="error.freightCostBy"
+                    read-only.bind="readOnly"
+                    items.bind="freightCostByOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+        
+                <au-dropdown
+                    label="Tipe Pembayaran"
+                    value.bind="data.PaymentType"
+                    error.bind="error.paymentType"
+                    read-only.bind="readOnly"
+                    items.bind="typePaymentOptions"  
+                    change.delegate="paymentTypeChanged($event)"
+                    if.bind="!supplierIsStorage"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-dropdown
+                    label="Tipe Pembayaran"
+                    value.bind="data.PaymentType"
+                    error.bind="error.paymentType"
+                    read-only.bind="readOnly"
+                    items.bind="typePaymentStorageOptions"  
+                    change.delegate="paymentTypeChanged($event)"
+                    if.bind="supplierIsStorage"
+                    options.bind="controlOptions">
+                </au-dropdown>
+        
+                <au-dropdown
+                    label="Term Pembayaran"
+                    value.bind="data.PaymentMethod"
+                    error.bind="error.paymentMethod"
+                    read-only.bind="readOnly"
+                    items.bind="termPaymentImportOptions"  
+                    change.delegate="paymentMethodChanged($event)"
+                    options.bind="controlOptions"
+                    if.bind="supplierIsImport">
+                </au-dropdown>
+        
+                <au-dropdown
+                    label="Term Pembayaran"
+                    value.bind="data.PaymentMethod"
+                    error.bind="error.PaymentMethod"
+                    read-only.bind="readOnly"
+                    items.bind="termPaymentLocalOptions"  
+                    change.delegate="paymentMethodChanged($event)"
+                    options.bind="controlOptions"
+                    if.bind="!supplierIsImport">
+                </au-dropdown>
+        
+                <numeric 
+                    label="Tempo Pembayaran" 
+                    value.bind="data.PaymentDueDays" 
+                    error.bind="error.PaymentDueDays" 
+                    format="0"
+                    read-only.bind="true"
+                    post-fix="hari" 
+                    if.bind="data.PaymentType=='CASH' || data.PaymentType=='T/T BEFORE'">
+                </numeric>
+        
+                <numeric
+                    label="Tempo Pembayaran" 
+                    value.bind="data.PaymentDueDays" 
+                    error.bind="error.PaymentDueDays" 
+                    format="0"
+                    read-only.bind="readOnly"
+                    post-fix="hari" 
+                    if.bind="data.PaymentType =='T/T AFTER'">
+                </numeric>
+        
+                <au-autocomplete 
+                    value.bind="selectedCurrency" 
+                    error.bind="error.Currency"
+                    label="Mata Uang" 
+                    loader.bind="currencyLoader"
+                    text.bind = "currencyView"
+                    placeholder="cari mata uang" 
+                    key="code" 
+                    read-only.bind="(readOnly ||isEdit) "
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <numeric 
+                    label="Rate" 
+                    value.bind="data.CurrencyRate" 
+                    error.bind="error.currencyRate" 
+                    format="0"
+                    read-only.bind="true">
+                </numeric>
+                
+                <!--<au-autocomplete 
+                    value.bind="selectedIncomeTax" 
+                    error.bind="error.IncomeTax"
+                    label="Pph" 
+                    loader.bind="incomeTaxLoader"
+                    text.bind = "incomeTaxView"
+                    placeholder="cari pph" 
+                    key="" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>-->
+                <au-checkbox 
+                    label="Apakah kena Pph?" 
+                    value.bind="data.Supplier.usetax"  
+                    if.bind="data.SupplierId"
+                    read-only.bind="true"
+                     options.bind="controlOptions">
+                </au-checkbox>
+                
+                <!-- <au-textbox 
+                    label="Pph" 
+                    value.bind="data.IncomeTax.Name" 
+                    read-only.bind="true"
+                    if.bind="data.Supplier.usetax"
+                    options.bind="controlOptions">
+                </au-textbox> -->
+
+                <au-autocomplete 
+                value.bind="selectedIncomeTax" 
+                error.bind="error.incomeTax"
+                label="Pph" 
+                loader.bind="incomeTaxLoader"
+                text.bind = "incomeTaxView"
+                placeholder="cari pph" 
+                key=""                    
+                read-only.bind="readOnly"
+                if.bind="data.Supplier.usetax"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        
+                <numeric 
+                    label="Rate Pph" 
+                    value.bind="data.IncomeTax.Rate" 
+                    error.bind="error.IncomeTaxRate" 
+                    if.bind="data.Supplier.usetax"
+                    format="0"
+                    read-only.bind="true"
+                    post-fix="%">
+                </numeric>
+        
+                <au-checkbox 
+                    label="Apakah kena Ppn?" 
+                    value.bind="data.Supplier.usevat" 
+                    error.bind="error.IsUseVat" 
+                    read-only.bind="true"
+                    change.delegate="useVatChanged($event)"
+                    if.bind="data.SupplierId"
+                    options.bind="controlOptions">
+                </au-checkbox>
+
+                <au-autocomplete value.bind="selectedVatTax" error.bind="error.Vat" label="Ppn" 
+                    if.bind="data.Supplier.usevat" loader.bind="vatTaxLoader" text.bind = "vatTaxView"
+                    placeholder="cari ppn" key="rate" read-only.bind="readOnly" post-fix="%" options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-dropdown
+                    label="Kategori"
+                    value.bind="data.Category"
+                    error.bind="error.category"
+                    read-only.bind="(readOnly || isEdit)"
+                    items.bind="categoryOptions"
+                    change.delegate="categoryChanged($event)"
+                    options.bind="controlOptions">
+                </au-dropdown>
+        
+                <au-multiline 
+                    label="Keterangan" 
+                    value.bind="data.Remark"
+                    placeholder="tambah keterangan" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-multiline>
+            </div>
+            <div class="col-md-6" show.bind="isFabric">
+                <h4>Standar Kualitas</h4>
+                <au-dropdown
+                    label="Jenis"
+                    value.bind="data.QualityStandardType"
+                    error.bind="error.QualityStandardType"
+                    read-only.bind="readOnly"
+                    items.bind="qualityStandardTypeOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-textbox 
+                    label="Shrinkage Test" 
+                    value.bind="data.Shrinkage" 
+                    error.bind="error.Shrinkage" 
+                    placeholder="tambahkan shrinkage test"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Wet Rubbing Test" 
+                    value.bind="data.WetRubbing" 
+                    error.bind="error.WetRubbing" 
+                    placeholder="tambahkan wet rubbing test" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Dry Rubbing Test" 
+                    value.bind="data.DryRubbing" 
+                    error.bind="error.DryRubbing" 
+                    placeholder="tambahkan dry rubbing test"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Washing Test" 
+                    value.bind="data.Washing" 
+                    error.bind="error.Washing" 
+                    placeholder="tambahkan washing test" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Dark Perspiration Test" 
+                    value.bind="data.DarkPerspiration" 
+                    error.bind="error.DarkPerspiration" 
+                    placeholder="tambahkan dark perspiration test" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Light Perspiration Test" 
+                    value.bind="data.LightMedPerspiration" 
+                    error.bind="error.LightMedPerspiration" 
+                    placeholder="tambahkan light perspiration test" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-multiline 
+                    label="Piece Length " 
+                    value.bind="data.PieceLength"
+                    error.bind="error.PieceLength" 
+                    read-only.bind="readOnly"
+                    placeholder="tambahkan piece length " 
+                    options.bind="controlOptions">
+                </au-multiline>
+        </div>
+    </div>
+
+        <hr/>
+         <div class="form-group" show.bind="!readOnly && data.Currency && !isEdit"> 
+            <div class="col-sm-3">
+                 <au-textbox value.bind="keywords" placeholder="#nama unit #nama buyer #kategori (harus berurutan)"></au-textbox>
+            </div>
+            <div class="col-sm-7">
+                 <div class="col-sm-3">
+                     <au-textbox   value.bind="label" read-only.bind="true"> </au-textbox>
+                </div> 
+                <div class="col-sm-4">
+                    <au-datepicker value.bind="shipmentDateFrom"></au-datepicker>
+                </div>
+                <div class="col-sm-4">
+                    <au-datepicker value.bind="shipmentDateTo" ></au-datepicker>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-success" click.delegate="search()">Cari</button>
+            </div>
+        </div>
+
+        <au-textbox error.bind="error.ItemsCount" read-only.bind="true"></au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            title="Pilih PO Internal"
+            columns.bind="items.columns"
+            remove.bind="items.onRemove"
+            options.bind="options"
+            read-only.bind="readOnly" 
+            change.delegate="itemsChanged($event)"
+            show.bind="isItem"
+            view-model.ref="DetailsCollection"
+            footer-template="modules/garment-purchasing/purchase-order-external/template/purchase-order-external-item-footer"
+            header-template="modules/garment-purchasing/purchase-order-external/template/purchase-order-external-item-header"
+            item-template="modules/garment-purchasing/purchase-order-external/template/purchase-order-external-item">
+        </au-collection>
+  </au-input-form>
+</template>

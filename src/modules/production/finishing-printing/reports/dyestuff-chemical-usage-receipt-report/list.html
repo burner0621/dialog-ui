@@ -1,0 +1,54 @@
+<template>
+    <h1 class="page-header">Laporan Resep Pemakaian Dystuff & Chemical</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="productionOrder"
+            label="No. SPP"
+            loader.bind="prodcutionOrderLoader"
+            placeholder="Cari No SPP"
+            options.bind="controlOption"
+            text="OrderNo">    
+        </au-autocomplete>
+
+        <au-autocomplete
+            label="Design" 
+            value.bind="strikeOff" 
+            loader.bind="strikeOffLoader"
+            placeholder="Cari Design"
+            options.bind="controlOption"
+            text="Code" >
+        </au-autocomplete>
+
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal"
+            options.bind="controlOption">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir"
+            options.bind="controlOption">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+
+        <au-table
+            view-model.ref="receiptTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+        </au-table>
+    </form>
+</template>

@@ -1,0 +1,20 @@
+<template>
+    <tr>
+        <td colspan="1" align='right'>
+            <au-textbox
+                label="TOTAL"
+                options.bind="controlOptions"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='right' colspan="1">
+            <au-textbox
+                value.bind="totalCuttingOutQuantity"
+                error.bind="error"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td colspan="3"></td>
+
+    </tr>
+</template>

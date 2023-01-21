@@ -1,0 +1,66 @@
+<template>
+  <tr>
+    <td align="center" click.delegate="onItemClicked(step, $event)" ref="tdNumber">${$index + 1}</td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdStep">
+      <au-autocomplete 
+        value.bind="temp" 
+        error.bind="error.Process"
+        loader.bind="stepLoader"
+        placeholder="search step" 
+        key="Process"
+        text="Process"
+        read-only.bind="(readOnly || isEdit || step.isNotDone)"
+        options.bind="controlOptions">
+      </au-autocomplete>
+      </br>
+      <au-textbox class="col-sm-11" value.bind="stepIndicatorInfo" read-only.bind="true" options.bind="controlOptions"></au-textbox>
+      <button class="btn btn-info pull-right" click.delegate="toggle()">i</button>
+    </td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdMachine" width="20%">
+      <au-autocomplete 
+        value.bind="context.data.Machine" 
+        error.bind="error.Machine"
+        query.bind="query"
+        loader.bind="machineLoader"
+        placeholder="search machine"
+        text="Name"
+        read-only.bind="(readOnly || isEdit || step.IsNotDone)"
+        options.bind="controlOptions"
+        view-model.ref="machineVM">
+      </au-autocomplete>
+    </td>
+    <td ref="tdArea" width="20%">
+      <au-dropdown
+          value.bind="context.data.ProcessArea"
+          items.bind="areaOptions"
+          error.bind="error.ProcessArea"
+          options.bind="controlOptions"
+          read-only.bind="(readOnly || isEdit || step.IsNotDone)">
+      </au-dropdown>
+    </td>
+    <td ref="tdDeadline">
+      <au-datepicker
+        value.bind="context.data.Deadline"
+        error.bind="error.Deadline"
+        read-only.bind="(readOnly || isEdit)"
+        options.bind="controlOptions">
+      </au-datepicker>
+    </td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdButton" if.bind="!options.readOnly && !options.disabledStepAdd">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(context.data)" if.bind="!step.IsNotDone">-</button>
+    </td>
+  </tr>
+  <tr if.bind="isShowing">
+    <td></td>
+    <td>
+      <au-collection 
+        items.bind="step.StepIndicators" 
+        columns.bind="stepIndicatorColumns"
+        read-only.bind="readOnly"
+        options.bind="options"
+        item-template="modules/production/finishing-printing/bad-output-kanban/template/step-indicator-item">
+      </au-collection>
+    </td>
+    <td colspan="3"></td>
+  </tr>
+</template>

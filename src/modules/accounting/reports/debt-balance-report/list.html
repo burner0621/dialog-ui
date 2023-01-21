@@ -1,0 +1,78 @@
+<template>
+  <h1 class="page-header">Laporan Saldo Hutang</h1>
+  <form class="form-horizontal">
+    <au-dropdown label="Jenis Supplier" value.bind="type" items.bind="SupplierType" options.bind="controlOptions">
+    </au-dropdown>
+    <au-dropdown label="Kategori" value.bind="KtgrItem" items.bind="KategoriItem" options.bind="controlOptions" >
+    </au-dropdown>
+    <au-dropdown value.bind="info.month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths" key="value"
+      text="text">
+    </au-dropdown>
+    <au-dropdown value.bind="info.year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value"
+      text="text">
+    </au-dropdown>
+    <div class="form-group">
+      <label for="contact" class="col-sm-6 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+        <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+      </div>
+    </div>
+    <div slot="toolbar" class="btn-group">
+      <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+    </div>
+
+    <table class="table table-bordered table-hover" id="myTable">
+      <thead>
+        <tr>
+          <td align="center" rowspan="2">Kode Supplier</td>
+          <td align="center" rowspan="2">Nama Supplier</td>
+          <td align="center" rowspan="2">Mata Uang</td>
+          <td align="center" rowspan="3">Saldo Awal Total</td>
+          <td align="center" rowspan="2">No BP</td>
+          <td align="center" rowspan="2">No BP Kecil</td>
+          <td align="center" rowspan="2">Tipe</td>
+          <td align="center" rowspan="2">Saldo Awal</td>
+          <td align="center" rowspan="2">Hutang</td>
+          <td align="center" colspan="3">Bayar</td>
+          <td align="center" rowspan="2">Saldo Akhir</td>
+        </tr>
+        <tr>         
+          <td align="center">J u m l a h</td>
+          <td align="center">Nota Bayar</td>
+          <td align="center">Tanggal Bayar</td>         
+        </tr>
+      </thead>
+      <tbody>
+        <tr repeat.for="debt of data">
+          <td if.bind="debt.docspan" rowspan="${debt.docspan}">${debt.SupplierCode}</td>
+          <td if.bind="debt.docspan" rowspan="${debt.docspan}">${debt.SupplierName}</td>
+          <td if.bind="debt.docspan" rowspan="${debt.docspan}">${debt.DOCurrencyCode}</td>
+          <td class="text-right" if.bind="debt.docspan" rowspan="${debt.docspan}">${debt.TotalInitialBalance}</td>
+          <td>${debt.BillNo}</td>
+          <td>${debt.PaymentBill}</td>
+          <td>${debt.CodeRequirment}</td>    
+          <td class="text-right">${debt.InitialBalance}</td>
+          <td class="text-right">${debt.TotalKredit}</td>
+          <td class="text-right">${debt.TotalDebit}</td>
+          <td>${debt.NoDebit}</td>
+          <td>${debt.TglDebit}</td>
+          <td class="text-right">${debt.TotalEndingBalance}</td>
+        </tr>
+        <tr class="active">
+          <td class="text-center" colspan="3"><strong>T O T A L </strong></td>
+          <td class="text-right"><strong>${AmountTotalInitialBalance}</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>          
+          <td class="text-right"><strong>${AmountTotal}</strong></td>
+          <td class="text-right"><strong>${AmountTotalKredit}</strong></td>
+          <td class="text-right"><strong>${AmountTotalDebit}</strong></td>
+          <td></td>
+          <td></td>
+          <td class="text-right"><strong>${AmountTotalEndingBalance}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</template>

@@ -1,0 +1,82 @@
+<template>
+	<tr>
+		<td class="bg-primary">
+			<au-autocomplete value.bind="selectedNoAcc" error.bind="error.NoAcc"
+				loader.bind="chartOfAccountLoader" text.bind="chartOfAccountView"
+				placeholder="Cari No Acc" read-only.bind="readOnly || isIdxZero">
+			</au-autocomplete>
+		</td>
+		<td class="bg-primary">
+			<au-autocomplete value.bind="selectedSubAcc" error.bind="error.SubAcc"
+				loader.bind="chartOfAccountLoader" text.bind="chartOfAccountView"
+				placeholder="Cari Sub Acc" read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td>
+		<!-- <td class="bg-primary">
+			<au-autocomplete value.bind="selectedAccUnit" error.bind="error.AccUnit"
+				loader.bind="chartOfAccountLoader" text.bind="chartOfAccountView"
+				placeholder="Cari Acc Unit" read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td>
+		<td class="bg-primary">
+			<au-autocomplete value.bind="selectedAccBiaya" error.bind="error.AccBiaya"
+				loader.bind="chartOfAccountLoader" text.bind="chartOfAccountView"
+				placeholder="Cari Acc Biaya" read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td> -->
+		<td class="bg-primary">
+			<au-numeric value.bind="amount" error.bind="error.Amount" read-only.bind="true"
+				if.bind="(Currency && Currency.Code == 'IDR')" value="0">
+			</au-numeric>
+
+			<au-numeric value.bind="amount" error.bind="error.Amount" read-only.bind="readOnly"
+				if.bind="(Currency && Currency.Code != 'IDR')">
+			</au-numeric>
+
+
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.Summary" error.bind="error.Summary" read-only.bind="readOnly"
+				if.bind="(Currency && Currency.Code == 'IDR')">
+			</au-numeric>
+
+			<au-numeric value.bind="data.Summary" error.bind="error.Summary" read-only.bind="true"
+				if.bind="(Currency && Currency.Code != 'IDR')">
+			</au-numeric>
+		</td>
+		<!-- <td class="bg-primary">
+			<au-numeric value.bind="data.C2A" error.bind="error.C2A" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.C2B" error.bind="error.C2B" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.C2C" error.bind="error.C2C" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.C1A" error.bind="error.C1A" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td class="bg-primary">
+			<au-numeric value.bind="data.C1B" error.bind="error.C1B" read-only.bind="readOnly">
+			</au-numeric>
+		</td> -->
+		<td class="bg-primary">
+			<au-textbox value.bind="data.NoteNumber" error.bind="error.NoteNumber"
+				read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+
+		<td class="bg-primary">
+			<au-textbox value.bind="data.Remarks" error.bind="error.Remarks" read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+
+	</tr>
+</template>

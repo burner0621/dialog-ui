@@ -1,0 +1,38 @@
+<template>
+    <require from="../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox
+            value.bind="data.Process"
+            error.bind="error.Process"
+            label="Proses"
+            placeholder="Masukkan Proses"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.Alias"
+            error.bind="error.Alias"
+            label="Alias"
+            placeholder="Masukkan Alias"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-layout error.bind="error.StepIndicator"></au-layout>
+
+        <au-collection
+            title="Indikator Step"
+            items.bind="data.StepIndicators" 
+            errors.bind="error.StepIndicators"
+            add.bind="stepIndicatorsInfo.onAdd"
+            remove.bind="stepIndicatorsInfo.onRemove"
+            columns.bind="columns"
+            options.bind="options"
+            read-only.bind="readOnly"
+            item-template="modules/master/step/template/step-indicators">
+        </au-collection>
+
+    </au-input-form>
+</template>

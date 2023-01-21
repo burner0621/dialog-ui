@@ -1,0 +1,29 @@
+<template>
+    <tr>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Step.Process" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.Machine.Name" options.bind="controlOptions" read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td class="col-md-1">
+            <au-numeric format="0,0.00" value.bind="data.Chemical" options.bind="controlOptions" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="col-md-1">
+            <au-numeric format="0,0.00" value.bind="data.Utility" options.bind="controlOptions" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="col-md-1">
+            <au-numeric format="0,0.00" value.bind="data.Depretiation" options.bind="controlOptions" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+
+        <td class="col-md-1">
+            <au-numeric value.bind="data.Total" options.bind="controlOptions" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

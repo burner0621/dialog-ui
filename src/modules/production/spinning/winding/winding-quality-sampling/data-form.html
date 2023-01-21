@@ -1,0 +1,15 @@
+<template> 
+    <form class="form-horizontal">
+        <unit-auto-suggest              label="Spinning"    value.bind="data.spinning"   error.bind="error.spinning"    read-only.bind="readOnly"   change.delegate="unitChanged($event)"       filter.bind="spinningUnitFilter"></unit-auto-suggest>
+        <datepicker                     label="Tanggal"     value.bind="data.date"       error.bind="error.date"        read-only.bind="readOnly"></datepicker>
+        <machine-auto-suggest-by-unit   label="Mesin"       value.bind="data.machine"    error.bind="error.machine"     read-only.bind="readOnly"	change.delegate="machineChanged($event)"    filter.bind="filter || isFilter" if.bind="data.unitId"></machine-auto-suggest-by-unit>
+        <product-by-uster-auto-suggest  label="Benang"      value.bind="data.uster"      error.bind="error.uster"       read-only.bind="readOnly"	change.delegate="threadChanged($event)"></product-by-uster-auto-suggest>
+        <numeric                        label="U%"          value.bind="data.U"          error.bind="error.U"           read-only.bind="readOnly"></numeric>
+        <numeric                        label="Thin"        value.bind="data.thin"       error.bind="error.thin"        read-only.bind="readOnly"></numeric>
+        <numeric                        label="Thick"       value.bind="data.thick"      error.bind="error.thick"       read-only.bind="readOnly"></numeric>
+        <numeric                        label="Neps"        value.bind="data.neps"       error.bind="error.neps"        read-only.bind="readOnly"></numeric>
+        <numeric                        label="IPI"         value="${data.thin + data.thick + data.neps}"               error.bind="error.ipi"         read-only="true"></numeric>
+        <numeric                        label="Sys"         value.bind="data.sys"        error.bind="error.sys"         read-only.bind="readOnly"></numeric>
+        <numeric                        label="Elongation"  value.bind="data.elongation" error.bind="error.elongation"  read-only.bind="readOnly"></numeric>
+    </form>
+</template>

@@ -1,0 +1,96 @@
+<template>
+    <au-input-form 
+          title.bind="title" 
+          with.bind="context">
+  
+          <div slot="actions" class="btn-group">
+              <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+              <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+              <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+              <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+          </div>
+  
+          <au-textbox 
+              label="No. Dokumen" 
+              value.bind="data.no" 
+              error.bind="error.no" 
+              read-only.bind="true"
+              if.bind="(readOnly || isEdit)"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-datepicker 
+              label="Tgl. Dokumen" 
+              value.bind="data.date" 
+              error.bind="error.date" 
+              read-only.bind="readOnly"
+              options.bind="controlOptions">
+          </au-datepicker>
+  
+          <au-textbox 
+              label="No. Referensi" 
+              value.bind="data.referenceNo" 
+              error.bind="error.referenceNo" 
+              placeholder="masukkan nomor referensi"
+              read-only.bind="readOnly"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-textbox 
+              label="Jenis Referensi" 
+              value.bind="data.referenceType" 
+              error.bind="error.referenceType" 
+              placeholder="masukkan jenis referensi"
+              read-only.bind="readOnly"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-dropdown
+              label="Status"
+              value.bind="data.type"
+              error.bind="error.type"
+              read-only.bind="readOnly"
+              placeholder="masukkan tipe"
+              items.bind="types"
+              options.bind="controlOptions"
+          ></au-dropdown>
+  
+          <au-autocomplete 
+              value.bind="selectedStorage" 
+              error.bind="error.storageId"
+              label="Gudang" 
+              change.delegate="selectedStorageChanged($event)" 
+              loader.bind="storageLoader"
+              text.bind = "storageView"
+              placeholder="cari penyimpanan" 
+              key="_id" 
+              read-only.bind="readOnly"
+              options.bind="controlOptions">
+          </au-autocomplete>
+  
+          <au-multiline 
+              label="Keterangan" 
+              value.bind="data.remark"
+              placeholder="tambah keterangan" 
+              read-only.bind="readOnly"
+              options.bind="controlOptions">
+          </au-multiline>
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+        
+          <au-collection 
+              items.bind="data.items" 
+              errors.bind="error.items" 
+              columns.bind="itemsColumns" 
+              add.bind="addItems" 
+              remove.bind="removeItems"
+              read-only.bind="readOnly" 
+              item-template="modules/inventory/inventory-document/template/inventory-document-item">
+          </au-collection>
+  
+    </au-input-form>
+  </template>

@@ -1,0 +1,81 @@
+<template>
+  <au-input-form title="Posting Jurnal Transaksi" with.bind="context" options.bind="formOptions">
+    <au-dropdown label="Bulan" value.bind="selectedMonth" items.bind="monthOptions" text="MonthName"
+      options.bind="controlOptions">
+    </au-dropdown>
+    <au-dropdown label="Tahun" value.bind="selectedYear" items.bind="yearOptions" options.bind="controlOptions">
+    </au-dropdown>
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class='btn btn-success'>Cari</button>
+        <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+      </div>
+    </div>
+
+    <au-textbox error.bind="error.invalidCOA" show.bind="error.invalidCOA" read-only.bind="true">
+    </au-textbox>
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <!--Table-->
+        <table class="table table-bordered">
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th>
+                <au-checkbox value.bind="selectAll" change.delegate="selectAllClicked($event)"></au-checkbox>
+              </th>
+              <th>Tanggal Jurnal</th>
+              <th>Kode Jurnal</th>
+              <th>No. Akun</th>
+              <th>Nama Akun</th>
+              <th>Keterangan</th>
+              <th>DEBIT</th>
+              <th>KREDIT</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+          <!--Table body-->
+          <tbody>
+            <tr show.bind="data.transactions.length == 0">
+              <td colspan="9">
+                <div class="alert alert-info">Tidak ada data</div>
+              </td>
+            </tr>
+            <tr repeat.for="transaction of data.transactions">
+              <td if.bind="transaction.isHeader" rowspan.bind="transaction.rowspanNumber">
+                <au-checkbox value.bind="transaction.isSelected"
+                  change.delegate="selectedRowClicked($event, transaction.header.Id)">
+                </au-checkbox>
+              </td>
+              <td if.bind="transaction.isHeader" rowspan.bind="transaction.rowspanNumber">${transaction.header.dateView}
+              </td>
+              <td if.bind="transaction.isHeader" rowspan.bind="transaction.rowspanNumber">
+                ${transaction.header.DocumentNo}</td>
+              <td>
+                <au-autocomplete value.bind="transaction.COA" loader.one-time="coaLoader" text="Code"
+                  read-only.bind="transaction.isReadOnly" error.bind="transaction.error.invalidCOA">
+                </au-autocomplete>
+              </td>
+              <td>
+                <au-textbox value.bind="transaction.COA.Name" read-only.bind="true"
+                  error.bind="transaction.error.invalidCOAName">
+                </au-textbox>
+              </td>
+              <td>${transaction.Remark}</td>
+              <td>${transaction.Debit}</td>
+              <td>${transaction.Credit}</td>
+            </tr>
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!--Table-->
+        <au-textbox error.bind="error.noneSelected" show.bind="error.noneSelected" read-only.bind="true">
+        </au-textbox>
+      </div>
+    </div>
+  </au-input-form>
+</template>

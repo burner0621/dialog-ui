@@ -1,0 +1,70 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete
+                value.bind="data.comodity"
+                error.bind="error.comodity"
+                loader.bind="comodityLoader"
+                read-only.bind="readOnly"
+                placeholder="komoditi"
+                text.bind = "comodityView">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.description"
+                error.bind="error.description"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.quantity"
+                error.bind="error.quantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-autocomplete
+                value.bind="data.uom"
+                error.bind="error.uom"
+                loader.bind="uomLoader"
+                read-only.bind="readOnly"
+                placeholder="satuan"
+                text.bind = "uomView">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.cartonQuantity"
+                error.bind="error.cartonQuantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.grossWeight"
+                error.bind="error.grossWeight"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.nettWeight"
+                error.bind="error.nettWeight"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.volume"
+                error.bind="error.volume"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

@@ -1,0 +1,69 @@
+<template>
+    <style>
+        table .btn-success {
+            float: none !important;
+            display: none;
+        }
+
+        .col-sm-12 {
+            margin-top: 0px !important;
+        }
+    </style>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <au-textbox
+            label="No Bon Retur"
+            value.bind="data.No"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            if.bind="readOnly">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal"
+            value.bind="data._CreatedUtc"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            if.bind="readOnly">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="unit" 
+            error.bind="error.Unit"
+            query.bind="unitQuery"
+            label="Unit"
+            loader.one-time="unitLoader"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            placeholder="Cari Unit"            
+            text="name">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier" 
+            error.bind="error.Supplier"
+            label="Supplier"
+            loader.one-time="supplierLoader"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            placeholder="Cari Supplier"
+            text.bind = "supplierView">
+        </au-autocomplete>
+
+        <au-textbox
+            show.bind="error.FPReturnInvToPurchasingCollection"
+            error.bind="error.FPReturnInvToPurchasingCollection"
+            read-only="true">
+        </au-textbox>
+            
+        <au-collection
+            items.bind="data.FPReturnInvToPurchasingDetails" 
+            errors.bind="error.FPReturnInvToPurchasingDetails"
+            columns.bind="fpRITP.columns"
+            read-only.bind="readOnly"
+            show.bind="data.Unit && data.Supplier"
+            options.bind="fpRITP.options"
+            item-template="modules/inventory/finishing-printing/fp-return-inv-to-purchasing/template/fp-return-inv-to-purchasing-detail">
+        </au-collection>
+        <!--add.bind="fpRITP.onAdd"-->
+    </au-input-form>
+</template>

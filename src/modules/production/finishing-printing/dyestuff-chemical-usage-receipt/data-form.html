@@ -1,0 +1,379 @@
+<template>
+    <style>
+        /*Setting the table width is important!*/
+        #detailTable {
+            width: 100% ;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+
+        }
+
+        #viewTable {
+            table-layout: fixed;
+            width: 100%;
+            overflow-wrap: break-word;
+        }
+
+        /*Hide text outside the cell.*/
+        #viewTable th,
+        td {
+            overflow: hidden;
+        }
+
+        /* Setting the width of column 1. */
+        /* #detailTable th:nth-of-type(1),td:nth-of-type(1) {
+            width: 15%;
+        } */
+
+
+        /*Setting the width of column 2.*/
+        /* #detailTable th:nth-of-type(2),td:nth-of-type(2) {
+            width: 5%;
+        } */
+
+        /*Setting the width of column 3.*/
+        /* #detailTable th:nth-of-type(3),td:nth-of-type(3) {
+            width: 15%;
+        } */
+
+        /*Setting the width of column 4.*/
+        /* #detailTable th:nth-of-type(4),td:nth-of-type(4) {
+            width: 15%;
+        } */
+
+        /*Setting the width of column 5.*/
+        /* #detailTable th:nth-of-type(5),td:nth-of-type(5) {
+            width: 15%;
+        } */
+
+        /*Setting the width of column 6.*/
+        /* #detailTable th:nth-of-type(6),td:nth-of-type(6) {
+            width: 15%;
+        } */
+
+        /*Setting the width of column 7.*/
+        /* #detailTable th:nth-of-type(7),td:nth-of-type(7) {
+            width: 15%;
+        } */
+
+        /*Setting the width of column 8.*/
+        /* #detailTable th:nth-of-type(8),td:nth-of-type(8) {
+            width: 5%;
+        } */
+    </style>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <div class="row">
+            <div class="col-md-6">
+                <au-autocomplete placeholder="Masukan No SPP" value.bind="selectedProductionOrder" label="No SPP"
+                    loader.bind="productionOrderLoader" query.bind="sppQuery" text="OrderNo"
+                    read-only.bind="readOnly || isEdit" error.bind="error.ProductionOrder"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-numeric label="Jumlah Order" format="0.00" value.bind="data.ProductionOrder.OrderQuantity"
+                    read-only.bind="true" options.bind="controlOptions">
+                </au-numeric>
+
+                <au-textbox label="Material" value.bind="construction" read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-numeric label="Total Screen" format="0.00" value.bind="data.TotalScreen"
+                    if.bind="data.UsageReceiptItems.length > 0"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-numeric>
+
+            </div>
+            <div class="col-md-6">
+                <au-autocomplete placeholder="Masukan Kode Strike Off" value.bind="selectedStrikeOff" label="Motif"
+                    loader.bind="strikeOffLoader" text="Code" read-only.bind="readOnly || isEdit"
+                    error.bind="error.StrikeOff" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox label="Repeat" value.bind="data.RepeatedProductionOrderNo" read-only.bind="true"
+                    options.bind="controlOptions" show.bind="data.RepeatedProductionOrderNo">
+                </au-textbox>
+
+                <au-textbox label="Proses" value.bind="data.StrikeOff.Type" read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker options.bind="controlOptions" value.bind="data.Date" error.bind="error.Date"
+                    read-only.bind="readOnly || isEdit" label="Tanggal">
+                </au-datepicker>
+            </div>
+        </div>
+
+        <br>
+        <br>
+        <div class="row" if.bind="data.UsageReceiptItems.length > 0 && !isEdit"
+            repeat.for="color of data.UsageReceiptItems">
+            <div class="col-md-6">
+                <table id="createTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Warna
+                            </th>
+                            <th>
+                                ${color.ColorCode}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Dyestuff & Chemicals
+                            </th>
+                            <th>
+                                Resep
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody repeat.for="item of color.UsageReceiptDetails">
+                        <tr>
+                            <td>
+                                ${item.Name}
+                            </td>
+                            <td>
+                                ${item.ReceiptQuantity}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <au-numeric 
+                    label="Total Realisasi Pembuatan Pasta" 
+                    format="0.00" 
+                    value.bind="color.TotalRealizationQty"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptionsTotal">
+                </au-numeric>
+            </div>
+        </div>
+
+        <div class="row" if.bind="data.UsageReceiptItems.length > 0 && isEdit && !readOnly"
+            repeat.for="color of data.UsageReceiptItems">
+
+            <div class="col-md-12">
+                <table id="detailTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Warna
+                            </th>
+                            <th colspan="6">
+                                ${color.ColorCode}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                Dyestuff & Chemicals
+                            </th>
+                            <th width="20%">
+                                Resep
+                            </th>
+                            <th width="20%">
+                                Adjs 1
+                            </th>
+                            <th width="20%">
+                                Adjs 2
+                            </th>
+                            <th width="20%">
+                                Adjs 3
+                            </th>
+                            <th width="20%">
+                                Adjs 4
+                            </th>
+                            <th rowspan="2">
+                                Total
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <au-datepicker value.bind="color.ReceiptDate" error.bind="error.ReceiptDate"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs1Date" error.bind="error.Adjs1Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs2Date" error.bind="error.Adjs2Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs3Date" error.bind="error.Adjs3Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs4Date" error.bind="error.Adjs4Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody repeat.for="item of color.UsageReceiptDetails">
+                        <tr>
+                            <td>
+                                ${item.Name}
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.ReceiptQuantity" read-only.bind="true">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs1Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs2Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs3Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs4Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" show.bind="item.Name != 'Viscositas'"
+                                    value.bind="item.ReceiptQuantity + item.Adjs1Quantity + item.Adjs2Quantity + item.Adjs3Quantity + item.Adjs4Quantity + item.Adjs5Quantity"
+                                    read-only.bind="true">
+                                </au-numeric>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <au-numeric 
+                    label="Total Realisasi Pembuatan Pasta" 
+                    format="0.00" 
+                    value.bind="color.TotalRealizationQty"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptionsTotal"
+                    width ="10">
+                </au-numeric>
+            </div>
+            
+        </div>
+
+        <div class="row" if.bind="data.UsageReceiptItems.length > 0 && isEdit && readOnly"
+            repeat.for="color of data.UsageReceiptItems">
+
+            <div class="col-md-12">
+                <table id="viewTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Warna
+                            </th>
+                            <th colspan="6">
+                                ${color.ColorCode}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                Dyestuff & Chemicals
+                            </th>
+                            <th>
+                                Resep
+                            </th>
+                            <th>
+                                Adjs 1
+                            </th>
+                            <th>
+                                Adjs 2
+                            </th>
+                            <th>
+                                Adjs 3
+                            </th>
+                            <th>
+                                Adjs 4
+                            </th>
+                            <th rowspan="2">
+                                Total
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <au-datepicker value.bind="color.ReceiptDate" error.bind="error.ReceiptDate"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs1Date" error.bind="error.Adjs1Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs2Date" error.bind="error.Adjs2Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs3Date" error.bind="error.Adjs3Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                            <th>
+                                <au-datepicker value.bind="color.Adjs4Date" error.bind="error.Adjs4Date"
+                                    read-only.bind="readOnly">
+                                </au-datepicker>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody repeat.for="item of color.UsageReceiptDetails">
+                        <tr>
+                            <td>
+                                ${item.Name}
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.ReceiptQuantity" read-only.bind="true">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs1Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs2Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs3Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" value.bind="item.Adjs4Quantity" read-only.bind="readOnly">
+                                </au-numeric>
+                            </td>
+                            <td>
+                                <au-numeric format="0.00" show.bind="item.Name != 'Viscositas'"
+                                    value.bind="item.ReceiptQuantity + item.Adjs1Quantity + item.Adjs2Quantity + item.Adjs3Quantity + item.Adjs4Quantity + item.Adjs5Quantity"
+                                    read-only.bind="true">
+                                </au-numeric>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <au-numeric 
+                    label="Total Realisasi Pembuatan Pasta" 
+                    format="0.00" 
+                    value.bind="color.TotalRealizationQty"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptionsTotal"
+                    >
+                </au-numeric>
+            </div>
+
+
+        </div>
+
+    </au-input-form>
+</template>

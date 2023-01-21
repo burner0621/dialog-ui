@@ -1,0 +1,16 @@
+<template>
+  <tr>
+    <td style="text-align:center;" class="col-sm-2">
+      <au-textbox value.bind="item.pcsNo" error.bind="error.pcsNo" read-only.bind="true" options.bind="controlOptions"></au-textbox>
+    </td>
+    <td style="text-align:center;">
+      <au-textbox value.bind="item.grade" error.bind="error.grade" read-only.bind="true" options.bind="controlOptions"></au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="item.lot" error.bind="error.lot" read-only.bind="options.readOnly" options.bind="controlOptions"></au-textbox>
+    </td>
+    <td>
+      <au-dropdown value.bind="item.status" error.bind="error.status" items.bind="statusOptions" read-only.bind="options.readOnly"></au-dropdown>
+    </td>
+  </tr>
+</template>

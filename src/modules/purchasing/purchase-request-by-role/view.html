@@ -1,0 +1,26 @@
+<template>  
+    <h1 class="page-header">Detail Purchase Request</h1>
+    <require from="./data-form"></require>
+    <block> 
+    <form class="form-horizontal">
+        <fieldset>
+            <textbox                label="No. PR"              value.bind="data.no"                    error.bind="error.no"                       read-only="true"></textbox>
+            <datepicker             label="Tgl. PR"             value.bind="data.date"                  error.bind="error.date"                     read-only="true"></datepicker>
+            <datepicker             label="Tgl. Diminta Datang" value.bind="data.expectedDeliveryDate"  error.bind="error.expectedDeliveryDate"     read-only="true"></datepicker>
+            <budget-auto-suggest    label="Budget"              value.bind="data.budget"                error.bind="error.budget"                   read-only="true"  ></budget-auto-suggest>
+            <unit-auto-suggest      label="Unit"                value.bind="data.unit"                  error.bind="error.unit"                     read-only="true"   ></unit-auto-suggest>
+            <category-auto-suggest  label="Kategori"            value.bind="data.category"              error.bind="error.category"                 read-only="true"  ></category-auto-suggest>
+        </fieldset>
+        <hr />
+        <multiline  label="Keterangan"  value.bind="data.remark"    error.bind="error.remark"   read-only="true"></multiline>
+        <hr />
+        <purchase-request-item-collection     value.bind="data.items"     error.bind="error.items"    read-only="true" ></purchase-request-item-collection>
+    </form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default'  >Kembali</a>
+            <a click.delegate="edit()" class="btn btn-primary"  if.bind="!data.isPosted">Ubah</a>
+            <a click.delegate="delete()" class="btn btn-danger" if.bind="!data.isPosted">Hapus</a>
+        </div>
+    </block>
+</template>

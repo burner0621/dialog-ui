@@ -1,0 +1,61 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox
+				value.one-way="data.EPONo"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="product"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.deliveredQuantity"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.deliveredUom.unit"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td if.bind="hasCreate">
+			<au-textbox
+				if.bind="hasCreate"
+				value.bind="data.pricePerDealUnit"
+				read-only.bind="true"
+				>
+			</au-textbox>
+		</td>
+		<td if.bind="!hasCreate">
+			<au-numeric
+				if.bind="!hasCreate"
+				value.bind="data.pricePerDealUnit"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+		<td if.bind="hasCreate">
+			<au-textbox
+				if.bind="hasCreate"
+				value.bind="data.PriceTotal"
+				read-only.bind="true"
+				>
+			</au-textbox>
+		</td>
+		<td if.bind="!hasCreate">
+			<au-numeric
+				if.bind="!hasCreate"
+				value.bind="data.PriceTotal"
+				read-only.bind="true"
+				format = "0,0.0000">
+			</au-numeric>
+		</td>
+	</tr>
+</template>

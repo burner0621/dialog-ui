@@ -1,0 +1,94 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        
+        <au-autocomplete
+            label="Unit"
+            value.bind="selectedUnit"
+            error.bind="error.Unit.Name"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            loader.bind="unitLoader"
+            text.bind = "unitView"
+            placeholder="Unit">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="No Bukti Pengeluaran"
+            value.bind="uenNo"
+            error.bind="error.UENId"
+            loader.bind="uenLoader"
+            text.bind = "uenView"
+            key="UENNo"
+            if.bind="selectedUnit"
+            aria-placeholder="Cari No Bukti Pengeluaran"
+            query.bind="filterUen"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            view-model.ref="UENViewModel">
+        </au-autocomplete>
+
+        <au-datepicker
+            label="Tgl. Pengeluaran"
+            value.bind="data.ExpenditureDate"
+            read-only.bind="true"
+            show.bind="(data.ExpenditureDate && !isView)"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox
+            label="RO"
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            if.bind="data.RONo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="No. Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            if.bind="data.Article"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Buyer"
+            value.bind="data.buyerView"
+            error.bind="error.Buyer"
+            if.bind="data.RONo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tgl. Preparing"
+            value.bind="data.ProcessDate"
+            error.bind="error.ProcessDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="isView ? detailsInfo.columns : itemsInfo.columns" 
+            options.bind="options"
+            read-only.bind="readOnly"
+            show.bind="data.UENNo"
+            item-template="modules/garment-production/preparing/template/preparing-item"
+            view-model.ref="ItemsCollection">
+        </au-collection>
+    </au-input-form>
+</template>

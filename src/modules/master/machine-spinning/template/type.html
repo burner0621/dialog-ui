@@ -1,0 +1,15 @@
+<template>
+  <tr>
+    <td>
+      <!-- <au-autocomplete loader.bind="stepLoader" value.bind="step" key="_id" text="process"
+        read-only.bind="options.readOnly" options.bind="autocompleteOption" error.bind="error.steps"></au-autocomplete> -->
+
+      <au-dropdown value.bind="type" error.bind="error.Type" read-only.bind="options.readOnly" items.bind="typeOptions"
+        options.bind="controlOptions">
+      </au-dropdown>
+    </td>
+
+    <td if.bind="!options.readOnly"><button class="btn btn-danger pull-right"
+        click.delegate="onremove(data, $event)">-</button></td>
+  </tr>
+</template>

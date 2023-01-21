@@ -1,0 +1,518 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+    
+        <div class="row">
+            <div class="col-md-6">
+                <au-textbox 
+                    label="Nomor Lampiran Disposisi" 
+                    value.bind="data.dispositionNo" 
+                    read-only="true"
+                    options.bind="controlOptions" 
+                    if.bind="readOnly || data.id">
+                </au-textbox>
+
+                <au-dropdown
+                    label="Jenis Pembayaran"
+                    value.bind="selectedPaymentType"
+                    error.bind="error.paymentType"
+                    read-only.bind="readOnly || data.id"
+                    items.bind="paymentTypeOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-dropdown
+                    label="Payment Method"
+                    value.bind="data.paymentMethod"
+                    error.bind="error.paymentMethod"
+                    read-only.bind="readOnly"
+                    if.bind="data.paymentType=='FORWARDER'"
+                    items.bind="paymentMethodOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-dropdown
+                    label="Dibayar Di"
+                    value.bind="data.paidAt"
+                    error.bind="error.paidAt"
+                    read-only.bind="readOnly || data.id"
+                    if.bind="data.paymentType=='FORWARDER'"
+                    items.bind="paidAtOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-textbox
+                    label="Dikirim Per"
+                    value.bind="data.sendBy"
+                    error.bind="error.sendBy"
+                    read-only.bind="readOnly"
+                    if.bind="data.paymentType!='COURIER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete 
+                    label="Buyer" 
+                    placeholder="Pilih buyer" 
+                    value.bind="selectedBuyer"
+                    error.bind="error.buyer" 
+                    loader.bind="buyerLoader" 
+                    text.bind="buyerView"
+                    read-only.bind="readOnly || data.id" 
+                    if.bind="data.paymentType!='COURIER'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-dropdown
+                    label="Payment Term"
+                    value.bind="data.paymentTerm"
+                    error.bind="error.paymentTerm"
+                    read-only.bind="readOnly"
+                    items.bind="paymentTermOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-autocomplete 
+                    label="Forwarder" 
+                    placeholder="Pilih forwarder" 
+                    value.bind="selectedForwarder"
+                    error.bind="error.forwarder" 
+                    loader.bind="forwarderLoader" 
+                    text.bind="forwarderView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Alamat Forwarder" 
+                    value.bind="data.address"
+                    error.bind="error.address" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="NPWP Forwarder" 
+                    value.bind="data.npwp"
+                    error.bind="error.npwp" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No Invoice Forwarder" 
+                    value.bind="data.invoiceNumber"
+                    error.bind="error.invoiceNumber" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal Invoice Forwarder" 
+                    value.bind="data.invoiceDate" 
+                    error.bind="error.invoiceDate"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="No Faktur Pajak Forwarder" 
+                    value.bind="data.invoiceTaxNumber"
+                    error.bind="error.invoiceTaxNumber" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-autocomplete 
+                    label="EMKL" 
+                    placeholder="Pilih emkl" 
+                    value.bind="selectedEMKL"
+                    error.bind="error.emkl" 
+                    loader.bind="emklLoader" 
+                    text.bind="emklView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Alamat EMKL" 
+                    value.bind="data.address"
+                    error.bind="error.address" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="NPWP EMKL" 
+                    value.bind="data.npwp"
+                    error.bind="error.npwp" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No Invoice EMKL" 
+                    value.bind="data.invoiceNumber"
+                    error.bind="error.invoiceNumber" 
+                    if.bind="data.paymentType=='EMKL'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal Invoice EMKL" 
+                    value.bind="data.invoiceDate" 
+                    error.bind="error.invoiceDate"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='EMKL'"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="No Faktur Pajak EMKL" 
+                    value.bind="data.invoiceTaxNumber"
+                    error.bind="error.invoiceTaxNumber" 
+                    if.bind="data.paymentType=='EMKL'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete 
+                    label="Gudang" 
+                    placeholder="Pilih Gudang" 
+                    value.bind="selectedWarehouse"
+                    error.bind="error.warehouse" 
+                    loader.bind="warehouseLoader" 
+                    text.bind="warehouseView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Alamat Gudang" 
+                    value.bind="data.address"
+                    error.bind="error.address" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="NPWP Gudang" 
+                    value.bind="data.npwp"
+                    error.bind="error.npwp" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No Invoice Gudang" 
+                    value.bind="data.invoiceNumber"
+                    error.bind="error.invoiceNumber" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal Invoice Gudang" 
+                    value.bind="data.invoiceDate" 
+                    error.bind="error.invoiceDate"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="No Faktur Pajak Gudang" 
+                    value.bind="data.invoiceTaxNumber"
+                    error.bind="error.invoiceTaxNumber" 
+                    if.bind="data.paymentType=='PERGUDANGAN'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+               
+                <au-autocomplete 
+                    label="Kurir" 
+                    placeholder="Pilih kurir" 
+                    value.bind="selectedCourier"
+                    error.bind="error.courier" 
+                    loader.bind="courierLoader" 
+                    text.bind="courierView"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='COURIER'"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Alamat Kurir" 
+                    value.bind="data.address"
+                    error.bind="error.address" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='COURIER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="NPWP Kurir" 
+                    value.bind="data.npwp"
+                    error.bind="error.npwp" 
+                    read-only.bind="true" 
+                    if.bind="data.paymentType=='COURIER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No Invoice Kurir" 
+                    value.bind="data.invoiceNumber"
+                    error.bind="error.invoiceNumber" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='COURIER'"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tanggal Invoice Kurir" 
+                    value.bind="data.invoiceDate" 
+                    error.bind="error.invoiceDate"
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='COURIER'"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="No Faktur Pajak Kurir" 
+                    value.bind="data.invoiceTaxNumber"
+                    error.bind="error.invoiceTaxNumber" 
+                    if.bind="data.paymentType=='COURIER'"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-numeric 
+                    label="Nilai Tagihan" 
+                    value.bind="billValue"
+                    error.bind="error.billValue" 
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+        </div>
+        <div class="col-md-6"> 
+                <au-numeric 
+                    label="Nilai PPN" 
+                    value.bind="data.vatValue"
+                    error.bind="error.vatValue" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-numeric>
+                
+                <au-autocomplete 
+                    label="PPH" 
+                    placeholder="Pilih PPH" 
+                    value.bind="data.incomeTax"
+                    error.bind="error.incomeTax" 
+                    loader.bind="incomeTaxLoader" 
+                    text.bind="incomeTaxView"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-numeric 
+                    label="Nilai PPH" 
+                    value.bind="data.incomeTaxValue"
+                    error.bind="error.incomeTaxValue" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric 
+                    label="Total Tagihan" 
+                    value.bind="billTotal"
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-numeric>
+                
+                <au-datepicker 
+                    label="Tanggal Disposisi" 
+                    value.bind="data.paymentDate" 
+                    error.bind="error.paymentDate"
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-datepicker>
+                
+                <au-textbox 
+                    label="Bank" 
+                    value.bind="data.bank"
+                    error.bind="error.bank" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-textbox 
+                    label="Acc No" 
+                    value.bind="data.accNo"
+                    error.bind="error.accNo" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-checkbox
+                    label="Freight Charge"
+                    value.bind="isFreightCharged"
+                    error.bind="error.isFreightCharged" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.paymentType=='FORWARDER'"
+                    options.bind="controlOptions">
+                </au-checkbox>
+
+                <au-dropdown
+                    label="Shipment Method"
+                    value.bind="data.freightBy"
+                    error.bind="error.freightBy"
+                    read-only.bind="readOnly"
+                    items.bind="freightByOptions"
+                    if.bind="data.isFreightCharged"
+                    options.bind="controlOptions">
+                </au-dropdown>
+                
+                <au-textbox 
+                    label="AWB/BL No" 
+                    value.bind="data.freightNo"
+                    error.bind="error.freightNo" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.isFreightCharged"
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-datepicker 
+                    label="Tanggal AWB/BL" 
+                    value.bind="data.freightDate" 
+                    error.bind="error.freightDate"
+                    read-only.bind="readOnly" 
+                    if.bind="data.isFreightCharged"
+                    options.bind="controlOptions">
+                </au-datepicker>
+                
+                <au-multiline 
+                    label="Flight/Vessel" 
+                    value.bind="data.flightVessel"
+                    error.bind="error.flightVessel" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.isFreightCharged"
+                    options.bind="controlOptions">
+                </au-multiline>
+                
+                <au-textbox 
+                    label="Destination To" 
+                    value.bind="data.destination"
+                    error.bind="error.destination" 
+                    read-only.bind="readOnly" 
+                    if.bind="data.isFreightCharged"
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-multiline 
+                    label="Keterangan" 
+                    value.bind="data.remark"
+                    error.bind="error.remark" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-multiline>
+                
+        </div>
+    </div> 
+        <div class="row">
+            <div class="col-md-6">
+    
+                <p>Perincian Tagihan :</p>
+                <div class="form-group has-error">
+                    <p if.bind="error.billDetailsCount" class="help-block text-center">${error.billDetailsCount}</p>
+                </div>
+                <au-collection 
+                    items.bind="data.billDetails" 
+                    errors.bind="error.bills" 
+                    columns.bind="billsColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removebills"
+                    add.bind="addbills"
+                    options.bind="Options"
+                    item-template="modules/garment-shipping/payment-disposition/template/bill">
+                </au-collection>
+            </div>
+        </div>
+            <div class="row">
+            <div class="col-md-6">
+    
+                <p show.bind="data.paymentType=='FORWARDER'">Perincian Pembayaran :</p>
+                <div class="form-group has-error">
+                    <p if.bind="error.paymentDetailsCount" class="help-block text-center">${error.paymentDetailsCount}</p>
+                </div>
+                <au-collection 
+                    items.bind="data.paymentDetails" 
+                    errors.bind="error.payments" 
+                    columns.bind="paymentsColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removepayments"
+                    add.bind="addpayments"
+                    options.bind="Options"
+                    show.bind="data.paymentType=='FORWARDER'"
+                    item-template="modules/garment-shipping/payment-disposition/template/payment">
+                </au-collection>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <p show.bind="data.buyerAgent && data.paymentType!='COURIER'">Detail Invoice DL:</p>
+                <div class="form-group has-error">
+                    <p if.bind="error.invoiceDetailsCount" class="help-block text-center">${error.invoiceDetailsCount}</p>
+                </div>
+                <au-collection 
+                    items.bind="data.invoiceDetails" 
+                    errors.bind="error.invoices" 
+                    columns.bind="data.isFreightCharged ? invoicesColumnsFreightCharge : invoicesColumns"
+                    read-only.bind="readOnly" 
+                    remove.bind="removeInvoices"
+                    add.bind="addInvoices"
+                    options.bind="Options"
+                    change.delegate="invoiceChanged($event)"
+                    show.bind="data.buyerAgent && data.paymentType!='COURIER'"
+                    item-template="modules/garment-shipping/payment-disposition/template/invoice">
+                </au-collection>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p if.bind="data.paymentType!='EMKL'">Beban Unit :</p>
+                <div if.bind="data.paymentType!='EMKL'" class="form-group has-error">
+                    <p if.bind="error.unitChargesCount" class="help-block text-center">${error.unitChargesCount}</p>
+                </div>
+                <div class="form-group has-error">
+                    <p if.bind="error.unitChargesValue" class="help-block text-center">${error.unitChargesValue}</p>
+                </div>
+                <au-collection 
+                    items.bind="data.unitCharges" 
+                    errors.bind="error.unitCharges" 
+                    columns.bind="data.paymentType!='COURIER' ? unitsColumnsForwarder : unitsColumns"
+                    read-only.bind="readOnly || data.paymentType!='COURIER'" 
+                    remove.bind="removeUnits"
+                    add.bind="addUnits"
+                    options.bind="Options"
+                    if.bind="data.paymentType!='EMKL'"
+                    item-template="modules/garment-shipping/payment-disposition/template/unit">
+                </au-collection>
+                
+        
+            </div>
+        </div>
+    </au-input-form>
+</template>

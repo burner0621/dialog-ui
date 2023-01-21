@@ -1,0 +1,39 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div class="col-md-12">
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2">
+                    <textbox label="No Beam" read-only="true"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <au-textbox placeholder="No Beam" value.bind="data.Number" error.bind="error.Number"
+                        read-only.bind="readOnly">
+                    </au-textbox>
+                </div>
+            </div>
+
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2">
+                    <textbox label="Tipe Beam" read-only="true"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <au-dropdown value.bind="data.Type" items.bind="Types"error.bind="error.Type"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+                </div>
+            </div>
+
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2">
+                    <textbox label="Berat Kosong (Kg)" read-only="true"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <au-numeric value.bind="data.EmptyWeight" error.bind="error.EmptyWeight"
+                        read-only.bind="readOnly">
+                    </au-numeric>
+                </div>
+            </div>
+
+        </div>
+    </au-input-form>
+</template>

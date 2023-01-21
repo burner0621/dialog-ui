@@ -1,0 +1,70 @@
+<template>
+  <tr>
+    <!-- <require from="../../../../lib/number-format-value-converter"></require> -->
+    <td>
+      <au-textbox value.bind="data.Expenditure.DocumentNo"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.Supplier.Name"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-multiline value.bind="data.Remark"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+      </au-multiline>
+    </td>
+    <td>
+      <au-autocomplete value.bind="unitPaymentOrder"
+                       error.bind="error.UnitPaymentOrder"
+                       loader.bind="unitPaymentOrderLoader"
+                       query.bind="upoLoaderQuery"
+                       placeholder="cari spb"
+                       text.bind="unitPaymentOrderView"
+                       read-only.bind="readOnly || detailReadOnly">
+      </au-autocomplete>
+    </td>
+    <td>
+      <au-multiline value.bind="data.UnitReceiptNoteNo"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+      </au-multiline>
+    </td>
+    <td>
+      <au-numeric value.bind="data.PurchaseAmountCurrency"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="data.PurchaseAmount"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="data.PaymentAmountCurrency"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="data.PaymentAmount"
+                  read-only.bind="readOnly"
+                  options.bind="controlOptions">
+      </au-numeric>
+    </td>
+    <td class="col-sm-1"
+        if.bind="!readOnly">
+      <button class="btn btn-danger pull-right"
+              click.delegate="onremove(data, $event)">
+        -
+      </button>
+    </td>
+  </tr>
+</template>

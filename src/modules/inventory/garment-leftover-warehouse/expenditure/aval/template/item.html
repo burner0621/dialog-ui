@@ -1,0 +1,71 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete
+                value.bind="selectedUnit"
+                error.bind="error.Unit"
+                loader.bind="unitLoader"
+                read-only.bind="readOnly || data.Id"
+                placeholder="unit"
+                text.bind = "unitView"
+                >
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-autocomplete
+                value.bind="selectedAval"
+                error.bind="error.AvalReceiptNo"
+                loader.bind="avalLoader"
+                read-only.bind="readOnly|| data.Id"
+                placeholder="no Bon"
+                text.bind = "avalView"
+                show.bind="data.Unit"
+                query.bind= "filterFabric">
+            </au-autocomplete>
+        </td>
+<!-- 
+        <td if.bind="!isFabric">
+            <au-autocomplete
+                value.bind="selectedStock"
+                error.bind="error.RONo"
+                loader.bind="stockLoader"
+                read-only.bind="readOnly|| data.Id"
+                placeholder="no RO"
+                text.bind = "roView"
+                show.bind="data.Unit"
+                query.bind= "filterAcc">
+            </au-autocomplete>
+        </td> -->
+        <td if.bind="!readOnly">
+            <au-numeric
+                value.bind="data.Quantity"
+                error.bind="error.Quantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.ActualQuantity"
+                error.bind="error.ActualQuantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="uom"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <!-- <td if.bind="!isFabric">
+            <au-textbox
+                value.bind="data.UomUnit"
+                error.bind="error.Uom"
+                read-only.bind="true">
+            </au-textbox>
+        </td> -->
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

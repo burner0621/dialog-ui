@@ -1,0 +1,75 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+
+        <au-autocomplete value.bind="memoDetail"
+                         error.bind="error.MemoDetail"
+                         label="Nomor Memo"
+                         loader.bind="memoDetailLoader"
+                         text="DocumentNo"
+                         placeholder="pilih nomor memo"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="data.AccountingBook"
+                         error.bind="error.AccountingBook"
+                         label="Jenis Buku"
+                         loader.bind="accountingBookLoader"
+                         text.bind="accountingBookView"
+                         placeholder="pilih jenis buku"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Memo"
+                       value.bind="data.MemoDetail.Date"
+                       error.bind="error.Date"
+                       read-only.bind="true"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox value.bind="data.MemoDetail.Currency.Code"
+                    label="Mata Uang"
+                    read-only.bind="true"
+                    if.bind="data.MemoDetail"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="Rate"
+                    value.bind="data.MemoDetail.Currency.Rate"
+                    format="0"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline label="Keterangan"
+                      value.bind="data.Remarks"
+                      placeholder="tambah keterangan"
+                      read-only.bind="readOnly"
+                      options.bind="controlOptions">
+        </au-multiline>
+
+        <au-collection items.bind="data.Items"
+                       errors.bind="error.Items"
+                       columns.bind="columns"
+                       add.bind="addItems"
+                       remove.bind="onremove"
+                       read-only.bind="readOnly"
+                       item-template="modules/accounting/purchasing-memo-textile/templates/item">
+        </au-collection>
+
+        <au-textbox error.bind="error.Differences"
+                    show.bind="error.Differences"
+                    read-only.bind="true">
+        </au-textbox>
+
+        <!-- <div class="btn-group pull-right">
+            <button class="btn btn-success"
+                    click.delegate="postingCallback($event)"
+                    if.one-way="hasPosting">Posting</button>
+        </div> -->
+
+    </au-input-form>
+</template>

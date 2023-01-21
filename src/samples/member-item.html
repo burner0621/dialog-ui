@@ -1,0 +1,10 @@
+<template>
+  <td>${data.user.id}</td>
+  <td>
+    <au-autocomplete value.bind="data.user" loader.bind="dataLoader" error.bind="error.user" key="id" text="login" template="modules/project/user"></au-autocomplete>
+  </td>
+  <td>
+    <au-textbox value.bind="data.user.avatar_url"></au-textbox>
+  </td>
+  <td><button click.delegate="onremove(data, $event)">remove</button></td>
+</template>

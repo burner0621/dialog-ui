@@ -1,0 +1,39 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal" value.bind="data.LotDate" error.bind="error.LotDate" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="Lot" value.bind="data.LotNo" error.bind="error.LotNo" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+        <!-- 
+        <au-dropdown label="Tipe Benang" value.bind="data.YarnType" error.bind="error.YarnType" read-only.bind="readOnly"
+            items.bind="yarnTypeList" options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-autocomplete label="Tipe Benang" value.bind="yarn" error.bind="error.YarnTypeIdentity"
+            loader.bind="materialTypeLoader" placeholder="Cari tipe benang" key="Id" text="Name"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-collection columns.bind="itemColumns" if.bind="data.Id" items.bind="data.CottonCompositions"
+            errors.one-way="error.CottonCompositions" add.bind="addItemCallback" remove.bind="onremove"
+            read-only.bind="readOnly" item-template="modules/production/spinning/lot-configuration-mix-drawing/template/item">
+        </au-collection>
+
+        <au-collection if.bind="!data.Id" items.bind="data.mixItems"
+            errors.bind="error.CottonCompositions" add.bind="mixDrawingColumns.onAdd" remove.bind="onremove"
+            columns.bind="mixDrawingColumns.columns" read-only.bind="readOnly" view-model.ref="ItemsCollection"
+            options.bind="detailOptions"
+            item-template="modules/production/spinning/lot-configuration-mix-drawing/template/count-configuration-item">
+        </au-collection>
+
+    </au-input-form>
+</template>

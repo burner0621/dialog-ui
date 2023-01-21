@@ -1,0 +1,151 @@
+<template>
+  <div class="row">
+    <div class="col-md-12">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div class="row">
+          <div class="col-md-6" style="white-space: nowrap;">
+            
+            <au-autocomplete label="SPP"
+              placeholder="No. Order Produksi" 
+              value.bind="selectedOrderNumber" 
+              error.bind="error.OrderNumber"
+              read-only.bind="readOnly"
+              loader.bind="orders" 
+              text="OrderNumber"
+              Options.bind ="customOptions"
+            ></au-autocomplete>
+            
+            <au-textbox label="Unit"
+              value.bind="data.Unit" 
+              error.bind="error.Unit" 
+              read-only.bind="readOnlyViewEdit"
+              Options.bind ="customOptions"
+            ></au-textbox>
+
+            <au-textbox label="Konstruksi"
+              value.bind="data.ConstructionNumber"
+              error.bind="error.ConstructionNumber" 
+              read-only.bind="readOnlyViewEdit"
+              Options.bind ="customOptions"
+            ></au-textbox>  
+
+            <au-dropdown 
+             label="Proses"
+             value.bind="data.Process"
+             error.bind="error.Process"
+             read-only.bind="(readOnly)"
+             items.bind="processOptions"
+             keypress.delegate="enterDelegate($event)"
+             options.bind="(customOptions)"
+            ></au-dropdown>
+
+            <au-autocomplete label="Operator"
+              placeholder="Cari Operator" 
+              value.bind="data.Operator" 
+              error.bind="error.Operator"
+              read-only.bind="readOnly"
+              loader.bind="operators" 
+              text="Username"
+              Options.bind ="customOptions"
+            ></au-autocomplete>
+
+            <au-autocomplete label = "No Mesin"
+              placeholder="No Mesin" 
+              value.bind="selectedMachineDocument" 
+              error.bind="error.MachineNumber"
+              read-only.bind="readOnly" 
+              loader.one-time="machines" 
+              text="MachineNumber"
+              options.bind="(customOptions)"
+            ></au-autocomplete>
+
+            <au-textbox label="Tipe Mesin"
+             value.bind="data.MachineTypeName"
+             error.bind="error.MachineTypeName" 
+             read-only.bind="readOnlyViewEdit"
+             Options.bind ="customOptions"
+            ></au-textbox>
+
+            <au-textbox label="Lokasi Mesin"
+             value.bind="data.MachineLocation"
+             error.bind="error.MachineLocation" 
+             read-only.bind="readOnlyViewEdit"
+             Options.bind ="customOptions"
+            ></au-textbox>
+
+          </div>
+
+          <div class="col-md-6" style="white-space: nowrap;">
+            <div class="row">
+              <div class="col-md-4" style="text-align:left;">
+                
+                <textbox label="Tanggal/Waktu Berhenti"
+                 read-only="true"
+                 style="display: inline-block"
+                ></textbox>
+
+              </div>
+              
+              <div class="col-md-6">
+                <au-datetimepicker 
+                 label="" 
+                 read-only.bind="readOnly"
+                 value.bind="data.StopDate"
+                 error.bind="error.StopDate"
+                ></au-datetimepicker>
+              </div>
+
+              
+            </div>
+          </div>
+
+          <div class="col-md-6" style="white-space: nowrap;">
+            <div class="row">
+              <div class="col-md-4" style="text-align:left;">
+                
+                <textbox label="Tanggal/Waktu Lanjut"
+                 read-only="true"
+                 style="display: inline-block"
+                ></textbox>
+
+              </div>
+              
+              <div class="col-md-6">
+                <au-datetimepicker 
+                 label="" 
+                 read-only.bind="readOnly"
+                 value.bind="data.ContinueDate"
+                 error.bind="error.ContinueDate"
+                ></au-datetimepicker>
+              </div>
+
+              
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+
+            <au-textbox label="Trouble"
+             value.bind="data.Trouble"
+             error.bind="error.Trouble" 
+             read-only.bind="readOnly"
+             options.bind = "customOptions"
+            ></au-textbox>
+            
+            <au-multiline 
+             label="Keterangan"
+             value.bind="data.Description"
+             error.bind="error.Description" 
+             read-only.bind="readOnly"
+             options.bind ="customDescriptionOptions"
+            ></au-multiline>
+
+          </div>
+
+        </div>
+
+        </div>
+      </au-input-form>
+    </div>
+  </div>
+</template>

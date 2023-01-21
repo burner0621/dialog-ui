@@ -1,0 +1,62 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.product.name"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.defaultQuantity"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.product.uom.unit"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.dealQuantity"
+                        format="0,0.00"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.dealUom.unit"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.conversion"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="hasView">
+            <au-numeric value.bind="data.priceBeforeTax"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td align="center">
+            <au-checkbox value.bind="data.includePpn"
+                         read-only.bind="true"
+                         options.bind="controlOptions">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.productRemark"
+                        read-only.bind="true"
+                        placeholder="tambah keterangan"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+    </tr>
+</template>

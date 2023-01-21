@@ -1,0 +1,322 @@
+<template>
+        <require from="../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Laporan Traceable Keluar</h1>
+    <form class="form-horizontal">
+
+
+        <!-- <input  label="No BC Keluar" type="text" value.bind="BCNo" options.bind="controlOptions"> -->
+
+        <au-textbox 
+        value.bind="BCNo"
+        label="No Dokumen"
+        placeholder="Masukan No Dokumen"
+        options.bind="controlOptions">
+        </au-textbox >
+        <!-- <au-autocomplete 
+        value.bind="BCNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No BC Masuk"
+        options.bind="controlOptions">
+        </au-autocomplete > -->
+
+        <!-- <au-autocomplete 
+        value.bind="BCNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No BC Masuk"
+        loader.bind="bcnoLoader"
+        query.bind="filterQuery"
+        options.bind="controlOptions">
+        </au-autocomplete > -->
+            <!--<au-textbox
+            value.bind="internNote" 
+                label="Nomor Nota Intern" 
+                options.bind="controlOptions"
+                placeholder="Cari Nomor Nota Intern"></au-textbox>-->
+            
+        <!-- <au-autocomplete 
+                value.bind="currency" 
+                label="Mata Uang" 
+                loader.bind="currencyLoader"
+                placeholder="Cari Mata Uang" 
+                read-only.bind="readOnly" 
+                key="Id" 
+                text="Code"
+                options.bind="controlOptions">
+            </au-autocomplete> -->
+        <!-- <supplier-auto-suggest label="Supplier" value.bind="supplierId"></supplier-auto-suggest> -->
+        <!-- <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker> -->
+
+        <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-primary'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <!--<au-table
+            view-model.ref="doTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Cetak Excel</button>
+            </div>
+        </au-table>-->
+        <!--<hr/>
+    </form>
+</template>-->
+        <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+
+        
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td rowspan="2">Tanggal Keluar</td>
+                        <td rowspan="2">No Bon</td>
+                        <td rowspan="2">Nama Barang</td>
+                        <td rowspan="2">Jumlah Barang</td>
+                        <td rowspan="2">Satuan</td>
+                        <td rowspan="2">No. Invoice</td>
+                        <td rowspan="2">Buyer</td>
+                        <td colspan="3">Dokumen</td>      
+                        <td rowspan="2">RO</td>
+                    </tr>
+                    <tr>
+                        <td>Jenis</td>
+                        <td>Nomor</td>
+                        <td>Tanggal</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                        <td >${$index+1}</td>
+                        <td >${IN.ExpenditureDate | dateFormat:'DD MMM YYYY'}</td>
+                        <td >${IN.ExpenditureGoodId}</td>
+                        <td >${IN.ComodityName}</td>
+                        <td >${IN.Qty | numberFormat: '0,000.00'}</td>
+                        <td>${IN.UnitQtyName}</td>
+                        <td >${IN.ExpenditureNo}</td>
+                        <td >${IN.BuyerName}</td>
+                        <td >${IN.BCType}</td>
+                        <td>${IN.BCNo}</td>
+                        <td>${IN.BCDate | dateFormat:'DD MMM YYYY' }</td>
+                        <td>${IN.RO}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+    </hr>
+
+    <h1 class="page-header">Perincian Pemakaian Bahan Baku Dan Bahan Penolong</h1>
+        
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" border="1" id="doReport">
+                    <thead align="center">
+                        <tr>
+                            <td rowspan="2">No</td>
+                            <td rowspan="2">No.RO</td>
+                            <td rowspan="2">Kode Barang</td>
+                            <td rowspan="2">Nama Barang</td>
+                            <td rowspan="2">Jumlah Pemakaian</td>
+                            <td rowspan="2">Satuan</td>
+                            <td colspan="3">Dokumen</td>
+                                 
+                        </tr>
+                        <tr>
+                            <td>Jenis BC</td>
+                            <td>No</td>
+                            <td>Tanggal</td> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="IN of data2">
+                            <td >${$index+1}</td>
+                            <td >${IN.DestinationJob}</td>
+                            <td >${IN.ItemCode}</td>
+                            <td >${IN.ItemName}</td>
+                            <td >${IN.SmallestQuantity | numberFormat: '0,000.00'}</td>
+                            <td >${IN.UnitQtyName}</td>
+                            <td >${IN.BCType}</td>
+                            <td >${IN.BCNo}</td>
+                            <td>${IN.BCDate | dateFormat:'DD MMM YYYY' }</td>  
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+             <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+                Tidak ada data ditemukan.
+            </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</template> 
+<!-- <template>
+    <h1 class="page-header">Laporan Traceable Masuk</h1>
+    <form class="form-horizontal">
+        <au-dropdown 
+        label="Jenis" 
+        value.bind="type"
+        items.bind="Types"
+        options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-autocomplete 
+        value.bind="BCNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No BC Masuk"
+        if.bind="type == 'No BC Masuk'"
+        loader.bind="bcnoLoader"
+        query.bind="filterQuery"
+        options.bind="controlOptions">
+        </au-autocomplete >
+        
+        <au-autocomplete
+        value.bind="rojob"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="RO Job"
+        if.bind="type == 'RO Job'"
+        loader.bind="rojobLoader"
+        query.bind="filterQuery"
+        options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+        value.bind="itemcode"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Kode Barang"
+        if.bind="type == 'Kode Barang'"
+        loader.bind="itemcodeLoader"
+        query.bind="filterQuery"
+        options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+        value.bind="comodity"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Komoditi"
+        if.bind="type == 'Komoditi'"
+        loader.bind="komoditiLoader"
+        query.bind="filterQuery"
+        options.bind="controlOptions">
+        </au-autocomplete>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-3 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+       
+         <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Jenis BC</td>
+                    <td>No BC</td>
+                    <td>Tanggal BC</td>
+                    <td>No Bon</td>
+                    <td>PO</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>Qty</td>
+                    <td>Satuan</td>
+                    <td>No BUK</td>
+                    <td>Qty</td>
+                    <td>Satuan</td>
+                    <td>Produksi Qty</td>
+                    <td>BJ Qty</td>
+                    <td>Invoice</td>
+                    <!-- <td>WIP</td> -->
+                    <!-- <td>BC Keluar</td>
+                    <td>Tgl BC Keluar</td>
+                    <td>Ekspor Qty</td>
+                    <td>Sample Qty</td>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data"> -->
+                        <!-- <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.count}</td>
+                        <td if.bind="item.rowspan" rowspan="${item.rowspan}">${IN.BCType}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.BCNo}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.BCDate | dateFormat:'D MMM YYYY'}</td> -->
+                        <!-- <td if.bind="IN.docspan" rowspan="${IN.docspan}">${IN.count}</td>
+                        <td if.bind="IN.rowspan" rowspan="${IN.rowspan}">${IN.BCType}</td>
+                        <td if.bind="IN.docspan" rowspan="${IN.docspan}">${IN.BCNo}</td>
+                        <td if.bind="IN.docspan" rowspan="${IN.docspan}">${IN.BCDate | dateFormat:'D MMM YYYY'}</td>
+                        <td if.bind="IN.docspan" rowspan="${IN.docspan}">${IN.BonNo}</td>
+                        <td>${IN.PO}</td>
+                        <td>${IN.ItemCode}</td>
+                        <td>${IN.ItemName}</td>
+                        <td>${IN.ReceiptQty}</td>
+                        <td>${IN.SatuanReceipt}</td>
+                        <td>${IN.BUK}</td>
+                        <td>${IN.QtyBUK}</td>
+                        <td>${IN.SatuanBUK}</td>
+                        <td>${IN.ProduksiQty}</td>
+                        <td>${IN.BJQty}</td>
+                        <td>${IN.Invoice}</td>
+                        <td>${IN.PEB}</td>
+                        <td>${IN.PEBDate | dateFormat:'D MMM YYYY'}</td>
+                        <td>${IN.EksporQty}</td>
+                        <td>${IN.SampleQty}</td>
+                        <!--<td>${SJ['Satuan Barang']}</td>-->
+                    <!-- </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</template>  --> 
+
+
+
+
+
+
+
+

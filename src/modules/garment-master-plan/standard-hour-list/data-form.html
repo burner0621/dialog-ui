@@ -1,0 +1,68 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+        </div>
+
+        <au-autocomplete 
+            value.bind="selectedBuyer" 
+            error.bind="error.BuyerName"
+            label="Buyer" 
+            loader.one-time="buyerLoader"
+            text.bind = "buyerView"
+            placeholder="Pilih Buyer" 
+            key="code" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedComodity" 
+            error.bind="error.ComodityName"                                                                                                                                                                                                                                                                                                               
+            label="Comodity" 
+            loader.one-time="comodityLoader"
+            text.bind = "comodityView"
+            placeholder="Pilih Comodity" 
+            key="code" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Update"
+            value.bind="data.SMVDate"
+            error.bind="error.date" 
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-numeric  
+            label="Standard Minute Value Cutting" 
+            value.bind="data.SMVCutting"
+            error.bind="error.SMVCutting"
+            read-only.bind="readOnly"
+            options.bind="controlOptions2"
+            format="0.00">
+        </au-numeric>
+
+        <au-numeric  
+            label="Standard Minute Value Sewing" 
+            value.bind="data.SMVSewing"
+            error.bind="error.SMVSewing"
+            read-only.bind="readOnly"
+            options.bind="controlOptions2"
+            format="0.00">
+        </au-numeric>
+        
+        <au-numeric  
+            label="Standard Minute Value Finishing" 
+            value.bind="data.SMVFinishing"
+            error.bind="error.SMVFinishing"
+            read-only.bind="readOnly"
+            options.bind="controlOptions2"
+            format="0.00">
+        </au-numeric>
+    </au-input-form>
+</template>

@@ -1,0 +1,64 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox
+                value.bind="data.product.name || ''"
+                error.bind="error.product"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.description"
+                error.bind="error.description"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.quantity"
+                error.bind="error.quantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.uom.unit || ''"
+                error.bind="error.uom"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.packQuantity"
+                error.bind="error.packQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.packUom.unit || ''"
+                error.bind="error.packUom"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.grossWeight"
+                error.bind="error.grossWeight"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.nettWeight"
+                error.bind="error.nettWeight"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

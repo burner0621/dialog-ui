@@ -1,0 +1,79 @@
+<template>
+    <h1 class="page-header">Monitoring RO Job Order</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="selectedROGarment" 
+            label="Nomor RO" 
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO" 
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="prMonitor">
+                <thead align="center">
+                    <tr>
+                        <td>PO Serial Number</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Budget Quantity</td>
+                        <td>Satuan Beli</td>
+                        <td>Status</td>
+                        <td>RO Master</td>
+                        <td>PO Master</td>
+                        <td>Jumlah Pembagian PO</td>
+                        <td>Satuan</td>
+                        <td>No Surat Jalan</td>
+                        <td>Supplier</td>
+                        <td>Ket. Kelebihan Barang</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template repeat.for="data of tableData">
+                        <tr>
+                            <td rowspan.bind="data.Items.length || 1">${data.POSerialNumber}</td>
+                            <td rowspan.bind="data.Items.length || 1">${data.ProductCode}</td>
+                            <td rowspan.bind="data.Items.length || 1">${data.ProductName}</td>
+                            <td rowspan.bind="data.Items.length || 1" align="center">${data.BudgetQuantity}</td>
+                            <td rowspan.bind="data.Items.length || 1" align="center">${data.UomPriceUnit}</td>
+                            <td rowspan.bind="data.Items.length || 1">${data.Status}</td>
+                            <template if.bind="data.Items.length > 0">
+                                <td>${data.Items[0].ROMaster}</td>
+                                <td>${data.Items[0].POMaster}</td>
+                                <td align="center">${data.Items[0].DistributionQuantity}</td>
+                                <td align="center">${data.Items[0].UomCCUnit}</td>
+                                <td>${data.Items[0].DONo}</td>
+                                <td>${data.Items[0].SupplierName}</td>
+                                <td>${data.Items[0].OverUsageReason}</td>
+                            </template>
+                            <template else>
+                                <td repeat.for="i of 7"></td>
+                            </template>
+                        </tr>
+                        <template if.bind="data.Items.length > 1">
+                            <tr repeat.for="index of data.Items.length - 1">
+                                <td>${data.Items[index+1].ROMaster}</td>
+                                <td>${data.Items[index+1].POMaster}</td>
+                                <td align="center">${data.Items[index+1].DistributionQuantity}</td>
+                                <td align="center">${data.Items[index+1].UomCCUnit}</td>
+                                <td>${data.Items[index+1].DONo}</td>
+                                <td>${data.Items[index+1].SupplierName}</td>
+                                <td>${data.Items[index+1].OverUsageReason}</td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

@@ -1,0 +1,126 @@
+<template>
+  
+        <h1 class="page-header">Monitoring Bon Terima Unit</h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete 
+                value.bind="no" 
+                label="No Bon Terima Unit" 
+                loader.bind="unitReceiptLoader"
+                placeholder="Cari No Bon Terima Unit"
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-textbox 
+                label="Nomor PR" 
+                value.bind="pr"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox  
+                value.bind="purchaseRequestRefNo"
+                label="Nomor Ref. PR"
+                placeholder="masukkan nomor referensi PR"  >
+            </au-textbox>
+
+                        <au-textbox  
+                value.bind="roNo"
+                label="Nomor RO"
+                placeholder="masukkan nomor RO"  >
+            </au-textbox>
+
+            <au-textbox  
+                value.bind="deliveryorderNo"
+                label="Nomor SJ"
+                placeholder="masukkan nomor SJ"  >
+            </au-textbox>
+
+            <au-autocomplete 
+                value.bind="unit" 
+                label="Unit" 
+                loader.bind="unitLoader"
+                placeholder="Cari Unit"
+                read-only.bind="readOnly" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+            <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="name" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>Nomor Bon Terima Unit</td>
+                        <td>Tanggal Bon Terima Unit</td>
+                        <td>Unit</td>
+                        <td>Supplier</td>
+                        <td>Surat Jalan</td>
+                        <td>No PR</td>
+                        <td>No Ref PR</td>
+                        <td>No RO</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah</td>
+                        <td>Satuan</td>
+                        <td>Keterangan</td>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                    <tr repeat.for="item of data">
+                        <td class="text-left">${item.no}</td>
+                        <td class="text-left">${item.date | dateFormat:'DD MMMM YYYY'}</td>
+                        <td class="text-left">${item.unit}</td>
+                         <td class="text-left">${item.supplier}</td>
+                        <td class="text-left">${item.deliveryorderNo}</td>
+                        <td class="text-left">${item.purchaseRequestNo}</td>
+                        <td class="text-left">${item.purchaseRequestRefNo}</td>
+                        <td class="text-left">${item.roNo}</td>
+                        <td class="text-left">${item.productCode}</td>
+                        <td class="text-left">${item.productName}</td>
+                        <td class="text-right">${item.quantity}</td>
+                        <td class="text-left">${item.unitCode}</td>
+                        <td class="text-left">${item.remark}</td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

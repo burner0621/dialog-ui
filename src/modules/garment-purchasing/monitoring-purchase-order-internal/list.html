@@ -1,0 +1,60 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table > tbody > tr > td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Purchase Order internal</h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete value.bind="no" label="Nomor PR" placeholder="cari nomor pr" loader.bind="purchaseOrdersLoader" key="refNo"
+                text="refNo">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="unit" label="Unit" placeholder="cari unit" loader.bind="unitLoader" key="code" text="name">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="category" label="Kategori" placeholder="cari kategori" loader.bind="categoryLoader" key="code"
+                text="name">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="buyer" label="Buyer" placeholder="cari buyer" loader.bind="buyerLoader" key="code"
+                text="name">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+            <!--<div class="btn-group pull-left" if.bind="data.length > 0">-->
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+        <au-table
+          view-model.ref="table"
+          data.bind="loader"
+          columns.bind="columns"
+          sortable.bind="true"
+          page-size="25"
+          options.bind="tableOptions">
+          
+          <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+          </div>
+        </au-table>
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

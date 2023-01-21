@@ -1,0 +1,15 @@
+<template>
+    <tr>
+        <td>
+            <au-numeric value.bind="Input.Counter" read-only.bind="options.readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="hank" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove($event)">-</button>
+        </td>
+    </tr>
+</template>

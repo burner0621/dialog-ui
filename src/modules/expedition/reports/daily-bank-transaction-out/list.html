@@ -1,0 +1,109 @@
+<template>
+    <h1 class="page-header">Laporan Transaksi Bank Harian Keluar</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="info.code"
+                         label="No Referensi"
+                         loader.bind="referenceNoLoader"
+                         placeholder="No Referensi"
+                         read-only.bind="false"
+                         text.bind="referenceNoView"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="info.bank"
+                         label="Nama Bank"
+                         loader.bind="accountBankLoader"
+                         placeholder="Nama Bank"
+                         read-only.bind="false"
+                         text.bind="accountBankView"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="info.division"
+                         label="Divisi"
+                         loader.bind="divisionLoader"
+                         placeholder="Divisi"
+                         read-only.bind="false"
+                         text.bind="divisionView"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal Awal Bank Harian"
+                       value.bind="info.startDate"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker label="Tanggal Akhir Bank Harian Masuk"
+                       value.bind="info.endDate"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact"
+                   class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="reset()"
+                        class='btn btn-primary'>Reset</button>
+                <button click.delegate="search()"
+                        class='btn btn-success'>Cari</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>No Referensi</th>
+                        <th>Tanggal</th>
+                        <th>Nama Bank</th>
+                        <th>Mata Uang</th>
+                        <th>Jenis Referensi</th>
+                        <th>Jenis Sumber</th>
+                        <th>Status</th>
+                        <th>Nominal</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr show.bind="isEmpty">
+                        <td colspan="10">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of data">
+                        <td>${datum.Index}</td>
+                        <td>${datum.ReferenceNo}</td>
+                        <td>${datum.DateFormatted}</td>
+                        <td>${datum.AccountBankAccountName} - ${datum.AccountBankName} -
+                            ${datum.AccountBankAccountNumber} - ${datum.AccountBankCurrencyCode}</td>
+                        <td>${datum.AccountBankCurrencyCode}</td>
+                        <td>${datum.ReferenceType}</td>
+                        <td>${datum.SourceType}</td>
+                        <td>${datum.Status}</td>
+                        <td class="text-right">${datum.Nominal}</td>
+                        <td>${datum.Remark}</td>
+                    </tr>
+
+                </tbody>
+                <!--Table body-->
+                <div style="margin-bottom: 1%"
+                     slot="toolbar"
+                     class="btn-group">
+                    <button class='btn btn-primary'
+                            click.delegate="excel()">Excel</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+
+</template>

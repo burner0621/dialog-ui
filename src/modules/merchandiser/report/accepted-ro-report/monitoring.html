@@ -1,0 +1,110 @@
+<template>
+    <h1 class="page-header">Laporan Penerimaan RO Garment</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="selectedSection"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            placeholder="Cari Seksi"
+            text="Code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <!--<au-autocomplete
+            value.bind="selectedROGarment"
+            label="Nomor RO"
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO"
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedBuyer"
+            label="Buyer"
+            loader.bind="garmentBuyerLoader"
+            placeholder="Cari Buyer"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>-->
+        <au-datepicker
+            value.bind="selectedAcceptedDateStart"
+            label="Tgl Terima Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <au-datepicker
+            value.bind="selectedAcceptedDateEnd"
+            label="Tgl Terima Akhir"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><label>No</label></th>
+                        <th><label>Tanggal Terima</label></th>
+                        <th><label>No RO</label></th>
+                        <th><label>Artikel</label></th>
+                        <th><label>Kode Buyer</label></th>
+                        <th><label>Nama Buyer</label></th>
+                        <th><label>Tanggal Shipment</label></th>
+                        <th><label>Quantity</label></th>
+                        <th><label>Satuan</label></th>
+                        <th><label>User Penerima</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="10">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <tr>
+                            <td class="text-center"> ${$index + 1}</td>
+                            <td align="center">
+                                <au-datepicker value.bind="data.AcceptedDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.RONo" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.Article" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.Buyer" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.BuyerName" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="data.DeliveryDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.Quantity" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.Uom" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="data.AcceptedBy" read-only="true"></au-textbox>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

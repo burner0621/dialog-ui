@@ -1,0 +1,78 @@
+<template>
+    <div class="display-wrapper">
+        <h1 class="page-header">Koreksi Harga Pembelian</h1>
+        <br>
+        <au-table
+            data.bind="loader"
+            context.bind="context"
+            context-click.delegate="contextClickCallback($event)"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25">
+            
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="create()">Buat</button>
+            </div>
+        </au-table>
+
+		<hr/>
+    </div>
+</template>
+
+<!--<template>
+
+    <div class="display-wrapper">
+        <h1 class="page-header">Koreksi Harga Pembelian</h1>
+        <br>
+        <div class="row">
+            <div class="col-sm-8">
+				<div class="input-group">
+					<input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
+					<span class="input-group-btn">
+                        <button class="btn btn-default" click.delegate="loadPage()"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" click.delegate="activate()"> Tampilkan Semua </button>    
+                    </span>
+				</div>
+			</div>
+            <div class="col-sm-4">
+                <div class="pull-right">
+                    <button class="btn btn-primary" click.delegate="create()">Buat</button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align:center">No. Koreksi</th>
+                    <th style="text-align:center">Tgl Koreksi</th>
+                    <th style="text-align:center">No. Surat Perintah Bayar</th>
+                    <th style="text-align:center">Supplier</th>
+                    <th style="text-align:center">No. Invoice Koreksi</th>
+                    <th style="text-align:center">Tgl. Jatuh Tempo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td style="text-align:center">${item.no}</td>
+                    <td style="text-align:center">${item.date | dateFormat:'D MMM YYYY'}</td>
+                    <td style="text-align:center">${item.unitPaymentOrder.no}</td>
+                    <td style="text-align:center">${item.unitPaymentOrder.supplier.name}</td>
+                    <td style="text-align:center">${item.invoiceCorrectionNo}</td>
+                    <td style="text-align:center">${item.unitPaymentOrder.dueDate | dateFormat:'D MMM YYYY'}</td>
+                    <td style="text-align:center">
+                        <button class="btn btn-default" click.delegate="view(item)">Rincian</button>
+                        <button class="btn btn-primary" click.delegate="getPDF(item)">Cetak Pdf</button>
+                        //<button class="btn btn-primary" click.delegate="getPDFRetur(item)" if.bind="item.unitPaymentOrder.useIncomeTax">Cetak Nota Retur</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Data Catatan Koreksi Harga Tidak Ditemukan.
+    </div>
+    <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+    <hr/>
+    </div>
+</template>-->

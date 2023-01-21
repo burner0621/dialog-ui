@@ -1,0 +1,89 @@
+<template>
+    <tr>
+        <!-- <td align='center' if.bind="options.isCreate || options.isEdit" class="bg-primary"  class="col-sm-1">
+            <au-checkbox 
+                value.bind="data.IsSave" 
+                if.bind="options.isCreate || options.isEdit"
+                options.bind="controlOptions"
+                change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td> -->
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Size.Size"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary" if.bind="!readOnly">
+            <au-numeric
+                value.bind="data.SewingInQuantity"
+                error.bind="error.SewingInQuantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-numeric
+                value.bind="qty"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Color"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <div>
+                <button class="btn btn-info pull-right" if.bind= "data.Details" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+        <tr if.bind="error.DetailsCount">
+            <div class="form-group has-error" if.bind="error.Detail">
+                <p if.bind="error.Detail" class="help-block text-center">${error.Detail}</p>
+            </div>
+        </tr>
+        <!-- <tr if.bind="error.TotalQuantity">
+            <div class="form-group has-error" if.bind="error.TotalQuantity">
+                <p if.bind="error.TotalQuantity" class="help-block text-center">${error.TotalQuantity}</p>
+            </div>
+        </tr> -->
+        
+    <tr show.bind="isShowing">
+        <td colspan="15">
+            <au-collection 
+                items.bind="data.Details" 
+                errors.bind="error.Details" 
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly" 
+                add.bind="addItems" 
+                remove.bind="removeItems"
+                options.bind="itemOptions"
+                item-template="modules/garment-production/sewing-out/template/detail"
+                footer-template="modules/garment-production/sewing-out/template/detail-footer">
+            </au-collection>
+            <!-- <hr style="border: 5px solid #173250; border-radius: 0px 0px 5px 5px;"> -->
+        </td>
+    </tr>
+    </tr>
+    
+</template>

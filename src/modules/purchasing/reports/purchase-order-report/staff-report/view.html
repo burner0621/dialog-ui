@@ -1,0 +1,110 @@
+<template>
+    <h1 class="page-header">Monitoring Tanggal Ketepatan Kedatangan </h1> 
+    
+    <form class="form-horizontal">
+     
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+               <th class="text-center"> Divisi</th> 
+                <th class="text-center">Nama Staff</th> 
+                <th class="text-center">Tanggal Awal</th>
+                <th class="text-center">Tanggal Akhir</th>
+                <th class="text-center">PR</th>
+                 <th class="text-center">Intern ke Ekstern</th>
+                <th class="text-center"> Tidak Tercapai</th>
+                <th class="text-center">%</th>
+                 <th class="text-center">Barang Datang</th>
+                <th class="text-center"> Tidak Tercapai</th>
+                <th class="text-center">%</th>
+                
+                <!--<th>Kategori UOM</th>-->
+            </tr>
+             <tbody if.bind="data.length > 0">
+            <tr >
+               
+  </td>
+    <td >${divname}</td>
+                    <td >${staff}</td>
+                    <td >${dateFrom}</td>
+                    <td >${dateTo} </td>
+                    <td >${nilaitotalp}</td>
+                    <td >${nilaitotalpp2}</td>
+                    <td >${nilaitotals2}</td>
+                    <td >${persen2}%</td>
+                    <td >${nilaitotalpp}</td>
+                    <td >${nilaitotals}</td>
+                    <td >${persen}%</td>
+              
+                
+            </tr>
+            
+        </tbody>
+        </thead> 
+        </table>
+<br>
+  <div class="btn-group pull-left" if.bind="data.length > 0">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+        <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th class="text-center">Tanggal PR</th>
+           
+                
+                <th class="text-center">No PR</th>
+                <th class="text-center">Nama Barang</th>
+                <th class="text-center">Supplier</th>
+                <th class="text-center">Tgl Terima Po Int</th>
+                <th class="text-center">Tgl Terima PO Eks</th>
+                <th class="text-center">Selisih1</th>
+                <th class="text-center">Tgl Target Datang</th>
+                <th class="text-center">Tgl Barang Datang</th>
+                <th class="text-center">Selisih2</th>
+                 <th class="text-center">Unit</th>
+                
+                <!--<th>Kategori UOM</th>-->
+            </tr>
+            
+        </thead>
+    
+        <tbody>
+            <tr repeat.for="item of data">
+                <td class="text-center">${$index + 1}</td>
+   
+       <td>${item.tgpr | dateFormat:'DD-MM-YYYY'}</td>
+              
+                    <td > ${item._id.name}</td>
+                    <td > ${item.nmbarang}</td>
+                    <td > ${item.nmsupp}</td>
+                
+                    <td>${item.tglpoint | dateFormat:'DD-MM-YYYY'}</td>
+                     <td>${item.tglpoeks | dateFormat:'DD-MM-YYYY'}</td>
+                     <td >${item.selisih2}</td>
+               
+                     
+<td>${item.tgltarget | dateFormat:'DD-MM-YYYY'}</td>
+<td>${item.tgldatang | dateFormat:'DD-MM-YYYY'}</td>
+             
+                     <td > ${item.selisih}</td>
+                     <td > ${item.unit}</td>
+
+              
+                
+            </tr>
+            
+        </tbody>
+    </table>
+        
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+     
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list(dateFrom,dateTo,divisi)" class='btn btn-default btn-sm'>Kembali</a>
+        </div>
+    </form>
+        
+</template>

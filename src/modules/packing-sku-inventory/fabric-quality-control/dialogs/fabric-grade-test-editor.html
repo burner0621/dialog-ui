@@ -1,0 +1,18 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>${isEdit ? "Ubah Kain" : "Tambah Kain"}</ai-dialog-header>
+
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-textbox label="Nomor Pcs" value.bind="PcsNo" error.bind="pcsNoError"></au-textbox>
+                <au-numeric label="Panjang" value.bind="PcsLength" error.bind="pcsLengthError" read-only.bind="readOnly" options.bind="layoutOptions2"></au-numeric>
+                <au-numeric label="Lebar" value.bind="PcsWidth" error.bind="pcsWidthError" read-only.bind="readOnly" options.bind="layoutOptions2"></au-numeric>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Kembali</button>
+            <button class="btn btn-success" click.delegate="saveCallback()">Ok</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

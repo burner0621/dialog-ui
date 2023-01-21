@@ -1,0 +1,33 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-dropdown label="Tipe Kategori" value.bind="data.categoryType"
+                    error.bind="error.categoryType"  read-only.bind="(readOnly || isEdit)"
+                    items.bind="CategoryTypes" change.delegate="CategoryTypeChanged($event)">
+                </au-dropdown> 
+
+                <au-textbox label="Kode Kategori" placeholder="Kode Kategori" value.bind="data.code" error.bind="error.Code"
+                    read-only.bind="(readOnly || isEdit)">
+                </au-textbox>
+
+                <au-textbox label="Nama Kategori" placeholder="Nama Kategori" value.bind="data.name" error.bind="error.Name"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-autocomplete label="Satuan" placeholder="Satuan" value.bind="UOM" error.bind="error.uom" loader.bind="uomLoader"
+                    read-only.bind="readOnly" key="Unit" text="Unit">
+                </au-autocomplete>
+
+                <au-dropdown label="Jenis Kategori" value.bind="data.codeRequirement"
+                    error.bind="error.codeRequirement"  read-only.bind="(readOnly || isEdit)"
+                    items.bind="CodeRequirements" change.delegate="CodeRequirementChanged($event)">
+                </au-dropdown> 
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

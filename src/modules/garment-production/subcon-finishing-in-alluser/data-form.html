@@ -1,0 +1,140 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox
+            if.bind="data.FinishingInNo"
+            value.bind="data.FinishingInNo"
+            label="No Finishing In Subcon"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Unit"
+            error.bind="error.Unit"
+            label="Unit Finishing In Subcon"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Finishing In Subcon"
+            value.bind="data.FinishingInDate"
+            error.bind="error.FinishingInDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-textbox
+            value.bind="data.FinishingInType"
+            label="Asal Finishing In Subcon"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.Article"
+            label="No Artikel"
+            read-only="true"
+            if.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="data.Comodity" 
+            label="Komoditi" 
+            text = "Name"
+            read-only="true"
+            if.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedSupplier" 
+            error.bind="error.Supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="Cari Supplier" 
+            if.bind="!readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedURN"
+            error.bind="error.DONo"
+            label="No SJ"
+            loader.bind="urnLoader"
+            query.bind="filter"
+            show.bind="data.Supplier"
+            text.bind="urnView"
+            placeholder="Nomor SJ"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            view-model.ref="selectedURNViewModel">
+        </au-autocomplete>
+
+        <au-dropdown
+            if.bind="selectedURN"
+            value.bind="selectedRONo"
+            error.bind="error.RONo"
+            label="No RO"
+            items.bind="itemsRONo"
+            read-only.bind="readOnly"
+            options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-collection
+            items.bind="dataDODetails"
+            columns.bind="doDetailColumns"
+            read-only="true"
+            title="Detail SJ"
+            if.bind="selectedRONo && !readOnly"
+            footer-template="modules/garment-production/subcon-finishing-in/template/do-detail-footer">
+        </au-collection>
+
+        <!-- <p if.bind="selectedRONo">Sisa Jumlah SJ: <b>${totalQuantity}</b></p> -->
+        <au-textbox
+            if.bind="selectedRONo && !readOnly"
+            value.one-way="totalQuantity"
+            error.bind="error.TotalQuantity"
+            label="Sisa Jumlah SJ"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <div class="form-group has-error">
+            <p if.bind="error.Item" class="help-block text-center">${error.Item}</p>
+        </div>
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="subconDetails.columns"
+            read-only.bind="readOnly"
+            title="Detail Finishing In Subcon"
+            if.bind="selectedRONo && !readOnly"
+            options.bind="subconDetails.options"
+            header-template="modules/garment-production/subcon-finishing-in/template/subcon-detail-header"
+            item-template="modules/garment-production/subcon-finishing-in/template/subcon-detail"
+            footer-template="modules/garment-production/subcon-finishing-in/template/subcon-detail-footer">
+                <button if.bind="!readOnly" slot="body" click.delegate="subconDetails.onAdd()" class="btn btn-primary pull-right">Tambah Detail</button>
+        </au-collection>
+
+        <au-collection
+            items.bind="data.ViewItems"
+            columns.bind="subconDetails.viewColumns"
+            read-only="true"
+            title="Detail Finishing In Subcon"
+            if.bind="readOnly">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

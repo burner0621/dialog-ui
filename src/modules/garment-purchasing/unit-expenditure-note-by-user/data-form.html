@@ -1,0 +1,139 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <au-textbox 
+                    label=""
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-textbox 
+                    label="Nomor Bon Pengeluaran Unit" 
+                    value.bind="data.UENNo" 
+                    error.bind="error.UENNo" 
+                    read-only.bind="true"
+                    if.bind="(readOnly || isEdit)"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Tgl. Pengeluaran" 
+                    value.bind="data.ExpenditureDate" 
+                    error.bind="error.ExpenditureDate" 
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+                </au-datepicker>
+                
+                <au-dropdown 
+                    label="Jenis Pengeluaran" 
+                    value.bind="data.ExpenditureType" 
+                    error.bind="error.ExpenditureType" 
+                    read-only.bind="readOnly || isEdit"
+                    items.bind="expenditureTypeOptions"
+                    change.delegate="expenditureTypeChanged($event)"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-textbox
+                    label="Tujuan Barang"
+                    value.bind="data.ExpenditureTo"
+                    error.bind="error.ExpenditureTo"
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-textbox>
+        
+                <au-autocomplete 
+                    label="No. Delivery Order" 
+                    value.bind="unitDeliveryOrder" 
+                    error.bind="error.UnitDONo" 
+                    read-only.bind="readOnly || isEdit"
+                    query.bind = "filterUnitDeliveryOrder"
+                    loader.bind="unitDeliveryOrderLoader"
+                    text = "UnitDONo"
+                    placeholder = "Cari Unit Delivery Order"
+                    view-model.ref="DONoViewModel"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+                
+                <au-textbox
+                    label="Unit yang mengeluarkan"
+                    value.bind = "data.UnitSender"
+                    error.bind="error.UnitSender"
+                    read-only.bind="true"
+                    placeholder = "Cari Unit Delivery ORder"
+                    options.bind="controlOptions">
+                </au-textbox>
+        
+                <au-textbox
+                    label="Gudang yang mengeluarkan"
+                    value.bind="data.Storage"
+                    error.bind="error.Storage"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    label="Unit yang meminta"
+                    value.bind="data.UnitRequest" 
+                    error.bind="error.UnitRequest" 
+                    read-only.bind="true"
+                    if.bind="!isExternal"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    label="Gudang yang meminta"
+                    value.bind="data.StorageRequest"
+                    error.bind="error.StorageRequest"
+                    read-only.bind="true"
+                    if.bind = "isTransfer "
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    label="RO Job"
+                    value.bind="data.RoJob"
+                    error.bind="error.RoJob"
+                    show.bind="data.RoJob"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+            </div>
+    </div>
+
+        <au-textbox error.bind="error.ItemsCount" read-only.bind="true"></au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items"
+            columns.bind="items.columns"
+            options.bind="options"
+            read-only.bind="readOnly" 
+            show.bind="isItem && !isExternal"
+            header-template="modules/garment-purchasing/unit-expenditure-note-by-user/template/unit-expenditure-note-item-header"
+            item-template="modules/garment-purchasing/unit-expenditure-note-by-user/template/unit-expenditure-note-item">
+        </au-collection>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items"
+            columns.bind="items.columns"
+            options.bind="options"
+            read-only.bind="readOnly" 
+            show.bind="isItem && isExternal"
+            header-template="modules/garment-purchasing/unit-expenditure-note-by-user/template/unit-expenditure-note-item-external-header"
+            item-template="modules/garment-purchasing/unit-expenditure-note-by-user/template/unit-expenditure-note-item">
+        </au-collection>
+  </au-input-form>
+</template>

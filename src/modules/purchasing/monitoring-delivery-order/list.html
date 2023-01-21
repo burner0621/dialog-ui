@@ -1,0 +1,115 @@
+<template>
+    <h1 class="page-header">Monitoring Surat Jalan</h1>
+    <form class="form-horizontal">
+        <!-- <delivery-order-auto-suggest label="No. Surat Jalan" value.bind="no"></delivery-order-auto-suggest> -->
+        <au-autocomplete 
+            value.bind="no" 
+            label="No. Surat Jalan" 
+            loader.bind="dOLoader"
+            placeholder="cari nomor SJ" 
+            text.bind = "doView"
+            key="No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier" 
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            placeholder="cari supplier" 
+            key="code" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <!-- <supplier-auto-suggest label="Supplier" value.bind="supplierId"></supplier-auto-suggest> -->
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+
+        <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <au-table
+            view-model.ref="doTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Cetak Excel</button>
+            </div>
+        </au-table>
+        <hr/>
+    </form>
+</template>
+        <!-- <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td colspan="2">SUPPLIER</td>
+                        <td colspan="3">SURAT JALAN</td>
+                        <td rowspan="2">NO PO EXTERNAL</td>
+                        <td colspan="7">BARANG</td>
+                    </tr>
+                    <tr>
+                        <td>KODE</td>
+                        <td>NAMA</td>
+                        <td>NOMOR</td>
+                        <td>TANGGAL SURAT JALAN</td>
+                        <td>TANGGAL DATANG BARANG</td>
+                        <td>KODE</td>
+                        <td>NAMA</td>
+                        <td>DESKRIPSI</td>
+                        <td>JUMLAH YANG DIMINTA</td>
+                        <td>JUMLAH YANG DATANG</td>
+                        <td>SISA QTY</td>
+                        <td>SATUAN</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="SJ of data">
+                        <td>${SJ['Kode Supplier']}</td>
+                        <td>${SJ['Nama Supplier']}</td>
+                        <td>${SJ['Nomor Surat Jalan']}</td>
+                        <td>${SJ['Tanggal Surat Jalan']}</td>
+                        <td>${SJ['Tanggal Datang Barang']}</td>
+                        <td>${SJ['Nomor PO Eksternal']}</td>
+                        <td>${SJ['Kode Barang']}</td>
+                        <td>${SJ['Nama Barang']}</td>
+                        <td>${SJ['Deskripsi Barang']}</td>
+                        <td align="right">${SJ['Jumlah Barang yang Diminta']}</td>
+                        <td align="right">${SJ['Jumlah Barang yang Datang']}</td>
+                        <td align="right">${SJ['Jumlah Sisa Barang']}</td>
+                        <td>${SJ['Satuan Barang']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template> -->

@@ -1,0 +1,143 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+            <au-input-form title.bind="title" with.bind="context">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <au-autocomplete label="Invoice No" value.bind="selectedShippingInvoice"
+                            error.bind="error.invoiceNo" text="invoiceNo" loader.bind="shippingInvoiceLoader"
+                            placeholder="Invoice No" query.bind="filter" read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+                        </au-autocomplete>
+
+                        <au-datepicker label="TGL" value.bind="data.date" error.bind="error.date"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-datepicker>
+
+                        <au-autocomplete 
+                            label="Trucking" 
+                            placeholder="Pilih Trucking"
+                            value.bind="selectedEMKL" 
+                            error.bind="error.EMKL" 
+                            loader.bind="emklLoader"
+                            text.bind="emklView" 
+                            read-only.bind="readOnly" 
+                            options.bind="controlOptions"
+                            view-model.ref="EmklViewModel">
+                        </au-autocomplete>
+
+                        <!-- <au-textbox label="Nama Trucking" value.bind="data.emkl.name || ''" error.bind="error.name" placeholder="Nama Trucking"
+                            read-only.bind="true" options.bind="controlOptions">
+                        </au-textbox> -->
+
+                        <au-multiline label="Tujuan" value.bind="data.destination" error.bind="error.address"
+                            placeholder="Tujuan" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-multiline>
+
+                        <au-multiline label="Alamat" value.bind="data.address" error.bind="error.address"
+                            placeholder="Alamat" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-multiline>
+
+                        <au-multiline label="PIC" value.bind="data.pic" error.bind="error.pic"
+                            placeholder="PIC" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-multiline>
+
+                        <au-textbox label="ATTN" value.bind="data.attn" error.bind="error.attn" placeholder="ATTN"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-textbox label="Telp" value.bind="data.phone" error.bind="error.phone" placeholder="Telepon"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-datepicker label="Tgl Booking Shipment" value.bind="data.bookingDate"
+                            error.bind="error.bookingDate" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-datepicker>
+                    </div>
+                </div>
+
+                <hr />
+                <h1 class="page-header">Detail Surat Pengantar</h1>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <au-autocomplete label="Order" value.bind="data.order" error.bind="error.order"
+                            placeholder="Order" text.bind="orderView" read-only="true" options.bind="controlOptions">
+                        </au-autocomplete>
+
+                        <au-numeric label="Jumlah PCS" value.bind="data.pcsQuantity" error.bind="error.pcsQuantity"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-numeric>
+
+                        <au-numeric label="Jumlah SETS" value.bind="data.setsQuantity" error.bind="error.setsQuantity"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-numeric>
+
+                        <au-numeric label="Jumlah PACK" value.bind="data.packQuantity" error.bind="error.packQuantity"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-numeric>
+
+                        <au-numeric label="Jumlah Cartoon" value.bind="data.cartoonQuantity"
+                            error.bind="error.cartoonQuantity" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-numeric>
+
+                        <au-autocomplete label="Forwarder" value.bind="data.forwarder" error.bind="error.forwarder"
+                            loader.bind="forwarderLoader" text.bind="forwarderView" placeholder="Forwarder"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-autocomplete>
+
+                        <au-textbox label="Truck" value.bind="data.truck" error.bind="error.truck" placeholder="Truck"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-textbox label="No Polisi" value.bind="data.plateNumber" error.bind="error.plateNumber"
+                            placeholder="No Polisi" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-textbox label="Pengemudi" value.bind="data.driver" error.bind="error.driver"
+                            placeholder="Pengemudi" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <au-textbox label="Container No" value.bind="data.containerNo" error.bind="error.containerNo"
+                            placeholder="Container No" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-dropdown label="Freight" value.bind="data.freight" error.bind="error.freight"
+                            read-only.bind="readOnly" items.bind="freightOptions" options.bind="controlOptions">
+                        </au-dropdown>
+
+                        <au-textbox label="Seal Pelayaran" value.bind="data.shippingSeal"
+                            error.bind="error.shippingSeal" placeholder="Seal Pelayaran" read-only.bind="readOnly"
+                            options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-textbox label="Seal DL" value.bind="data.dlSeal" error.bind="error.dlSeal"
+                            placeholder="Seal DL" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-textbox label="Seal EMKL" value.bind="data.emklSeal" error.bind="error.emklSeal"
+                            placeholder="Seal EMKL" read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-textbox>
+
+                        <au-datepicker label="Tgl Perkiraan Export" value.bind="data.exportEstimationDate"
+                            error.bind="error.exportEstimationDate" read-only="true" options.bind="controlOptions">
+                        </au-datepicker>
+
+                        <au-multiline label="Unit" value.bind="data.unit" error.bind="error.unit" placeholder="Unit"
+                            read-only.bind="readOnly" options.bind="controlOptions">
+                        </au-multiline>
+
+                        <au-textbox label="Shipping Staff" value.bind="data.shippingStaff.name"
+                            placeholder="Shipping Staff" read-only="true" options.bind="controlOptions">
+                        </au-textbox>
+                    </div>
+                </div>
+                <hr />
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

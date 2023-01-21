@@ -1,0 +1,128 @@
+<template >
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.productName" 
+                error.bind="error.productName"
+                placeholder="tambah nama barang"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-textbox> 
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="getDesign"
+                read-only="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.colorWay" 
+                read-only="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="construction" 
+                error.bind="error.construction"
+                loader.bind="constructionLoader"
+                placeholder="cari konstruksi" 
+                key="code" 
+                text = "name"
+                read-only.bind="options.readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.lot" 
+                error.bind="error.lot"
+                placeholder="tambah lot"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.grade" 
+                error.bind="error.grade"
+                placeholder="tambah grade"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.description" 
+                error.bind="error.description"
+                placeholder="tambah keterangan produk"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.remark" 
+                error.bind="error.remark"
+                placeholder="tambah keterangan retur"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.returQuantity" 
+                error.bind="error.returQuantity"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="uom" 
+                error.bind="error.uom"
+                loader.bind="uomLoader"
+                placeholder="cari satuan" 
+                key="_id" 
+                text = "unit"
+                read-only.bind="options.readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.length" 
+                error.bind="error.length"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="getTotLength" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.weight" 
+                error.bind="error.weight"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="getTotWeight" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-left" click.delegate="onremove(data, $event)" if.bind="!options.readOnly">-</button>
+        </td>
+    </tr>
+</template>

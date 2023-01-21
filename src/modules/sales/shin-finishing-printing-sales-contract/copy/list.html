@@ -1,0 +1,16 @@
+<template>
+    <au-input-form title="Copy Sales Contract Dyeing/Printing">
+        <au-autocomplete
+            value.bind="salesContract"
+            label="Nomor Sales Contract"
+            loader.bind="salesContractLoader"
+            query.bind="salesContractFilter"
+            text.bind="salesContractView"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div>
+            <span class="col-sm-1"></span>
+            <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+        </div>
+    </au-input-form>
+</template>

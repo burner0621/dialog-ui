@@ -1,0 +1,65 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title"
+                     with.bind="context"
+                     options.bind="formOptions">
+
+        <au-textbox label="Kode"
+                    value.bind="data.Code"
+                    error.bind="error.code"
+                    read-only.bind="(readOnly || isEdit)"></au-textbox>
+
+        <au-textbox label="Nama"
+                    value.bind="data.Name"
+                    error.bind="error.name"
+                    read-only.bind="readOnly"></au-textbox>
+
+        <au-autocomplete label="Satuan"
+                         value.bind="UOM"
+                         error.bind="error.uom"
+                         loader.bind="uomLoader"
+                         read-only.bind="readOnly"
+                         key="Unit"
+                         text="Unit"></au-autocomplete>
+
+        <au-autocomplete label="Mata Uang"
+                         value.bind="Currency"
+                         error.bind="error.currency"
+                         loader.bind="currencyLoader"
+                         read-only.bind="readOnly"
+                         key="Symbol"
+                         text="Code"></au-autocomplete>
+
+        <au-numeric label="Harga"
+                    value.bind="data.Price"
+                    error.bind="error.price"
+                    read-only.bind="readOnly"></au-numeric>
+
+        <au-multiline label="Tags"
+                      value.bind="data.Tags"
+                      error.bind="error.tags"
+                      read-only.bind="readOnly"></au-multiline>
+
+        <au-multiline label="Keterangan"
+                      value.bind="data.Description"
+                      error.bind="error.description"
+                      read-only.bind="readOnly"></au-multiline>
+
+        <au-collection if.bind="isPermitted"
+                       items.bind="data.MappingCategories"
+                       errors.bind="error.MappingCategories"
+                       columns.bind="columns"
+                       add.bind="addItems"
+                       remove.bind="onremove"
+                       read-only.bind="readOnly"
+                       item-template="modules/master/product-budgeting/template/mapping-category">
+        </au-collection>
+
+        <template replaceable
+                  part="actions"></template>
+
+      </au-input-form>
+    </div>
+  </div>
+</template>

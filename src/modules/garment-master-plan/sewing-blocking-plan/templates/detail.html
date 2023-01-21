@@ -1,0 +1,38 @@
+<template>
+    <tr>
+        <td width="30%">
+            <au-textbox 
+                value.bind="comodity"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+            <au-layout error.bind="bookingComodity" if.bind="data.bookingMasterPlanComodity"></au-layout>
+            <au-layout error.bind="data.deletedData" if.bind="data.deletedData"></au-layout>
+            <au-layout error.bind="data.newData" if.bind="data.newData"></au-layout>
+        </td>
+        <td width="15%">
+            <numeric 
+                value.bind="data.ConfirmQuantity" 
+                read-only.bind="true" 
+                options.bind="controlOption">
+            </numeric>
+            <au-layout error.bind="data.bookingQuantity" if.bind="data.bookingQuantity"></au-layout>
+        </td>
+        <td width="45%">
+            <au-multiline 
+                value.bind="data.Remark" 
+                read-only.bind="true" 
+                options.bind="controlOption">
+            </au-multiline >
+            <au-layout error.bind="data.bookingRemark" if.bind="data.bookingRemark"></au-layout>
+        </td>
+        <td width="10%">
+            <au-datepicker 
+                value.bind="data.DeliveryDate"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-datepicker>
+            <au-layout error.bind="data.bookingDeliveryDate" if.bind="data.bookingDeliveryDate"></au-layout>
+        </td>
+    </tr>
+</template>

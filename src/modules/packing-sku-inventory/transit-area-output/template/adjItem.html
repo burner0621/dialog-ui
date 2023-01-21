@@ -1,0 +1,95 @@
+<template replace-part="inspectionMaterialProductionOrders">
+    <tr>
+        <td if.bind="isKain">
+            <au-autocomplete value.bind="selectedProductionOrder" error.bind="error.ProductionOrder"
+                loader.bind="productionOrderLoader" text.bind="adjSPPFormatter" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td if.bind="!isKain">
+            <au-autocomplete value.bind="selectedProductionOrder" error.bind="error.ProductionOrder"
+                loader.bind="productionOrderPackLoader" text.bind="adjSPPFormatter" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.productionOrder.orderQuantity" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.construction" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.unit" read-only.bind="true" error.bind="error.Unit"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.buyer" read-only.bind="true" error.bind="error.Buyer"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.color" read-only.bind="true" error.bind="error.Color"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.motif" read-only.bind="true" error.bind="error.Motif"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.remark" read-only.bind="true" error.bind="error.Remark"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!isKain">
+            <au-numeric value.bind="data.qtyPacking" error.bind="error.QtyPacking" format="0.00"
+                read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!isKain">
+            <au-textbox value.bind="data.packingUnit" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.uomUnit" read-only.bind="true" error.bind="error.UomUnit"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!isKain">
+            <au-numeric value.bind="data.packingLength" format="0.00" read-only.bind="true" error.bind="error.Qty"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td show.bind="!readOnly">
+            <au-numeric value.bind="data.balanceRemains" format="0.00" read-only.bind="true"
+                error.bind="error.BalanceRemains" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!isKain">
+            <au-numeric value.bind="balance" read-only.bind="true" error.bind="error.Balance"
+                options.bind="controlOptions">
+            </au-numeric>
+            <au-textbox value.bind="totalBalance" show.bind="false" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="isKain">
+            <au-numeric value.bind="data.balance" format="0.00" read-only.bind="readOnly" error.bind="error.Balance"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.adjDocumentNo" read-only.bind="readOnly" error.bind="error.AdjDocumentNo"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

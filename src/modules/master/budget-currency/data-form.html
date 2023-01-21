@@ -1,0 +1,24 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+
+        <au-datepicker label="Tanggal" value.bind="data.date" error.bind="error.Date" read-only.bind="(readOnly)">
+        </au-datepicker>
+
+        <au-textbox label="Mata Uang" value.bind="data.code" error.bind="error.Code" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-numeric label="Kurs" value.bind="data.rate" error.bind="error.Rate" read-only.bind="readOnly" format="0,000.0000">
+        </au-numeric>
+
+        <au-multiline label="Keterangan" value.bind="data.remark"  read-only.bind="readOnly">
+        </au-multiline>
+
+        <template replaceable part="actions"></template>
+
+      </au-input-form>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,69 @@
+<template>
+    <style>
+        table .btn-success {
+            float: none !important;
+        }
+
+        .col-sm-12 {
+            margin-top: 0px !important;
+        }
+    </style>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <au-textbox 
+            label="No. Referensi" 
+            value.bind="data.ReferenceNo" 
+            error.bind="error.ReferenceNo" 
+            placeholder="masukkan nomor referensi"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Jenis Referensi" 
+            value.bind="data.ReferenceType" 
+            error.bind="error.ReferenceType" 
+            placeholder="masukkan jenis referensi"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            placeholder="pilih gudang asal"
+            value.bind="sourceStorage" 
+            error.bind="error.SourceStorageId"
+            label="Gudang Asal" 
+            loader.one-time="storageLoader"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"                
+            text="name">
+        </au-autocomplete>
+
+        <au-autocomplete
+            placeholder="pilih gudang tujuan"
+            value.bind="targetStorage" 
+            error.bind="error.TargetStorageId"
+            label="Gudang Tujuan" 
+            loader.one-time="storageLoader"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"                
+            text="name">
+        </au-autocomplete>
+
+        <au-textbox
+            show.bind="!data.StockTransferNoteItems || data.StockTransferNoteItems.length === 0"
+            error.bind="error.StockTransferNoteItems"
+            read-only="true">
+        </au-textbox>
+            
+        <au-collection
+            items.bind="data.StockTransferNoteItems" 
+            errors.bind="error.StockTransferNoteItems"
+            columns.bind="stnInfo.columns"
+            add.bind="stnInfo.onAdd"
+            read-only.bind="readOnly"
+            show.bind="sourceStorage"
+            options.bind="stnInfo.options"
+            item-template="modules/inventory/stock-transfer-note/template/stock-transfer-note-item">
+        </au-collection>
+    </au-input-form>
+</template>

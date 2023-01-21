@@ -1,0 +1,143 @@
+<template>
+  <require from="../../../../lib/number-format-value-converter"></require>
+
+  <h1 class="page-header">Laporan Uang Muka</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete value.bind="selectedBillNo" label="Jenis Supplier" loader.bind="billNoLoader" text="Value"
+      placeholder="cari nomor bp besar" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-datepicker value.bind="info.startDate" label="Tanggal Sampai Dengan" options.bind="controlOptions">
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="credit-balance-table">
+    <au-table view-model.ref="tableList" data.bind="loader" columns.bind="columns" sortable="true" page-size="25"
+      options.bind="tableOptions">
+      <div slot="toolbar" class="btn-group">
+        <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+        <!-- <button class="btn btn-primary" click.delegate="pdf()">PDF</button> -->
+      </div>
+    </au-table>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-sm-4">
+      <au-table view-model.ref="categoryTableList"
+                data.bind="categories"
+                columns.bind="categoryColumns"
+                options.bind="tableOptions">
+      </au-table>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-3">
+      <au-table view-model.ref="currencyTableList"
+                data.bind="currencies"
+                columns.bind="currencyColumns"
+                options.bind="tableOptions">
+      </au-table>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-sm-4">
+
+      <div class="table-responsive" if.bind="categories && categories.length > 0">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+          <thead align="center">
+            <tr>
+              <td rowspan="2">No</td>
+              <td colspan="2">Bukti</td>
+              <td rowspan="2">Disposisi</td>
+              <td rowspan="2">Supplier</td>
+              <td rowspan="2">Umur Uang Muka</td>
+              <td colspan="4">Saldo Awal</td>
+              <td colspan="4">Pemasukan Uang Muka</td>
+              <td colspan="2">Memo</td>
+              <td colspan="3">Realisasi Uang Muka</td>
+              <td rowspan="2">Tanggal Nota</td>
+              <td rowspan="2">Nomor NI</td>
+              <td rowspan="2">Surat Jalan</td>
+              <td rowspan="2">Tanggal SJ</td>
+              <td rowspan="2">Nomor BP Kecil</td>
+              <td colspan="4">NO BP</td>
+              <td rowspan="2">Selisih Kurs</td>
+              <td colspan="3">Saldo Akhir</td>
+            </tr>
+            <tr>
+              <td>Tanggal</td>
+              <td>No</td>
+              <td>Nilai Disposisi</td>
+              <td>Nilai Bayar</td>
+              <td>Kurs</td>
+              <td>Rupiah</td>
+              <td>Nilai Depo</td>
+              <td>Nilai Bayar</td>
+              <td>Kurs</td>
+              <td>Rupiah</td>
+              <td>No Memo</td>
+              <td>Tanggal</td>
+              <td>Jumlah Valas</td>
+              <td>Kurs</td>
+              <td>Rupiah</td>
+              <td>Ket</td>
+              <td>Mata Uang</td>
+              <td>Kurs</td>
+              <td>Rupiah</td>
+              <td>Mata</td>
+              <td>Kurs</td>
+              <td>Rupiah</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="category of categories">
+              <td>${category.CategoryName}</td>
+              <td>${category.CurrencyCode}</td>
+              <td class="text-right"><strong>${category.CurrencyAmount | numberFormat:
+                '0,000.0000'}</strong></td>
+              <td class="text-right"><strong>${category.Amount | numberFormat:
+                  '0,000.0000'}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <!-- <div class="col-sm-4">
+
+      <div class="table-responsive" if.bind="currencies && currencies.length > 0">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+          <thead align="center">
+            <tr>
+              <td>Mata Uang</td>
+              <td>Total Valas</td>
+              <td>Total (IDR)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr repeat.for="currency of currencies">
+              <td>${currency.CurrencyCode}</td>
+              <td class="text-right"><strong>${currency.CurrencyAmount | numberFormat:
+                  '0,000.0000'}</strong></td>
+              <td class="text-right"><strong>${currency.Amount | numberFormat:
+                  '0,000.0000'}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div> -->
+    <div class="col-sm-4">
+
+    </div>
+  </div>
+</template>

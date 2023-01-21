@@ -1,0 +1,196 @@
+<template>
+
+  <form class="form-horizontal" with.bind="context">
+
+    <div class="row">
+
+      <div class="col-md-6" style="padding:0">
+
+        <au-datepicker read-only.bind="true" label="Tanggal" value.bind="data.Date" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="No. Pre Sales Contract" value.bind="selectedPreSalesContract"
+          error.bind="error.PreSalesContract" read-only.bind="readOnly || !data.isCopy" loader.bind="preSalesContractLoader"
+          options.bind="controlOptions" query.bind="preSCQuery" text.bind="preSalesContractView"
+          placeholder="pilih Pre Sales Contract">
+        </au-autocomplete>
+
+        <au-textbox label="No. Sales Contract" value.bind="data.SalesContractNo" read-only="true" show.bind="data.Id" options.bind="controlOptions">
+        </au-textbox>
+
+        <!-- <au-textbox label="No. SPP" value.bind="data.ProductionOrderNo" read-only="true" options.bind="controlOptions">
+        </au-textbox> -->
+
+        <au-textbox label="Buyer" value.bind="data.Buyer" read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Unit" value.bind="data.Unit" read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Jenis Sales Contract" value.bind="data.SalesContractType" read-only="true"
+          options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Material" value.bind="data.Material.Name" read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <!-- <au-autocomplete label="Konstruksi Material" value.bind="data.MaterialConstruction"
+          error.bind="error.MaterialConstructionID" read-only.bind="readOnly" loader.bind="materialConstructionLoader"
+          key="Name" text="Name" options.bind="controlOptions" placeholder="pilih konstruksi finish">
+        </au-autocomplete> -->
+        
+        <au-autocomplete label="Nomor Benang Material" value.bind="data.YarnMaterial" error.bind="error.YarnMaterialID"
+          read-only.bind="readOnly" loader.bind="yarnMaterialLoader" key="Name" text="Name"
+          options.bind="controlOptions" placeholder="pilih nomor benang material">
+        </au-autocomplete>
+
+        <!-- <au-textbox label="Lebar Finish" value.bind="data.MaterialWidth" error.bind="error.MaterialWidth"
+          read-only.bind="readOnly" options.bind="controlOptions" placeholder="input lebar finish">
+        </au-textbox> -->
+
+
+        <div class="row">
+          <div class="col-sm-4" style="padding-left:20%">
+            <textbox label="Jumlah Order" read-only="true"></textbox>
+          </div>
+
+          <div class="col-sm-3">
+            <au-numeric format="0" value.bind="orderQuantity" read-only.bind="true">
+            </au-numeric>
+          </div>
+
+          <div class="col-sm-1">
+            <textbox label="Satuan" read-only="true"></textbox>
+          </div>
+
+          <div class="col-sm-3">
+            <!-- <au-autocomplete value.bind="data.UOM" error.bind="error.UOMID" read-only.bind="true"
+              loader.bind="uomLoader" text="Unit" key="Unit" placeholder="pilih satuan">
+            </au-autocomplete> -->
+            <au-textbox value.bind="data.UOM.Unit" read-only="true" options.bind="controlOptions">
+            </au-textbox>
+
+          </div>
+        </div>
+
+        <au-numeric label="Toleransi Jumlah (%)" value.bind="data.ShippingQuantityTolerance" read-only.bind="readOnly"
+          post-fix="%" options.bind="controlOptions">
+        </au-numeric>
+
+        <au-textbox label="Nomor Disposisi" value.bind="data.DispositionNumber" read-only.bind="readOnly"
+          options.bind="controlOptions" placeholder="input nomor disposisi">
+        </au-textbox>
+
+        <au-autocomplete label="Komoditas" value.bind="data.Commodity" error.bind="error.CommodityID"
+          read-only.bind="readOnly" options.bind="controlOptions" loader.bind="comodityLoader" key="Name" text="Name"
+          placeholder="pilih komoditas">
+        </au-autocomplete>
+
+        <au-multiline label="Keterangan Komoditas" value.bind="data.CommodityDescription" read-only.bind="(readOnly)"
+          rows.bind="8" options.bind="controlOptions" placeholder="input keterangan komoditas">
+        </au-multiline>
+
+        <au-numeric label="Amount" value.bind="data.Amount" error.bind="error.Amount" read-only.bind="readOnly"
+          if.bind="isExport" options.bind="controlOptions">
+        </au-numeric>
+
+      </div>
+
+      <div class="col-md-6" style="padding:0">
+
+        <au-autocomplete label="Kualitas" value.bind="data.Quality" error.bind="error.QualityID"
+          read-only.bind="readOnly" loader.bind="qualityLoader" text="Name" key="Name" options.bind="controlOptions"
+          placeholder="pilih kualitas">
+        </au-autocomplete>
+
+        <au-multiline label="Piece Length" value.bind="data.PieceLength" read-only.bind="readOnly" rows.bind="8"
+          options.bind="controlOptions" placeholder="input piece length">
+        </au-multiline>
+
+        <au-multiline label="Packing" value.bind="data.Packing" read-only.bind="readOnly" options.bind="controlOptions"
+          placeholder="input packing">
+        </au-multiline>
+
+        <!-- <checkbox label="Kena Ppn?" value.bind="selectedUseIncomeTax" read-only.bind="readOnly">
+        </checkbox> -->
+
+        <au-autocomplete label="Syarat Pembayaran" value.bind="data.TermOfPayment" error.bind="error.TermOfPaymentID"
+          read-only.bind="readOnly" loader.bind="termOfPaymentLoader" text="Name" key="Name"
+          options.bind="controlOptions" placeholder="pilih syarat pembayaran">
+        </au-autocomplete>
+
+        <au-autocomplete label="Pembayaran ke Rekening" value.bind="selectedAccountBank"
+          error.bind="error.AccountBankID" read-only.bind="readOnly" loader.bind="accountBankLoader"
+          text.bind="bankView" key="BankName" options.bind="controlOptions" placeholder="pilih rekening">
+        </au-autocomplete>
+
+        <au-textbox label="Mata Uang" value.bind="data.AccountBank.Currency.Code" read-only="true"
+          options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Term of Shipment" value.bind="data.TermOfShipment" error.bind="error.TermOfShipment"
+          read-only.bind="readOnly" if.bind="isExport" options.bind="controlOptions"
+          placeholder="input term of shipment">
+        </au-textbox>
+
+        <au-textbox label="Ongkos Angkut" value.bind="data.TransportFee" read-only.bind="true"
+          options.bind="controlOptions" placeholder="input ongkos angkut">
+        </au-textbox>
+
+        <au-textbox label="Dikirim ke" value.bind="data.DeliveredTo" error.bind="error.DeliveredTo"
+          read-only.bind="readOnly" options.bind="controlOptions" placeholder="input tujuan pengiriman">
+        </au-textbox>
+
+        <au-datepicker label="Jadwal Pengiriman" value.bind="data.DeliverySchedule" error.bind="error.DeliverySchedule"
+          read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline label="Keterangan Shipment" value.bind="data.ShipmentDescription" read-only.bind="readOnly"
+          rows.bind="8" if.bind="isExport" options.bind="controlOptions" placeholder="input keterangan shipment">
+        </au-multiline>
+
+        <au-multiline label="Kondisi" value.bind="data.Condition" read-only.bind="readOnly" rows.bind="8"
+          options.bind="controlOptions" placeholder="input kondisi">
+        </au-multiline>
+
+        <au-autocomplete label="Agen" value.bind="data.Agent" error.bind="error.AgentID" read-only.bind="readOnly"
+          if.bind="isExport" loader.bind="buyerLoader" text.bind="buyerView" key="Name" options.bind="controlOptions"
+          placeholder="pilih agen">
+        </au-autocomplete>
+
+        <au-textbox label="Komisi" value.bind="data.Commission" error.bind="error.Commission" read-only.bind="readOnly"
+          if.bind="isExport" options.bind="controlOptions" placeholder="input komisi">
+        </au-textbox>
+
+        <au-dropdown label="Point System" value.bind="selectedPointSystem" items.bind="pointSystemOptions"
+          read-only.bind="readOnly" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-numeric label="Batas Point" value.bind="data.PointLimit" error.bind="error.PointLimit"
+          read-only.bind="readOnly" if.bind="isFourPointSystem" options.bind="controlOptions">
+          </numeric>
+
+      </div>
+
+    </div>
+
+    <au-textbox error.bind="error.Details" read-only.bind="true"></au-textbox>
+
+    <au-collection if.bind="isExistAccountBank && isPrinting" items.bind="data.Details" errors.bind="error.Details"
+      read-only.bind="readOnly" columns.bind="detailHeader"
+      item-template="modules/sales/shin-finishing-printing-sales-contract/templates/detail-item"
+      footer-template="modules/sales/shin-finishing-printing-sales-contract/templates/printing-detail-footer"
+       options.bind="itemsOptions" view-model.ref="FPCollection">
+    </au-collection>
+
+    <au-collection if.bind="isExistAccountBank && !isPrinting" items.bind="data.Details" errors.bind="error.Details"
+      read-only.bind="readOnly" columns.bind="detailHeader"
+      item-template="modules/sales/shin-finishing-printing-sales-contract/templates/detail-item"
+      footer-template="modules/sales/shin-finishing-printing-sales-contract/templates/detail-footer"
+       options.bind="itemsOptions" view-model.ref="FPCollection">
+    </au-collection>
+
+
+
+  </form>
+</template>

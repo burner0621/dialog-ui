@@ -1,0 +1,58 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="badOutputReason" 
+                error.bind="error.BadOutput" 
+                loader.bind="badOutputReasonLoader" 
+                placeholder="search Keterangan Bad Output" 
+                key="Code"
+                text="Reason" 
+                read-only.bind="(readOnly || isEdit)"
+                select.bind="selectBadOutput"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.Length"
+                read-only.bind="(readOnly || isEdit)"
+                options.bind="controlOptions"
+                error.bind="error.Length">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown
+                value.bind="data.Action"
+                error.bind="error.Action"
+                read-only.bind="(readOnly || isEdit)"
+                options.bind="controlOptions"
+                items.bind="actionList">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="machine"
+                loader.bind="machineLoader" 
+                text="Name"
+                placeholder="search Mesin Penyebab Bad Output"
+                read-only.bind="(readOnly || isEdit)"
+                error.bind="error.Machine"
+                options.bind="controlOptions"
+                select.bind="selectMachine"
+                >
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.Description"
+                error.bind="error.Description"
+                read-only.bind="(readOnly || isEdit)"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+        </td>
+     </tr>
+</template>

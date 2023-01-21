@@ -1,0 +1,63 @@
+<template>
+
+  <div class="row">
+    <div class="col-md-6">
+
+      <au-input-form with.bind="context" title.bind="title" options.bind="formOptions">
+        <au-textbox label="Nomor Mesin" value.bind="data.No" error.bind="error.No" read-only.bind="readOnly">
+        </au-textbox>
+
+        <au-autocomplete label="Unit" value.bind="Unit" error.bind="error.Unit" loader.bind="unitLoader"
+          query.bind="spinningFilter" text.bind="unitView" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Line" value.bind="data.Line" error.bind="error.Line" read-only.bind="readOnly"></au-textbox>
+
+        <au-textbox label="Merk Mesin" value.bind="data.Name" error.bind="error.Name" read-only.bind="readOnly">
+        </au-textbox>
+
+        <au-textbox label="Type Mesin" value.bind="data.Brand" error.bind="error.Brand" read-only.bind="readOnly">
+        </au-textbox>
+
+        <!-- <au-dropdown label="Jenis Proses" value.bind="data.Type" error.bind="error.Type" read-only.bind="readOnly"
+          items.bind="typeOptions" options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-numeric label="Tahun Mesin" value.bind="data.Year" error.bind="error.Year" read-only.bind="readOnly"
+          format="0"></au-numeric>
+
+        <au-textbox label="Kondisi Mesin" value.bind="data.Condition" error.bind="error.Condition"
+          read-only.bind="readOnly"></au-textbox>
+
+        <au-textbox label="Kondisi Counter" value.bind="data.CounterCondition" error.bind="error.CounterCondition"
+          read-only.bind="readOnly"></au-textbox>
+
+        <au-numeric label="Jumlah Delivery" value.bind="data.Delivery" error.bind="error.Delivery"
+          read-only.bind="readOnly" format="0,000"></au-numeric>
+
+        <au-numeric label="Kapasitas/Hari (Bale)" value.bind="data.CapacityPerHour" error.bind="error.CapacityPerHour"
+          read-only.bind="readOnly" format="0,000.00"></au-numeric>
+
+        <au-autocomplete label="Satuan" value.bind="Uom" error.bind="error.Uom" loader.bind="uomLoader"
+          text.bind="uomView" key="unit" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Kode" value.bind="data.MachineCode" error.bind="error.MachineCode" read-only.bind="readOnly">
+        </au-textbox>
+
+        <au-collection items.bind="data.Types" errors.bind="error.Types" read-only.bind="readOnly"
+          view-model.ref="Types" columns.bind="typeColumns" title="Jenis Proses"
+          item-template="modules/master/machine-spinning/template/type" add.bind="addType" options.bind="detailOptions"
+          remove.bind="removeType">
+        </au-collection>
+        <div if.bind="error.Types.toString()">
+          <span style="color:red">-Proses harus diisi dan tidak boleh sama.</span>
+        </div>
+
+        <template replaceable part="actions"></template>
+
+      </au-input-form>
+
+    </div>
+  </div>
+</template>

@@ -1,0 +1,22 @@
+<template>
+    <au-input-form title="Copy RO Garment">
+        <div class="row">
+            <div class="col-md-6">
+                <au-autocomplete
+                    value.bind="data"
+                    label="No RO"
+                    loader.bind="loader"
+                    text="RO_Number"
+                    placeholder="Cari RO"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-sm-4"></div>
+                <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+            </div>
+        </div>
+    </au-input-form>
+</template>

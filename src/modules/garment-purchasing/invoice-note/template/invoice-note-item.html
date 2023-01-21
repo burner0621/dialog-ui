@@ -1,0 +1,42 @@
+<template>
+    <tr>
+        <!-- <td if.bind="!options.readOnly">
+            <au-checkbox value.bind="data.check"> </au-checkbox>
+        </td> -->
+        <td>
+            <au-autocomplete value.bind="deliveryOrder" error.bind="error.deliveryOrder" loader.bind="deliveryOrderLoader"  placeholder="cari nomor surat jalan"
+                text.bind="doView"  query.bind="filter" read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.deliveryOrder.doDate" read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.deliveryOrder.arrivalDate" read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <div class="col-sm-7">
+                <au-textbox value.bind="totalAmount" 
+                    read-only.bind="true" 
+                    format="0.00"
+                    options.bind="controlOptions">
+                </au-textbox>
+            </div>
+            <div class="col-sm-1  pull-right">
+                <button class="btn btn-info pull-right" if.bind="data.details" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(context.data)">-</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="5">
+            <au-collection items.bind="data.details" errors.bind="error.details" columns.bind="itemsColumns" remove.bind="removeItems" options.bind="context.context.options"
+                read-only.bind="options.readOnly" item-template="modules/garment-purchasing/invoice-note/template/invoice-note-fulfillment">
+            </au-collection>
+        </td>
+    </tr>
+</template>

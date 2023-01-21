@@ -1,0 +1,17 @@
+<template>
+    <h1 class="page-header">Nota Koreksi - Retur</h1>
+    <au-table
+        data.bind="loadData"
+        columns.bind="columns"
+        sortable="true"
+        page-size="25"
+        context.bind="context" 
+        context-click.delegate="contextClickCallback($event)"
+        context-show.call="contextShowCallback(index, context, data)" 
+        options.bind="tableOptions">
+
+       <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="create()">Buat</button>
+        </div>
+    </au-table>
+</template>

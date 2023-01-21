@@ -1,0 +1,28 @@
+<template>
+    <tr>
+        <td class="col-sm-4">
+            <au-autocomplete value.bind="selectedSalesNote" error.bind="error.salesNote" loader.bind="salesNoteLoader"
+                read-only.bind="readOnly" placeholder="No Nota Penjualan" text="noteNo" query.bind="salesNoteFilter">
+            </au-autocomplete>
+        </td>
+
+        <td class="col-sm-4">
+            <au-numeric value.bind="data.salesAmount" read-only="true">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-4">
+            <au-numeric value.bind="data.cuttingAmount" error.bind="error.cuttingAmount" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+
+        <td class="col-sm-2" if.bind="useVat">
+            <au-checkbox value.bind="data.includeVat" read-only.bind="readOnly" if.bind="useVat">
+            </au-checkbox>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

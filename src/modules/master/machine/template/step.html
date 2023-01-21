@@ -1,0 +1,16 @@
+<template>
+  <tr>
+    <td>
+      <au-autocomplete 
+      loader.bind="stepLoader" 
+      value.bind="step" 
+      key="Id" 
+      text="Process" 
+      read-only.bind="options.readOnly"
+        options.bind="autocompleteOption" 
+        error.bind="error.Steps"></au-autocomplete>
+        ${error}
+    </td>
+    <td if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button></td>
+  </tr>
+</template>

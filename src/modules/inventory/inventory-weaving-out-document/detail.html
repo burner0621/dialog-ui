@@ -1,0 +1,52 @@
+<template
+  ><style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style>
+  <au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <au-datepicker
+      options.bind="controlOptions"
+      value.bind="data.Date"
+      error.bind="error.Date"
+      read-only.bind="readOnly"
+      label="Tanggal"
+    >
+    </au-datepicker>
+
+    
+
+    <!-- <au-dropdown
+      options.bind="controlOptions"
+      label="Group"
+      value.bind="data.BonType"
+      error.bind="error.Group"
+      read-only.bind="readOnly"
+      items.bind="groups"
+    ></au-dropdown> -->
+    <textbox
+    label ="Nomor Bon"
+    value.bind="data.BonNo"
+    read-only.bind="true"
+    if.bind="readOnly"
+  ></textbox>
+    <au-collection
+      columns.bind="itemColumns"
+      view-model.ref="ItemsCollection"
+      items.bind="data.Detail"
+      errors.one-way="error.Detail"
+      options.bind="detailOptions"
+      read-only.bind="readOnly"
+      header-template="modules/inventory/inventory-weaving-out-document/template/item-header"
+      item-template="modules/inventory/inventory-weaving-out-document/template/item"
+    >
+      >
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

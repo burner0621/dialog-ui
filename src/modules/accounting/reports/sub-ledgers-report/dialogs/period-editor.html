@@ -1,0 +1,20 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-dropdown label="Bulan" value.bind="month" items.bind="monthOptions" text="MonthName"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-dropdown label="Tahun" value.bind="year" items.bind="yearOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Cancel</button>
+            <button class="btn btn-success" click.delegate="saveCallback()">Ok</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

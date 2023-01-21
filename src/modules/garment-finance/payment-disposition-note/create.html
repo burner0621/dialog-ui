@@ -1,0 +1,106 @@
+<template>
+    <require from="../../../lib/number-format-value-converter"></require>
+    <au-input-form title="Buat Bukti Pembayaran Disposisi"
+                   options.bind="formOptions">
+
+        <au-autocomplete label="Bank"
+                         placeholder="pilih bank"
+                         value.bind="selectedBank"
+                         error.bind="error.bank"
+                         loader.one-time="bankLoader"
+                         text.bind="bankView"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="No. Rekening"
+                    value.bind="data.AccountBank.AccountNumber"
+                    read-only.bind="true"
+                    options.bind="controlOptions"
+                    >
+        </au-textbox>
+
+        <!-- <au-textbox label="Mata Uang"
+                    value.bind="data.AccountBank.Currency.Code"
+                    read-only.bind="true"
+                    options.bind="controlOptions"
+                    show.bind="selectedBank">
+        </au-textbox> -->
+
+        <au-autocomplete label="Mata Uang"
+                         placeholder="pilih mata uang"
+                         value.bind="selectedCurrency"
+                         error.bind="error.Currency"
+                         loader.one-time="currencyLoader"
+                         text.bind="currencyView"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-numeric label="Rate"
+                    placeholder="masukkan rate"
+                    value.bind="data.CurrencyRate"
+                    error.bind="error.CurrencyRate"
+                    read-only.bind="sameCurrencyValue"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-autocomplete label="Supplier"
+                         placeholder="pilih supplier"
+                         value.bind="selectedSupplier"
+                         error.bind="error.Supplier"
+                         loader.one-time="supplierLoader"
+                         text.bind="supplierView"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="No. BG/Cek"
+                    value.bind="data.BGCheckNumber"
+                    error.bind="error.BGCheckNumber"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions"
+                    >
+        </au-textbox>
+
+        <au-datepicker label="Tanggal"
+                       value.bind="data.PaymentDate"
+                       error.bind="error.PaymentDate"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown label="Jenis Transaksi"
+                     value.bind="data.TransactionType"
+                     error.bind="error.TransactionType"
+                     read-only.bind="readOnly"
+                     items.bind="transactionTypeOptions"
+                     options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox error.bind="error.Items"
+                    show.bind="error.Items"
+                    read-only.bind="true">
+        </au-textbox>
+
+        <au-collection show.bind="selectedBank && selectedSupplier"
+                       if.bind="!IDR"
+                       items.bind="Items"
+                       columns.bind="collection.columns"
+                       checkall.delegate="onCheckAll($event)"
+                       error.bind="error.Items"
+                       item-template="modules/garment-finance/payment-disposition-note/templates/item">
+        </au-collection>
+
+        <au-collection show.bind="selectedBank && selectedSupplier && selectedCurrency && data.CurrencyRate"
+                       if.bind="IDR"
+                       items.bind="Items"
+                       columns.bind="collection.columns"
+                       checkall.delegate="onCheckAll($event)"
+                       error.bind="error.Items"
+                       item-template="modules/garment-finance/payment-disposition-note/templates/item"
+                       options.bind="collectionOptions">
+        </au-collection>
+
+        TOTAL BAYAR ${grandTotal | numberFormat: '0,000.00'} ${data.CurrencyCode}
+    </au-input-form>
+</template>

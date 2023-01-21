@@ -1,0 +1,161 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+
+    <h1 class="page-header">Laporan Uang Muka</h1>
+
+    <form class="form-horizontal">
+        <!-- <au-autocomplete 
+            value.bind="info.supplier"
+            label="Jenis Supplier"
+            text="name"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier"
+            loader.one-time="supplierLoader"
+        >
+        </au-autocomplete> -->
+
+        <au-dropdown label="Jenis Supplier"
+                     value.bind="info.SupplierType"
+                     error.bind="error.SupplierType"
+                     items.bind="supplierTypeOptions"
+                     options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-datepicker 
+            value.bind="info.Date" 
+            error.bind="error.Date"
+            label="Tanggal Sampai dengan" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+              <button click.delegate="search()" class="btn btn-success">Cari</button>
+              <button click.delegate="reset()" class="btn btn-success">Reset</button>
+            </div>
+          </div>
+    </form>
+
+    <!-- <div id="credit-balance-table">
+        <au-table 
+            view-model.ref="tableList" 
+            data.bind="loader" 
+            columns.bind="columns" 
+            sortable="true" 
+            page-size="25"
+            options.bind="tableOptions"
+        >
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+    </div> -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered" style="display: block;
+            overflow-x: auto;
+            white-space: nowrap;">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="vertical-align: middle;">No</th>
+                        <th colspan="2">Bukti</th>
+                        <th rowspan="2" style="vertical-align: middle;">Disposisi</th>
+                        <th rowspan="2" style="vertical-align: middle;">Supplier</th>
+                        <th rowspan="2" style="vertical-align: middle;">Umur Uang Muka</th>
+                        <th colspan="4">Saldo Awal</th>
+                        <th colspan="4">Pemasukan Uang Muka</th>
+                        <th colspan="2">Memo</th>
+                        <th colspan="3">Realisasi Uang Muka</th>
+                        <th rowspan="2" style="vertical-align: middle;">Tanggal Nota</th>
+                        <th rowspan="2" style="vertical-align: middle;">No NI</th>
+                        <th rowspan="2" style="vertical-align: middle;">Surat Jalan</th>
+                        <th rowspan="2" style="vertical-align: middle;">Tanggal SJ</th>
+                        <th rowspan="2" style="vertical-align: middle;">No BP Kecil</th>
+                        <th colspan="4">NO BP</th>
+                        <th rowspan="2" style="vertical-align: middle;">Selisih Kurs</th>
+                        <th colspan="3">Saldo Akhir</th>
+                    </tr>
+                    <tr>
+                        <!-- BUKTI -->
+                        <th>Tanggal</th>
+                        <th>No</th>
+                        <!-- SALDO AWAL -->
+                        <th>Nilai Disposisi</th>
+                        <th>Nilai Bayar</th>
+                        <th>Kurs</th>
+                        <th>Rupiah</th>
+                        <!-- PEMASUKAN UANG MUKA -->
+                        <th>Nilai Disposisi</th>
+                        <th>Nilai Bayar</th>
+                        <th>Kurs</th>
+                        <th>Rupiah</th>
+                        <!-- MEMO -->
+                        <th>No Memo</th>
+                        <th>Tanggal</th>
+                        <!-- REALISASI UANG MUKA -->
+                        <th>Jumlah Valas</th>
+                        <th>Kurs</th>
+                        <th>Rupiah</th>
+                        <!-- NO BP -->
+                        <th>Ket</th>
+                        <th>Mata Uang</th>
+                        <th>Kurs</th>
+                        <th>Rupiah</th>
+                        <!-- SALDO AKHIR -->
+                        <th>Mata Uang</th>
+                        <th>Kurs</th>
+                        <th>Rupiah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr if.bind="isEmpty">
+                        <td colspan="32">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <!-- <tbody if.bind="!isEmpty"> -->
+                        <tbody if.bind="!isEmpty" repeat.for="item of data">
+                            <!-- <tbody repeat.for="i of item.DispositionExpenditures.length"> -->
+                                <tr repeat.for="i of item.DispositionExpenditures.length">
+                                    <td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">Index</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].BankExpenditureDate}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].BankExpenditureNo}</td>                                    
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DispositionNo}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].SupplierName}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DownPaymentDuration}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].InitialBalanceDispositionAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].InitialBalancePaymentAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].InitialBalanceCurrencyRate}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].InitialBalanceCurrencyAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DownPaymentDispositionAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DownPaymentDispositionPaymentAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DownPaymentCurrencyRate}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].DownPaymentCurrencyAmount}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].LastBalanceCurrencyCode}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].LastBalanceCurrencyRate}</td>
+                                        <td rowspan="${item.DispositionExpenditures[i]._rowSpan}">${item.DispositionExpenditures[i].LastBalanceCurrencyAmount}</td>                                 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="16" rowspan="${item.DispositionExpenditures[i]._rowSpan}"></td>
+                                </tr>
+                            <!-- </tbody> -->
+                        </tbody>
+                    <!-- </tbody> -->
+                    <!-- <tr>
+                        <td class="text-right" colspan="6">TOTAL </td>
+                    </tr> -->
+                </tbody>
+                <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="excel()">Cetak Excel</button>
+                </div>
+            </table>
+        </div>
+    </div>
+                        
+</template>

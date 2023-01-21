@@ -1,0 +1,52 @@
+<template>
+    <tr>
+
+        <!-- <td>
+            <au-autocomplete value.bind="Product" error.bind="error.Product" placeholder="Cari Nama Produk" text="Name" read-only.bind="readOnly"
+                options.bind="controlOptions" loader.bind="productLoader">
+            </au-autocomplete>
+        </td> -->
+
+        <td align="center">${$index + 1}</td>
+        <!-- 
+        <td>
+            <au-numeric value.bind="data.LengthBeforeReGrade" error.bind="error.LengthBeforeReGrade" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td> -->
+
+        <td>
+            <au-numeric value.bind="data.Quantity" error.bind="error.Quantity" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+
+        <td>
+            <au-numeric value.bind="data.Length" error.bind="error.Length" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+
+        <!-- <td>
+            <au-dropdown value.bind="data.GradeBefore" read-only.bind="readOnly" items.bind="gradeList" options.bind="controlOptions">
+            </au-dropdown>
+        </td> -->
+
+        <td>
+            <au-dropdown value.bind="data.Grade" error.bind="error.Grade" read-only.bind="readOnly" items.bind="gradeList" options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+
+        <td>
+            <au-dropdown value.bind="data.Retur" error.bind="error.Return" read-only.bind="readOnly" items.bind="return" options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+
+        <td>
+            <au-multiline value.bind="data.Remark" placeholder="tambah keterangan" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-multiline>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+        </td>
+
+    </tr>
+</template>

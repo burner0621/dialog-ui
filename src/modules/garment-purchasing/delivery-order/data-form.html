@@ -1,0 +1,150 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"  show.bind=!data.billNo     if.one-way="context.hasView">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)" show.bind=!data.billNo    if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox 
+            label="Nomor Surat Jalan" 
+            value.bind="data.doNo" 
+            error.bind="error.doNo" 
+            placeholder="tambahkan nomor surat jalan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl. Surat Jalan" 
+            value.bind="data.doDate" 
+            error.bind="error.doDate" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Tiba" 
+            value.bind="data.arrivalDate" 
+            error.bind="error.arrivalDate" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="supplier" 
+            error.bind="error.supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="cari supplier" 
+            key="code" 
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Jenis Supplier" 
+            value.bind="supplierType" 
+            read-only.bind="true"
+            if.bind="data.supplier"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown
+            label="Pengiriman"
+            value.bind="data.shipmentType"
+            error.bind="error.shipmentType"
+            read-only.bind="readOnly"
+            items.bind="shipmentTypes"
+            if.bind = "isImport"
+            change.delegate="shipmentTypeChanged($event)"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox 
+            label="Nomor AWB" 
+            value.bind="data.shipmentNo"
+            error.bind="error.shipmentNo"
+            placeholder="tambah nomor AWB"
+            read-only.bind="readOnly"
+            if.bind="isImport && data.shipmentType=='By Sea'"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Nomor BL" 
+            value.bind="data.shipmentNo"
+            error.bind="error.shipmentNo"
+            placeholder="tambah nomor BL"
+            read-only.bind="readOnly"
+            if.bind="isImport && data.shipmentType=='By Air'"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <!-- <au-checkbox 
+            label="Apakah dikenakan Bea Cukai?" 
+            value.bind="data.isCustoms" 
+            error.bind="error.isCustoms" 
+            read-only.bind="readOnly"
+            if.bind="!hasView"
+            options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-textbox 
+            label="Apakah dikenakan Bea Cukai?" 
+            value.bind="isCustomsDisplay"
+            read-only.bind="true"
+            if.bind="hasView"
+            options.bind="controlOptions">
+        </au-textbox> -->
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <!-- <au-numeric 
+            label="Total Jumlah"
+            value.bind="data.totalQuantity" 
+            error.bind="error.totalQuantity"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric 
+            label="Total Nominal"
+            value.bind="data.totalAmount" 
+            error.bind="error.totalAmount"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-numeric> -->
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.items" 
+            errors.bind="error.items" 
+            columns.bind="itemsInfo.columns" 
+            add.bind="itemsInfo.onAdd" 
+            remove.bind="removeItems"
+            options.one-way="filter"
+            read-only.bind="readOnly"
+            if.bind="data.supplier"
+            change.delegate="itemChanged($event)"
+            view-model.ref="ItemsCollection"
+            item-template="modules/garment-purchasing/delivery-order/template/delivery-order-item"
+            footer-template="modules/garment-purchasing/delivery-order/template/delivery-order-item-footer"
+            view-model.ref="ItemsCollection">
+        </au-collection>
+
+    </au-input-form>
+</template>

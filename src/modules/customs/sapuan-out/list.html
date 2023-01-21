@@ -1,0 +1,69 @@
+
+<template>
+  
+    <h1 class="page-header">Monitoring Pengeluaran Aval Sampah Sapuan</h1>
+    <form class="form-horizontal">
+
+            <au-datepicker 
+            label="Tanggal Awal Laporan" 
+            value.bind="dateFrom" error.bind="error.dateFrom"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-datepicker 
+            label="Tanggal Akhir Laporan" 
+            value.bind="dateTo" error.bind="error.dateTo"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+             <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+       <br>
+    </br>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>NOMOR BON MASUK</td>
+                    <td>TANGGAL PENGELUARAN</td>
+                    <td>KETERANGAN</td>
+                    <td>QUANTITY</td>
+                    <td>SATUAN</td>
+                </tr>
+            </thead>
+            <tbody>
+             
+                <tr repeat.for="item of data">
+                    <td class="text-left">${$index + 1}</td>
+                    <td class="text-left">${item.TransactionNo}</td>
+                    <td class="text-left">${item.TransactionDate | dateFormat:'DD MMMM YYYY'}</td>
+                    <td class="text-left">${item.ScrapSourceName}</td>
+                    <td class="text-right">${item.Quantity}</td>
+                    <td if.bind="item.uomspan" rowspan="${item.uomspan}">${item.UomUnit}</td>
+                </tr>
+                <tr class="active">
+                    <td class="text-center" colspan="4"><strong>T O T A L </strong></td>
+                    <td class="text-right"><strong>${sumQty}</strong></td>        
+                    <td class="text-right"><strong></strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+        Tidak ada data.
+    </div>
+    <pagination if.bind="info.total>info.size"  info.bind="info" change.delegate="changePage($event)"></pagination>
+    <hr/>
+</au-input-form> 
+</template>

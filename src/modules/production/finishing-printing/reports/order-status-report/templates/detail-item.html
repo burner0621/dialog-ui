@@ -1,0 +1,27 @@
+<template>
+    <tr>
+        <require from="../../../../../../lib/number-format-value-converter"></require>
+        <td>${data.no}</td>
+        <td>${data.orderNo}</td>
+        <td>${data.constructionComposite}</td>
+        <td>${data.processType}</td>
+        <td>${data.designCode}</td>
+        <td>${data.colorRequest}</td>
+        <td>${data.buyerName}</td>
+        <td>${data.accountName}</td>
+        <td>${data._createdDate | dateFormat: "DD MMM YYYY"}</td>
+        <td>${data.deliveryDate | dateFormat: "DD MMM YYYY"}</td>
+        <td></td>
+        <td><au-datepicker value.bind="data.deliveryDateCorrection" error.bind="error.deliveryDateCorrection"></au-datepicker></td>
+        <td><au-dropdown items.bind="reasons" value.bind="data.reason" error.bind="error.reason"></au-dropdown></td>
+        <td>${data.orderQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.notInKanbanQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.preProductionQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.onProductionQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.inspectingQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.afterProductionQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.storageQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.shipmentQuantity | numberFormat: "0,000.00"}</td>
+        <td>${data.diffOrderShipmentQuantity | numberFormat: "0,000.00"}</td>
+    </tr>
+</template>

@@ -1,0 +1,72 @@
+<template>
+
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">LAPORAN BON TERIMA UNIT YANG BELUM DIBUAT SPB</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <au-autocomplete value.bind="unit" label="Unit" loader.bind="unitLoader" placeholder="nama unit" key="code">
+                </au-autocomplete>
+
+                <au-autocomplete value.bind="staffName" label="Nama Staff Pembelian" loader.bind="accountLoader" placeholder="nama staff pembelian"
+                    key="code">
+                </au-autocomplete>
+
+                <au-datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)">
+                </au-datepicker>
+
+                <au-datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateMin">
+                </au-datepicker>
+
+                <label for="contact" class="col-sm-9 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="exportToXls()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="1">NO</td>
+                        <td rowspan="2">UNIT</td>
+                        <td rowspan="2">SUPPLIER</td>
+                        <td rowspan="2">SURAT JALAN</td>
+                        <td rowspan="2">TANGGAL SJ</td>
+                        <td rowspan="2">STAFF PEMBELIAN</td>
+                        <td rowspan="2">BON TERIMA UNIT</td>
+                        <td rowspan="2">TANGGAL BON TERIMA UNIT</td>
+                        <td rowspan="2">ADM</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="unitReceiptNote of data">
+                        <td>${unitReceiptNote['No']}</td>
+                        <td>${unitReceiptNote['Unit']}</td>
+                        <td>${unitReceiptNote['Supplier']}</td>
+                        <td>${unitReceiptNote['No Surat Jalan']}</td>
+                        <td>${unitReceiptNote['Tanggal Surat Jalan']}</td>
+                        <td>${unitReceiptNote['Staff']}</td>
+                        <td>${unitReceiptNote['No Bon Terima Unit']}</td>
+                        <td>${unitReceiptNote['Tanggal Bon Terima Unit']}</td>
+                        <td>${unitReceiptNote['User']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

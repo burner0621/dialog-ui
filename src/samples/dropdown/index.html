@@ -1,0 +1,17 @@
+<template>
+  <require from="../../au-components/form/dropdown-text"></require>
+  <require from="../generic-settings"></require>
+  <au-input-form title="dropdown demo">
+    <!--<select value.bind="value2" class="form-control" matcher.bind="_matcher" change.delegate="changeCallback2($event)">
+            <option repeat.for="item of objects" model.bind="item">${item | dropdownText : "name"}</option>
+          </select>-->
+    <au-dropdown value.bind="value" label.bind="label" error.bind="error" change.delegate="changeCallback($event)" options.bind="options"
+      loader.bind="loader" items.bind="objects" key="code" text="name"></au-dropdown>
+      <p>
+        <div class="well">
+          <code style="word-wrap:break-word">${stringValue}</code>
+        </div>
+      </p>
+      <generic-settings label.two-way="label" error.two-way="error" options.two-way="options"></generic-settings> 
+  </au-input-form>
+</template>

@@ -1,0 +1,15 @@
+<template>
+	<tr>
+		<td colspan="4" align='right'>
+			<au-textbox label="TOTAL" options.bind="controlOptions" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td align='right' colspan="1">
+			<au-numeric value.bind="totalQuantity" error.bind="error" format="0" read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td></td>
+
+
+	</tr>
+</template>

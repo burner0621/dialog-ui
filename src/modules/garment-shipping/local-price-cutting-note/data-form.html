@@ -1,0 +1,41 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <au-input-form title.bind="title" with.bind="context">
+
+                <au-textbox label="No Nota Potongan" value.bind="data.cuttingPriceNoteNo" read-only="true"
+                    options.bind="controlOptions" if.bind="readOnly || isEdit">
+                </au-textbox>
+
+                <au-datepicker label="Tanggal" value.bind="data.date" error.bind="error.date" read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Buyer" placeholder="Pilih Buyer" value.bind="selectedBuyer"
+                    error.bind="error.buyer" loader.bind="buyerLoader" text.bind="buyerView"
+                    read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-checkbox label="Apakah kena PPN ?" value.bind="useVat" error.bind="error.useVat"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-checkbox>
+
+                <au-multiline label="Keterangan" value.bind="data.remark" placeholder="Keterangan"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-multiline>
+
+                <au-textbox error.bind="error.itemsCount" read-only.bind="true" show.bind="error.itemsCount"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-collection columns.bind="data.useVat ? columnsUseVat : items.columns" 
+                    items.bind="data.items"  errors.bind="error.items" add.bind="items.onAdd" 
+                    read-only.bind="readOnly || !data.buyer" options.bind="items.options"
+                    item-template="modules/garment-shipping/local-price-cutting-note/template/item">
+                </au-collection>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

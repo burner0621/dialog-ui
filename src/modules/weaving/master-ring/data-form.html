@@ -1,0 +1,41 @@
+<template
+  ><au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <au-textbox
+            label="Kode"
+            placeholder="Kode Ring"
+            value.bind="data.code"
+            error.bind="error.code"
+            read-only.bind="readOnly"
+          ></au-textbox>
+        </div>
+
+        <div class="row">
+          <au-textbox
+            label="Ukuran"
+            placeholder="Ukuran Ring"
+            value.bind="data.number"
+            error.bind="error.number"
+            read-only.bind="readOnly"
+          ></au-textbox>
+        </div>
+
+        <div class="row">
+          <au-multiline
+            label="Keterangan"
+            placeholder="Keterangan"
+            value.bind="data.description"
+            error.bind="error.description"
+            read-only.bind="readOnly"
+          ></au-multiline>
+        </div>
+      </div>
+    </div></au-input-form
+  >
+</template>

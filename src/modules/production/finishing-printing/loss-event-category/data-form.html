@@ -1,0 +1,17 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete value.bind="lossEvent" label="Losses" read-only.bind="readOnly" error.bind="error.LossEvent"
+            loader.bind="lossEventLoader" text.bind="lossEventView" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox value.bind="data.LossEvent.ProcessArea" label="Area" read-only.bind="true" error.bind="error.Losses"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox value.bind="data.LossesCategory" label="Kategori Losses" read-only.bind="readOnly"
+            error.bind="error.LossesCategory" options.bind="controlOptions">
+        </au-textbox>
+
+    </au-input-form>
+</template>

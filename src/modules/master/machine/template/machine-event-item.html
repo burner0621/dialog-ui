@@ -1,0 +1,28 @@
+<template>
+  <tr>
+  <td style="text-align:center;" class="col-sm-2">
+    <au-textbox 
+    value.bind="machineEvent.No" 
+    error.bind="error.No"
+    read-only.bind="options.readOnly" 
+    options.bind="controlOptions">
+    </au-textbox>
+  </td>
+  <td>
+    <au-textbox 
+    value.bind="machineEvent.Name" 
+    error.bind="error.Name"
+    read-only.bind="options.readOnly" 
+    options.bind="controlOptions"></au-textbox>
+  </td>
+  <td>
+    <au-dropdown
+      value.bind="machineEvent.Category"
+      error.bind="error.Category"
+      read-only.bind="options.readOnly" 
+      items.bind="categories">
+    </au-dropdown>
+  </td>
+  <td if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(machineEvent, $event)">-</button></td>
+  </tr>
+</template>

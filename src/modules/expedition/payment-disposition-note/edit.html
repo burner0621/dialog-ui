@@ -1,0 +1,88 @@
+<template>
+    <require from="../../../lib/number-format-value-converter"></require>
+    <au-input-form title="Buat Bukti Pembayaran Disposisi" options.bind="formOptions">
+
+        <au-textbox
+            label="Bank"
+            value.bind="data.AccountBank.BankName"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="No. Rekening"
+            value.bind="data.AccountBank.AccountNumber"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Mata Uang"
+            value.bind="data.AccountBank.Currency.Code"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            show.bind="!IDR">
+        </au-textbox>
+
+        <au-textbox
+            label="Mata Uang"
+            value.bind="data.CurrencyCode"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            show.bind="IDR">
+        </au-textbox>
+
+        <au-numeric
+            label="Rate"
+            value.bind="data.CurrencyRate"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            show.bind="IDR">
+        </au-numeric>
+
+        <au-textbox
+            label="Supplier"
+            value.bind="data.Supplier.Name"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="No. BG/Cek"
+            value.bind="data.BGCheckNumber"
+            error.bind="error.BGCheckNumber"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal"
+            value.bind="data.PaymentDate"
+            error.bind="error.PaymentDate"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="Jenis Transaksi"
+                    value.bind="data.TransactionType"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            error.bind="error.Items"
+            show.bind="error.Items"
+            read-only.bind="true">
+        </au-textbox>
+
+        <au-collection
+            items.bind="Items" 
+            errors.bind="error.Details"
+            columns.bind="collection.columns"
+            checkall.delegate="onCheckAll($event)"
+            item-template="modules/expedition/payment-disposition-note/templates/item-edit"
+            options.bind="collectionOptions">
+        </au-collection>
+        
+        TOTAL BAYAR ${grandTotal | numberFormat: '0,000.0000'} ${data.AccountBank.Currency.Code}
+    </au-input-form>
+</template>

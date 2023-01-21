@@ -1,0 +1,162 @@
+<template>
+ <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Monitoring Penjulan Lokal Per Buyer</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer"
+            value.bind="buyer"
+            error.bind="error.Buyer"
+            loader.bind="garmentlocalbuyerLoader"
+            text.bind = "buyerView"
+            key="Code"
+            placeholder="Cari Buyer"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Jenis Transaksi"
+            value.bind="lstype"
+            error.bind="error.LSType"
+            loader.bind="garmenttransactiontypeLoader"
+            text.bind = "lstypeView"
+            key="Code"
+            placeholder="Cari Jenis Transaksi"
+            options.bind="controlOptions">
+        </au-autocomplete> 
+        
+        <au-datepicker label="Tanggal Nota Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Nota Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+
+        <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">NAMA BUYER</th>
+                    <th class="text-center">NOMOR NOTA</th>                    
+                    <th class="text-center">TANGGAL NOTA</th>
+                    <th class="text-center">JENIS TRANSAKSI</th>
+                    <th class="text-center">NO DISPOSISI</th>
+                    <th class="text-center">K E T E R A N G A N</th>
+                    <th class="text-center">TEMPO</th>
+                    <th class="text-center">KENA PPN</th>
+                    <th class="text-center">KODE BARANG</th>
+                    <th class="text-center">NAMA BARANG</th>
+                    <th class="text-center">QUANTITY</th>
+                    <th class="text-center">SATUAN</th>
+                    <th class="text-center">HARGA</th>
+                    <th class="text-center">JUMLAH HARGA</th>
+                   
+                </tr>
+            </thead>
+
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="14">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <template repeat.for="unitIndex of data.localSalesNo.length">
+                            <template repeat.for="detailIndex of data.localSalesNo[unitIndex].details.length">
+                                <tr style="background: white;">
+                                    <template if.bind="unitIndex==0 && detailIndex==0">
+                                        <td rowspan.bind="data.rowSpan + data.localSalesNo.length" align="center">
+                                            <label><au-textbox value.bind="data.buyerName" read-only="true"></au-textbox></label>
+                                        </td>
+                                    </template>
+                                    <template if.bind="detailIndex==0">
+                                        <td rowspan.bind="data.localSalesNo[unitIndex].details.length || 1" align="center">
+                                            <label><au-textbox value.bind="data.localSalesNo[unitIndex].noteNo" read-only="true"></au-textbox></label>
+                                        </td>
+                                    </template>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-datepicker value.bind="data.localSalesNo[unitIndex].details[detailIndex].lsDate" read-only="true"></au-datepicker>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].lsType" read-only="true"></au-textbox>
+                                    </td>                        
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].dispoNo" read-only="true"></au-textbox>
+                                    </td>                        
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].remark" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].tempo" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].useVat" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].productCode" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].productName" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                         <au-numeric value.bind="data.localSalesNo[unitIndex].details[detailIndex].quantity" read-only="true"></au-numeric>             
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.localSalesNo[unitIndex].details[detailIndex].uomUnit" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-numeric value.bind="data.localSalesNo[unitIndex].details[detailIndex].price" read-only="true"></au-numeric>             
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-numeric value.bind="data.localSalesNo[unitIndex].details[detailIndex].amount" read-only="true"></au-numeric>             
+                                    </td>
+                                </tr>
+                            </template>
+                            <tr style="background: lightgray; font-weight: bold;">
+                                <td colspan="9" align="center">
+                                    <au-textbox value="SUB TOTAL" read-only="true"></au-textbox>
+                                </td>
+                                <td align="right">
+                                    <au-numeric value.bind="data.localSalesNo[unitIndex].quantities" read-only="true"></au-numeric>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td align="right">
+                                    <au-numeric value.bind="data.localSalesNo[unitIndex].amounts" read-only="true"></au-numeric>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+            </div>
+            <div class="row" if.bind="grandTotalByUom.length > 0">
+                <div class="form-group col-md-1"></div>
+                <div class="form-group col-md-5">
+                <template repeat.for="uomIndex of grandTotalByUom.length">
+                      <label class="control-label text-left col-md-4">${uomIndex==0 ? 'GRAND TOTAL' : ''}</label>
+                      <p class="form-control-static text-right col-md-3">${grandTotalByUom[uomIndex].quantity | numberFormat:'0,000'}</p>
+                      <p class="form-control-static col-md-2">${grandTotalByUom[uomIndex].uom}</p>
+                      <p class="form-control-static text-right col-md-3">${grandTotalByUom[uomIndex].amount | numberFormat:'0,000.00'}</p>
+                </template>
+                </div>
+                <div class="form-group col-md-6">
+                     <label class="control-label text-left col-md-4">GRAND TOTAL</label>
+                     <p class="form-control-static col-md-8">${grandTotal | numberFormat:'0,000.00'}</p>
+                </div>
+            </div>
+         
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

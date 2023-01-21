@@ -1,0 +1,20 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+
+        <au-textbox label="Nama"
+                    value.bind="data.Name"
+                    error.bind="error.Name"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="Nomor Urut"
+                    value.bind="data.LayoutOrder"
+                    error.bind="error.LayoutOrder"
+                    options.bind="controlOptions"
+                    format="0">
+        </au-numeric>
+
+    </au-input-form>
+</template>

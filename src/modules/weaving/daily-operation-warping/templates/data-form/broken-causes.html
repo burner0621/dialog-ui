@@ -1,0 +1,14 @@
+<template>
+  <tr>
+    <!-- Nama Penyebab Putus -->
+    <td>
+      <au-textbox value.bind="data.WarpingBrokenCauseName" read-only.bind="true"></au-textbox>
+    </td>
+
+    <!-- Jumlah Putus -->
+    <td>
+      <au-numeric value.bind="data.TotalBroken" format="0" read-only.bind="true">
+      </au-numeric>
+    </td>
+  </tr>
+</template>

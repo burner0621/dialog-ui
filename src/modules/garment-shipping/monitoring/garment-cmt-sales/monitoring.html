@@ -1,0 +1,78 @@
+<template>
+    <h1 class="page-header">Report Realisasi CMT Penjualan</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+ 
+        <!-- <au-dropdown label="Jenis Tanggal" value.bind="JnsInv" items.bind="OptionDate" options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-datepicker label="Tanggal Trucking Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Trucking Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td align="center" rowspan="2">NO.</td>
+                    <td align="center" rowspan="2">NO INVOICE</td>
+                    <td align="center" rowspan="2">TGL TRUCKING</td>
+                    <td align="center" rowspan="2">BUYER AGENT</td>
+                    
+                    <td align="center" rowspan="2">TGL PEB</td>
+                    <td align="center" rowspan="2">KURS</td>
+                    <td align="center" colspan="2">FOB</td>
+                    <td align="center" colspan="2">LESS FAB</td>
+                    <td align="center" colspan="2">TO BE PAID</td>
+                </tr>
+                <tr>
+                    <td align="center">USD</td>
+                    <td align="center">RUPIAH</td>
+                    <td align="center">USD</td>
+                    <td align="center">RUPIAH</td>
+                    <td align="center">USD</td>
+                    <td align="center">RUPIAH</td>                        
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center"> ${$index + 1}</td>                        
+                    <td>${item.invoiceNo}</td>
+                    <td>${item.invoiceDate}</td>                  
+                    <td>${item.buyerAgentName}</td>
+                    <td>${item.pebDate}</td>
+                    <td>${item.rate}</td>
+                    <td class="text-right"><strong>${item.fob}</strong></td>
+                    <td class="text-right"><strong>${item.fobIdr}</strong></td>
+                    <td class="text-right"><strong>${item.fab}</strong></td>
+                    <td class="text-right"><strong>${item.fabIdr}</strong></td>
+                    <td class="text-right"><strong>${item.toBePaid}</strong></td>
+                    <td class="text-right"><strong>${item.toBePaidIdr}</strong></td>
+                    
+                </tr>                    
+            </tbody>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

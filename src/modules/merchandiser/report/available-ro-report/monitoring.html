@@ -1,0 +1,143 @@
+<template>
+    <h1 class="page-header">Laporan Kecepatan Cek RO</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="selectedSection"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            placeholder="Cari Seksi"
+            text="Code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <!--<au-autocomplete
+            value.bind="selectedROGarment"
+            label="Nomor RO"
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO"
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedBuyer"
+            label="Buyer"
+            loader.bind="garmentBuyerLoader"
+            placeholder="Cari Buyer"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>-->
+        <au-datepicker
+            value.bind="selectedAvailableDateStart"
+            label="Tgl Kesiapan RO Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <au-datepicker
+            value.bind="selectedAvailableDateEnd"
+            label="Tgl Kesiapan RO Akhir"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <!--<au-dropdown
+            value.bind="selectedStatus"
+            label="Status"
+            items.bind="statusList"
+            options.bind="controlOptions">
+        </au-dropdown>-->
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><label>No</label></th>
+                        <th><label>No RO</label></th>
+                        <th><label>Tanggal Validasi RO Md</label></th>
+                        <th><label>Tanggal Validasi RO Sample</label></th>
+                        <th><label>Tanggal Penerimaan RO</label></th>
+                        <th><label>Tanggal Kesiapan RO</label></th>
+                        <th><label>Tanggal Shipment</label></th>
+                        <th><label>+/-<br/>Terima - Siap</label></th>
+                        <th><label>Kode Buyer</label></th>
+                        <th><label>Nama Buyer</label></th>
+                        <th><label>Artikel</label></th>
+                        <th><label>Quantity</label></th>
+                        <th><label>Satuan</label></th>
+                        <th><label>User</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="14">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="i of tableData.length">
+                        <tr>
+                            <td align="center">
+                                <au-textbox value.bind="i+1" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].RONo" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].ValidatedMDDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].ValidatedSampleDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].AcceptedDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].AvailableDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].DeliveryDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].DateDiff" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].BuyerCode" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Buyer" read-only="true"></au-textbox>
+                            </td>                           
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Article" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Quantity" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Uom" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].AvailableBy" read-only="true"></au-textbox>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <template if.bind="tableData.length > 0">
+            <au-textbox label="KECEPATAN CEK RO" read-only="true"></au-textbox>
+            <au-textbox label="Status OK" value="Selisih Tgl Terima RO dengan Tgl Kesiapan RO <= 2 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status OK" value="${dataOk.total}/${tableData.length} X 100% = ${dataOk.percent} %" read-only="true"></au-textbox>
+            <au-textbox label="Status NOT OK" value="Selisih Tgl Terima RO dengan Tgl Kesiapan RO > 2 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status NOT OK" value="${dataNotOk.total}/${tableData.length} X 100% = ${dataNotOk.percent} %" read-only="true"></au-textbox>
+        </template>
+
+        <hr/>
+    </form>
+</template>

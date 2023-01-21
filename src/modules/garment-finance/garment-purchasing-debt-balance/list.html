@@ -1,0 +1,159 @@
+<template>
+  <h1 class="page-header">Kartu Hutang</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete value.bind="info.supplier"
+                     error.bind="error.supplier"
+                     label="Supplier"
+                     loader.bind="supplierLoader"
+                     text.bind="supplierView"
+                     placeholder="Input Supplier"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+    <au-dropdown value.bind="info.month"
+                 label="Bulan"
+                 options.bind="controlOptions"
+                 items.bind="itemMonths"
+                 key="value"
+                 text="text">
+    </au-dropdown>
+    <au-dropdown value.bind="info.year"
+                 label="Tahun"
+                 options.bind="controlOptions"
+                 items.bind="itemYears"
+                 key="value"
+                 text="text">
+    </au-dropdown>
+
+    <div class="form-group">
+      <label for="contact"
+             class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()"
+                class="btn btn-success">Cari</button>
+        <button click.delegate="reset()"
+                class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-12"
+         style="overflow-x: auto">
+      <!--Table-->
+      <table class="table table-bordered">
+        <!--Table head-->
+        <thead>
+          <tr>
+            <th rowspan="2">Tanggal</th>
+            <th rowspan="2">Nama Barang</th>
+            <th rowspan="2">Kategory Pembelian</th>
+            <th rowspan="2">No BP Besar</th>
+            <th rowspan="2">No BP Kecil</th>
+            <th rowspan="2">No SJ</th>
+            <th rowspan="2">Nomor Bukti Pengeluaran Bank</th>
+            <th rowspan="2">No NI</th>
+            <th rowspan="2">No Invoice</th>
+            <th colspan="5">Nilai Invoice</th>
+            <th colspan="4">Mutasi</th>
+            <th colspan="2">Saldo Akhir</th>
+          </tr>
+          <tr>
+            <th>DPP</th>
+            <th>DPP Valas</th>
+            <th>PPN</th>
+            <th>PPH</th>
+            <th>Total</th>
+            <th>Pembelian</th>
+            <th>Pembelian Valas</th>
+            <th>Pembayaran</th>
+            <th>Pembayaran Valas</th>
+            <th>Valas</th>
+            <th>Rupiah</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+        <!--Table body-->
+        <tbody>
+          <tr show.bind="isEmpty">
+            <td colspan="20">
+              <div class="alert alert-info">Tidak ada data</div>
+            </td>
+          </tr>
+          <tr repeat.for="datum of data">
+
+            <!-- <td repeat.for="key of datum | keys"
+                if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                style="white-space: pre"
+                class="key.toString().toLowerCase() == 'dpp' || key.toString().toLowerCase() == 'dppcurrency' || key.toString().toLowerCase() == 'ppn' || key.toString().toLowerCase() == 'total' || key.toString().toLowerCase() == 'purchase' || key.toString().toLowerCase() == 'payment' || key.toString().toLowerCase() == 'finalbalance' ? text-right : '';"
+                colspan="${key.toString().toLowerCase() == 'previous' ? 13 : key.toString().toLowerCase() == 'date' && datum[key] === null ? 5 : key.toString().toLowerCase() == 'dpp' && datum[key] === null ? 3 : 1}">
+              ${datum[key]}
+            </td> -->
+
+            <td if.bind="datum.IsInitialBalance"
+                colspan="19">Saldo Awal </td>
+            <td if.bind="datum.IsInitialBalance"
+                class="text-right">${datum.RemainBalance} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.Date} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.Products} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.PurchasingCategoryName} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.BillsNo} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.PaymentBills} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.GarmentDeliveryOrderNo} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.BankExpenditureNoteNo} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.InternalNoteNo} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance">${datum.InvoiceNo} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.DPPAmount} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.CurrencyDPPAmount} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.VATAmount} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.IncomeTaxAmount} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.TotalInvoice} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.MutationPurchase} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.CurrencyMutationPurchase} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.MutationPayment} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.CurrencyMutationPayment} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.CurrencyRemainBalance} </td>
+            <td if.bind="!datum.IsInitialBalance && !datum.IsTotalBalance"
+                class="text-right">${datum.RemainBalance} </td>
+            <td if.bind="datum.IsTotalBalance"
+                colspan="19">Saldo Akhir </td>
+            <td if.bind="datum.IsTotalBalance"
+                class="text-right">${datum.RemainBalance} </td>
+          </tr>
+          <!-- <tr>
+            <td class="text-right" colspan="7">TOTAL</td>
+            <td class="text-right" colspan="4">${currency}</td>
+            <td>${purchase}</td>
+            <td>${payment}</td>
+            <td>${closingBalance}</td>
+          </tr> -->
+        </tbody>
+        <!--Table body-->
+        <div style="margin-bottom: 1%"
+             slot="toolbar"
+             class="btn-group">
+          <button class="btn btn-primary"
+                  click.delegate="excel()">
+            Cetak Excel
+          </button>
+          <button class="btn btn-primary"
+                  click.delegate="pdf()">
+            Cetak PDF
+          </button>
+        </div>
+      </table>
+      <!--Table-->
+    </div>
+  </div>
+</template>

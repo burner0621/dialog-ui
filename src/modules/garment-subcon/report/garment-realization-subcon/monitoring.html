@@ -1,0 +1,180 @@
+<template>
+    <h1 class="page-header">Laporan Realisasi Pengeluaran Subcon</h1>
+    <br>
+    <form class="form-horizontal">
+        <!-- <au-autocomplete 
+            label="No Subcon Contract"
+            value.bind="subconContract"
+            error.bind="error.SubconContract"
+            loader.bind="subconContractLoader"
+            text.bind = "ContractNo"
+            placeholder="No Subcon Contract"
+            options.bind="controlOptions">
+        </au-autocomplete> -->
+
+        <au-autocomplete value.bind="subconContract" error.bind="error.subconContract"
+						label="No Subcon Contract" loader.bind="subconContractLoader" text="ContractNo"
+						placeholder="No Subcon Contract"
+						options.bind="controlOptions">
+					</au-autocomplete>
+ 
+        <!-- <au-dropdown label="Jenis Tanggal" value.bind="JnsInv" items.bind="OptionDate" options.bind="controlOptions">
+        </au-dropdown> -->
+  
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-sm-6">
+                <au-textbox
+                label="Nomor Kontrak"
+                value.bind="contractNo"
+                error.bind="error.contractNo" 
+                read-only.bind="true" 
+                >
+                </au-textbox>
+                <au-textbox
+                    label="BPJ No"
+                    value.bind="bpjNo"
+                    error.bind="error.bpjNo" 
+                    read-only.bind="true" 
+                    >
+                </au-textbox>
+                <au-textbox
+                    label="Tanggal Jatuh Tempo"
+                    value.bind="dueDate"
+                    error.bind="error.dueDate" 
+                    read-only.bind="true" 
+                    >
+                </au-textbox>
+            </div>
+        </div>
+        
+        
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <table class="table table-bordered table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <td align="center" rowspan="2">NO.</td>
+                            <td align="center" colspan="2">BC 261</td>
+                            <td align="center" rowspan="2">JENIS BARANG SUBCON</td>
+                            <td align="center" rowspan="2">JUMLAH BARANG</td>
+                            <td align="center" rowspan="2">SATUAN</td>
+                        </tr>
+                        <tr>
+                            <td align="center">NO BC</td>
+                            <td align="center">TANGGAL</td>                     
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of Out">
+                            <td class="text-center"> ${$index + 1}</td>   
+                            <td>${item.bcNoOut}</td>                     
+                            <td>${item.bcDateOut | dateFormat:'DD MMMM YYYY'}</td>
+                            <td>${item.jobType}</td>
+                            <td>${item.quantityOut}</td>                  
+                            <td>${item.uomOut}</td>
+                        </tr>                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <table class="table table-bordered table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <td align="center" rowspan="2">NO.</td>
+                            <td align="center" colspan="2">BC 262</td>
+                            <td align="center" rowspan="2">JENIS BARANG HASIL SUBCON</td>
+                            <td align="center" rowspan="2">JUMLAH BARANG</td>
+                            <td align="center" rowspan="2">SATUAN</td>
+                        </tr>
+                        <tr>
+                            <td align="center">NO BC</td>
+                            <td align="center">TANGGAL</td>                   
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="item of IN">
+                            <td class="text-center"> ${$index + 1}</td>    
+                            <td>${item.bcNoOut}</td>                    
+                            <td>${item.bcDateOut | dateFormat:'DD MMMM YYYY'}</td>
+                            <td>${item.jobType}</td>
+                            <td>${item.quantityOut}</td>                  
+                            <td>${item.uomOut}</td>
+                        </tr>                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <tr>
+                        <td>Pengeluaran dan pemasukan barang tersebut diatas</td> 
+                    </tr>
+                    <tr>
+                        <td>Sesuai dengan BC. 261 dengan BC. 262</td>    
+                    </tr>
+                    <br><br>
+                    <au-textbox
+                        label="Izin Subcon (total barang subcon)"
+                        value.bind="totalSubconItem"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                    <au-textbox
+                        label="Realisasi Barang Keluar"
+                        value.bind="totalItemOUT"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                    <au-textbox
+                        label="Sisa Barang Belum Keluar"
+                        value.bind="TotalLeftoverItemOUT"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </div>
+                <div class="col-sm-6">
+                    <tr>
+                        <td>Sesuai dengan BC.262</td>
+                    </tr>
+                    <br><br>
+                    <au-textbox
+                        label="Barang Keluar"
+                        value.bind="totalItemOUT"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                    <au-textbox
+                        label="Realisasi Barang Masuk"
+                        value.bind="totalItemIN"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                    <au-textbox
+                        label="Sisa Barang Belum Masuk"
+                        value.bind="totalLeftoverItemIN"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+                    </au-textbox>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

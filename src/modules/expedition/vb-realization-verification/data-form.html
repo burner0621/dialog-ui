@@ -1,0 +1,60 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete placeholder="pilih realisasi" label="Realisasi VB" value.bind="selectedVBRealization"
+            error.bind="error.vbRealization" loader.one-time="vbRealizationLoader" text="DocumentNo"
+            read-only.bind="readOnly" query.bind="filter" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Tipe VB" value.bind="vbType" read-only.bind="true" options.bind="controlOptions"
+            show.bind="selectedVBRealization">
+        </au-textbox>
+
+        <au-textbox label="Pemohon VB" value.bind="data.vbRealization.Header.VBRequestDocumentCreatedBy"
+            read-only.bind="true" options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal Permohonan VB" value.bind="data.vbRealization.Header.VBRequestDocumentDate"
+            read-only.bind="true" options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-datepicker>
+
+        <au-datepicker label="Estimasi Tanggal Realisasi"
+            value.bind="data.vbRealization.Header.VBRequestDocumentRealizationEstimationDate" read-only.bind="true"
+            options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-datepicker>
+
+        <au-textbox label="Unit Pemohon VB" value.bind="data.vbRealization.Header.SuppliantUnitName"
+            read-only.bind="true" options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-textbox>
+
+        <au-textbox label="Mata Uang" value.bind="data.vbRealization.Header.CurrencyCode" read-only.bind="true"
+            options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-textbox>
+
+        <au-numeric label="Jumlah Uang Pemohon" value.bind="data.vbRealization.Header.VBRequestDocumentAmount"
+            read-only.bind="true" options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-numeric>
+
+        <au-multiline label="Kegunaan VB" value.bind="data.vbRealization.Header.VBRequestDocumentPurpose"
+            read-only.bind="true" options.bind="controlOptions" show.bind="selectedVBRealization">
+        </au-multiline>
+
+        <au-collection if.bind="data.vbRealization.Header.Type == 2" items.bind="data.vbRealization.Items"
+            columns.bind="columns" read-only.bind="true" show.bind="selectedVBRealization"
+            options.bind="vbHeaderOptions" item-template="modules/expedition/vb-realization-verification/templates/item"
+            footer-template="modules/expedition/vb-realization-verification/templates/item-footer">
+        </au-collection>
+
+        <au-collection if.bind="data.vbRealization.Header.Type == 1" items.bind="data.vbRealization.Items"
+            columns.bind="columns" read-only.bind="true" show.bind="selectedVBRealization"
+            options.bind="vbHeaderOptions" item-template="modules/expedition/vb-realization-verification/templates/item"
+            footer-template="modules/expedition/vb-realization-verification/templates/item-footer">
+        </au-collection>
+
+        <div class="btn-group pull-right">
+            <button class="btn btn-success" click.delegate="sendToCashierCallback($event)" if.one-way="isRejected">Kirim ke Kasir</button>
+            <button class="btn btn-danger" click.delegate="rejectCallback($event)" if.one-way="isCreate || isVerified">Reject</button>
+        </div>
+
+    </au-input-form>
+</template>

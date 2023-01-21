@@ -1,0 +1,49 @@
+<template>
+    <tr>
+        <!-- Proses -->
+        <td>
+            <au-textbox value.bind="data.Chemical.Name"
+                        read-only.bind="true"
+                        options.bind="controlOptions"></au-textbox>
+        </td>
+
+        <!-- Machine -->
+        <td>
+            <au-numeric value.bind="data.ChemicalQuantity"
+                        options.bind="controlOptions"
+                        format="0"
+                        read-only.bind="true"></au-numeric>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.Chemical.UOM.Unit"
+                        options.bind="controlOptions"
+                        read-only.bind="true"></au-textbox>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.Chemical.Currency.Code"
+                        options.bind="controlOptions"
+                        read-only.bind="true"></au-textbox>
+        </td>
+
+        <td>
+            <au-numeric value.bind="data.Chemical.Price"
+                        options.bind="controlOptions"
+                        read-only.bind="true"></au-numeric>
+        </td>
+
+        <td>
+            <au-numeric value.bind="priceTotal"
+                        options.bind="controlOptions"
+                        read-only.bind="true"></au-numeric>
+        </td>
+        
+        <td class="col-sm-1"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

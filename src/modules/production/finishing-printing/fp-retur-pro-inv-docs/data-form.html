@@ -1,0 +1,46 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <au-textbox label="No. Bon Hasil Re-grade" value.bind="data.Code" if.bind="readOnly" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="No. Bon Terima Unit" value.bind="NoBon" error.bind="error.Bon" placeholder="Cari No Bon" text="no"
+            key="no" loader.bind="unitReceiptNoteLoader" query.bind="filterUnit" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal" value.bind="data._CreatedUtc" if.bind="readOnly" options.bind="controlOptions" read-only.bind="readOnly">
+        </au-datepicker>
+
+        <au-autocomplete label="Nama Mesin" value.bind="Machine" error.bind="error.Machine" placeholder="Cari Mesin" text="name"
+            key="name" loader.bind="machineLoader" read-only.bind="readOnly" options.bind="controlOptions" query.bind="machineFilter">
+        </au-autocomplete>
+
+        <au-textbox label="Operator" value.bind="data.Operator" error.bind="error.Operator" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown label="Shift" value.bind="data.Shift" items.bind="shiftOptions" error.bind="error.Shift" read-only.bind="readOnly"
+            options.bind="controlOptions"></au-dropdown>
+
+        <au-autocomplete label="Nama Barang" value.bind="Product" error.bind="error.Product" placeholder="Cari Nama Barang" text="ProductView"
+            show.bind="NoBon" loader.bind="productLoader" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Panjang Total (MTR)" value.bind="data.TotalLength" show.bind="Product" read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Grade Asli" value.bind="data.OriginalGrade" error.bind="error.OriginalGreade" read-only.bind="readOnly"
+            options.bind="controlOptions" placeholder="Grade">
+        </au-textbox>
+
+        <!-- <au-multiline label="Keterangan" value.bind="data.Remark" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-multiline> -->
+
+        <au-collection items.bind="data.Details" errors.bind="error.Details" show.bind="Product" add.bind="DetailInfo.onAdd" remove.bind="DetailInfo.onRemove"
+            options.bind="options" columns.bind="DetailInfo.columns" read-only.bind="readOnly" item-template="modules/production/finishing-printing/fp-retur-pro-inv-docs/template/detail"
+            footer-template="modules/production/finishing-printing/fp-retur-pro-inv-docs/template/footer"></au-collection>
+        </au-collection>
+
+    </au-input-form>
+</template>

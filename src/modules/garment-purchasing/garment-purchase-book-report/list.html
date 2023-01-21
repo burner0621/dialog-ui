@@ -1,0 +1,177 @@
+<template>
+    <h1 class="page-header">Laporan Buku Harian Pembelian Term Of Payemnt</h1>
+    <form class="form-horizontal">
+        <!--<au-autocomplete  value.bind="unit" error.bind="error.unit" label="Unit"  loader.bind="unitLoader"></au-autocomplete>-->
+        <au-autocomplete  value.bind="unit" label="Unit"  loader.bind="unitLoader" options.bind="controlOptions"></au-autocomplete>
+                
+        <au-dropdown 
+                label="Jenis Supplier" 
+                value.bind="JenisSpl"
+                items.bind="SupplierType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentImport"  
+                options.bind="controlOptions"
+                if.bind="jnsSpl">
+        </au-dropdown>
+
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentLocal"  
+                options.bind="controlOptions"
+                if.bind="!jnsSpl">
+        </au-dropdown>
+        
+        <au-dropdown 
+                label="Kategori" 
+                value.bind="KtgrItem"
+                items.bind="KategoriItem"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-dropdown 
+                label="Tahun" 
+                value.bind="Year"
+                items.bind="YearItem"
+                options.bind="controlOptions" >
+        </au-dropdown>
+        
+        <!-- <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind ="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind ="controlOptions"></au-datepicker> -->
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td class="text-center" rowspan="3">No</td>
+                    <td class="text-center" rowspan="3">Supplier</td>
+                    <td class="text-center" rowspan="3">Satuan</td>
+                    <td class="text-center" colspan="24">Total Pembelian</td>
+                </tr>
+                <tr>
+                    <td class="text-center" colspan="2">Januari</td>
+                    <td class="text-center" colspan="2">Februari</td>
+                    <td class="text-center" colspan="2">Maret</td>
+                    <td class="text-center" colspan="2">April</td>
+                    <td class="text-center" colspan="2">Mei</td>
+                    <td class="text-center" colspan="2">Juni</td>
+                    <td class="text-center" colspan="2">Juli</td>
+                    <td class="text-center" colspan="2">Agustus</td>
+                    <td class="text-center" colspan="2">September</td>
+                    <td class="text-center" colspan="2">Oktober</td>
+                    <td class="text-center" colspan="2">November</td>
+                    <td class="text-center" colspan="2">Desember</td>
+                </tr>
+                <tr>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">Nominal(Rp.)</td>
+                </tr>
+            </thead>
+            <tbody>
+                 <tr repeat.for="item of data">
+                   
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${item.SupplierName}</td>
+                        <td>${item.UomUnit}</td>
+                        <td>${item.Qty_Jan}</td>
+                        <td>${item.Nominal_Jan}</td>
+                        <td>${item.Qty_Feb}</td>
+                        <td>${item.Nominal_Feb}</td>
+                        <td>${item.Qty_Mar}</td>
+                        <td>${item.Nominal_Mar}</td>
+                        <td>${item.Qty_Apr}</td>
+                        <td>${item.Nominal_Apr}</td>
+                        <td>${item.Qty_Mei}</td>
+                        <td>${item.Nominal_Mei}</td>
+                        <td>${item.Qty_Jun}</td>
+                        <td>${item.Nominal_Jun}</td>
+                        <td>${item.Qty_Jul}</td>
+                        <td>${item.Nominal_Jul}</td>
+                        <td>${item.Qty_Aug}</td>
+                        <td>${item.Nominal_Aug}</td>
+                        <td>${item.Qty_Sep}</td>
+                        <td>${item.Nominal_Sep}</td>
+                        <td>${item.Qty_Oct}</td>
+                        <td>${item.Nominal_Oct}</td>
+                        <td>${item.Qty_Nov}</td>
+                        <td>${item.Nominal_Nov}</td>
+                        <td>${item.Qty_Dec}</td>
+                        <td>${item.Nominal_Dec}</td>
+                  </tr>   
+                  <tr >
+                    <td class="text-center" colspan="3"><strong>T O T A L . . . . </strong></td>
+                    <td class="text-right"><strong>${jan_qty}</strong></td>
+                    <td class="text-right"><strong>${jan_nom}</strong></td>
+                    <td class="text-right"><strong>${feb_qty}</strong></td>
+                    <td class="text-right"><strong>${feb_nom}</strong></td>
+                    <td class="text-right"><strong>${mar_qty}</strong></td>
+                    <td class="text-right"><strong>${mar_nom}</strong></td>
+                    <td class="text-right"><strong>${apr_qty}</strong></td>
+                    <td class="text-right"><strong>${apr_nom}</strong></td>
+                    <td class="text-right"><strong>${mei_qty}</strong></td>
+                    <td class="text-right"><strong>${mei_nom}</strong></td>
+                    <td class="text-right"><strong>${jun_qty}</strong></td>
+                    <td class="text-right"><strong>${jun_nom}</strong></td>
+                    <td class="text-right"><strong>${jul_qty}</strong></td>
+                    <td class="text-right"><strong>${jul_nom}</strong></td>
+                    <td class="text-right"><strong>${aug_qty}</strong></td>
+                    <td class="text-right"><strong>${aug_nom}</strong></td>
+                    <td class="text-right"><strong>${sep_qty}</strong></td>
+                    <td class="text-right"><strong>${sep_nom}</strong></td>
+                    <td class="text-right"><strong>${oct_qty}</strong></td>
+                    <td class="text-right"><strong>${oct_nom}</strong></td>
+                    <td class="text-right"><strong>${nov_qty}</strong></td>
+                    <td class="text-right"><strong>${nov_nom}</strong></td>
+                    <td class="text-right"><strong>${dec_qty}</strong></td>
+                    <td class="text-right"><strong>${dec_nom}</strong></td>
+                                     
+                </tr>   
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </div>
+    </form>
+
+</template>

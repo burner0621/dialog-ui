@@ -1,0 +1,46 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)"
+        if.one-way="context.hasCancel">Kembali</button>
+      <!-- <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button> -->
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <!-- <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button> -->
+    </div>
+
+    <div class="row">
+
+      <au-textbox value.bind="data.MachineBrand" error.bind="error.MachineBrand" label="Brand" read-only.bind="true"
+        options.bind="controlOptions">
+      </au-textbox>
+
+      <au-textbox label="Jumlah Mesin" value.bind="data.MachineQuantity" error.bind="error.MachineQuantity"
+        read-only.bind="true" options.bind="controlOptions">
+      </au-textbox>>
+
+      <au-textbox label="Tipe" value.bind="data.MachineType" error.bind="error.MachineType" read-only.bind="true"
+        options.bind="controlOptions">
+      </au-textbox>
+
+
+      <au-textbox value.bind="data.MachineCategory" error.bind="error.MachineCategory" label="Kategori"
+        read-only.bind="true" options.bind="controlOptions">
+      </au-textbox>
+
+      <au-textbox label="Jumlah Transaksi" value.bind="data.TransactionAmount" error.bind="error.PurchaseYear"
+        read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+      </au-textbox>
+
+      <au-dropdown label="Tipe Transaksi" value.bind="tipe" error.bind="error.TransactionType"
+        read-only.bind="(readOnly || isEdit)" options.bind="controlOptions" items.bind="tipeitems">
+      </au-dropdown>
+
+      <au-datepicker label="Tgl. Transaksi" value.bind="data.TransactionDate" error.bind="error.TransactionDate"
+        read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+      </au-datepicker>
+
+  </au-input-form>
+  <!-- </div>
+  </div> -->
+</template>

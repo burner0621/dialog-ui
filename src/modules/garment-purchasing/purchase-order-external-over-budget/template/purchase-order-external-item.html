@@ -1,0 +1,119 @@
+<!-- <template >
+    <tr>
+        <td>
+            <au-textbox value.bind="data.prNo" read-only.bind="true" error.bind="error.no">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.roNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="product" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.defaultQuantity"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.defaultUom.unit"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.dealQuantity"
+                error.bind="error.dealQuantity"
+                read-only.bind="options.readOnly"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="selectedDealUom" 
+                error.bind="error.dealUom"
+                change.delegate="selectedDealUomChanged($event)"
+                loader.bind="uomLoader"
+                text.bind="uomView"
+                placeholder="cari satuan" 
+                key="unit"
+                read-only.bind="options.readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>                   
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="quantityConversion"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.uomConversion.unit"
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.conversion"
+                error.bind="error.conversion"
+                read-only.bind="options.readOnly"
+                change.delegate="conversionChanged($event)"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="price" 
+                error.bind="error.priceBeforeTax"
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions"
+                format="0,000.0000">
+            </au-numeric>
+        </td>
+        <td show.bind="context.context.options.checkOverBudget" align="center">
+            <au-checkbox 
+                value.bind="data.isOverBudget" 
+                error.bind="error.isOverBudget" 
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-checkbox>
+        </td>
+        <td show.bind="context.context.options.checkOverBudget">
+            <au-textbox 
+                value.bind="data.overBudgetRemark" 
+                error.bind="error.overBudgetRemark"
+                read-only.bind="options.readOnly || !data.isOverBudget || !context.context.options.checkOverBudget"
+                placeholder="tambah keterangan over budget"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <!--<td show.bind="context.context.options.isUseIncomeTax" align="center">
+            <au-checkbox 
+                value.bind="data.useIncomeTax" 
+                error.bind="error.useIncomeTax" 
+                read-only.bind="readOnly"
+                change.delegate="useIncomeTaxChanged($event)"
+                options.bind="controlOptions">
+            </au-checkbox>
+        </td>-->
+        <td>
+            <au-multiline 
+                value.bind="data.remark" 
+                error.bind="error.remark"
+                read-only.bind="options.readOnly"
+                placeholder="tambah keterangan"
+                options.bind="controlOptions">
+            </au-multiline>
+        </td>
+        <td if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button></td>
+    </tr>
+</template> -->

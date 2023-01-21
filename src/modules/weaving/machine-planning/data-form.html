@@ -1,0 +1,93 @@
+<template>
+  <style>
+    .collection.panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Unit Weaving" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="Cari Unit" value.bind="WeavingUnit" error.bind="error.WeavingUnit"
+            read-only.bind="readOnly" options.bind="customOptions" loader.bind="units" text="Name">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="No. Mesin" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Mesin" value.bind="Machine" error.bind="error.Machine"
+            read-only.bind="readOnly" options.bind="customOptions" loader.bind="machines" text="MachineNumber">
+          </au-autocomplete>
+        </div>
+        <div class="col-md-offset-1 col-md-2">
+          <textbox label="Lokasi" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Lokasi" value.bind="data.Location" error.bind="error.Location" read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Area" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Area" value.bind="data.Area" error.bind="error.Area" read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Blok" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-dropdown value.bind="data.Blok" error.bind="error.Blok" read-only.bind="readOnly" items.bind="bloks">
+          </au-dropdown>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Blok Kaizen" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-dropdown value.bind="data.BlokKaizen" error.bind="error.BlokKaizen" read-only.bind="readOnly"
+            items.bind="bloks">
+          </au-dropdown>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Maintenance" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="Maintenance" value.bind="UserMaintenance" error.bind="error.UserMaintenance"
+            read-only.bind="readOnly" options.bind="customOptions" loader.bind="users" text="Username">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2">
+          <textbox label="Operator" read-only="true"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="Operator" value.bind="UserOperator" error.bind="error.UserOperator"
+            read-only.bind="readOnly" options.bind="customOptions" loader.bind="users" text="Username">
+          </au-autocomplete>
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+</template>

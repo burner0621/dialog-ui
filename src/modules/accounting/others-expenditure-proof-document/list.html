@@ -1,0 +1,29 @@
+<template>
+  <h1 class="page-header">Bukti Pengeluaran Lain - Lain</h1>
+  <au-table
+    data.bind="loader"
+    columns.bind="columns"
+    sortable.bind="true"
+    page-size="25"
+    context.bind="context"
+    context-click.delegate="contextClickCallback($event)"
+    context-show.call="contextShowCallback(index, context, data)"
+    row-formatter.bind="rowFormatter"
+    selections.bind="selectedItems"
+    selectable.bind="true"
+    view-model.ref="table"
+    options.bind="tableOptions"
+  >
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-success" click.delegate="create()">Buat</button>
+      <button
+        class="btn btn-primary"
+        disabled.bind="!selectedItems.length > 0"
+        click.delegate="posting()"
+      >
+        Posting
+      </button>
+      <!-- <button class="btn btn-primary" click.delegate="post()">Posting Jurnal</button> -->
+    </div>
+  </au-table>
+</template>

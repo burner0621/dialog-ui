@@ -1,0 +1,45 @@
+<template>
+
+    <ai-dialog style="width:750px; height: 300px;">
+
+        <block>
+
+            <ai-dialog-body>
+                <au-autocomplete label="Kategori Cashflow"
+                                 value.bind="cashflowCategory"
+                                 loader.one-time="cashflowCategoryLoader"
+                                 error.bind="CashflowCategoryId"
+                                 text="Name">
+                </au-autocomplete>
+
+                <au-textbox label="Nama"
+                            value.bind="data.Name"
+                            error.bind="error.Name">
+                </au-textbox>
+
+                <au-numeric label="Nomor Urut"
+                            value.bind="data.LayoutOrder"
+                            error.bind="error.LayoutOrder"
+                            format="0">
+                </au-numeric>
+
+                <au-checkbox label="Ambil dari Laporan"
+                             value.bind="data.IsReadOnly">
+                </au-checkbox>
+            </ai-dialog-body>
+
+            <ai-dialog-footer>
+                <div class="text-center"
+                     style="margin:100px 0px 10px 0px;">
+                    <button click.delegate="controller.cancel()"
+                            class='btn btn-default btn-sm'>Kembali</button>
+                    <button click.delegate="save()"
+                            class='btn btn-success btn-sm'>Simpan</button>
+                </div>
+            </ai-dialog-footer>
+
+        </block>
+
+    </ai-dialog>
+
+</template>

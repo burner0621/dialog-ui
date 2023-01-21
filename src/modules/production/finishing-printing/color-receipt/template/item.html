@@ -1,0 +1,17 @@
+<template replace-part="ColorReceiptItems">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedProduct" error.bind="error.Product" loader.bind="productLoader"
+                text="Name" read-only.bind="readOnly" query.bind="productQuery" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Quantity" format="0.00" read-only.bind="readOnly" error.bind="error.Quantity"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

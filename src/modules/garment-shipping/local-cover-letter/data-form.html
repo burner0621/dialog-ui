@@ -1,0 +1,72 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+            <au-input-form title.bind="title" with.bind="context">
+
+                <au-textbox label="No Surat Pengantar" value.bind="data.localCoverLetterNo" read-only="true"
+                    options.bind="controlOptions" if.bind="data.id">
+                </au-textbox>
+
+                <!--<au-autocomplete label="No Nota Penjualan" value.bind="selectedSalesNote"
+                    error.bind="error.localSalesNote" text="noteNo" loader.bind="salesNoteLoader"
+                    placeholder="No Nota Penjualan" read-only.bind="readOnly || isEdit" 
+                    options.bind="controlOptions" query.bind="filter">
+                </au-autocomplete>-->
+
+                <au-autocomplete label="No Nota Penjualan" value.bind="selectedSalesNote"
+                    error.bind="error.localSalesNote" text="noteNo" loader.bind="salesNoteLoader"
+                    placeholder="No Nota Penjualan" read-only.bind="readOnly || isEdit" 
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-datepicker label="Tgl Surat Pengantar" value.bind="data.date" error.bind="error.date"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Buyer" value.bind="data.buyer" text.bind="buyerView" read-only="true"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-multiline label="Alamat Buyer" value.bind="data.buyer.address" read-only="true"
+                    options.bind="controlOptions">
+                </au-multiline>
+
+                <au-textbox label="No BC" placeholder="No BC" value.bind="data.bcNo"
+                    error.bind="error.bcNo" read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker label="Tgl Bea Cukai" value.bind="data.bcdate" error.bind="error.bcdate"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-multiline label="Keterangan" value.bind="data.remark" error.bind="error.remark"
+                    placeholder="Keterangan" read-only.bind="readOnly" options.bind="controlOptions">
+                </au-multiline>
+
+                <hr />
+                <h1 class="page-header">Detail Surat Pengantar</h1>
+
+                <au-textbox label="Truck" value.bind="data.truck" error.bind="error.truck" placeholder="Truck"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox label="No Polisi" value.bind="data.plateNumber" error.bind="error.plateNumber" placeholder="No Polisi"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox label="Pengemudi" value.bind="data.driver" error.bind="error.driver" placeholder="Pengemudi"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete label="Shipping Staff" value.bind="data.shippingStaff" error.bind="error.shippingStaff"
+                    text.bind="shippingStaffView" loader.bind="shippingStaffLoader" placeholder="Shipping Staff"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <hr />
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

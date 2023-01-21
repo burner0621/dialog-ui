@@ -1,0 +1,28 @@
+<template>
+    <!--<div class="row">
+	    <div class="col-md-6">-->
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <fieldset>
+            <au-datepicker label="Tgl. Pemeriksaan Lot Warna" value.bind="data.date" error.bind="error.date" read-only.bind="readOnly">
+            </au-datepicker>
+            <au-autocomplete value.bind="fabricQc" error.bind="error.fabricQualityControlId" label="Nomor Order - Nomor Kereta" loader.bind="fabricQcLoader"
+                placeholder="Cari Nomor Order - Nomor Kereta" read-only.bind="fabricQcReadOnly" key="productionOrderNo" text.bind="textFormatter">
+            </au-autocomplete>
+            <au-textbox label="Nomor Pemeriksaan Kain" value.bind="data.fabricQc.code" read-only.bind="true" if.bind="hasFabricQc"></au-textbox>
+            <au-textbox label="Warna" value.bind="data.fabricQc.color" read-only.bind="true" if.bind="hasFabricQc"></au-textbox>
+            <au-textbox label="Konstruksi" value.bind="data.fabricQc.construction" read-only.bind="true" if.bind="hasFabricQc"></au-textbox>
+            <au-textbox label="Jumlah Order" value.bind="orderQuantity" read-only.bind="true" if.bind="hasFabricQc"></au-textbox>
+        </fieldset>
+
+        <au-collection items.bind="data.items" errors.bind="error.items" columns.bind="itemsColumns" add.bind="addItems" remove.bind="removeItem"
+            title="Item" read-only.bind="readOnly" item-template="modules/production/finishing-printing/inspection-lot-color/template/item">
+        </au-collection>
+    </au-input-form>
+</template>

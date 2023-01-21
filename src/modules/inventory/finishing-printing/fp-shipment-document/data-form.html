@@ -1,0 +1,85 @@
+<template>
+        <au-input-form title.bind="title"
+                       with.bind="context">
+
+                <div slot="actions"
+                     class="btn-group">
+                        <button class="btn btn-default"
+                                click.delegate="context.cancel($event)"
+                                if.one-way="context.hasCancel">Kembali</button>
+                        <button class="btn btn-danger"
+                                click.delegate="context.update($event)"
+                                if.one-way="context.isVoidAble">Void</button>
+                        <button class="btn btn-success"
+                                click.delegate="context.save($event)"
+                                if.one-way="context.hasSave">Simpan</button>
+                </div>
+
+                <fieldset>
+                        <au-datepicker label="Tanggal Pengiriman"
+                                       value.bind="data.DeliveryDate"
+                                       error.bind="error.DeliveryDate"
+                                       read-only.bind="readOnly"
+                                       options.bind="smallControlOptions"></au-datepicker>
+
+                        <au-textbox label="NO."
+                                    value.bind="data.ShipmentNumber"
+                                    error.bind="error.ShipmentNumber"
+                                    read-only.bind="readOnly"
+                                    options.bind="smallControlOptions"></au-textbox>
+
+                        <au-textbox label="Sesuai DO. No"
+                                    value.bind="data.DeliveryCode"
+                                    error.bind="error.DeliveryCode"
+                                    read-only.bind="readOnly"
+                                    options.bind="smallControlOptions"></au-textbox>
+
+                        <au-textbox label="Kode Barang"
+                                    value.bind="data.ProductIdentity"
+                                    error.bind="error.ProductIdentity"
+                                    read-only.bind="readOnly"
+                                    options.bind="smallControlOptions"></au-textbox>
+
+                        <au-autocomplete value.bind="data.Buyer"
+                                         error.bind="error.Buyer"
+                                         label="Buyer"
+                                         loader.one-time="buyerLoader"
+                                         placeholder="Cari Buyer"
+                                         read-only.bind="readOnly"
+                                         key="Name"
+                                         text="Name"
+                                         change.delegate="buyerChanged($event)"
+                                         options.bind="mediumControlOptions"></au-autocomplete>
+
+                        <au-textbox label="Tipe Buyer"
+                                    value.bind="data.Buyer.Type"
+                                    read-only.bind="true"></au-textbox>
+
+                        <au-autocomplete value.bind="data.Storage"
+                                         error.bind="error.Storage"
+                                         label="Gudang"
+                                         loader.one-time="storageLoader"
+                                         text.bind="storageView"
+                                         change.delegate="storageChanged($event)"
+                                         placeholder="Cari penyimpanan"
+                                         read-only.bind="readOnly"
+                                         options.bind="mediumControlOptions"></au-autocomplete>
+                </fieldset>
+
+                <au-textbox error.bind="error.Detail"
+                            read-only.bind="true"></au-textbox>
+
+                <au-collection columns.bind="detailColumns"
+                               items.bind="data.Details"
+                               errors.one-way="error.Details"
+                               add.one-time="addDetails"
+                               remove.bind="removeDetails"
+                               read-only.bind="readOnly"
+                               item-template="modules/inventory/finishing-printing/fp-shipment-document/template/shipment-detail"
+                               footer-template="modules/inventory/finishing-printing/fp-shipment-document/template/footer-shipment"
+                               options.bind="detailOptions"
+                               show.bind="detailVisibility"
+                               view-model.ref="DetailsCollection">
+                </au-collection>
+        </au-input-form>
+</template>

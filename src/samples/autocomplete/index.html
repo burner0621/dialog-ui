@@ -1,0 +1,24 @@
+<template>
+  <require from="../generic-settings"></require>
+  <au-input-form title="autocomplete demo">
+    <!--<h4>with template item</h4>
+    <au-autocomplete value.bind="x" label.bind="label" error.bind="error" change.delegate="changeCallback($event)" options.bind="options" loader.bind="loader" key="id" text="login" template="modules/sample/autocomplete/item-template"></au-autocomplete>-->
+    
+    <h4>with replace-part</h4>
+    <au-autocomplete value.bind="x" label.bind="label" error.bind="error" change.delegate="changeCallback($event)" options.bind="options" loader.bind="loader" key="id" text="login">
+      <template replace-part="item">
+        <h4>${login}</h4>
+        <span>${avatar_url}</span>
+      </template>
+    </au-autocomplete>
+    <au-autocomplete value.bind="x" label.bind="label" read-only.bind="true" error.bind="error" change.delegate="changeCallback($event)" options.bind="options" loader.bind="loader" key="id" text="login" template="modules/sample/autocomplete/item-template"></au-autocomplete>
+    
+    <p>
+      <div class="well">
+        <code style="word-wrap:break-word">${stringValue}</code>
+      </div>
+    </p>
+
+        <generic-settings label.two-way="label" error.two-way="error" options.two-way="options"></generic-settings>
+  </au-input-form>
+</template>

@@ -1,0 +1,24 @@
+<template replace-part="item">
+    <tr>
+        <td>
+
+            <au-autocomplete value.bind="selectedShippingOut" error.bind="error.BonNo" read-only.bind="readOnly"
+                loader.one-time="shippingOutSalesLoader" text="bonNo" query.bind="shippingQuery"
+                keypress.delegate="enterDelegate($event)" placeholder="Pilih No. Bon Pengiriman Dyeing/Printing">
+            </au-autocomplete>
+
+            <au-textbox error.bind="error.SalesInvoiceItem" read-only.bind="true"></au-textbox>
+
+            <au-collection show.bind="selectedShippingOut" columns.bind="salesInvoiceItemsInfo.columns"
+                items.bind="data.SalesInvoiceItems" errors.bind="error.SalesInvoiceItems" read-only.bind="readOnly"
+                options.bind="shippingOutTableOptions"
+                item-template="modules/sales/sales-invoice/template/dyeing-printing-item"
+                view-model.ref="SalesInvoiceItemsCollection">
+            </au-collection>
+        </td>
+        <td if.bind="!readOnly">
+            <button if.bind="!readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

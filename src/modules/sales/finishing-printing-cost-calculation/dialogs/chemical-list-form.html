@@ -1,0 +1,20 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>
+            <h4>Daftar Chemical</h4>
+        </ai-dialog-header>
+        <ai-dialog-body>
+            <au-collection view-model.ref="chemicalCollection"
+                           items.bind="data"
+                           columns.bind="columns"
+                           item-template="modules/sales/finishing-printing-cost-calculation/template/data-form/chemical">
+            </au-collection>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default"
+                    click.delegate="dialogController.cancel()">Close</button>
+
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

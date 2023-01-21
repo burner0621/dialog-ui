@@ -1,0 +1,110 @@
+<template>
+    <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Display Cost Calculation Garment Per Buyer | Sales Contract</h1>
+    <form class="form-horizontal">
+
+        <au-input
+            type="number"
+            value.bind="filterYear"
+            label="Tahun"
+            input-options.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-input>
+        
+
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentBuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Buyer Brand"
+            value.bind="buyerBrand"
+            error.bind="error.BuyerBrand"
+            loader.bind="garmentBuyerBrandLoader"
+            text.bind = "buyerBrandView"
+            key="Code"
+            placeholder="Cari Buyer Brand"
+            query.bind="filterBuyerBrand"
+            options.bind="controlOptions">
+        </au-autocomplete>
+ 
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">No RO</th>
+                    <th class="text-center">Tgl Shipment</th>        
+                    <th class="text-center">Article / Style</th>
+                    <th class="text-center">No Sales Contract</th>
+                    <th class="text-center">Buyer Agent</th>
+                    <th class="text-center">Nama Buyer Agent</th>
+                    <th class="text-center">Brand Buyer</th>
+                    <th class="text-center">Nama Brand Buyer</th>
+                    <th class="text-center">Jumlah</th>
+                    <th class="text-center">Satuan</th>        
+                    <th class="text-center">Confirm Price</th>        
+                    <th class="text-center">Amount</th>        
+                 </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="brand of brands">
+                    <tr repeat.for="data of brand.data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${data.RO_Number}</td>
+                        <td>${data.DeliveryDate}</td>
+                        <td>${data.Article}</td>
+                        <td>${data.SalesContractNo}</td>
+                        <td>${data.BuyerCode}</td>
+                        <td>${data.BuyerName}</td>
+                        <td>${data.BrandCode}</td>
+                        <td>${data.BrandName}</td>
+                        <td class="text-right">${data.Quantity}</td>
+                        <td>${data.UOMUnit}</td>
+                        <td class="text-right">${data.ConfirmPrice}</strong></td>     
+                        <td class="text-right"><strong>${data.Amount}</strong></td>     
+                    </tr>
+                    <tr class="active">
+                       <td class="text-center">.</td>
+                        <td class="text-right" colspan="6"><strong>${brand.brand}</strong></td>
+                        <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${brand.subTotal1}</strong></td>                     
+                        <td class="text-right"><strong>.</strong></td>                     
+                        <td class="text-right"><strong>.</strong></td>                     
+                        <td class="text-right"><strong>${brand.subTotal}</strong></td>                     
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="9"><strong>T O T A L . . . . . . :</strong></td>
+                        <td class="text-right"><strong>${QtyTotal}</strong></td>                     
+                        <td class="text-right"><strong>.</strong></td>                                                                     
+                        <td class="text-right"><strong>.</strong></td>                                             
+                        <td class="text-right"><strong>${AmountTotal}</strong></td>                     
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+     </form>
+</template>

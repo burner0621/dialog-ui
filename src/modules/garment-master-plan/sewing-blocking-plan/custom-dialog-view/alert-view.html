@@ -1,0 +1,14 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>Blocking Plan Sewing</ai-dialog-header>
+
+        <ai-dialog-body>
+            <div innerHTML.bind="data.message"></div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.delegate="controller.cancel()">Cancel</button>
+            <button click.delegate="save()">Ok</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

@@ -1,0 +1,195 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <require from="../../../../lib/date-format-value-converter"></require>
+    <h1 class="page-header">Laporan Buku Pembelian Lokal</h1>
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="no"
+                         label="Nomor Nota"
+                         loader.bind="unitReceiptNoteLoader"
+                         text.bind="unitReceiptNoteView"
+                         placeholder="Cari Nomor Nota"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete value.bind="accountingCategory"
+                         label="Kategori"
+                         loader.bind="accountingCategoryLoader"
+                         text.bind="accountingCategoryView"
+                         placeholder="Cari Kategori"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete value.bind="accountingUnit"
+                         label="Unit"
+                         loader.bind="accountingUnitLoader"
+                         text.bind="accountingUnitView"
+                         placeholder="Cari Unit"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete value.bind="division"
+                         label="Division"
+                         loader.bind="divisionLoader"
+                         text="Name"
+                         placeholder="Cari Divisi"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+        <au-datepicker label="Dari Tanggal"
+                       value.bind="dateFrom"
+                       options.bind="controlOptions"></au-datepicker>
+        <au-datepicker label="Sampai Tanggal"
+                       value.bind="dateTo"
+                       options.bind="controlOptions"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact"
+                   class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()"
+                        class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()"
+                        class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()"
+               class='btn btn-primary'>Cetak Excel</a>
+            <a click.delegate="printPdf()"
+               class='btn btn-info'>Cetak Pdf</a>
+        </div>
+    </form>
+
+    <br>
+    </br>
+
+    <div class="table-responsive"
+         if.bind="data.Reports && data.Reports.length > 0">
+        <table class="table table-bordered table-hover"
+               border="1"
+               id="myTable">
+            <thead align="center">
+                <tr>
+                    <td rowspan=2>Tanggal</td>
+                    <td rowspan=2>Supplier</td>
+                    <td rowspan=2>Keterangan</td>
+                    <td rowspan=2>No PO</td>
+                    <td rowspan=2>No Surat Jalan</td>
+                    <td rowspan=2>No Bon Penerimaan</td>
+                    <td rowspan=2>No Invoice</td>
+                    <td rowspan=2>No Faktur Pajak</td>
+                    <td rowspan=2>No SPB/NI</td>
+                    <td rowspan=2>No. Nota Koreksi</td>
+                    <td rowspan=2>Tanggal Nota Koreksi</td>
+                    <td rowspan=2>Kategori Pembelian</td>
+                    <td rowspan=2>Kategori Pembukuan</td>
+                    <td rowspan=2>Unit Pembelian</td>
+                    <td rowspan=2>Unit Pembukuan</td>
+                    <td rowspan=2>Quantity</td>
+                    <td rowspan=2>Satuan</td>
+                    <td rowspan=2>Mata Uang</td>
+                    <td colspan=3>Pembelian</td>
+                    <td rowspan=2>Total (IDR)</td>
+                </tr>
+                <tr>
+                    <td>DPP</td>
+                    <td>PPN</td>
+                    <td>PPH</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="report of data.Reports">
+                    <td>${report.ReceiptDate | dateFormat:'YYYY-MM-DD'}</td>
+                    <td>${report.SupplierName}</td>
+                    <td>${report.ProductName}</td>
+                    <td>${report.IPONo}</td>
+                    <td>${report.DONo}</td>
+                    <td>${report.URNNo}</td>
+                    <td>${report.InvoiceNo}</td>
+                    <td>${report.VATNo}</td>
+                    <td>${report.UPONo}</td>
+                    <td>${report.CorrectionNo}</td>
+                    <td>${report.CorrectionDate | dateFormat:'YYYY-MM-DD'}</td>
+                    <td>${report.AccountingCategoryName}</td>
+                    <td>${report.CategoryName}</td>
+                    <td>${report.AccountingUnitName}</td>
+                    <td>${report.UnitName}</td>
+                    <td>${report.Quantity}</td>
+                    <td>${report.Uom}</td>
+                    <td>${report.CurrencyCode}</td>
+                    <td class="text-right">${report.DPP | numberFormat: '0,000.0000'}</td>
+                    <td class="text-right">${report.VAT | numberFormat: '0,000.0000'}</td>
+                    <td class="text-right">${report.IncomeTax | numberFormat: '0,000.0000'}</td>
+                    <td class="text-right"><strong>${report.Total | numberFormat: '0,000.0000'}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="21"
+                        class="text-right">Jumlah</td>
+                    <td class="text-right"><strong>${data.GrandTotal | numberFormat: '0,000.0000'}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-info text-center"
+         role="alert"
+         if.bind="data.Reports && data.Reports.length === 0">
+        Tidak ada data.
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="table-responsive"
+                 if.bind="data.Reports && data.Reports.length > 0">
+                <table class="table table-bordered table-hover"
+                       border="1"
+                       id="myTable">
+                    <thead align="center">
+                        <tr>
+                            <td>Kategori</td>
+                            <td>Total (IDR)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="categorySummary of data.CategorySummaries">
+                            <td>${categorySummary.Category}</td>
+                            <td class="text-right"><strong>${categorySummary.SubTotal | numberFormat:
+                                    '0,000.0000'}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Jumlah</td>
+                            <td class="text-right"><strong>${data.GrandTotal | numberFormat:
+                                    '0,000.0000'}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="table-responsive"
+                 if.bind="data.Reports && data.Reports.length > 0">
+                <table class="table table-bordered table-hover"
+                       border="1"
+                       id="myTable">
+                    <thead align="center">
+                        <tr>
+                            <td>Mata Uang</td>
+                            <td>Total</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr repeat.for="currencySummary of data.CurrencySummaries">
+                            <td>${currencySummary.CurrencyCode}</td>
+                            <td class="text-right"><strong>${currencySummary.SubTotal | numberFormat:
+                                    '0,000.0000'}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+    <hr />
+</template>

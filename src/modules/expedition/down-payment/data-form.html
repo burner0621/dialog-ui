@@ -1,0 +1,52 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)"
+        if.one-way="context.hasCancel">Kembali</button>
+      <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <button class="btn btn-danger" click.delegate="context.delete($event)"
+        if.one-way="context.hasDelete">Hapus</button>
+    </div>
+
+    <au-datepicker label="Tanggal Pembayaran" value.bind="data.DatePayment" error.bind="error.DatePayment"
+      read-only.bind="readOnly" options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-autocomplete value.bind="data.Bank" error.bind="error.Bank" label="Bank Tujuan" loader.bind="bankLoader"
+      text.bind="bankView" placeholder="cari bank" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-textbox label="No. Rekening" value.bind="data.Bank && data.Bank.AccountNumber ? data.Bank.AccountNumber : ''"
+      read-only.bind="true" options.bind="controlOptions">
+    </au-textbox>
+
+    <au-textbox label="Currency"
+      value.bind="data.Bank && data.Bank.Currency && data.Bank.Currency.Code ? data.Bank.Currency.Code : ''"
+      read-only.bind="true" options.bind="controlOptions">
+    </au-textbox>
+
+    <au-autocomplete value.bind="data.Buyer" error.bind="error.Buyer" label="Buyer" loader.bind="buyerLoader"
+      text.bind="buyerView" placeholder="cari buyer" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-numeric label="Jumlah yang dibayarkan" value.bind="data.TotalPayment" error.bind="error.TotalPayment"
+      read-only.bind="readOnly" format="0,0.00" options.bind="controlOptions">
+    </au-numeric>
+
+    <au-autocomplete label="Kurs" placeholder="pilih mata uang" value.bind="selectedCurrency"
+      error.bind="error.Currency" loader.one-time="currencyLoader" text="Code" read-only.bind="readOnly"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-dropdown label="Kategori Bukti Penerimaan" value.bind="data.CategoryAcceptance" error.bind="error.CategoryAcceptance" read-only.bind="readOnly"
+      placeholder="Kategori Bukti Penerimaan" items.bind="ListCategory" options.bind="controlOptions">
+    </au-dropdown>
+
+    <au-multiline label="Untuk Pembayaran" value.bind="data.Remark" error.bind="error.Remark"
+      placeholder="Untuk Pembayaran" read-only.bind="readOnly" options.bind="controlOptions">
+    </au-multiline>
+
+  </au-input-form>
+</template>

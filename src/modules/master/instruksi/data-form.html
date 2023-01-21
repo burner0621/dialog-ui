@@ -1,0 +1,25 @@
+<template>
+    <form class="form-horizontal">
+        <textbox label="Nama Instruksi" value.bind="data.Name" error.bind="error.Name" read-only.bind="readOnly"></textbox>
+        <table class="table table-hover">
+            <tr>
+                <td class="col-md-10">
+                    <au-layout error.bind="error.Step"></au-layout>
+                    <au-collection items.bind="data.Steps" columns.bind="stepInfo.columns" add.bind="stepInfo.onAdd" remove.bind="stepInfo.onRemove"
+                        title="Details Step" read-only.bind="readOnly" item-template="modules/master/instruksi/template/step-item">
+                    </au-collection>
+                </td>
+                <td style="vertical-align: middle" width="1%">
+                    <button class="btn btn-info pull-right" click.delegate="moveItemUp($event)" if.bind="!readOnly">
+                        <i class="fa fa-caret-up" aria-hidden="true"></i>
+                    </button>
+                    </br>
+                    </br>
+                    <button class="btn btn-info pull-right" click.delegate="moveItemDown($event)" if.bind="!readOnly">
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</template>

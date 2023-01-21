@@ -1,0 +1,12 @@
+<template>
+    <h1>Complete Surat Permintaan Barang</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error"></data-form>
+        <hr/>
+        <div class="pull-right">
+            <button class="btn btn-default" click.delegate="view()">Kembali</button>
+            <button class="btn btn-success" click.delegate="complete()">Simpan</button>
+        </div>
+    </block>
+</template>

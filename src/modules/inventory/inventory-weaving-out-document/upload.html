@@ -1,0 +1,23 @@
+<template>
+    <h1 class="page-header">Upload Data Pengeluaran Gudang</h1>
+    <hr>
+    <form class="form-horizontal">
+        <datepicker label="Tanggal Pengeluaran" value.bind="data.date" error.bind="error.date" read-only.bind="read-only"></datepicker>
+        <dropdown label="Zona" value.bind="data.from" items.bind="destinationAreas" options.bind="auInputOptions"></dropdown>
+        <div class="form-group ${error.file?'has-error':''}">
+            <label for = "dataFile" class="col-sm-4 control-label">File Path</label>
+            <div class="col-sm-5">
+                <input type="file" id="fileCsv" name="fileUpload">
+                <span class="help-block">${error.file}</span>
+            </div>
+        </div>
+        <block>
+            <data-form data.bind="data" error.bind="error"></data-form>
+            <hr/>
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" click.delegate="cancelCallback()">Kembali</button>
+                <button class="btn btn-success" click.delegate="saveCallback()">Simpan</button>
+            </div>
+        </block>
+    </form>
+</template>

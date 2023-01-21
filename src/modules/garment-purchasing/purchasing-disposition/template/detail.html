@@ -1,0 +1,94 @@
+<template>
+    <tr>
+        <td>
+			<au-textbox
+				value.bind="data.RONo"
+				read-only="true">
+			</au-textbox>
+		</td>
+        <td>
+            <au-textbox 
+                value.bind="data.IPONo"
+                read-only="true">
+            </au-textbox>
+        </td>
+		<td>
+			<au-textbox
+				value.bind="data.ProductName"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.bind="data.UnitName"
+				read-only.bind="true"
+				>
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.QTYOrder"
+				read-only="true"
+				format = "0,0.00">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.bind="data.QTYUnit"
+				read-only.bind="true"
+				>
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.QTYRemains"
+				read-only="true"
+				format = "0,0.00">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.one-way="data.PricePerQTY"
+				read-only="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.one-way="data.PriceTotal"
+				read-only="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.QTYPaid"
+				read-only.bind="(readOnly||isOver)"
+				error.bind="error.QTYPaid"
+				change.delegate="paidQtyChanged($event)"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.PaidPrice"
+				read-only.bind="(readOnly||isOver)"
+				error.bind="error.PaidPrice"
+				change.delegate="paidQtyChanged($event)"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox
+				value.bind="data.PercentageOverQTY"
+				read-only.bind="true"
+				error.bind="error.PercentageOverQTY"
+				format = "0,0.0000">
+			</au-textbox>
+		</td>
+        
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>
+    </tr>
+</template>

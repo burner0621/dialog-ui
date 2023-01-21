@@ -1,0 +1,29 @@
+<template>
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox label="Code" value.bind="data.code" error.bind="error.code" read-only.bind="true" if.bind="data.code">
+                </au-textbox>
+
+                <au-textbox label="Nama Storage" value.bind="data.name" error.bind="error.name" read-only.bind="(readOnly)">
+                </au-textbox>
+
+                <au-autocomplete 
+                    value.bind="selectedUnit"
+                    label="Unit" 
+                    loader.one-time="unitLoader" 
+                    text.bind="unitView"
+                    read-only.bind="readOnly"
+                    error.bind="error.unit">
+                </au-autocomplete>
+
+                <au-multiline label="Deskripsi" value.bind="data.description" error.bind="error.description" read-only.bind="(readOnly)">
+                </au-multiline>
+
+                <template replaceable part="actions"></template>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,30 @@
+<template>
+	<tr>
+		<td>
+			<au-autocomplete value.bind="selectedAccount" error.bind="error.NoAccount"
+				loader.bind="coaLoader" text.bind="coaView" placeholder="Cari No Account"
+				read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Account.Name" error.bind="error.AccountName" read-only.bind="true">
+			</au-textbox>
+		</td>
+
+		<td>
+			<au-numeric value.bind="data.Debit" error.bind="error.Debit" read-only.bind="readOnly">
+			</au-numeric>
+
+		</td>
+		<td>
+			<au-numeric value.bind="data.Credit" error.bind="error.Credit" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td if.bind="readOnly"></td>
+
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+
+	</tr>
+</template>

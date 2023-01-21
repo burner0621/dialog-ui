@@ -1,0 +1,15 @@
+<template>
+    <h1 class="page-header">Export Data Pembelian untuk Keperluan Anggaran</h1>
+    <form class="form-horizontal">
+        <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-7 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+                <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</button>
+            </div>
+        </div>
+        <hr/>
+    </form>
+</template>

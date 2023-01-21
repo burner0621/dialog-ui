@@ -1,0 +1,28 @@
+<template replace-part="StrikeOffItems">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="kanban" error.bind="error.Kanban" loader.bind="kanbanLoader"
+                read-only.bind="readOnly" text.bind="kanbanView" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Speed" format="0.00" read-only.bind="readOnly" error.bind="error.Speed"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Input_BQ" format="0.00" read-only.bind="readOnly" error.bind="error.Input_BQ"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Output_BS" format="0.00" read-only.bind="readOnly" error.bind="error.Output_BS"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1" if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+
+</template>

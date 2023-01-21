@@ -1,0 +1,34 @@
+<template>
+    <tr>
+        <td >
+            <div class="col-sm-11">
+                <au-autocomplete 
+                        value.bind="selectedPacking" 
+                        loader.bind="productionLoader"
+                        text.bind="productionLoaderView"
+                        placeholder="cari nomor production order" 
+                        error.bind="error.ProductionOrder"
+                        query.bind="filter"
+                        key="Code"
+                        read-only.bind="options.readOnly"
+                        options.bind="controlOptions">
+                </au-autocomplete>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-danger pull-left" click.delegate="onremove(data, $event)" if.bind="!options.readOnly">-</button>            
+                
+            </div>
+        </td>
+    </tr>
+    <tr if.bind="selectedPacking">
+        <td>
+            <au-collection 
+            items.bind="data.Details" 
+            errors.bind="error.Details" 
+            columns.bind="itemsColumns"
+            read-only.bind="options.readOnly"
+            item-template="modules/inventory/finishing-printing/fp-retur-to-qc-doc/template/fp-retur-detail">
+        </au-collection>
+        </td>  
+    </tr>
+</template>

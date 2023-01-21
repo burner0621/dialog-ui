@@ -1,0 +1,247 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-6" style="padding:0">
+          <div class="col-sm-10" style="padding-left:18%">   
+            <au-dropdown
+                label="Jenis SPP"
+                value.bind="data.POType"
+                error.bind="error.poType"
+                read-only.bind="(readOnly || isEdit)"
+                items.bind="POTypes"
+                change.delegate="POTypeChanged($event)">
+            </au-dropdown>                          
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">   
+            <au-autocomplete value.bind="SalesContract" label="Nomor Sales Contract" error.bind="error.SalesContractNo"
+                read-only.bind="readOnly" loader.bind="fpSalesContractLoader" placeholder="cari nomor sales kontrak "
+                text="SalesContractNo"
+                if.bind="nameCheck">
+            </au-autocomplete>
+          </div>
+         
+          <textbox label="No. Order Produksi" value.bind="data.OrderNo" error.bind="error.orderNo"           
+               if.bind="data.OrderNo" read-only="true">
+          </textbox>
+          
+          <div class="col-sm-10" style="padding-left:18%">
+                <au-autocomplete value.bind="data.Buyer" label="Buyer" error.bind="error.Buyer" read-only="true"
+                   text.bind="getBuyerText"
+                   if.bind="nameCheck">
+                </au-autocomplete>
+          </div>
+
+          <textbox label="Tipe Buyer" value.bind="data.Buyer.Type" error.bind="error.Buyer" read-only="true" if.bind="nameCheck"></textbox>
+         
+          <div class="col-sm-10" style="padding-left:18%">
+                <au-autocomplete value.bind="data.OrderType" label="Jenis Order" error.bind="error.OrderType"
+                   text="Name" read-only="true"
+                   if.bind="nameCheck">
+                </au-autocomplete>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+                <au-autocomplete value.bind="data.OrderType" label="Jenis Order" error.bind="error.OrderType"
+                   text="Name" loader.bind="orderTypeLoader" read-only.bind="(readOnly)" 
+                   if.bind="!nameCheck"> 
+                </au-autocomplete>
+          </div>
+   
+          <div class="col-sm-10" style="padding-left:18%">
+               <au-autocomplete loader.bind="processTypeLoader" value.bind="data.ProcessType" label="Jenis Proses"
+                   error.bind="error.ProcessType" if.bind="data.OrderType.Id" filter.bind="filterOrder"
+                   read-only.bind="(readOnly)" text="Name">
+                </au-autocomplete>
+          </div>
+   
+          <div class="col-sm-10" style="padding-left:18%">
+                <au-textbox value.bind="data.ProcessType.Unit" label="Unit" if.bind="data.ProcessType.Id"
+                   read-only.bind="true">
+                </au-textbox>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+                <au-textbox value.bind="data.ProcessType.SPPCode" label="Kode SPP" if.bind="data.ProcessType.Id"
+                  read-only.bind="true">
+                </au-textbox>
+          </div>
+     
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete if.bind="buyerType&&isPrinting" value.bind="data.DesignMotive" label="Motif"
+              error.bind="error.DesignMotive" read-only="true" text="Name" if.bind="nameCheck">
+            </au-autocomplete>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.Material" label="Material" error.bind="error.Material" read-only="true"
+              text="Name" if.bind="nameCheck">
+            </au-autocomplete>
+          </div>
+          
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="materialLoader" value.bind="data.Material" label="Material" error.bind="error.Material" 
+                text="Name" query.bind="materialQuery" read-only.bind="(readOnly)" if.bind="!nameCheck">
+            </au-autocomplete>
+          </div>
+          
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="materialConstructionLoader" value.bind="data.MaterialConstruction"
+              label="Konstruksi Material" error.bind="error.MaterialConstruction" read-only.bind="(readOnly)"
+              text="Name">
+            </au-autocomplete>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.ProductTextile" label="Nama Barang" error.bind="error.ProductTextile" read-only="true"
+               text.bind="getProductTextileText"
+               if.bind="nameCheck">
+            </au-autocomplete>
+          </div>
+
+          <!-- <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.ProductTextile" label="Nama Barang" error.bind="error.ProductTextile" read-only="true"
+               text.bind="getProductTextileText"
+               >
+            </au-autocomplete>
+          </div> -->
+ 
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.YarnMaterial" label="Nomor Benang Material"
+              error.bind="error.YarnMaterial" read-only="true" text="Name" if.bind="nameCheck">
+            </au-autocomplete>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="yarnmaterialLoader" value.bind="data.YarnMaterial" label="Nomor Benang Material"
+              error.bind="error.YarnMaterial" text="Name" read-only.bind="(readOnly)" if.bind="!nameCheck">
+            </au-autocomplete>
+          </div>
+ 
+          <textbox label="Lebar Material" value.bind="data.MaterialWidth" error.bind="error.MaterialWidth"
+            read-only.bind="(readOnly)">
+          </textbox>
+ 
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox label="Jumlah Order" read-only="true"></textbox>
+            </div>
+
+            <div class="col-sm-3">
+              <numeric value.bind="data.OrderQuantity" error.bind="error.OrderQuantity" read-only.bind="(readOnly)">
+              </numeric>
+            </div>
+
+            <div class="col-sm-2">
+              <textbox label="Satuan" read-only="true"></textbox>
+            </div>
+
+            <div class="col-sm-2">
+              <textbox value.bind="data.Uom.Unit" error.bind="error.Uom" read-only="true"></textbox>
+            </div>
+          </div>
+
+          <numeric label="Toleransi Jumlah Kirim (%)" value.bind="data.ShippingQuantityTolerance"
+            error.bind="error.ShippingQuantityTolerance" read-only.bind="readOnly" post-fix="%" if.bind="nameCheck"></numeric>
+       
+          <textbox label="Asal Material" value.bind="data.MaterialOrigin" error.bind="error.MaterialOrigin"
+            read-only.bind="(readOnly)"></textbox>
+
+          <textbox label="Lebar Finish" value.bind="data.FinishWidth" error.bind="error.FinishWidth" read-only="true" if.bind="nameCheck">
+          </textbox>
+
+          <textbox label="Lebar Finish" value.bind="data.FinishWidth" error.bind="error.FinishWidth" read-only.bind="(readOnly)" if.bind="!nameCheck">
+          </textbox>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="finishTypeLoader" value.bind="data.FinishType" label="Jenis Finish"
+              error.bind="error.FinishType" read-only.bind="readOnly" text="Name">
+            </au-autocomplete>
+          </div>
+   
+          <textbox label="Kode Desain" value.bind="data.DesignCode" error.bind="error.DesignCode"
+            read-only.bind="(readOnly)" if.bind="isPrintingOnly"></textbox>
+          <textbox label="Nomor Desain" value.bind="data.DesignNumber" error.bind="error.DesignNumber"
+            read-only.bind="(readOnly)" if.bind="isPrintingOnly"></textbox>
+        </div>
+        
+        <div class="col-md-6" style="padding:0">
+          <textbox label="Standar Handling" value.bind="data.HandlingStandard" error.bind="error.HandlingStandard"
+            read-only.bind="(readOnly)"></textbox>
+          <dropdown label="RUN" value.bind="data.Run" error.bind="error.Run" read-only.bind="(readOnly)"
+            items.bind="RUNOptions" if.bind="isPrintingOnly" change.delegate="RUNChanged($event)"></dropdown>
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox value="Lebar RUN (cm)" read-only="true" if.bind="isPrinting && data.RunWidth.length"></textbox>
+            </div>
+            <div class="col-sm-2" repeat.for="i of data.RunWidth.length">
+              <numeric value.bind="data.RunWidth[i].Value" read-only.bind="(readOnly)"
+                if.bind="isPrinting && (isRUN || run)" error.bind="error.RunWidth"></numeric>
+            </div>
+          </div>
+          <textbox label="Tulisan Pinggir Kain" value.bind="data.ArticleFabricEdge" error.bind="error.ArticleFabricEdge"
+            read-only.bind="(readOnly)" if.bind="isPrintingOnly"></textbox>
+          <textbox label="Standar Shrinkage" value.bind="data.ShrinkageStandard" error.bind="error.ShrinkageStandard"
+            read-only.bind="(readOnly)"></textbox>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="standardTests" value.bind="data.StandardTests" label="Standar Test"
+              error.bind="error.StandardTests" read-only.bind="readOnly" text="Name">
+            </au-autocomplete>
+          </div>
+   
+          <textbox label="Sample" value.bind="data.Sample" error.bind="error.Sample" read-only.bind="(readOnly)">
+          </textbox>
+          <multiline label="Packing Instruction" value.bind="data.PackingInstruction"
+            error.bind="error.PackingInstruction" read-only.bind="(readOnly)" rows.bind="10"></multiline>
+          <datepicker label="Tanggal Delivery" value.bind="data.DeliveryDate" error.bind="error.DeliveryDate"
+            read-only.bind="readOnly"></datepicker>
+          <multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"
+            rows.bind="10"></multiline>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="account" label="Nama Staff Penjualan" text.bind="text"
+              error.bind="error.Account" read-only.bind="readOnly" loader.bind="accountLoader">
+            </au-autocomplete>
+          </div>
+
+        </div>
+      </div>
+      <hr />
+      <au-collection items.bind="data.LampStandards" errors.bind="error.LampStandards" read-only.bind="readOnly"
+        columns.bind="lampHeader" item-template="modules/sales/production-order/templates/lamp-standard"
+        add.bind="addLamp" remove.bind="removeLamp"></au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly"
+        if.bind="data.OrderType.Name && data.Uom && isPrinting" columns.bind="detailHeader"
+        item-template="modules/sales/production-order/templates/detail-item-printing"
+        footer-template="modules/sales/production-order/templates/detail-footer-printing"
+        add.bind="addDetailPrintingYarnDyed" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly"
+        if.bind="data.OrderType.Name && data.Uom && !isPrinting && !isYarnDyed" columns.bind="detailHeader"
+        item-template="modules/sales/production-order/templates/detail-item"
+        footer-template="modules/sales/production-order/templates/detail-footer" add.bind="addDetailnonPrinting"
+        view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly"
+        if.bind="data.OrderType && data.Uom && isYarnDyed" columns.bind="detailHeader"
+        item-template="modules/sales/production-order/templates/detail-item-yarn-dyed"
+        footer-template="modules/sales/production-order/templates/detail-footer-yarn-dyed"
+        add.bind="addDetailPrintingYarnDyed" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <div if.bind="error.LampStandards.toString()">
+        <span style="color:red">-Standar Lampu tidak boleh kosong</span>
+      </div>
+      <br>
+      <div if.bind="error.Details.toString()">
+        <span style="color:red">-Detail Warna harus diisi dan Jumlah Total pada detail harus sama dengan jumlah order
+          .</span>
+      </div>
+    </form>
+  </au-input-form>
+</template>

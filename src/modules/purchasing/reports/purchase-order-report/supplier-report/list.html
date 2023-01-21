@@ -1,0 +1,60 @@
+<template>
+    <h1 class="page-header">Total Pembelian per Supplier</h1>
+    <form class="form-horizontal">
+        <au-autocomplete  loader.one-time="divisionLoader"  text.bind="divisionView" label="Divisi"  value.bind="divisi" loader.bind="divisionLoader"></au-autocomplete>
+        <au-autocomplete  value.bind="unit"  label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+        <au-autocomplete  value.bind="category"  label="Kategori"  loader.bind="categoryLoader"></au-autocomplete>
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">Supplier</th>
+                    <th class="text-center">Divisi</th>
+                    <th class="text-center">Unit</th>
+                    <th class="text-center">Kategori</th>
+                    <th class="text-center">Jumlah [Rp]</th>
+                    <th class="text-center">%</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center"> ${$index + 1}</td>
+                    <td class="text-left"> ${item.supplierName}</td>
+                    <td class="text-center"> ${item.divisionName}</td>
+                    <td class="text-center"> ${item.unitName}</td>
+                    <td class="text-center"> ${item.categoryName}</td>
+                    <td class="text-right"> ${item.amount}</td>
+                    <td class="text-right"> ${item.percentage}</td>
+                </tr>
+            </tbody>
+            <tfoot if.bind="data.length > 0">
+                <tr>
+                    <td colspan="5" class="text-center">Total Pembelian . . . . . . . . . :</td>
+                    <td class="text-right">${pricetotals}</td>
+                    <td class="text-right">${percentagetotal}%</td>                    
+                </tr>
+            </tfoot>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <span if.bind="data.length > 0">
+            * Persentase diatas merupakan hasil pembulatan.
+        </span>
+        <hr/>
+    </form>
+
+</template>

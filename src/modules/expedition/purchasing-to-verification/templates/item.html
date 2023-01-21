@@ -1,0 +1,81 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="unitPaymentOrder"
+                error.bind="error.UnitPaymentOrder"
+                loader.one-time="unitPaymentOrderLoader"
+                text="no"
+                
+                select.bind="selectUPO">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.date"
+                read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.dueDate"
+                read-only="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.invoiceNo"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.supplierName"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.divisionName"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.incomeTax"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.vat"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.totalPaid"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.currency"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-info" click.delegate="toggle()">i</button> 
+            <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="11">
+            <au-collection
+                items.bind="data.items" 
+                columns.bind="columns"
+                item-template="modules/expedition/purchasing-to-verification/templates/detail">
+            </au-collection>
+        </td>  
+    </tr>
+</template>

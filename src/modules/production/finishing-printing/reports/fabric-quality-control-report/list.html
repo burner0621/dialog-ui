@@ -1,0 +1,109 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table thead tr th {
+                vertical-align: top !important;
+            }
+
+            .panel-body {
+                display: none;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Pemeriksaan Kain</h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete value.bind="filter.code" label="Nomor Pemeriksaan Kain" 
+                loader.bind="fabricQCLoader" placeholder="cari nomor pemeriksaan kain" key="Code" text="Code">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="filter.kanbanCode" label="Nomor Order - Nomor Kereta" 
+                loader.bind="kanbanLoader" placeholder="cari nomor order - nomor kereta" key="Id">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="filter.productionOrderType" label="Jenis Order" 
+                loader.bind="orderTypeLoader" placeholder="cari jenis order" key="Id" text="Name">
+            </au-autocomplete>
+
+            <au-dropdown label="Shift" value.bind="filter.shiftIm" items.bind="shiftOptions" read-only.bind="readOnly" ></au-dropdown>
+
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <au-collection columns.one-way="listFQSDetailColumns" items.bind="newData" read-only.bind="true" item-template="modules/production/finishing-printing/reports/fabric-quality-control-report/template/list-fqc">
+            </au-collection>
+        </div>
+
+        <!--<div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="3">No</td>
+                        <td rowspan="3">Nomor Order</td>
+                        <td rowspan="3">Jenis Order</td>
+                        <td rowspan="3">Nomor Kereta</td>
+                        <td rowspan="3">Tanggal IM</td>
+                        <td rowspan="3">Shift</td>
+                        <td rowspan="3">Operator IM</td>
+                        <td rowspan="3">No. Mesin IM</td>
+                        <td rowspan="3">Konstruksi</td>
+                        <td rowspan="3">Buyer</td>
+                        <td rowspan="3">Warna</td>
+                        <td rowspan="3">Jumlah Order (meter)</td>
+                        <td rowspan="3">Packing Instruction</td>
+                        <td rowspan="3">Nomor PCS</td>
+                        <td rowspan="3">Panjang PCS (meter)</td>
+                        <td rowspan="3">Lebar PCS (meter)</td>
+                        <td rowspan="3">Nilai</td>
+                        <td rowspan="3">Grade</td>
+                        <td rowspan="3">Aval (meter)</td>
+                        <td rowspan="3">Sampel (meter)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of newData">
+                        <td class="text-center">${item.no}</td>
+                        <td>${item.productionOrderNo}</td>
+                        <td>${item.productionOrderType}</td>
+                        <td>${item.cartNo}</td>
+                        <td>${item.dateIm | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.shiftIm}</td>
+                        <td>${item.operatorIm}</td>
+                        <td>${item.machineNoIm}</td>
+                        <td>${item.construction}</td>
+                        <td>${item.buyer}</td>
+                        <td>${item.color}</td>
+                        <td>${item.orderQuantity}</td>
+                        <td>${item.packingInstruction}</td>
+                        <td>${item.pcsNo}</td>
+                        <td>${item.initLength}</td>
+                        <td>${item.width}</td>
+                        <td>${item.finalScore}</td>
+                        <td>${item.grade}</td>
+                        <td>${item.avalLength}</td>
+                        <td>${item.sampleLength}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

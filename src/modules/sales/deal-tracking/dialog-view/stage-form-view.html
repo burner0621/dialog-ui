@@ -1,0 +1,16 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>Stage</ai-dialog-header>
+
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-textbox value.bind="data.Name" label="Nama Stage" placeholder="Nama stage" error.bind="error.Name"></au-textbox>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.delegate="controller.cancel()">Kembali</button>
+            <button click.delegate="save()">Simpan</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

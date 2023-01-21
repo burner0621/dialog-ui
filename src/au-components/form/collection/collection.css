@@ -1,0 +1,24 @@
+td .form-group {
+  margin: 0px !important;
+} 
+td .col-sm-12 {
+  padding: 0px;
+  margin-top: -4px;
+  margin-bottom: -4px;
+} 
+td .help-block{
+    margin-top: 5px;
+    margin-bottom: 1px;
+    margin-left: 5px;
+}
+td .alert{
+  border-radius: 0px;
+  margin: -8px;
+  padding: 30px;
+  text-align: center;
+}
+
+.collection .panel-body
+{
+  padding:8px;
+}

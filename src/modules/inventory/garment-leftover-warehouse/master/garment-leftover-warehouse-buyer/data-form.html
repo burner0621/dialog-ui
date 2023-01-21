@@ -1,0 +1,43 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox label="Kode" placeholder="Kode" value.bind="data.Code" error.bind="error.Code"
+                    read-only.bind="(readOnly || isEdit)">
+                </au-textbox>
+
+                <au-textbox label="Nama" placeholder="Nama" value.bind="data.Name" error.bind="error.Name"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-multiline label="Alamat" placeholder="Alamat" value.bind="data.Address" error.bind="error.Address"
+                    read-only.bind="readOnly">
+                </au-multiline>
+
+                <au-textbox label="No Telepon" placeholder="No Telepon" value.bind="data.PhoneNumber" error.bind="error.PhoneNumber"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-textbox label="N I K" placeholder="N I K" value.bind="data.NIK" error.bind="error.NIK"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-textbox label="No. NPWP" placeholder="No NPWP" value.bind="data.NPWP" error.bind="error.NPWP"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-textbox label="Nama Wajib Pajak" placeholder="Nama Wajib Pajak" value.bind="data.WPName" error.bind="error.WPName"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+                <au-dropdown label="Status Buyer" value.bind="data.KaberType" error.bind="error.kaberType" items.bind="KaberTypes"
+                   read-only.bind="readOnly">
+                </au-dropdown>
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

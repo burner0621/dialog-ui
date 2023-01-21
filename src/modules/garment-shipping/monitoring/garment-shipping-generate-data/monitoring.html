@@ -1,0 +1,80 @@
+<template>
+    <h1 class="page-header">Generate Data Untuk Keperluan Pembukuan</h1>
+    <form class="form-horizontal">
+        <au-datepicker label="Tanggal Nota Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Nota Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td align="center" rowspan="2">NO.</td>
+                    <td align="center" rowspan="2">NO INVOICE</td>
+                    <td align="center" rowspan="2">TGL INVOICE</td>
+                    <td align="center" rowspan="2">TGL TRUCKING</td>
+                    <td align="center" rowspan="2">TGL J/T</td>
+                    <td align="center" rowspan="2">KODE BUYER</td>
+                    <td align="center" rowspan="2">NAMA BUYER</td>
+                    <td align="center" rowspan="2">NO R/O</td>
+                    <td align="center" rowspan="2">NO S/C</td>
+                    <td align="center" rowspan="2">DESTINATION</td>
+                    <td align="center" rowspan="2">TGL EXPORT</td>
+                    <td align="center" rowspan="2">KODE</td>                    
+                    <td align="center" rowspan="2">KOMODITI</td>
+                    <td align="center" rowspan="2">NO PEB</td>
+                    <td align="center" rowspan="2">TGL PEB</td>
+                    <td align="center" rowspan="2">OMZET</td>
+                    <td align="center" rowspan="2">ACCOUNTING</td>
+                    <td align="center" rowspan="2">AMOUNT</td>
+                    <td align="center" rowspan="2">TO BE PAID</td>
+                    <td align="center" rowspan="2">QUANTITY</td>
+                    <td align="center" rowspan="2">SATUAN</td>
+                    <td align="center" rowspan="2">PRICE</td>
+                    <td align="center" rowspan="2">SUB AMOUNT</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center"> ${$index + 1}</td>                        
+                    <td>${item.invoiceNo}</td>
+                    <td>${item.invoiceDate}</td>
+                    <td>${item.truckingDate}</td>                  
+                    <td>${item.dueDate}</td>
+                    <td>${item.buyerCode}</td>
+                    <td>${item.buyerName}</td>
+                    <td>${item.roNo}</td>
+                    <td>${item.scNo}</td>
+                    <td>${item.destination}</td>
+                    <td>${item.sailingDate}</td>
+                    <td>${item.comoditCode}</td>
+                    <td>${item.comodityName}</td>
+                    <td>${item.pebNo}</td>
+                    <td>${item.pebDate}</td>
+                    <td>${item.def}</td>
+                    <td>${item.acc}</td>
+                    <td class="text-right"><strong>${item.amount}</strong></td>
+                    <td class="text-right"><strong>${item.toBePaid}</strong></td>                          
+                    <td class="text-right"><strong>${item.quantity}</strong></td>
+                    <td>${item.uomUnit}</td>
+                    <td class="text-right"><strong>${item.price}</strong></td>
+                    <td class="text-right"><strong>${item.subAmount}</strong></td>      
+                    
+                </tr>                    
+            </tbody>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

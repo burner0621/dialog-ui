@@ -1,0 +1,103 @@
+<template>
+    <h1 class="page-header">LAPORAN Realisasi CMT</h1>
+    <form class="form-horizontal">
+<!-- 
+            <input type="text" value.bind="unitcode"></input> -->
+
+            <au-autocomplete 
+            value.bind="unitcode" 
+            label="Unit" 
+            loader.bind="unitLoader"
+            placeholder="cari unit" 
+            text.bind = "unitView"
+            
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <!-- <au-dropdown 
+              label="Unit" 
+              value.bind="UnitItem"
+              items.bind="UnitItems"
+              options.bind="controlOptions" >
+      </au-dropdown> -->
+     
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td align="center" rowspan="2">NO.</td>
+                        <td align="center" rowspan="2">NO INVOICE</td>
+                        <td align="center" rowspan="2">NO. BON</td>
+                        <td align="center" rowspan="2">RO</td>
+                        <td align="center" rowspan="2">ARTIKEL</td>
+                        <td align="center" rowspan="2">QTY BJ</td>
+                        <td align="center" colspan="4">BON PEMAKAIAN</td>
+                        <td align="center" colspan="7">BON PENERIMAAN</td>
+
+                        
+                    </tr>
+                    <tr>
+                            <td align="center">NO. BON</td>
+                            <td align="center">KETERANGAN </td>
+                            <td align="center">QTY</td>
+                            <td align="center" >ASAL</td>
+                            <td align="center" >NO. BON</td>
+                            <td align="center" >KETERANGAN</td>
+                            <td align="center" >QTY</td>
+                            <td align="center">SUPPLIER</td>
+                            <td align="center">NO NOTA</td>
+                            <td align="center">NO. BON KECIL</td>
+                            <td align="center">SURAT JALAN</td>
+                    </tr>
+
+                    
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                            <!-- <td >${$index + 1}</td>
+                            <td >${item.Invoice}</td>
+                            <td >${item.ExpenditureGoodId}</td> -->
+                        <td if.bind="item.docspan" rowspan="${item.docspan}" >${item.Count}</td>
+                        <td if.bind="item.rowspan" rowspan="${item.rowspan}">${item.Invoice}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${item.ExpenditureGoodId}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${item.RO}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${item.Article}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${item.UnitQty}</td>
+                        <td>${item.UENNo}</td>
+                        <td>${item.ProductRemark}</td>
+                        <td>${item.Quantity}</td>
+                        <td>${item.RONo}</td>
+                        <td>${item.URNNo}</td>
+                        <td>${item.ProductRemark2}</td>
+                        <td>${item.ReceiptQuantity}</td>
+                        <td>${item.SupplierName}</td>
+                        <td>${item.BillNo}</td>
+                        <td>${item.PaymentBill}</td>
+                        <td>${item.DONo}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+                Tidak ada data ditemukan.
+            </div>
+            <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+            <hr/>
+    </form>
+
+    
+</template>

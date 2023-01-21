@@ -1,0 +1,179 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Laporan Sub Ledger</h1>
+
+    <form class="form-horizontal">
+        <au-dropdown label="Bulan" value.bind="info.month" items.bind="monthOptions" text="MonthName"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown label="Tahun" value.bind="info.year" items.bind="yearOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Kode Akun COA" placeholder="pilih akun" value.bind="info.COA" error.bind="error.COA"
+            loader.one-time="coaLoader" text.bind="coaView" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Nama Akun COA" value.bind="info.COA.Name" read-only="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr style="background-color: white; color: black">
+                        <td style="border-right: none" class="text-right" colspan="5">Saldo Awal: </td>
+                        <td style="border-left: none" class="text-right" colspan="2">${initialBalance}</td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>No. Bukti</th>
+                        <th>Bank</th>
+                        <th>CEK/BG</th>
+                        <th>Perkiraan</th>
+                        <th>DEBIT</th>
+                        <th>KREDIT</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <!-- <tr show.bind="textileLokals.length == 0 && textileImports.length == 0
+                        && garmentLokals.length == 0 && garmentImports.length == 0 
+                        && others.length == 0">
+                        <td colspan="9">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr> -->
+                    <!-- <tr>
+                        <td colspan="9">
+                            <div>Pembelian Textile Lokal</div>
+                        </td>
+                    </tr> -->
+                    <tr show.bind="others.length == 0">
+                        <td colspan="7">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of others">
+                        <td>${datum.Date}</td>
+                        <td>${datum.No}</td>
+                        <td>${datum.BankName}</td>
+                        <td>${datum.BGCheck}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Credit}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td colspan="9">
+                            <div>Pembelian Textile Import</div>
+                        </td>
+                    </tr>
+                    <tr show.bind="textileImports.length == 0">
+                        <td colspan="9">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of textileImports">
+                        <td>${datum.Date}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.Supplier}</td>
+                        <td>${datum.URNNo}</td>
+                        <td>${datum.UPONo}</td>
+                        <td>${datum.COAName}</td>
+                        <td>${datum.COACode}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Credit}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <div>Pembelian Garment Lokal</div>
+                        </td>
+                    </tr>
+                    <tr show.bind="garmentLokals.length == 0">
+                        <td colspan="9">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of garmentLokals">
+                        <td>${datum.Date}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.Supplier}</td>
+                        <td>${datum.URNNo}</td>
+                        <td>${datum.UPONo}</td>
+                        <td>${datum.COAName}</td>
+                        <td>${datum.COACode}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Credit}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <div>Pembelian Garment Import</div>
+                        </td>
+                    </tr>
+                    <tr show.bind="garmentImports.length == 0">
+                        <td colspan="9">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of garmentImports">
+                        <td>${datum.Date}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.Supplier}</td>
+                        <td>${datum.URNNo}</td>
+                        <td>${datum.UPONo}</td>
+                        <td>${datum.COAName}</td>
+                        <td>${datum.COACode}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Credit}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <div>Lain - Lain</div>
+                        </td>
+                    </tr>
+                    <tr show.bind="others.length == 0">
+                        <td colspan="9">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of others">
+                        <td>${datum.Date}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.Supplier}</td>
+                        <td>${datum.URNNo}</td>
+                        <td>${datum.UPONo}</td>
+                        <td>${datum.COAName}</td>
+                        <td>${datum.COACode}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Credit}</td>
+                    </tr> -->
+                    <tr style="background-color: white; color: black">
+                        <td style="border-right: none" class="text-right" colspan="5">Saldo Akhir: </td>
+                        <td style="border-left: none" class="text-right" colspan="2">${closingBalance}</td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+                <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' style="margin-right: 5px" click.delegate="excel()">Cetak
+                        Excel</button>
+
+                    <button class='btn btn-primary' click.delegate="excelAll()">Cetak Excel All</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+</template>

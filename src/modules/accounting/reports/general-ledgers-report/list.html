@@ -1,0 +1,108 @@
+<template>
+    <h1 class="page-header">Laporan General Ledger</h1>
+
+    <form class="form-horizontal">
+        <au-datepicker value.bind="startDate" label="Tanggal Awal" options.bind="controlOptions"
+            error.bind="error.startDate">
+        </au-datepicker>
+
+        <au-datepicker value.bind="endDate" label="Tanggal Akhir" options.bind="controlOptions"
+            error.bind="error.endDate">
+        </au-datepicker>
+
+        <au-textbox error.bind="error.invalidDateInput" read-only.bind="true"></au-textbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="excel()" class='btn btn-success'>Excel</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <aubs-accordion close-others.bind="true">
+                <aubs-accordion-group repeat.for="result of data">
+                    <template replace-part="header">
+                        <h4 class="panel-title" style="cursor: pointer;">
+                            <a click.delegate="toggle()">
+                                <div class="row">
+                                    <!-- <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                ${result.COACode}
+                                            </div>
+                                            <div class="col-md-6">
+                                                ${result.COAName}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Saldo Awal:
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                ${result.InitialBalance | numberFormat}
+                                            </div>
+                                            <div class="col-md-4">
+                                                Saldo Akhir:
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                ${result.Summary | numberFormat}
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-2 text-left">
+                                        ${result.COACode}
+                                    </div>
+                                    <div class="col-sm-4 text-left">
+                                        ${result.COAName}
+                                    </div>
+                                    <div class="col-sm-1 text-left">
+                                        Saldo Awal:
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        ${result.InitialBalance | numberFormat}
+                                    </div>
+                                    <div class="col-sm-1 text-left">
+                                        Saldo Akhir:
+                                    </div>
+                                    <div class="col-sm-2 text-right">
+                                        ${result.Summary | numberFormat}
+                                    </div>
+                                </div>
+                            </a>
+                        </h4>
+                    </template>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th>Debit</th>
+                                <th>Kredit</th>
+                                <th>Sisa Saldo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="item of result.Items">
+                                <td>${item.Date | dateFormat}</td>
+                                <td>${item.Description}</td>
+                                <td>${item.COACode}</td>
+                                <td class="text-right">${item.Debit | numberFormat}</td>
+                                <td class="text-right">${item.Credit | numberFormat}</td>
+                                <td class="text-right">${item.RemainingBalance | numberFormat}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </aubs-accordion-group>
+            </aubs-accordion>
+        </div>
+    </div>
+
+</template>

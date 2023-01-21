@@ -1,0 +1,49 @@
+<template>
+    <tr>
+        <td class="col-sm-2">
+            <au-textbox
+                value.bind="data.TRNo"
+                read-only="true" />
+        </td>
+        <td class="col-sm-3">
+            <au-textbox
+                value.bind="dataProduct"
+                read-only="true" />
+        </td>
+        <td class="col-sm-1">
+            <au-numeric
+                value.bind="data.DOQuantity"
+                read-only="true" />
+        </td>
+        <td class="col-sm-1">
+            <au-numeric
+                value.bind="dataDeliveryQuantity"
+                error.bind="error.DeliveryQuantity"
+                read-only.bind="readOnly" />
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="data.Uom"
+                error.bind="error.Uom"
+                loader.one-time="uomLoader"
+                text="unit"
+                read-only="true" />
+        </td>
+        <td class="col-sm-1">
+            <au-dropdown
+                items.bind="gradeItems"
+                value.bind="data.Grade"
+                error.bind="error.Grade"
+                read-only.bind="readOnly" />
+        </td>
+        <td class="col-sm-3">
+            <au-multiline
+                value.bind="data.ProductRemark"
+                read-only.bind="readOnly"
+                options.bind="controlOptions" />
+        </td>
+        <td class="col-sm-1" if.bind="!readOnly">
+            <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+        </td>
+    </tr>
+</template>

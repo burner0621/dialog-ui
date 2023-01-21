@@ -1,0 +1,83 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.UnitPaymentOrderNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.UPODate" read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.DueDate" read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="listURNNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InvoiceNo" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.SupplierName" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.CategoryName" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.DivisionName" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Vat" format="0,000.0000" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.IncomeTax" format="0,000.0000" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.TotalPaid" format="0,000.0000" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Currency" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td show.bind="IDR && !sameCurrency">
+            <au-numeric value.bind="data.TotalPaidIDR" format="0,000.0000" if.bind="IDR && !sameCurrency"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td show.bind="IDR && !sameCurrency">
+            <au-textbox value.bind="data.CurrencyIDR" if.bind="IDR && !sameCurrency" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+          <au-numeric value.bind="data.AmountPaid" format="0,000.0000" read-only.bind="true">
+          </au-numeric>
+        </td>
+        <td style="width: 10%;">
+          <au-numeric value.bind="data.SupplierPayment" read-only.bind="true" format = "0,0.000" options.bind="controlOptions">
+          </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.PaymentDifference" format="0,000.0000" read-only.bind="true">
+            </au-numeric>
+          </td>
+        <td>
+            <button class="btn btn-info" click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="12">
+            <au-collection items.bind="data.Items" columns.bind="columns"
+                item-template="modules/expedition/bank-expenditure-note/templates/detail-view">
+            </au-collection>
+        </td>
+    </tr>
+</template>

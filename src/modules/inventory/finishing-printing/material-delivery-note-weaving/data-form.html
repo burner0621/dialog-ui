@@ -1,0 +1,54 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox value.bind="data.code" if.bind="data.code" label="Kode Bon" read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal S.J" value.bind="data.dateSJ" error.bind="error.DateSJ" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete placeholder="Pilih Nomor DO" query.bind="filter" options.bind="controlOptions" value.bind="data.selectedDO"
+            label="Berdasarkan DO No" read-only.bind="readOnly || isEdit" error.bind="error.DeliveryOrder"
+            loader.bind="doSalesLoader" text.bind="doTextFormatter">
+        </au-autocomplete>
+
+        <au-textbox label="Dikirim Kepada" value.bind="data.sendTo" error.bind="error.SendTo" read-only.bind="readOnly"
+            placeholder="Input Dikirim Kepada" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete value.bind="selectedUnit" error.bind="error.Unit" label="Bagian" loader.one-time="unitLoader"
+            text.bind="unitView" read-only.bind="readOnly || isEdit" options.bind="controlOptions"
+            placeholder="Cari Bagian">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="selectedBuyer" error.bind="error.Buyer" label="Nama Buyer"
+            loader.bind="buyerLoader" text.bind="buyerView" placeholder="Cari Buyer" read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Nomor" value.bind="data.numberBonOut" error.bind="error.NumberBonOut"
+            read-only.bind="readOnly || isEdit" items.bind="NumberBonOut" options.bind="controlOptions"></au-dropdown>
+
+        <au-autocomplete label="Gudang" value.bind="selectedStorage" read-only.bind="readOnly || isEdit"
+            error.bind="error.Storage" loader.one-time="storageLoader" text.bind="storageView" placeholder="Cari Gudang"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-multiline label="Keterangan" value.bind="data.remark" error.bind="error.Remark" read-only.bind="readOnly"
+            keypress.delegate="enterDelegate($event)" placeholder="Input Keterangan" options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox error.bind="error.ItemsMaterialDeliveryNoteWeaving"
+            show.bind="error.ItemsMaterialDeliveryNoteWeaving" read-only.bind="true">
+        </au-textbox>
+
+        <au-collection items.bind="data.itemsMaterialDeliveryNoteWeaving"
+            errors.bind="error.ItemsMaterialDeliveryNoteWeavings" columns.bind="columns" add.bind="addItems"
+            remove.bind="onremove" read-only.bind="readOnly"
+            item-template="modules/inventory/finishing-printing/material-delivery-note-weaving/template/item">
+        </au-collection>
+
+    </au-input-form>
+</template>

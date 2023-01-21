@@ -1,0 +1,222 @@
+<template>
+  <style>
+    .bordered {
+      border-style: solid;
+      border-width: 1px;
+      padding-top: 15px;
+    }
+
+    .bordered-next {
+      border-left-width: 0px;
+      padding-top: 18.5px;
+      padding-bottom: 18.5px;
+    }
+
+    .bordered-not-last {
+      border-bottom-width: 0px;
+    }
+
+    #calculatedHPP {
+      margin-left: -15px;
+    }
+
+    .bordered .price {
+      font-size: 20px;
+    }
+
+    .large-column-table tbody tr td {
+      padding-top: 25px;
+      padding-bottom: 25px;
+    }
+
+    .large-column-table tbody tr .label-td {
+      width: 35%;
+    }
+
+    .small-column-table tbody tr .label-td {
+      width: 30%;
+    }
+
+    .wrap {
+      white-space: pre-wrap;
+      /* CSS3 */
+      white-space: -moz-pre-wrap;
+      /* Firefox */
+      white-space: -pre-wrap;
+      /* Opera <7 */
+      white-space: -o-pre-wrap;
+      /* Opera 7 */
+      word-wrap: break-word;
+      /* IE */
+    }
+  </style>
+  <require from="../../../lib/number-format-value-converter.js"></require>
+  <require from="../../../lib/date-format-value-converter.js"></require>
+  <au-input-form title.bind="title" with.bind="context">
+    <button slot="actions" class="btn btn-primary" click.delegate="unpostCallback($event)" if.one-way="hasUnpost">Unpost</button>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="col-md-4">
+          <au-textbox label="No Pre Sales Contract" options.bind="length4" value.bind="data.PreSCNo" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="RO" options.bind="length4" value.bind="data.RO_Number" read-only.bind="readOnly"></au-textbox>
+          <au-datepicker label="Tanggal" options.bind="length4" value.bind="data.CreatedUtc" read-only.bind="readOnly"></au-datepicker>
+          <au-textbox label="Unit" options.bind="length4" value.bind="data.Unit.Name" read-only.bind="readOnly"></au-textbox>
+        </div>
+        <div class="col-md-4">
+          <au-textbox label="Size Range" options.bind="length4" value.bind="data.SizeRange" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Seksi" options.bind="length4" value.bind="data.Section" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Marketing Garment" options.bind="length4" value.bind="data.MarketingName" read-only.bind="readOnly"></au-textbox>         
+          <au-textbox label="No Booking Order" options.bind="length4" value.bind="data.BookingOrderNo" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Komoditi" options.bind="length4" value.bind="data.Comodity.Name" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Confirm Price" options.bind="length4" value.bind="data.ConfirmPrice" read-only.bind="readOnly"></au-textbox>          
+        </div>
+        <div class="col-md-4">
+          <au-textbox label="Lead Time" options.bind="length4" value.bind="data.LeadTime" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Fabric (%)" options.bind="length4" value.bind="data.FabricAllowance" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="Accessories (%)" options.bind="length4" value.bind="data.AccessoriesAllowance" read-only.bind="readOnly"></au-textbox>
+          <au-textbox label="FOB Price" options.bind="length4" value.bind="CM_Price" read-only.bind="readOnly"></au-textbox>                   
+        </div>
+      </div>
+      <div class="col-md-2">
+        <img src.bind="data.ImageFile || '#'" class="center-block" height="auto" width="60%">
+        <br>
+        <div class="text-center">${data.Article}</div>
+      </div>
+    </div>
+    <br>
+    <au-collection items.bind="data.CostCalculationGarment_Materials" columns.bind="costCalculationGarment_MaterialsInfo.columns"
+      item-template="modules/merchandiser/cost-calculation/template/view/cost-calculation-material" footer-template="modules/merchandiser/cost-calculation/template/view/cost-calculation-material-footer">
+    </au-collection>
+    <div class="row">
+      <div class="col-md-4">
+        <div>
+          <table class="table table-bordered large-column-table">
+            <tbody>
+              <tr>
+                <td class="label-td">Kuantitas</td>
+                <td>${data.Quantity + ' ' + data.UOM.Unit}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Deskripsi</td>
+                <td>${data.CommodityDescription}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Cont/Style</td>
+                <td>${data.Article}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Buyer Agent</td>
+                <td>${data.Buyer.Name}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Buyer Brand</td>
+                <td>${data.BuyerBrand.Name}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Delivery</td>
+                <td>${data.DeliveryDate | dateFormat:'YYYY-MM-DD'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Confirm Date</td>
+                <td>${data.ConfirmDate | dateFormat:'YYYY-MM-DD'}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <au-collection items.bind="data.priceInfo" columns.bind="priceInfo.columns" item-template="modules/merchandiser/cost-calculation/template/view/price-info">
+          </au-collection>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <table class="table table-bordered small-column-table">
+            <tbody>
+              <tr>
+                <td class="label-td">Total</td>
+                <td colspan="2">${data.Total | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">OTL 1</td>
+                <td>${data.OTL1.CalculatedValue | numberFormat:'0,0.000'}</td>
+                <td>${data.AfterOTL1 | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">OTL 2</td>
+                <td>${data.OTL2.CalculatedValue | numberFormat:'0,0.000'}</td>
+                <td>${data.AfterOTL2 | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Resiko (%)</td>
+                <td>${data.Risk | numberFormat:'0,0.00'}%</td>
+                <td>${data.AfterRisk | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Biaya Angkut</td>
+                <td>${data.FreightCost | numberFormat:'0,0.00'}</td>
+                <td>${data.AfterFreightCost | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Sub Total</td>
+                <td colspan="2">${data.AfterFreightCost | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">NET/FOB (%)</td>
+                <td>${data.NETFOBP | numberFormat:'0,0.00'}%</td>
+                <td>${data.NETFOB | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Komisi (%)</td>
+                <td>${data.CommissionPortion | numberFormat:'0,0.00'}%</td>
+                <td>${data.CommissionRate | numberFormat:'0,0.00'}</td>
+              </tr>
+              <tr>
+                <td class="label-td">Confirm Price</td>
+                <td colspan="2">${data.ConfirmPriceWithRate | numberFormat:'0,0.0000'}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p if.bind="isDollar">Note: 1 US$ = Rp. ${data.Rate.Value | numberFormat:'0,0.00'}</p>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>
+                  <au-textbox label="Biaya Kargo" options.bind="length6" value.bind="data.Freight" read-only.bind="readOnly"></au-textbox>
+                  <au-textbox label="Asuransi" options.bind="length6" value.bind="data.Insurance" read-only.bind="readOnly"></au-textbox>
+                  <au-textbox label="Confirm Price" options.bind="length6" value.bind="data.ConfirmPrice" read-only.bind="readOnly"></au-textbox>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="col-md-6">
+                    <au-textbox label="SMV Cut" options.bind="length7" value.bind="data.SMV_Cutting" read-only.bind="readOnly"></au-textbox>
+                    <au-textbox label="SMV Fin" options.bind="length7" value.bind="data.SMV_Finishing" read-only.bind="readOnly"></au-textbox>
+                  </div>
+                  <div class="col-md-6">
+                    <au-textbox label="SMV Sew" options.bind="length7" value.bind="data.SMV_Sewing" read-only.bind="readOnly"></au-textbox>
+                    <au-textbox label="SMV Total" options.bind="length7" value.bind="data.SMV_Total" read-only.bind="readOnly"></au-textbox>
+                  </div>
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <table class="table table-bordered large-column-table">
+            <tbody>
+              <tr>
+                <td class="label-td">Deskripsi</td>
+                <td>
+                  <au-multiline read-only.bind="true" value.bind="data.Description"></au-multiline>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+</template>

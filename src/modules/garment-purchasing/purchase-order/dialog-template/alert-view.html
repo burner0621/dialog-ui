@@ -1,0 +1,15 @@
+<template>
+    <ai-dialog>
+        <ai-dialog-header><h4>${title}</h4></ai-dialog-header>
+
+        <ai-dialog-body>
+            <div innerHTML.bind="message" style="white-space: pre-wrap;"></div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.trigger="controller.ok(message)">Ok</button>
+        </ai-dialog-footer>
+
+    </ai-dialog>
+
+</template>

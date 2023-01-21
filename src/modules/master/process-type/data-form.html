@@ -1,0 +1,42 @@
+<template>
+
+  <div class="row">
+    <div class="col-md-5">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <!-- <au-textbox 
+            label="Kode"
+            value.bind="data.code"
+            error.bind="error.code"
+            read-only.bind="true"
+            if.bind="data.code"
+            options.bind="controlOptions"
+          ></au-textbox> -->
+
+        <au-autocomplete value.bind="selectedOrder" error.bind="error.Order" label="Jenis Order"
+          loader.bind="orderLoader" text.bind="orderView" placeholder="cari order" key="Name" read-only.bind="isEdit"
+          options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Unit" options.bind="controlOptions" value.bind="data.Unit" error.bind="error.Unit"
+          read-only.bind="true">
+        </au-textbox>
+
+        <au-textbox label="Jenis Proses" value.bind="data.Name" error.bind="error.Name" read-only.bind="readOnly"
+          options.bind="controlOptions"></au-textbox>
+
+        <au-dropdown label="Kode SPP" value.bind="data.SPPCode" error.bind="error.SPPCode" read-only.bind="readOnly"
+          options.bind="controlOptions" items.bind="sppCodes"></au-dropdown>
+
+        <au-multiline label="Keterangan" value.bind="data.Remark" placeholder="tambah keterangan"
+          read-only.bind="readOnly" options.bind="controlOptions">
+        </au-multiline>
+
+
+
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+
+</template>

@@ -1,0 +1,54 @@
+<template>
+	<div class="row">
+		<div class="col-md-12">
+			<au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+				<div class="col-md-8">
+					<au-autocomplete label="Nomor Kwitansi" value.bind="selectedKwitansi"
+						text.bind="kwitansiView" loader.one-time="kwitansiLoader"
+						placeholder="Cari Nomor Kwitansi" error.bind="error.BankCashReceiptNo"
+						read-only.bind="readOnly || isEdit" query.bind="filter">
+					</au-autocomplete>
+
+					<au-datepicker label="Tgl Penerimaan" value.bind="data.BankCashReceiptDate"
+						read-only.bind="true" options.bind="controlOptions"
+						error.bind="error.BankCashReceiptDate">
+					</au-datepicker>
+
+					<au-numeric label="Amount" value.bind="data.Amount" read-only.bind="true"
+						error.bind="error.Amount"></au-numeric>
+				</div>
+				<div style="clear:both">
+					<div class="form-group has-error">
+						<p if.bind="error.ItemsCount" class="help-block text-center">
+							${error.ItemsCount}
+						</p>
+						<p if.bind="error.Amount" class="help-block text-center">
+							${error.Amount}
+						</p>
+					</div>
+					<au-collection items.bind="data.Items" errors.bind="error.Items"
+						columns.bind="itemsColumns" read-only.bind="readOnly"
+						title="Detail Nota Penjualan Lokal" add.bind="addItems"
+						remove.bind="removeItems" options.bind="Options"
+						item-template="modules/garment-finance/bank-cash/bank-cash-receipt-detail-locals/templates/item"
+						footer-template="modules/garment-finance/bank-cash/bank-cash-receipt-detail-locals/templates/footer">
+					</au-collection>
+
+					<div class="form-group has-error">
+						<p if.bind="error.ItemsCount" class="help-block text-center">
+							${error.ItemsCount}
+						</p>
+					</div>
+					<au-collection items.bind="data.OtherItems" errors.bind="error.OtherItems"
+						columns.bind="othersColumns" read-only.bind="readOnly"
+						title="Detail Lain-Lain" add.bind="addOtherItems"
+						remove.bind="removeOtherItems" options.bind="Options"
+						item-template="modules/garment-finance/bank-cash/bank-cash-receipt-detail-locals/templates/other-item"
+						footer-template="modules/garment-finance/bank-cash/bank-cash-receipt-detail-locals/templates/other-footer">
+					</au-collection>
+				</div>
+
+			</au-input-form>
+		</div>
+	</div>
+</template>

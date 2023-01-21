@@ -1,0 +1,219 @@
+<template>
+    <h1 class="page-header">Monitoring Pre Sales Contract</h1>
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <au-autocomplete
+                    value.bind="selectedSection"
+                    label="Seksi"
+                    loader.bind="sectionLoader"
+                    placeholder="Cari Seksi"
+                    text="Code"
+                    options.bind="controlOptionsLeft">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedPreSC"
+                    label="No Pre Sales Contract"
+                    loader.bind="preSalesContractLoader"
+                    placeholder="Cari No Pre Sales Contract"
+                    text="SCNo"
+                    options.bind="controlOptionsLeft">
+                </au-autocomplete>
+                <au-dropdown
+                    value.bind="selectedPreSCType"
+                    label="Jenis Sales Contract"
+                    items.bind="preSCTypeOptions"
+                    options.bind="controlOptionsLeft">
+                </au-dropdown>
+                <au-autocomplete
+                    value.bind="selectedBuyerAgent"
+                    label="Buyer Agent"
+                    loader.bind="garmentBuyerLoader"
+                    placeholder="Cari Buyer Agent"
+                    text.bind="codeNameView"
+                    options.bind="controlOptionsLeft">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedBuyerBrand"
+                    label="Buyer Brand"
+                    loader.bind="garmentBuyerBrandLoader"
+                    placeholder="Cari Buyer Brand"
+                    text.bind="codeNameView"
+                    options.bind="controlOptionsLeft">
+                </au-autocomplete>
+                <au-datepicker
+                    value.bind="selectedDateStart"
+                    label="Tgl Awal Pre Sales Contract"
+                    options.bind="controlOptionsLeft">
+                </au-datepicker>
+            </div>
+            <div class="form-group col-md-6">
+                <au-autocomplete
+                    value.bind="selectedPRMaster"
+                    label="No PR Master"
+                    loader.bind="garmentPurchaseRequestLoader"
+                    placeholder="Cari No PR Master"
+                    text="PRNo"
+                    query.bind="garmentPurchaseRequestFilter"
+                    options.bind="controlOptionsRight">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedROMaster"
+                    label="No RO Master"
+                    loader.bind="garmentPurchaseRequestLoader"
+                    placeholder="Cari No RO Master"
+                    text="RONo"
+                    query.bind="garmentPurchaseRequestFilter"
+                    options.bind="controlOptionsRight">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedUnitPRMaster"
+                    label="Unit PR Master"
+                    loader.bind="unitLoader"
+                    placeholder="Cari Unit PR Master"
+                    text.bind="codeNameView"
+                    options.bind="controlOptionsRight">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedROJob"
+                    label="No RO Job"
+                    loader.bind="costCalculationGarmentLoader"
+                    placeholder="Cari No RO Job"
+                    text="RO_Number"
+                    query.bind="costCalculationFilter"
+                    options.bind="controlOptionsRight">
+                </au-autocomplete>
+                <au-autocomplete
+                    value.bind="selectedUnitROJob"
+                    label="Unit RO Job"
+                    loader.bind="unitLoader"
+                    placeholder="Cari Unit RO Job"
+                    text.bind="codeNameView"
+                    options.bind="controlOptionsRight">
+                </au-autocomplete>
+                <au-datepicker
+                    value.bind="selectedDateEnd"
+                    label="Tgl Akhir Pre Sales Contract"
+                    options.bind="controlOptionsRight">
+                </au-datepicker>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><label>Seksi</label></th>
+                        <th><label>No Pre Sales Contract</label></th>
+                        <th><label>Tgl Pre Sales Contract</label></th>
+                        <th><label>Jenis Sales Contract</label></th>
+                        <th><label>Buyer Agent</label></th>
+                        <th><label>Buyer Brand</label></th>
+                        <th><label>Jumlah Order</label></th>
+                        <th><label>No PR Master</label></th>
+                        <th><label>No RO Master</label></th>
+                        <th><label>Jenis PR Master</label></th>
+                        <th><label>Unit (PR Master)</label></th>
+                        <th><label>Tgl PR Master</label></th>
+                        <th><label>Artikel (PR Master)</label></th>
+                        <th><label>Tgl Cost Calculation</label></th>
+                        <th><label>No RO JOB</label></th>
+                        <th><label>Artikel (Cost Calculation)</label></th>
+                        <th><label>Unit (Cost Calculation)</label></th>
+                        <th><label>Kuantitas</label></th>
+                        <th><label>Satuan</label></th>
+                        <th><label>Confirm Price</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="20">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <template repeat.for="itemIndex of (data.itemsLength)">
+                            <tr style.bind="data.style">
+                                <template if.bind="itemIndex == 0">
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.Section" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.SCNo" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-datepicker value.bind="data.SCDate" read-only="true"></au-datepicker>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.SCType" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.BuyerAgent" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.BuyerBrand" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.itemsLength" align="center">
+                                        <au-textbox value.bind="data.OrderQuantity" read-only="true"></au-textbox>
+                                    </td>
+                                </template>
+                                <td>
+                                    <au-textbox value.bind="data.GarmentPurchaseRequests[itemIndex].PRNo" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.GarmentPurchaseRequests[itemIndex].RONo" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.GarmentPurchaseRequests[itemIndex].PRType" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.GarmentPurchaseRequests[itemIndex].Unit" read-only="true"></au-textbox>
+                                </td>
+                                <td align="center">
+                                    <au-datepicker value.bind="data.GarmentPurchaseRequests[itemIndex].Date" read-only="true"></au-datepicker>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.GarmentPurchaseRequests[itemIndex].Article" read-only="true"></au-textbox>
+                                </td>
+                                <td align="center">
+                                    <au-datepicker value.bind="data.CostCalculations[itemIndex].Date" read-only="true"></au-datepicker>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.CostCalculations[itemIndex].RONo" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.CostCalculations[itemIndex].Article" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.CostCalculations[itemIndex].Unit" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.CostCalculations[itemIndex].Quantity" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.CostCalculations[itemIndex].Uom" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-numeric value.bind="data.CostCalculations[itemIndex].ConfirmPrice" if.bind="data.CostCalculations[itemIndex].ConfirmPrice > 0" format="0,0.0000" read-only="true"></au-numeric>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

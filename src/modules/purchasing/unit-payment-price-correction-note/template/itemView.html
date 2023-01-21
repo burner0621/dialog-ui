@@ -1,0 +1,69 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox value.one-way="data.ePONo"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.one-way="data.pRNo"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.one-way="product"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.quantity"
+						read-only.bind="true"
+						format="0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox value.one-way="data.uom.unit"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.pricePerDealUnitBefore"
+						read-only.bind="true"
+						format="0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="pricePerDealUnitAfter"
+						error.bind="error.pricePerDealUnitAfter"
+						read-only.bind="readOnly||pricePerUnitCorrectionReadOnly"
+						format="0,0.0000">
+			</au-numeric>
+		</td>
+		<td if.bind="pricePerUnitCorrectionReadOnly">
+			<au-numeric value.bind="data.priceTotalAfter"
+						error.bind="error.priceTotalAfter"
+						read-only.bind="readOnly||!pricePerUnitCorrectionReadOnly"
+						if.bind="pricePerUnitCorrectionReadOnly"
+						format="0,0.0000">
+			</au-numeric>
+		</td>
+		<td if.bind="!pricePerUnitCorrectionReadOnly">
+			<au-numeric value.bind="totalPrice"
+						error.bind="error.priceTotalAfter"
+						read-only.bind="true"
+						if.bind="!pricePerUnitCorrectionReadOnly"
+						format="0,0.0000">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.pricePerDealUnitBefore * data.quantity"
+						read-only.bind="true"
+						format="0,0.00">
+			</au-numeric>
+		</td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right"
+					click.delegate="onremove(data)">-</button>
+		</td>
+	</tr>
+</template>

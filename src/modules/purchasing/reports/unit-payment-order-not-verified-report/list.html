@@ -1,0 +1,69 @@
+<template>
+    <h1 class="page-header">Laporan Surat Perintah Bayar Not Verified</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="spb" 
+            label="No SPB" 
+            loader.bind="spbLoader"
+            placeholder="cari nomor SPB" 
+            text.bind = "spbView"
+            key="UnitPaymentOrderNo"
+            query.bind="filter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier" 
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            placeholder="cari supplier" 
+            key="name"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="division" 
+            label="Divisi" 
+            loader.bind="divisionLoader"
+            placeholder="cari divisi" 
+            key="name"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button> 
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    
+        <au-table
+            view-model.ref="trTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <!--<div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Cetak Excel</button>
+            </div>-->
+        </au-table>
+        <hr/>
+    </form>
+</template>

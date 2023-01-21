@@ -1,0 +1,13 @@
+<template>  
+    <h1 class="page-header">Detail Koreksi Harga Pembelian</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error" read-only="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default'  >Kembali</a>
+            <!--<a click.delegate="edit()" class="btn btn-primary" >Ubah</a>
+            <a click.delegate="delete()" class="btn btn-danger" >Hapus</a>-->
+        </div>
+    </block>
+</template>

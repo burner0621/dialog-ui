@@ -1,0 +1,97 @@
+<template>
+    <form class="form-horizontal">
+        <au-textbox
+            label="No. Bon Unit"
+            value.bind="data.no"
+            error.bind="error.no"
+            read-only.bind="true"
+            if.bind="readOnly || isEdit"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tgl. Bon Unit"
+            value.bind="data.date"
+            error.bind="error.date"
+            read-only.bind="readOnly || isEdit"
+            options.bind="auInputOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="unit"
+            label="Unit" 
+            loader.one-time="unitLoader" 
+            text.bind="unitView"
+            read-only.bind="readOnly  || isEdit"
+            error.bind="error.unitId"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+       
+       <au-autocomplete 
+            value.bind="supplier"
+            label="Supplier" 
+            loader.one-time="supplierLoader" 
+            text.bind="supplierView"
+            read-only.bind="readOnly  || isEdit"
+            error.bind="error.supplier"
+            options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="deliveryOrder"
+            label="Surat Jalan" 
+            loader.one-time="deliveryOrderBySupplierLoader" 
+            read-only.bind="readOnly|| isEdit"
+            error.bind="error.deliveryOrder"
+            options.bind="auInputOptions"
+            query.bind="filter"
+            show.bind="data.unitId && data.supplierId"
+            text="no"
+            view-model.ref="deliveryOrderAU">
+        </au-autocomplete>
+
+        <au-checkbox
+            label="Simpan ke Gudang" 
+            value.bind="data.isStorage" 
+            error.bind="error.isStorage" 
+            change.delegate="isStorageChanged($event)"
+            read-only.bind="readOnly"
+            options.bind="auInputOptions">
+        </au-checkbox>
+
+        <au-autocomplete 
+            value.bind="storage"
+            label="Nama Gudang" 
+            loader.one-time="storageLoader" 
+            read-only.bind="readOnly"
+            error.bind="error.storage"
+            query.bind="storageFilter"
+            show.bind="data.isStorage && data.doId"
+            options.bind="auInputOptions"
+            text.bind="storageView">
+        </au-autocomplete>
+
+        <au-multiline 
+            label="Keterangan"
+            value.bind="data.remark"
+            error.bind="error.remark"
+            read-only.bind="readOnly"
+            placeholder=" "
+            options.bind="auInputOptions">
+        </au-multiline>
+        <au-textbox
+            if.bind="deliveryOrder"
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+        <au-collection 
+            items.bind="data.items" 
+            columns.bind="deliveryOrderItem.columns"
+            errors.bind="error.items"
+            read-only.bind="readOnly"
+            item-template="modules/purchasing/unit-receipt-note/template/delivery-order-item"
+            show.bind="deliveryOrder">
+        </au-collection>
+    </form>
+</template>

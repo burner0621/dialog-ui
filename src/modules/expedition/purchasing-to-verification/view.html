@@ -1,0 +1,79 @@
+<template>
+    <au-input-form title="Rincian Penyerahan Dokumen Pembelian ke Verifikasi">
+        <au-textbox
+            label="No. SPB"
+            read-only="true"
+            value.bind="data.UnitPaymentOrderNo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal SPB"
+            read-only="true"
+            value.bind="data.UPODate"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            label="Tanggal Jatuh Tempo"
+            read-only="true"
+            value.bind="data.DueDate"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox
+            label="Nomor Invoice"
+            read-only="true"
+            value.bind="data.InvoiceNo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Supplier"
+            read-only="true"
+            value.bind="data.SupplierName"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Divisi"
+            read-only="true"
+            value.bind="data.DivisionName"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="PPH"
+            read-only="true"
+            value.bind="data.IncomeTax"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="PPN"
+            read-only="true"
+            value.bind="data.Vat"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Total Bayar (DPP + PPN)"
+            read-only="true"
+            value.bind="data.TotalPaid"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Mata Uang"
+            read-only="true"
+            value.bind="data.Currency"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-collection
+            items.bind="items" 
+            columns.bind="columns"
+            item-template="modules/expedition/purchasing-to-verification/templates/detail">
+        </au-collection>
+    </au-input-form>
+</template>

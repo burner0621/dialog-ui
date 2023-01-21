@@ -1,0 +1,138 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context">
+
+        <div slot="actions"
+             class="btn-group">
+            <button class="btn btn-default"
+                    click.delegate="context.cancel($event)"
+                    if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary"
+                    click.delegate="context.edit($event)"
+                    if.bind="context.hasEdit && !data.IsPosted">Ubah</button>
+            <button class="btn btn-success"
+                    click.delegate="context.save($event)"
+                    if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"
+                    click.delegate="context.delete($event)"
+                    if.bind="context.hasDelete && !data.IsPosted">Hapus</button>
+        </div>
+
+        <au-textbox label="No. Transaksi"
+                    value.bind="data.Code"
+                    error.bind="error.Code"
+                    read-only.bind="true"
+                    if.bind="data.Id && data.Id > 0"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete value.bind="data.Bank"
+                         error.bind="error.Bank"
+                         label="Bank"
+                         loader.bind="bankLoader"
+                         text.bind="bankView"
+                         placeholder="cari bank"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="No. Rekening"
+                    value.bind="data.Bank && data.Bank.AccountNumber ? data.Bank.AccountNumber : ''"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Currency"
+                    value.bind="data.Bank && data.Bank.Currency && data.Bank.Currency.Code ? data.Bank.Currency.Code : ''"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal Dokumen"
+                       value.bind="data.Date"
+                       error.bind="error.Date"
+                       read-only.bind="readOnly"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="No. Referensi"
+                    value.bind="data.ReferenceNo"
+                    error.bind="error.ReferenceNo"
+                    placeholder="masukkan nomor referensi"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Jenis Referensi"
+                    value.bind="data.ReferenceType"
+                    error.bind="error.ReferenceType"
+                    placeholder="masukkan jenis referensi"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <!-- <au-dropdown
+            label="Status"
+            value.bind="data.Status"
+            error.bind="error.Status"
+            read-only.bind="readOnly"
+            items.bind="statusOptions"
+            options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-dropdown label="Jenis Sumber"
+                     value.bind="data.SourceType"
+                     error.bind="error.SourceType"
+                     read-only.bind="readOnly"
+                     items.bind="sourceTypes"
+                     options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete value.bind="data.Supplier"
+                         error.bind="error.Supplier"
+                         label.bind="getSupplierLabel"
+                         loader.bind="supplierLoader"
+                         text.bind="supplierView"
+                         placeholder="cari supplier"
+                         read-only.bind="readOnly"
+                         if.bind="!isFrom && data.SourceType != 'Pendanaan'"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="data.Buyer"
+                         error.bind="error.Buyer"
+                         label.bind="getBuyerLabel"
+                         loader.bind="buyerLoader"
+                         text.bind="buyerView"
+                         placeholder="cari buyer"
+                         read-only.bind="readOnly"
+                         if.bind="isFrom && (data.SourceType != 'Lain - lain' && data.SourceType != 'Pendanaan')"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox value.bind="data.Receiver"
+                    error.bind="error.Receiver"
+                    label="Tujuan"
+                    placeholder="masukkan tujuan"
+                    read-only.bind="readOnly"
+                    if.bind="isFrom && data.SourceType == 'Lain - lain'"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="Nominal"
+                    value.bind="data.Nominal"
+                    error.bind="error.Nominal"
+                    read-only.bind="readOnly"
+                    format="0,0.0000"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline label="Keterangan"
+                      value.bind="data.Remark"
+                      placeholder="tambah keterangan"
+                      read-only.bind="readOnly"
+                      options.bind="controlOptions">
+        </au-multiline>
+
+    </au-input-form>
+</template>

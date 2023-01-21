@@ -1,0 +1,25 @@
+<template>
+    <tr>
+        <td class="col-sm-6">
+            <au-autocomplete 
+                placeholder="Unit" 
+                value.bind="data.unit"
+                error.bind="error.unit" 
+                loader.bind="unitLoader" 
+                text.bind="unitView"
+                read-only.bind="readOnly || data.id" >
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-6">
+            <au-numeric
+                value.bind="data.billValue"
+                error.bind="error.billValue"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

@@ -1,0 +1,59 @@
+<template
+  ><style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style>
+  <au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <au-datepicker
+      options.bind="controlOptions"
+      value.bind="data.date"
+      error.bind="error.Date"
+      read-only.bind="true"
+      label="Tanggal"
+    >
+    </au-datepicker>
+
+    <au-dropdown
+      options.bind="controlOptions"
+      label="Shift"
+      value.bind="data.shift"
+      error.bind="error.Shift"
+      read-only.bind="true"
+      items.bind="shifts"
+    ></au-dropdown>
+
+    <au-dropdown
+      options.bind="controlOptions"
+      label="Group"
+      value.bind="data.group"
+      error.bind="error.Group"
+      read-only.bind="true"
+      items.bind="groups"
+    ></au-dropdown>
+    <textbox
+      label ="Nomor Bon"
+      value.bind="data.bonNo"
+      read-only.bind="true"
+    ></textbox>
+    <au-collection
+      columns.bind="itemColumns"
+      view-model.ref="ItemsCollection"
+      items.bind="data.warehousesProductionOrders"
+      errors.one-way="error.WarehousesProductionOrders"
+      options.bind="detailOptions"
+      read-only.bind="readOnly"
+      remove.bind="onremove"
+      header-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/item-header-edit"
+      item-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/item-edit"
+    >
+      >
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

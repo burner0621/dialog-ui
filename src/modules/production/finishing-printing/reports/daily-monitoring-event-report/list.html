@@ -1,0 +1,49 @@
+<template>
+    <style>
+        #dailyReport td {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Laporan Monitoring Event</h1>
+    <form class="form-horizontal">
+
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom" error.bind="error.dateFrom"
+            options.bind="controlOptions"></au-datepicker>
+
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" error.bind="error.dateTo"
+            options.bind="controlOptions"></au-datepicker>
+
+        <au-dropdown value.bind="processArea" items.bind="areaOptions" label="Area" error.bind="error.area"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete value.bind="machine" label="Mesin" error.bind="error.machine" loader.bind="machineLoader"
+            text="Name" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+    <br>
+
+    <!-- <au-table data.bind="loader" columns.bind="columns" options.bind="tableOptions" view-model.ref="dailyTable"
+            context.bind="contextTable" row-formatter.bind="rowFormatter">
+        </au-table> -->
+
+    <au-collection view-model.ref="ItemsCollections" columns.bind="itemColumns" items.bind="tableData" options.bind="detailOptions"
+        item-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/item">
+    </au-collection>
+
+
+    </form>
+
+</template>

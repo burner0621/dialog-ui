@@ -1,0 +1,65 @@
+<template>
+      <au-input-form title="Detail Penyerahan Dokumen Disposisi Pembayaran ke Verifikasi">
+          <au-textbox
+              label="No Disposisi"
+              read-only="true"
+              value.bind="data.dispositionNo"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-datepicker
+              label="Tanggal Disposisi"
+              read-only="true"
+              value.bind="data.dispositionDate"
+              options.bind="controlOptions">
+          </au-datepicker>
+  
+          <au-datepicker
+              label="Tanggal Jatuh Tempo"
+              read-only="true"
+              value.bind="data.paymentDueDate"
+              options.bind="controlOptions">
+          </au-datepicker>
+  
+          <au-textbox
+              label="Supplier"
+              read-only="true"
+              value.bind="data.supplier.name"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-textbox
+              label="PPH"
+              read-only="true"
+              value.bind="data.incomeTaxValue"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-textbox
+              label="PPN"
+              read-only="true"
+              value.bind="data.vatValue"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-textbox
+              label="Total Bayar (DPP + PPN)"
+              read-only="true"
+              value.bind="data.totalPaid"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-textbox
+              label="Mata Uang"
+              read-only="true"
+              value.bind="data.currency.code"
+              options.bind="controlOptions">
+          </au-textbox>
+  
+          <au-collection
+              items.bind="items" 
+              columns.bind="columns"
+              item-template="modules/expedition/purchasing-to-verification/templates/detail">
+          </au-collection>
+      </au-input-form>
+  </template>

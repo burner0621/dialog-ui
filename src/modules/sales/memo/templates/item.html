@@ -1,0 +1,49 @@
+<template>
+    <tr>
+        <!-- <require from="../../../../lib/number-format-value-converter"></require> -->
+        <td>
+            <au-numeric value.bind="data.PaymentAmount"
+                        error.bind="error.PaymentAmount"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions"></au-numeric>
+        </td>
+        <td>
+            <au-autocomplete placeholder="pilih mata uang"
+                             value.bind="selectedCurrency"
+                             error.bind="error.Currency"
+                             loader.one-time="currencyLoader"
+                             text="Code"
+                             read-only.bind="readOnly">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="selectedCurrency ? selectedCurrency.Rate : 0"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Interest"
+                        error.bind="error.Interest"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="getTotal"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

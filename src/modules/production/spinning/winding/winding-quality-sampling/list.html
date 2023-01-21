@@ -1,0 +1,45 @@
+<template>
+    <h1 class="page-header">Spinning - Winding</br>Quality Hasil Produksi Spinning</h1>
+    <br>
+    <div class="row">
+            <div class="col-sm-8">
+                <div class="input-group">
+					<input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
+					<span class="input-group-btn">
+                        <button class="btn btn-default" click.delegate="loadPage()"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" click.delegate="activate()"> Tampilkan Semua </button>    
+                    </span>
+				</div>
+            </div>
+            <div class="col-sm-4">
+                <div class="pull-right">
+                    <button class="btn btn-primary" click.delegate="create()">Buat</button>
+                </div>
+            </div>
+        </div> 
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Spinning</th>
+                <th>Tanggal</th>
+                <th>Jenis Benang</th>
+                <th>Mesin</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data">
+                <td>${item.spinning.name}</td>
+                <td style="text-align:center">${item.date | dateFormat:'D MMM YYYY'}</td>
+                <td>${item.uster.product.name}</td>
+                <td>${item.machine.name}</td>
+                <td><button class="btn btn-default" click.delegate="view(item)">Rincian</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Data quality hasil produksi spinning tidak ada.
+    </div>
+    <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+    <hr/>
+</template>

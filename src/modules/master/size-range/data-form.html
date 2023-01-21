@@ -1,0 +1,14 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <div class="row">
+      <div class="col-md-9">
+        <au-textbox label="Size Range" placeholder="Nama Size Range" value.bind="data.Name" error.bind="error.Name" options.bind="customOptions"
+          read-only.bind="readOnly"></au-textbox>
+      </div>
+    </div>
+    <au-collection items.bind="data.RelatedSizes" errors.bind="error.RelatedSizes" columns.bind="relatedSizesInfo.columns" add.bind="relatedSizesInfo.onAdd"
+      remove.bind="relatedSizesInfo.onRemove" title="Size Terkait" read-only.bind="readOnly" item-template="modules/master/size-range/template/related-sizes">
+    </au-collection>
+  </au-input-form>
+  </div>
+</template>

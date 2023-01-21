@@ -1,0 +1,16 @@
+<template>
+  <tr repeat.for="item of itemSum">
+    <td colspan="2" class="text-right" style="padding-right:10%">
+      <b>Total<b>
+  </td>
+  <td class="text-right">
+    <require from="../../../../../lib/number-format-value-converter"></require>
+    <b>${item.orderQuantity | numberFormat:"0,000"}<b>
+  </td>
+  <td class="text-left">
+    <div class="col-sm-6">
+        <b class="col-sm-10 pull-left">${item.uom}<b>
+    </div>
+  </td>
+</tr>
+</template>

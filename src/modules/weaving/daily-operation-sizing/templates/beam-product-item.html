@@ -1,0 +1,46 @@
+<template>
+  <tr>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.SizingBeamNumber" error.bind="error.SizingBeamNumber" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.BeamProductDate" error.bind="error.BeamProductDate" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.BeamProductTime" error.bind="error.BeamProductTime" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="Counter Akhir" value.bind="data.CounterFinish" error.bind="error.CounterFinish"
+        read-only.bind="true"></au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="PIS(m)" value.bind="data.PISMeter" error.bind="error.PISMeter" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="Berat Bersih (Netto)" value.bind="data.WeightNetto" error.bind="error.WeightNetto"
+        read-only.bind="true"></au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="Berat Kotor (Bruto)" value.bind="data.WeightBruto" error.bind="error.WeightBruto"
+        read-only.bind="true"></au-textbox>
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="SPU" value.bind="data.SPU" error.bind="error.SPU" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="Total Putus" value.bind="data.TotalBroken" error.bind="error.TotalBroken" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox placeholder="Status Beam Sizing" value.bind="data.SizingBeamStatus"
+        error.bind="error.SizingBeamStatus" read-only.bind="true">
+      </au-textbox>
+    </td>
+  </tr>
+</template>

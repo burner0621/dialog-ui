@@ -1,0 +1,172 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <!-- <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div> -->
+
+        <au-textbox
+            label="No. Sewing In"
+            value.bind="data.SewingInNo"
+            read-only="true"
+            if.bind="data.SewingInNo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="selectedUnit"
+            error.bind="error.Unit"
+            label="Unit Sewing In"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Asal Sewing"
+            value.bind="selectedSewingFrom"
+            error.bind="error.SewingFrom"
+            read-only.bind="readOnly || isEdit"
+            items.bind="sewingFromOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete
+            value.bind="selectedLoading"
+            error.bind="error.LoadingNo"
+            label="No Loading"
+            query.bind="filter"
+            if.bind="data.Unit && isCutting"
+            loader.bind="loadingLoader"
+            text.bind="LoadingView"
+            placeholder="nomor loading"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedLoadingViewModel">
+        </au-autocomplete>
+
+        
+        <au-autocomplete
+            value.bind="selectedUnitFrom"
+            error.bind="error.UnitFrom"
+            label="Unit Asal"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="UnitFrom"
+            if.bind="isSewing || isFinishing"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="data.UnitFrom"
+            error.bind="error.UnitFrom"
+            label="Unit Asal"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            if.bind="data.UnitFrom && isCutting"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        
+        <au-autocomplete
+            value.bind="selectedSewingOut"
+            error.bind="error.RONo"
+            label="No RO"
+            loader.bind="roLoader"
+            show.bind="data.Unit && data.UnitFrom && isSewing"
+            text.bind="ROView"
+            placeholder="nomor RO"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedSewingOutViewModel">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedFinishingOut"
+            error.bind="error.RONo"
+            label="No RO"
+            loader.bind="roFinishingLoader"
+            show.bind="data.Unit && data.UnitFrom && isFinishing"
+            text.bind="ROView"
+            placeholder="nomor RO"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedFinishingOutViewModel">
+        </au-autocomplete>
+
+        <au-textbox
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            label="RO"
+            placeholder="Nomor RO"
+            if.bind="data.RONo && isCutting"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.Article"
+            label="No Artikel"
+            read-only="true"
+            if.bind="data.Article"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Comodity"
+            error.bind="error.Comodity"
+            label="Komoditi"
+            text.bind="comodityView"
+            read-only.bind="true"
+            if.bind="data.Comodity"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Sewing In"
+            value.bind="data.SewingInDate"
+            error.bind="error.SewingInDate"
+            read-only.bind="readOnly|| isCutting"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-layout error.bind="error.ItemsCount" if.bind="error.ItemsCount"></au-layout>
+        <au-layout error.bind="error.Price" if.bind="error.Price"></au-layout>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsInfo.columns" 
+            options.bind="itemOptions"
+            if.bind="data.Items.length > 0 && isCutting"
+            read-only.bind="readOnly"
+            header-template="modules/garment-production/sewing-in/template/item-header"
+            item-template="modules/garment-production/sewing-in/template/item">
+        </au-collection>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsInfo.columns" 
+            options.bind="itemOptions"
+            if.bind="data.Items.length > 0 && (isSewing || isFinishing)"
+            read-only.bind="readOnly"
+            item-template="modules/garment-production/sewing-in/template/item-sewing"
+            >
+        </au-collection>
+
+        <p if.bind="data.Items"><b>Jumlah Total Sewing In : ${totalQuantity} PCS</b></p>
+
+    </au-input-form>
+</template>

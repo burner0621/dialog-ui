@@ -1,0 +1,209 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title="Create: Operasional Mesin Harian Sizing"
+                 options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="No. Mesin"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Mesin"
+                           value.bind="MachineDocument"
+                           error.bind="error.MachineDocumentId"
+                           read-only.bind="readOnly"
+                           loader.bind="machines"
+                           text="MachineNumber"></au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="No. Order Produksi"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Order Produksi"
+                           value.bind="OrderDocument"
+                           error.bind="error.OrderDocumentId"
+                           read-only.bind="readOnly"
+                           loader.bind="orders"
+                           text="OrderNumber">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="No. Konstruksi"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="No. Konstruksi"
+                      value.bind="ConstructionNumber"
+                      error.bind="error.ConstructionNumber"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2 col-md-offset-1"
+             style="text-align:left;">
+          <textbox label="Unit Weaving"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Unit Weaving"
+                      value.bind="WeavingUnit"
+                      error.bind="error.WeavingUnit"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Kode Resep"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Kode Resep"
+                      value.bind="data.RecipeCode"
+                      error.bind="error.RecipeCode"
+                      read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+        <div class="col-md-2 col-md-offset-1"
+             style="text-align:left;">
+          <textbox label="Ne Real"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-numeric placeholder="Ne Real"
+                      value.bind="data.NeReal"
+                      error.bind="error.NeReal"
+                      read-only.bind="readOnly">
+          </au-numeric>
+        </div>
+      </div>
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Tanggal Pasang"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-datepicker value.bind="PreparationDate"
+                         error.bind="error.PreparationDate">
+          </au-datepicker>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Waktu Pasang"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-timepicker value.bind="PreparationTime"
+                         error.bind="error.PreparationTime"
+                         read-only.bind="readOnly">
+        </div>
+        <div class="col-md-2 col-md-offset-2"
+             style="text-align:left;">
+          <textbox label="Shift"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Shift"
+                      value.bind="PreparationShift.Name"
+                      error.bind="error.PreparationShift"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Jumlah Beam Dihasilkan"
+                   read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-numeric placeholder="Jumlah Beam Dihasilkan"
+                      value.bind="data.BeamProductResult"
+                      error.bind="error.BeamProductResult"
+                      read-only.bind="readOnly">
+          </au-numeric>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Total Helai Benang Beam Warping"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-4">
+          <au-textbox placeholder="Total Helai Benang Beam Warping"
+                      value.bind="YarnStrands"
+                      error.bind="error.YarnStrands"
+                      read-only.bind="true"></au-textbox>
+        </div>
+        <!-- <div class="col-md-2"
+             style="text-align:left; display:none">
+          <textbox label="Total Berat Kosong Beam Warping"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-4"
+             style="display:none;">
+          <au-textbox placeholder="Total Berat Kosong Beam Warping"
+                      value.bind="EmptyWeight"
+                      error.bind="error.EmptyWeight"
+                      read-only.bind="true"></au-textbox>
+        </div> -->
+      </div> 
+
+      <div class="row"
+           style="white-space: nowrap; overflow: auto; padding-right: 8px;"
+           show.bind="showHideBeamsCollection">
+        <au-collection items.bind="BeamsWarping"
+                       errors.bind="error.BeamsWarping"
+                       columns.bind="beamsWarpingColumns"
+                       add.bind="addBeamsWarping"
+                       remove.bind="onremove"
+                       read-only.bind="readOnly"
+                       options.bind="beamsWarpingTableOptions"
+                       item-template="modules/weaving/daily-operation-sizing/templates/beams-warping-post">
+        </au-collection>
+      </div>
+  </au-input-form>
+</template>

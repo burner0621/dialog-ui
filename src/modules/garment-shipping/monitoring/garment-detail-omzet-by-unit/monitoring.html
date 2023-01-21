@@ -1,0 +1,103 @@
+<template>
+    <require from="../../../../au-components/form/input/_input"></require>
+       <require from="../../../../lib/number-format-value-converter"></require>
+       <h1 class="page-header">Report Omzet Garment Per Unit</h1>
+       <form class="form-horizontal">
+           <au-autocomplete 
+               label="Unit"
+               value.bind="unit"
+               error.bind="error.Unit"
+               loader.bind="unitLoader"
+               query.bind="unitQuery"
+               text.bind = "unitView"
+               key="Code"
+               placeholder="Cari Unit"
+               options.bind="controlOptions">
+           </au-autocomplete>
+           
+           <au-datepicker label="Tanggal Trucking Awal" value.bind="dateFrom"></au-datepicker>
+           <au-datepicker label="Tanggal Trucking Akhir" value.bind="dateTo"></au-datepicker>
+     
+          <div class="form-group">
+               <label for="contact" class="col-sm-6 control-label"></label>
+               <div class="col-sm-3">
+                   <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                   <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+               </div>
+           </div>
+   
+           <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak</button>
+           <div class="table-responsive">
+               <table class="table table-bordered">
+               <thead>
+                   <tr>
+                       <th class="text-center">NO</th>
+                       <th class="text-center">KONFEKSI</th>                       
+                       <th class="text-center">INVOICE NO</th>
+                       <th class="text-center">TGL TRUCKING</th>
+                       <th class="text-center">TGL PEB</th>
+                       <th class="text-center">NAMA BUYER</th>
+                       <th class="text-center">I  T  E  M</th>
+                       <th class="text-center">NO RO</th>
+                       <!--<th class="text-center">STYLE ORD / ARTICLE NO</th>-->
+                       <th class="text-center">QUANTITY</th>
+                       <th class="text-center">SATUAN</th>                    
+                       <th class="text-center">AMOUNT</th>
+                       <th class="text-center">MATA UANG</th>                       
+                       <th class="text-center">RATE</th>                       
+                       <th class="text-center">AMOUNT IDR</th>                      
+                   </tr>
+               </thead>
+                   <tbody>
+                        <template repeat.for="invoice of invoices">
+                        <tr repeat.for="item of invoice.data">
+                           <td class="text-center"> ${$index + 1}</td>  
+                           <td>${item.unitCode}</td>                                    
+                           <td>${item.invoiceNo}</td>
+                           <td>${item.truckingDate}</td>               
+                           <td>${item.pebDate}</td>                                          
+                           <td>${item.buyerAgentName}</td>
+                           <td>${item.comodityName}</td>     
+                           <td>${item.roNumber}</td>                                    
+                           <!--<td>${item.articleStyle}</td>                       -->
+                           <td align="right">
+                               <strong>
+                               <au-numeric value.bind="item.quantityInPCS" read-only="true"></au-numeric>
+                               </strong>
+                           </td>
+                           <td>${item.uomUnit}</td>                           
+                           <td align="right">
+                               <strong>
+                               <au-numeric value.bind="item.amount" read-only="true"></au-numeric>
+                               </strong>
+                           </td>     
+                           <td>${item.currencyCode}</td>                           
+                           <td align="right">
+                               <au-numeric value.bind="item.rate" read-only="true"></au-numeric>
+                           </td>                                            
+                           <td align="right">
+                               <strong>
+                               <au-numeric value.bind="item.amountIDR" read-only="true"></au-numeric>
+                               </strong>
+                           </td>                                                 
+                        </tr>  
+                    </template>    
+                       <tr class="active">
+                           <td class="text-center" colspan="8"><strong>T O T A L . . . . . . :</strong></td>
+                           <td class="text-right"><strong>${QtyTotal1}</strong></td>   
+                           <td class="text-right"><strong>.</strong></td>    
+                           <td class="text-right"><strong>${AmountTtlUSD}</strong></td>                                             
+                           <td class="text-right"><strong>.</strong></td>    
+                           <td class="text-right"><strong>.</strong></td>                               
+                           <td class="text-right"><strong>${AmountTtlIDR}</strong></td>                     
+                       </tr>              
+                   </tbody>
+               </table>           
+            
+           <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+                Tidak Ada Data Yang Ditemukan.
+           </div>
+   
+           <hr/>
+       </form>
+   </template>

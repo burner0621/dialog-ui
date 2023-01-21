@@ -1,0 +1,129 @@
+<template>
+  <h1 class="page-header">Laporan Operasional Mesin Harian Warping</h1>
+  <!-- <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Periode" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-dropdown value.bind="Period" items.bind="periods" error.bind="error.Period"
+        read-only.bind="readOnly">
+      </au-dropdown>
+    </div>
+  </div>
+
+  <div class="row" show.bind="ShowHideByDatePeriod">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Tanggal Pasang" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="DatePeriod" error.bind="error.DatePeriod" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+  </div>
+
+  <div class="row" show.bind="ShowHideByDateRangePeriod">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Tanggal Pasang" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="StartDatePeriod" error.bind="error.StartDatePeriod">
+      </au-datepicker>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap; padding-top: 20px;">
+      <p>s.d</p>
+    </div>
+
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="EndDatePeriod" error.bind="error.EndDatePeriod" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+  </div>
+
+  <div class="row" show.bind="ShowHideMonthlyPeriod">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Bulanan" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-dropdown value.bind="MonthlyPeriod" error.bind="error.MonthlyPeriod" read-only.bind="readOnly"
+        items.bind="months">
+      </au-dropdown>
+    </div>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Tanggal Pasang" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="StartDatePeriod" error.bind="error.StartDatePeriod" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap; padding-top: 20px;text-align:center;">
+      <p>s.d</p>
+    </div>
+
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="EndDatePeriod" error.bind="error.EndDatePeriod" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="No. Order Produksi" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="OrderProduction" error.bind="error.OrderProduction" read-only.bind="readOnly"
+        loader.bind="orders" text="OrderNumber"></au-autocomplete>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Unit Weaving" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="WeavingUnit" error.bind="error.WeavingUnit" read-only.bind="readOnly"
+        loader.bind="units" text="Name"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Jenis Material" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="MaterialType" error.bind="error.MaterialType" read-only.bind="readOnly"
+        loader.bind="materialTypes" text="Name"></au-autocomplete>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Status Operasi" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-dropdown value.bind="OperationStatus" error.bind="error.OperationStatus" read-only.bind="readOnly"
+        items.bind="operationStatusItems"></au-dropdown>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+      <button class="btn btn-primary" click.delegate="exportToExcel()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+        Print Laporan
+      </button>
+      <button class="btn btn-success" click.delegate="searchDailyOperationWarpings()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 56px; border: 1px solid #777777;">
+        Cari
+      </button>
+      <button class="btn btn-success" click.delegate="reset()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 96px; border: 1px solid #777777;">
+        Atur Ulang
+      </button>
+    </div>
+  </div>
+  <au-table style="white-space: nowrap; margin-top: 26px;" data.bind="loader" columns.bind="columns"
+    sortable.bind="true" view-model.ref="dailyOperationWarpingsTable" page-size="25" options.bind="tableOptions"
+    context.bind="context">
+  </au-table>
+</template>

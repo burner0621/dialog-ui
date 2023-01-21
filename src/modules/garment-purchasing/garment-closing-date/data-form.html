@@ -1,0 +1,15 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-datepicker
+            label="Close Date"
+            value.bind="data.CloseDate"
+            error.bind="error.CloseDate"
+            options.bind="controlOptions"
+            read-only.bind="readOnly">
+        </au-datepicker>
+    </au-input-form>
+</template>

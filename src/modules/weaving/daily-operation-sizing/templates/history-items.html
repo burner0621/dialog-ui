@@ -1,0 +1,68 @@
+<template>
+  <style>
+    #edit-button {
+      background-color: rgb(32, 124, 8);
+      color: white;
+      white-space: nowrap;
+      width: 100px;
+      border: 1px solid #777777;
+    }
+
+    #delete-button {
+      background-color: #d65151;
+      color: white;
+      white-space: nowrap;
+      width: 100px;
+      border: 1px solid #777777;
+    }
+
+  </style>
+  <tr>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.SizingBeamNumber" error.bind="error.SizingBeamNumber" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineDate" error.bind="error.MachineDate" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineTime" error.bind="error.MachineTime" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.ShiftName" error.bind="error.ShiftName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.OperatorName" error.bind="error.OperatorName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.OperatorGroup" error.bind="error.OperatorGroup" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.BrokenPerShift" error.bind="error.BrokenPerShift" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <!-- <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.Information" error.bind="error.Information" read-only.bind="true">
+      </au-textbox>
+    </td> -->
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineStatus" error.bind="error.MachineStatus" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <div if.bind="data.ShowDeleteButton">
+        <!-- <button class="btn btn-default" id="edit-button" click.delegate="edit()" disabled.bind="isEditDisabled">
+          Edit
+        </button> -->
+        <button class="btn btn-default" id="delete-button" click.delegate="delete(data)" disabled.bind="isDeleteDisabled">
+          Delete
+        </button>
+      </div>
+    </td>
+  </tr>
+</template>

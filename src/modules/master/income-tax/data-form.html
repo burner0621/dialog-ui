@@ -1,0 +1,28 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title"
+                     with.bind="context"
+                     options.bind="formOptions">
+
+        <au-textbox label="Nama"
+                    value.bind="data.name"
+                    error.bind="error.name"
+                    read-only.bind="true"></au-textbox>
+
+        <au-textbox label="Rate"
+                    value.bind="data.rate"
+                    error.bind="error.rate"
+                    read-only.bind="true"></au-textbox>
+
+        <au-textbox label="COA"
+                    value.bind="data.COACodeCredit"
+                    error.bind="error.COACodeCredit"
+                    read-only.bind="readOnly"></au-textbox>
+
+        <template replaceable
+                  part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+</template>

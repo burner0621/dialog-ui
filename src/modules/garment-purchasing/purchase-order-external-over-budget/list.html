@@ -1,0 +1,19 @@
+<template>
+    <h1 class="page-header">Purchase Order External Garment Over Budget </h1>
+    <au-table 
+        view-model.ref="table" 
+        data.bind="loader" 
+        columns.bind="columns" 
+        sortable.bind="true" 
+        page-size="25" 
+        context.bind="context"
+        context-click.delegate="contextClickCallback($event)" 
+        context-show.call="contextShowCallback(index, context, data)" 
+        selectable.bind="true"
+        selections.bind="dataToBeApproved" row-formatter.bind="rowFormatter">
+        
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-primary" disabled.bind="!dataToBeApproved.length > 0" click.delegate="approve()">Approve</button>            
+        </div>
+    </au-table>
+</template>

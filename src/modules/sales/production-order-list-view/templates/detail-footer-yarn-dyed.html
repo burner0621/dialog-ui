@@ -1,0 +1,14 @@
+<template>
+  <tr>
+  <td colspan="2" class="text-right" style="padding-right:10%">
+    Total
+  </td>
+  <td class="text-left">
+    <require from="../../../../lib/number-format-value-converter"></require>
+    ${itemSum | numberFormat:"0,000"}
+  </td>
+  <td>
+    <au-textbox value.one-way="Uom" error.bind="error.Uom" read-only.bind="true" options.bind="controlOption"></au-textbox>
+  </td>
+  </tr>
+</template>

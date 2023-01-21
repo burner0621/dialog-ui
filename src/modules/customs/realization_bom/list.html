@@ -1,0 +1,31 @@
+<template>
+    <require from="../../../lib/number-format-value-converter"></require>
+<h1 class="page-header">Laporan Monitoring BOM (Bill of Material)</h1>
+<form class="form-horizontal">
+
+    <au-dropdown 
+              label="Unit" 
+              value.bind="UnitItem"
+              items.bind="UnitItems"
+              options.bind="controlOptions" >
+    </au-dropdown>
+
+    <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind="controlOptions"></au-datepicker>
+    <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind="controlOptions"></au-datepicker>
+
+    <div class="form-group">
+        <label for="contact" class="col-sm-5 control-label"></label>
+        <div class="col-sm-3">
+            <button click.delegate="ExportToExcel()" class='btn btn-success'>Cetak Excel</button>
+            <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+        </div>
+    </div>
+
+     <!-- <div >
+        <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+    </div> -->
+
+    <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+    <hr/>
+</form>
+</template> 

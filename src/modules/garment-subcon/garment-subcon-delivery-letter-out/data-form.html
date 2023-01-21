@@ -1,0 +1,153 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox
+            if.bind="data.DLNo"
+            value.bind="data.DLNo"
+            label="No SJ Subcon"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown
+            label="Jenis SJ Subcon"
+            value.bind="selectedDLType"
+            error.bind="error.DLType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="dlTypes"
+            options.bind="controlOptions">
+        </au-dropdown>
+        
+        <au-dropdown
+            label="Jenis Subcon Contract"
+            value.bind="selectedContractType"
+            error.bind="error.ContractType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="contractTypes"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown 
+            label="Kategori Subcon" 
+            value.bind="selectedSubconCategory" 
+            error.bind="error.SubconCategory" 
+            read-only.bind="readOnly || isEdit"
+            if.bind="selectedContractType"
+            items.bind="SubconCategoryTypeOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <!-- <au-dropdown
+            label="Jenis Subcon Jasa"
+            value.bind="selectedServiceType"
+            error.bind="error.ServiceType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="serviceTypes"
+            if.bind="selectedContractType=='SUBCON JASA'"
+            options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-autocomplete
+            value.bind="selectedContract"
+            error.bind="error.ContractNo"
+            label="No Subcon Contract"
+            loader.bind="contractLoader"
+            text.bind="contractView"
+            query.bind="contractFilter"
+            placeholder="subcon contract"
+            read-only.bind="readOnly|| isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedContractViewModel">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal SJ"
+            value.bind="data.DLDate"
+            error.bind="error.DLDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete
+            value.bind="selectedUEN"
+            error.bind="error.UENNo"
+            label="No Bon Pengeluaran Unit"
+            loader.bind="uenLoader"
+            text.bind="uenView"
+            if.bind="selectedContract && data.SubconCategory=='SUBCON CUTTING SEWING'"
+            query.bind="UENFilter"
+            placeholder="No Bon Pengeluaran Unit"
+            read-only.bind="readOnly|| isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedUENViewModel">
+        </au-autocomplete>
+
+        
+        <au-autocomplete
+            value.bind="selectedPO"
+            error.bind="error.PONo"
+            label="No PO"
+            loader.bind="poLoader"
+            text.bind="POView"
+            placeholder="Nomor PO"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            if.bind="data.SubconCategory=='SUBCON CUTTING SEWING'"
+            view-model.ref="selectedCuttingInViewModel">
+        </au-autocomplete>
+
+        <au-multiline
+            value.bind="data.Remark"
+            error.bind="error.Remark"
+            label="Keterangan"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+            <p if.bind="error.TotalQty" class="help-block text-center">${error.TotalQty}</p>
+        </div>
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="itemsInfo.columns"
+            read-only.bind="readOnly"
+            if.bind="data.Items && data.SubconCategory=='SUBCON CUTTING SEWING'"
+            options.bind="itemOptions"
+            item-template="modules/garment-subcon/garment-subcon-delivery-letter-out/template/item">
+        </au-collection>
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="itemsInfo.columnsCutting"
+            read-only.bind="readOnly"
+            remove.bind="removeItems"
+            add.bind="addItems"
+            if.bind="data.SubconCategory=='SUBCON SEWING'"
+            options.bind="itemOptions"
+            item-template="modules/garment-subcon/garment-subcon-delivery-letter-out/template/item-cutting">
+        </au-collection>
+        
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="data.SubconCategory=='SUBCON JASA GARMENT WASH' ? itemsInfo.columnsServiceWash : data.SubconCategory=='SUBCON JASA KOMPONEN' ? itemsInfo.columnsServiceCutting : data.SubconCategory=='SUBCON BB SHRINKAGE/PANEL' ?  itemsInfo.columnBBPanel : itemsInfo.columnBBWash"
+            read-only.bind="readOnly"
+            remove.bind="removeItems"
+            add.bind="addItems"
+            if.bind="data.ContractType=='SUBCON JASA' || data.ContractType=='SUBCON BAHAN BAKU'"
+            options.bind="itemOptions"
+            item-template="modules/garment-subcon/garment-subcon-delivery-letter-out/template/item-service">
+        </au-collection>
+
+        <p if.bind="data.Items"><b>Total Jumlah Keluar : ${totalQuantity} PCS</b></p>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

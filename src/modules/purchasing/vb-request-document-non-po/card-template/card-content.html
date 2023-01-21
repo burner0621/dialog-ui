@@ -1,0 +1,21 @@
+<template>
+    <tr>
+      <td>
+        <au-autocomplete 
+            value.bind="data.Unit"
+            error.bind="error.Unit"
+            read-only.bind="readOnly || options.vbNonPOType== 'Dengan Nomor VB'"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            options.bind="controlOptions">
+        </au-autocomplete>
+      </td>
+      
+      <td class="col-sm-1"
+          if.bind="!readOnly">
+        <button class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-
+        </button>
+      </td>
+    </tr>
+  </template>

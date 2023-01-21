@@ -1,0 +1,63 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>Activity</ai-dialog-header>
+
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <section id="dragula" if.bind="isNotes">
+                    <div id="notes-box" contentEditable=true data-text="Catatan" innerhtml.bind="data.Notes"></div>
+                    <div class="margin-bottom"><span class="error-text" show.bind="error.Notes">${error.notes}</span></div>
+
+                    <div>
+                        <i class="fa fa-link fa-2x" title="Hyperlink" aria-hidden="true" click.delegate="createHyperlink()"></i>
+
+                        <input type="file" id="dialogFileUpload" change.delegate="uploadFile()" show.bind="false" multiple>
+                        <label for="dialogFileUpload"><i class="fa fa-paperclip fa-2x" title="Attachment" aria-hidden="true"></i></label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6" repeat.for="attachment of currentAttachments">
+                            <div class="attachment-box">
+                                <div class="col-sm-1">
+                                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-sm-9">
+                                    ${attachment.FileName}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6" repeat.for="attachment of attachments">
+                            <div class="attachment-box">
+                                <div class="col-sm-1">
+                                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="col-sm-7">
+                                    ${attachment.name & oneTime}
+                                    <br> ${attachment.newSize & oneTime}
+                                </div>
+                                <div class="col-sm-2">
+                                    <i class="fa fa-window-close-o" aria-hidden="true" click.delegate="deleteAttachment($index)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section if.bind="!isNotes">
+                    <au-textbox value.bind="data.TaskTitle" error.bind="error.TaskTitle" placeholder="Judul tugas"></au-textbox>
+                    <au-multiline value.bind="data.Notes" error.bind="error.Notes" placeholder="Catatan"></au-multiline>
+                    <au-autocomplete value.bind="data.AssignedTo" error.bind="error.AssignedTo" label="Ditugaskan Kepada" loader.one-time="accountLoader"
+                        placeholder="Ditugaskan kepada" text="username">
+                    </au-autocomplete>
+                    <au-datetimepicker value.bind="data.DueDate" label="Batas tanggal terakhir" placeholder="Batal tanggal terahkir" error.bind="error.DueDate"></au-datetimepicker>
+                </section>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.delegate="controller.cancel()">Kembali</button>
+            <button click.delegate="save()">Simpan</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

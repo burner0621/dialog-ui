@@ -1,0 +1,14 @@
+<template> 
+    <div>
+        <textbox value.bind="data.textboxValue" label="Textbox Label" postfix="Textbox Postfix"></textbox>
+        <textbox value.bind="data.textboxValue" postfix="Textbox Postfix"></textbox>
+        <auto-suggest  label="Static" value.bind="data.staticAutoSuggestValue" options.bind="staticAutoSuggestOptions"></auto-suggest>
+        <dropdown  label="native" value.bind="data.native" items.bind="natives" ></dropdown>
+        <dropdown  label="object" value.bind="data.object" items.bind="objects" ></dropdown>
+        <auto-suggest  label="Api" value.bind="data.apiAutoSuggestValue" options.bind="apiAutoSuggestOptions"></auto-suggest> 
+        <currency-auto-suggest label="Currency" value.bind="data.currencyAutoSuggestValue" options.bind="currencyAutoSuggestValue"></auto-suggest> 
+    </div>
+    <button click.delegate="showData()">Show Data</button>
+    <button click.delegate="dialogPrompt()">Dialog:prompt</button>
+    <button click.delegate="dialogShow()">Dialog:custom-view</button>
+</template>

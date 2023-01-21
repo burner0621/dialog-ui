@@ -1,0 +1,35 @@
+<template>
+    <tr>
+        <td class="col-sm-3">
+            <au-autocomplete
+                value.bind="selectedSize"
+                error.bind="error.Size"
+                loader.bind="sizeLoader"
+                read-only.bind="true"
+                placeholder="Size"
+                text="Size">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-3">
+            <au-numeric 
+                value.bind="data.CuttingOutQuantity"
+                error.bind="error.Quantity"
+                read-only.bind="readOnly|| isEdit"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="col-sm-3">
+            <au-textbox 
+                value.bind="data.CuttingOutUom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-3">
+            <au-textbox 
+                value.bind="data.Remark"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+     </tr>
+</template>
+

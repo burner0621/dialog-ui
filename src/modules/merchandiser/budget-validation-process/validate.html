@@ -1,0 +1,53 @@
+<template>
+    <h1 class="page-header">Validasi Budget - PROSES</h1>
+    <au-input-form options.bind="options">
+        <div class="col-sm-6">
+            <au-autocomplete
+                label="No. RO"
+                placeholder="Cari RO"
+                value.bind="costCalculationGarment"
+                error.bind="error.RONo"
+                loader.one-time="costCalculationGarmentLoader"
+                options.bind="length"
+                text="RO_Number"
+                query.one-time="costCalculationGarmentUnpostedFilter"
+                view-model.ref="costCalculationGarmentVM">
+            </au-autocomplete>
+            <au-textbox
+                label="Jenis Validasi"
+                value.bind="validationType"
+                options.bind="length"
+                read-only="true">
+            </au-textbox>
+        </div>
+        <div class="col-sm-6">
+            <au-textbox
+                label="Buyer"
+                value.bind="buyer"
+                options.bind="length"
+                read-only="true">
+            </au-textbox>
+            <au-textbox
+                label="No. Artikel"
+                value.bind="article"
+                options.bind="length"
+                read-only="true">
+            </au-textbox>
+        </div>
+        <au-textbox
+            if.bind="error.MaterialsCount"
+            error.bind="error.MaterialsCount"
+            read-only="true">
+        </au-textbox>
+        <div class="row">
+            <div class="col-md-12">
+                <au-collection
+                    items.bind="data.CostCalculationGarment_Materials"
+                    columns.bind="columns"
+                    errors.bind="error.Materials"
+                    read-only="true">
+                </au-collection>
+            </div>
+        </div>
+    </au-input-form>
+</template>

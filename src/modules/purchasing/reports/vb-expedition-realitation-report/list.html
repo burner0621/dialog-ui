@@ -1,0 +1,95 @@
+<template>
+    <au-input-form title.bind="title">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Ekspedisi Realisasi VB</h1>
+        <div class="form-group">
+
+            <au-autocomplete value.bind="selectedVBRequest"
+                             label="No. VB Request"
+                             placeholder="pilih VB Request"
+                             loader.one-time="vbWithPOLoader"
+                             text="VBNo"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="selectedVBRealize"
+                             label="No. VB Realisasi"
+                             placeholder="pilih VB Realisasi"
+                             loader.one-time="vbRealizationLoader"
+                             text="VBNo"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="selectedApplicant"
+                             label="Pemohon VB"
+                             placeholder="pilih nama pemohon"
+                             loader.one-time="accountLoader"
+                             text="username"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+                             
+            <au-autocomplete value.bind="selectedUnit"
+                             label="Bagian"
+                             placeholder="pilih bagian"
+                             loader.one-time="unitLoader"
+                             text="Name"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal Realisasi VB"
+                           value.bind="realizeStartDate"
+                           options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-datepicker label="Tanggal Akhir Realisasi VB"
+                           value.bind="realizeEndDate"
+                           options.bind="controlOptions">
+            </au-datepicker>
+                             
+            <au-autocomplete value.bind="selectedDivision"
+                             label="Divisi"
+                             placeholder="pilih divisi"
+                             loader.one-time="divisionLoader"
+                             text="Name"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-dropdown label="Status"
+                         value.bind="selectedStatus"
+                         items.bind="statusTypes"
+                         options.bind="controlOptions"
+                         text="label">
+            </au-dropdown>
+
+            <div class="form-group">
+                <label for="contact"
+                       class="col-sm-6 control-label"></label>
+                <div class="col-sm-12 text-center">
+                    <button click.delegate="search()"
+                            class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()"
+                            class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+                
+                <au-table view-model.ref="table"
+                          data.bind="loader"
+                          columns.bind="columns"
+                          page-size="25"
+                          context.bind="context"
+                          options.bind="tableOptions">
+                          <div slot="toolbar"
+                               class="btn-group">
+                              <button class='btn btn-primary'
+                                      click.delegate="exportToExcel()">Excel</button>
+                          </div>
+                </au-table>
+            </div>
+        </div>
+    </au-input-form>
+</template>

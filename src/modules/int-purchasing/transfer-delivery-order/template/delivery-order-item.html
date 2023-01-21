@@ -1,0 +1,35 @@
+<template>
+    <tr>
+        <td >
+            <div class="col-sm-11">
+                <au-autocomplete 
+                        value.bind="ETONo"
+                        error.bind="error.ETONo"
+                        loader.one-time="externalTransferOrderLoader"
+                        text.bind="TransferDeliveryOrderView"
+                        query.one-time="selectedExternalTransferOrderFilter"
+                        read-only.bind="readOnly"
+                        options.bind="controlOptions">
+                </au-autocomplete>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-info" click.delegate="toggle()">i</button> 
+                <button class="btn btn-danger" click.delegate="onremove(data)" if.bind="!readOnly">-</button>
+            </div>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td>
+            <au-collection 
+                items.bind="data.details" 
+                errors.bind="error.details"
+                columns.bind="columns"
+                read-only.bind="readOnly" 
+                remove.bind="removeItems"
+                options.bind="options"
+                item-template="modules/int-purchasing/transfer-delivery-order/template/delivery-order-details"
+                header-template="modules/int-purchasing/transfer-delivery-order/template/transfer-delivery-order-detail-header"></au-collection>
+            </au-collection>
+        </td>  
+    </tr>
+</template>

@@ -1,0 +1,22 @@
+<template replace-part="avalItem">
+    <tr>
+        <td>
+            <au-textbox value.bind="data.grade" read-only.bind="true" error.bind="error.Grade"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.avalType" read-only.bind="readOnly" error.bind="error.Type"
+                options.bind="controlOptions" items.bind="avalTypes">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-numeric value.bind="data.balance" format="0.00" read-only.bind="readOnly" error.bind="error.Length"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,146 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <au-input-form title.bind="title" with.bind="context">
+
+                <au-textbox 
+                    label="Document CreditNo" 
+                    value.bind="data.documentCreditNo" 
+                    error.bind="error.DocumentCreditNo" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="TGL" 
+                    value.bind="data.date" 
+                    error.bind="error.Date" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="Issued Bank" 
+                    value.bind="data.issuedBank" 
+                    error.bind="error.IssuedBank" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-autocomplete 
+                    label="Applicant" 
+                    placeholder="Pilih Applicant" 
+                    value.bind="data.applicant"
+                    error.bind="error.Applicant" 
+                    loader.bind="buyerLoader" 
+                    text.bind="buyerView" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-datepicker 
+                    label="Expire Date" 
+                    value.bind="data.expireDate" 
+                    error.bind="error.ExpireDate" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox 
+                    label="Expire Place" 
+                    value.bind="data.expirePlace" 
+                    error.bind="error.ExpirePlace" 
+                    read-only.bind="readOnly" 
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-datepicker 
+                    label="Latest Shipment" 
+                    value.bind="data.latestShipment" 
+                    error.bind="error.LatestShipment" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-dropdown
+                    label="L/C Condition"
+                    value.bind="data.lcCondition"
+                    error.bind="error.LCCondition"
+                    read-only.bind="readOnly"
+                    items.bind="LCOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-numeric 
+                    label="Quantity" 
+                    value.bind="data.quantity" 
+                    error.bind="error.Quantity" 
+                    read-only.bind="readOnly"
+                    format="0"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-autocomplete 
+                    label="Satuan" 
+                    placeholder="Pilih satuan" 
+                    value.bind="data.uom"
+                    error.bind="error.Uom" 
+                    loader.bind="uomLoader" 
+                    text.bind="uomView" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-numeric 
+                    label="Amount" 
+                    value.bind="data.totalAmount" 
+                    error.bind="error.TotalAmount" 
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-collection 
+                    title="Amend"
+                    columns.bind="amendColumns" 
+                    items.bind="amendLCData" 
+                    show.bind="readOnly"
+                    read-only.bind="true">
+                </au-collection>
+
+                <au-numeric 
+                    label="Amount Akhir" 
+                    value.bind="finalAmount" 
+                    show.bind="readOnly"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-collection 
+                    title="Invoice"
+                    columns.bind="invoiceColumns" 
+                    items.bind="invoiceData" 
+                    show.bind="readOnly"
+                    read-only.bind="true">
+                </au-collection>
+
+                <au-numeric 
+                    label="Total Invoice" 
+                    value.bind="totalInvoice" 
+                    show.bind="readOnly"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric 
+                    label="Amount Akhir" 
+                    value.bind="finalAmountInvoice" 
+                    show.bind="readOnly"
+                    read-only="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

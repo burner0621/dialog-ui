@@ -1,0 +1,240 @@
+<template>
+    <style>
+        .tooltip-material-field {
+            position: relative;
+            display: inline-block;
+        }
+    
+        .tooltip-material-field .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+    
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+    
+        .tooltip-material-field:hover .tooltiptext {
+            visibility: visible;
+        }
+    </style>
+    
+    <tr>
+        <td>
+            <au-textbox value.bind="data.MaterialIndex + 1" options.bind="controlOptions" read-only="true"></au-textbox>
+        </td>
+        <!-- prmaster -->
+        <td>
+            <button class="btn btn-primary" click.delegate="clickPRMaster()">+</button>
+        </td>
+        <!-- pomaster -->
+        <td>
+            <div style="min-width: 50px;" class="tooltip-material-field">
+                <au-textbox value.bind="data.POMaster" options.bind="controlOptions" read-only.bind="true">
+                </au-textbox>
+                <span class="tooltiptext">No. PO</span>
+            </div>
+        </td>
+        <!-- FROM PR MASTER -->
+        <template if.bind="data.POMaster">
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Category.name" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Kategori</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Product.Code" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Kode Barang</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Product.Composition" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Komposisi</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Product.Const" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Konstruksi</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Product.Yarn" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Yarn</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="data.Product.Width" options.bind="controlOptions" read-only="true"></au-textbox>
+                    <span class="tooltiptext">Width</span>
+                </div>
+            </td>
+            <td>
+                <div style="width: 200px;" class="tooltip-material-field">
+                    <au-multiline value.bind="data.Description" options.bind="controlOptions" read-only="true"></au-multiline>
+                    <span class="tooltiptext">Deskripsi</span>
+                </div>
+            </td>
+        </template>
+        <!-- INPUT MANUAL -->
+        <template if.bind="!data.POMaster">
+            <!-- kategori -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete placeholder="Cari Kategori"  read-only.bind="isReadOnly"  value.bind="selectedCategory" key="name" text="name" error.bind="error.Category"
+                        loader.one-time="garmentCategoryLoader" options.bind="controlOptions" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Kategori</span>
+                </div>
+            </td>
+            <!-- kode barang -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-textbox value.bind="productCode" options.bind="controlOptions" read-only.bind="true">
+                    </au-textbox>
+                    <span class="tooltiptext">Kode Barang</span>
+                </div>
+            </td>
+            <!-- komposisi -->
+            <td>
+                <div style="width: 200px;" class="tooltip-material-field">
+                    <au-autocomplete value.bind="selectedComposition"  read-only.bind="isReadOnly"  placeholder="Cari Komposisi" text="Composition" options.bind="controlOptions" loader.bind="garmentProductDistinctDescriptionLoader" show.bind="categoryIsExist" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Komposisi</span>
+                </div>
+            </td>
+            <!-- konstruksi -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete query.bind="filterProductQuery"  read-only.bind="isReadOnly" placeholder="Cari Konstruksi" text.bind="getConstructionText" value.bind="selectedConstruction" options.bind="controlOptions" loader.bind="garmentProductConstLoader" show.bind="compositionIsExist" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Konstruksi</span>
+                </div>
+            </td>
+            <!-- yarn -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete query.bind="filterProductQuery"  read-only.bind="isReadOnly" placeholder="Cari Yarn" text.bind="getYarnText" value.bind="selectedYarn" options.bind="controlOptions" loader.bind="garmentProductYarnLoader" show.bind="constructionIsExist" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Yarn</span>
+                </div>
+            </td>
+            <!-- width -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete query.bind="filterProductQuery"  read-only.bind="isReadOnly" placeholder="Cari Width" text.bind="getWidthText" value.bind="selectedWidth" options.bind="controlOptions" loader.bind="garmentProductWidthLoader" show.bind="yarnIsExist" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Width</span>
+                </div>
+            </td>
+            <!-- deskripsi -->
+            <td>
+                <div style="width: 200px;" class="tooltip-material-field">
+                    <au-multiline placeholder="Deskripsi" value.bind="data.Description" error.bind="error.Description" options.bind="controlOptions"
+                        show.bind="productCodeIsExist"></au-multiline>
+                    <span class="tooltiptext">Deskripsi</span>
+                </div>
+            </td>
+        </template>
+        <!-- detail barang -->
+        <td>
+            <div style="min-width: 200px;" class="tooltip-material-field">
+                <au-multiline placeholder="Detail Barang" value.bind="data.ProductRemark" error.bind="error.ProductRemark" options.bind="controlOptions"
+                    show.bind="productCodeIsExist"></au-multiline>
+                <span class="tooltiptext">Detail Barang</span>
+            </div>
+        </td>
+        <!-- kuantitas -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="data.Quantity" error.bind="error.Quantity" format = "0,0.000" options.bind="controlOptions" show.bind="productCodeIsExist" read-only.bind="isProcess"></au-numeric>
+                <span class="tooltiptext">Kuantitas</span>
+            </div>
+        </td>
+        <!-- satuan -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-autocomplete placeholder="Cari Satuan" value.bind="data.UOMQuantity" error.bind="error.UOMQuantity" loader.one-time="uomLoader"
+                    options.bind="controlOptions" text.bind="uomView" show.bind="productCodeIsExist" read-only.bind="isProcess" keypress.delegate="enterDelegate($event)">
+                </au-autocomplete>
+                <span class="tooltiptext">Satuan</span>
+            </div>
+        </td>
+        <!-- price -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="data.Price" error.bind="error.Price" format = "0,0.00" options.bind="controlOptions" show.bind="productCodeIsExist" read-only.bind="isProcess"></au-numeric>
+                <span class="tooltiptext">Price</span>
+            </div>
+        </td>
+        <!-- FROM PR MASTER -->
+        <template if.bind="data.POMaster">
+            <!-- satuan harga -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete value.bind="data.UOMPrice" options.bind="controlOptions" text.bind="uomView" read-only="true"></au-autocomplete>
+                    <span class="tooltiptext">Satuan Harga</span>
+                </div>
+            </td>
+        </template>
+        <!-- INPUT MANUAL -->
+        <template if.bind="!data.POMaster">
+            <!-- satuan harga -->
+            <td>
+                <div style="width: 100px;" class="tooltip-material-field">
+                    <au-autocomplete placeholder="Cari Satuan" value.bind="data.UOMPrice" error.bind="error.UOMPrice" loader.one-time="uomLoader"
+                        options.bind="controlOptions" text.bind="uomView"  show.bind="productCodeIsExist" read-only.bind="isProcess" keypress.delegate="enterDelegate($event)">
+                    </au-autocomplete>
+                    <span class="tooltiptext">Satuan Harga</span>
+                </div>
+            </td>
+        </template>
+        <!-- konversi -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="data.Conversion" error.bind="error.Conversion" options.bind="controlOptions" show.bind="productCodeIsExist" read-only.bind="isProcess" format="0,0.[00000000000000000000]"></au-numeric>
+                <span class="tooltiptext">Konversi</span>
+            </div>
+        </td>
+        <!-- total -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="total" read-only.bind="disabled"  format = "0,0.00" ></au-numeric>
+                <span class="tooltiptext">Total</span>
+            </div>
+        </td>
+        <!-- ongkir -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="data.ShippingFeePortion" error.bind="error.ShippingFeePortion" options.bind="controlOptions" show.bind="productCodeIsExist" read-only.bind="data.isFabricCM"></au-numeric>
+                <span class="tooltiptext">Ongkir (%)</span>
+            </div>
+        </td>
+        <!-- jumlah ongkir -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="totalShippingFee" read-only.bind="disabled"></au-numeric>
+                <span class="tooltiptext">Jumlah Ongkir</span>
+            </div>
+        </td>
+        <!-- kuantitas budget -->
+        <td>
+            <div style="width: 100px;" class="tooltip-material-field">
+                <au-numeric value.bind="budgetQuantity" error.bind="error.BudgetQuantity" read-only.bind="disabled"></au-numeric>
+                <span class="tooltiptext">Kuantitas Budget</span>
+            </div>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

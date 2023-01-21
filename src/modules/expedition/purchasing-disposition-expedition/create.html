@@ -1,0 +1,30 @@
+<template>
+        <style>
+            table .btn-success { float: none !important; }
+            .col-sm-12 { margin-top: 0px !important; }
+        </style>
+        <au-input-form title="Buat Penyerahan Dokumen Disposisi Pembayaran ke Verifikasi" options.bind="formOptions">
+            <!--
+                <au-datepicker
+                    label="Tanggal Penyerahan"
+                    value.bind="data.SubmissionDate"
+                    error.bind="error.SubmissionDate"
+                    options.bind="controlOptions">
+                </au-datepicker>
+            -->
+    
+            <au-textbox
+                show.bind="error.DispositionsCollection"
+                error.bind="error.DispositionsCollection"
+                read-only="true">
+            </au-textbox>
+    
+            <au-collection
+                items.bind="data.PurchaseDisposition" 
+                errors.bind="error.PurchaseDisposition"
+                columns.bind="collection.columns"
+                add.bind="collection.onAdd"
+                item-template="modules/expedition/purchasing-disposition-expedition/templates/item">
+            </au-collection>
+        </au-input-form>
+    </template>

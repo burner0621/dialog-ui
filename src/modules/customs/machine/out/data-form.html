@@ -1,0 +1,63 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div slot="actions" class="btn-group">
+      <!-- <button class="btn btn-default" click.delegate="context.cancel($event)"
+        if.one-way="context.hasCancel">Kembali</button> -->
+      <!-- <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button> -->
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <!-- <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button> -->
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-md-6"> -->
+
+    <au-autocomplete value.bind="category" error.bind="error.MachineCategory" label="Kategori"
+      loader.bind="categoryLoader" text.bind="categoryView" placeholder="Pilih Kategory"
+      read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="brand" error.bind="error.MachineBrand" label="Brand" loader.bind="brandLoader"
+      text.bind="brandView" placeholder="Pilih Brand" read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="tipe" error.bind="error.MachineType" label="Tipe" loader.bind="tipeLoader"
+      text.bind="tipeView" query.bind="Filter" placeholder="Pilih Tipe" read-only.bind="readOnly || isEdit"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="serial" error.bind="error.IDNumber" label="Serial Number" loader.bind="serialLoader"
+      text.bind="serialView" query.bind="FilterSerial" placeholder="Pilih Serial Number"
+      read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+    </au-autocomplete>
+
+
+    <!-- <au-textbox 
+        label="Serial Number" value.bind="data.IDNumber" error.bind="error.IDNumber" read-only.bind="(readOnly || isEdit)"
+         options.bind="controlOptions">
+      </au-textbox> -->
+
+    <au-textbox label="Total Barang" value.bind="data.MachineQuantity" error.bind="error.MachineQuantity"
+      read-only.bind="true" options.bind="controlOptions">
+    </au-textbox>
+    <au-textbox label="Satuan" value.bind="data.UnitQuantity" error.bind="error.UnitQuantity" read-only.bind="true"
+      options.bind="controlOptions">
+    </au-textbox>
+
+    <au-textbox label="Jumlah Barang Keluar" value.bind="data.TransactionAmount" error.bind="error.TransactionAmount"
+      read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+    </au-textbox>
+
+    <au-textbox label="No BC Keluar" value.bind="data.BCOutNumber" error.bind="error.BCOutNumber"
+      read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+    </au-textbox>
+
+    <au-datepicker label="Tgl. Transaksi" value.bind="data.TransactionDate" error.bind="error.TransactionDate"
+      read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+    </au-datepicker>
+
+
+  </au-input-form>
+  <!-- </div>
+  </div> -->
+</template>

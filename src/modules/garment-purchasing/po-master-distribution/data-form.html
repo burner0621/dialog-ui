@@ -1,0 +1,72 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-autocomplete
+            value.bind="selectedSupplier"
+            error.bind="error.Supplier"
+            label="Supplier"
+            loader.bind="supplierLoader"
+            text.bind="supplierView"
+            placeholder="Supplier"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedDeliveryOrder"
+            error.bind="error.DeliveryOrder"
+            label="Nomor Surat Jalan"
+            loader.bind="deliveryOrderLoader"
+            text="DONo"
+            placeholder="Surat Jalan"
+            read-only.bind="readOnly || isEdit || !selectedSupplier"
+            options.bind="controlOptions"
+            view-model.ref="selectedDeliveryOrderViewModel">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tgl. Surat Jalan" 
+            value.bind="data.deliveryOrder.doDate" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Tiba" 
+            value.bind="data.deliveryOrder.arrivalDate" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox 
+            label="Jenis Supplier" 
+            value.bind="supplierType" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.deliveryOrder.remark"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+        </div>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsColumns"
+            read-only.bind="readOnly" 
+            options.bind="itemOptions"
+            item-template="modules/garment-purchasing/po-master-distribution/template/item" >
+        </au-collection>
+
+    </au-input-form>
+</template>

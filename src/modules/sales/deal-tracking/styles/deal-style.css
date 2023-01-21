@@ -1,0 +1,234 @@
+#dragula .cbp_tmtimeline {
+	padding: 0;
+	list-style: none;
+	position: relative;
+	margin-top: 20px;
+}
+
+#dragula .divScroll {
+	height: 500px;
+	overflow: auto;
+	border: 1px solid #BBB;
+}
+
+#dragula .cbp_tmtimeline a {
+	color: aquamarine;
+}
+
+/* The line */
+#dragula .cbp_tmtimeline:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 5px;
+	background: #285A8F;
+	left: 20%;
+	margin-left: -10px;
+}
+
+#dragula .cbp_tmtimeline > li {
+	position: relative;
+}
+
+/* The date/time */
+#dragula .cbp_tmtimeline > li .cbp_tmtime {
+	display: block;
+	width: 25%;
+	padding-right: 10%;
+	position: absolute;
+}
+
+#dragula .cbp_tmtimeline > li .cbp_tmtime span {
+	display: block;
+	text-align: right;
+}
+
+#dragula .cbp_tmtimeline > li .cbp_tmtime span:first-child {
+	font-size: 0.9em;
+	color: #285A8F;
+}
+
+#dragula .cbp_tmtimeline > li .cbp_tmtime span:last-child {
+	font-size: 15px;
+	color: #173250;
+}
+
+#dragula .cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
+	color: #234a77;
+}
+
+/* Right content */
+#dragula .cbp_tmtimeline > li .cbp_tmlabel {
+	margin: 0 0 10px 25%;
+	background: #173250;
+	color: #fff;
+	padding: 10px;
+	font-size: 15px;
+	font-weight: 300;
+	line-height: 1.4;
+	position: relative;
+	border-radius: 10px;
+}
+
+#dragula .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel {
+	background: #234a77;
+}
+
+#dragula .cbp_tmtimeline > li .cbp_tmlabel h4 { 
+	margin-top: 0px;
+	padding: 0 0 10px 0;
+	border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+/* The triangle */
+#dragula .cbp_tmtimeline > li .cbp_tmlabel:after {
+	right: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-right-color: #173250;
+	border-width: 5px;
+	top: 10px;
+}
+
+#dragula .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+	border-right-color: #234a77;
+}
+
+/* The icons */
+#dragula .cbp_tmtimeline > li .cbp_tmicon {
+	width: 35px;
+	height: 35px;
+	font-family: 'ecoico';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	font-size: 17px;
+	line-height: 40px;
+	-webkit-font-smoothing: antialiased;
+	position: absolute;
+	color: #fff;
+	background: #2068b5;
+	border-radius: 50%;
+	box-shadow: 0 0 0 6px #285A8F;
+	text-align: center;
+	left: 20%;
+	top: 0;
+	margin: 0 0 0 -25px;
+}
+
+#dragula p {
+    margin: 0 0 5px;
+}
+
+#dragula #notes-tab:checked ~ #notes-content,
+#dragula #task-tab:checked ~ #task-content{
+  	display: block;
+}
+
+#dragula section {
+  	display: none;
+  	padding: 20px 0 0;
+  	border-top: 1px solid #ddd;
+}
+
+#dragula input[type=radio] {
+	display: none;
+}
+
+#dragula .tab-label {
+	display: inline-block;
+	margin: 0 0 -1px;
+	padding: 15px 25px;
+	font-weight: 600;
+	text-align: center;
+	color: #bbb;
+	border: 1px solid transparent;
+}
+
+#dragula .tab-label:before {
+	font-family: fontawesome;
+	font-weight: normal;
+	margin-right: 10px;
+}
+
+#dragula .tab-label:hover {
+	color: #888;
+	cursor: pointer;
+}
+
+#dragula input[type=radio]:checked + .tab-label {
+	color: #555;
+	border: 1px solid #ddd;
+	border-top: 2px solid #173250;
+}
+
+#dragula #notes-box {
+	border: 1px solid #ccc;
+	height: 74px;
+	background: white;
+	padding: 10px;
+	overflow: auto;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text);
+	color:gray;
+}
+
+#dragula .error-text {
+	color: red
+}
+
+#dragula .margin-bottom {
+	margin-bottom: 15px;
+}
+
+#dragula .fa-link, #dragula .fa-paperclip, #dragula .fa-pencil-square-o, #dragula .fa-trash-o, #dragula .fa-window-close-o, #dragula .downloadFile {
+	cursor: pointer;
+}
+
+#dragula #notes-box a {
+	color: #0091ae;
+}
+
+#dragula #notes-box a:hover {
+	text-decoration: underline;
+}
+
+#dragula .attachment-box {
+	background: white;
+    height: 50px;
+    border: 1px solid #ddd;
+    padding: 0px;
+    padding-top: 5px;
+	margin-bottom: 10px;
+	overflow: auto;
+}
+
+#dragula .activity-attachment-box {
+	border: 1px solid #BBB;
+    height: 50px;
+    overflow: auto;
+	padding-top: 5px;
+	margin-bottom: 10px;
+}
+
+#dragula .circle-btn {
+	height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    background-color: #173250;
+    color: white;
+    border: 3px solid #BBB;
+}
+
+#dragula .circle-btn:hover {
+    background-color: #214566;
+}

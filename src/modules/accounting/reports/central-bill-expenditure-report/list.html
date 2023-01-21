@@ -1,0 +1,148 @@
+<template>
+
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Pengeluaran Bon Pusat</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <au-datepicker label="Tanggal Awal Bon Terima" value.bind="dateFrom"></au-datepicker>
+                <au-datepicker label="Tanggal Akhir Bon Terima" value.bind="dateTo"></au-datepicker>
+                <div class="col-sm-6">
+                    <button click.delegate="search()" class='btn btn-success'>Cari Data</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="exportToXls()" class='btn btn-primary'>Convert To Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td align="center" rowspan="3">NO</td>
+                        <td colspan="31">P U S A T</td>
+                         <td colspan="2">NOTA PEMBELIAN</td>
+                         <td colspan="12">K O N F E K S I</td>
+  
+                     </tr>
+                    <tr>
+                        <td rowspan="2">NO BON PUSAT</td>
+                        <td rowspan="2">TANGGAL BP</td>
+                        <td rowspan="2">NO BON KECIL</td>
+                        <td rowspan="2">TIPE BEA CUKAI</td>
+                        <td rowspan="2">NOMOR BEA CUKAI</td>
+                        <td rowspan="2">TGL BEA CUKAI</td>
+                        <td rowspan="2">KLASIFIKASI</td>
+                        <td rowspan="2">TEMR OF PAYMENT</td>
+                        <td rowspan="2">BUYER</td>
+                        <td rowspan="2">BARANG / JASA</td>
+                        <td rowspan="2">ASAL BARANG</td>
+                        <td rowspan="2">SUPPL</td>
+                        <td rowspan="2">NAMA SUPPLIER</td>
+                        <td rowspan="2">ARTICLE STYLE</td>
+                        <td rowspan="2">NOMOR RO</td>
+                        <td rowspan="2">NO SURAT JALAN</td>
+                        <td rowspan="2">TGL DATANG</td>
+                        <td rowspan="2">NO INVOICE</td>
+                        <td rowspan="2">NO FAKTUR</td>
+                        <td rowspan="2">TGL FAKTUR</td>
+                        <td rowspan="2">PO PEMBELIAN</td>                        
+                        <td rowspan="2">KODE BARANG</td>
+                        <td rowspan="2">NAMA BARANG</td>
+                        <td rowspan="2">KETERANGAN BARANG</td>
+                        
+                        <td colspan="4">SEBELUM KONVERSI</td>
+                        <td colspan="3">SETELAH KONVERSI</td>
+
+                        <td rowspan="2">NO NOTA INTERN</td>
+                        <td rowspan="2">TGL NOTA INTERN</td>
+
+                        <td rowspan="2">NO. BUM MASUK</td>
+                        <td rowspan="2">TGL BUM MASUK</td>
+                        <td rowspan="2">NAMA UNIT</td>
+
+                        <td colspan="4">SEBELUM KONVERSI</td>
+                        <td colspan="3">SETELAH KONVERSI</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>QUANTITY</td>
+                        <td>SATUAN</td>
+                        <td>HARGA</td>
+                        <td>JUMLAH HARGA</td>
+                        <td>NILAI KONVERSI</td>
+                        <td>QUANTITY</td>
+                        <td>SATUAN</td>
+                        <td>QUANTITY</td>
+                        <td>SATUAN</td>
+                        <td>HARGA</td>
+                        <td>JUMLAH HARGA</td>
+                        <td>NILAI KONVERSI</td>
+                        <td>QUANTITY</td>
+                        <td>SATUAN</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td>${item.BillNo}</td>
+                        <td>${item.BillDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.PaymentBill}</td>
+                        <td>${item.CustomsType}</td>
+                        <td>${item.BeaCukaiNo}</td>
+                        <td>${item.BeaCukaiDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.CodeRequirement}</td>
+                        <td>${item.PaymentType}</td>
+                        <td>${item.BuyerName}</td>
+                        <td>${item.ProductType}</td>
+                        <td>${item.ProductFrom}</td>
+                        <td>${item.SupplierCode}</td>
+                        <td>${item.SupplierName}</td>
+                        <td>${item.Article}</td>
+                        <td>${item.RONo}</td>
+                        <td>${item.DONo}</td>
+                        <td>${item.ArrivalDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.InvoiceNo}</td>
+                        <td>${item.IncomeTaxNo}</td>
+                        <td>${item.IncomeTaxDate}</td>
+                        <td>${item.EPONo}</td>
+                        <td>${item.ProductCode}</td>
+                        <td>${item.ProductName}</td>
+                        <td>${item.ProductRemark}</td>
+                        <td align="right">${item.DOQuantity}</td>
+                        <td>${item.UOMUnit}</td>
+                        <td align="right">${item.PricePerDealUnit}</td>
+                        <td align="right">${item.PriceTotal}</td>
+                        <td align="right">${item.Conversion}</td>
+                        <td align="right">${item.SmallQuantity}</td>
+                        <td>${item.SmallUOMUnit}</td>
+                        <td>${item.InternNo}</td>
+                        <td>${item.INDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.URNNo}</td>
+                        <td>${item.ReceiptDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.UnitName}</td>
+                        <td align="right">${item.ReceiptQuantity}</td>
+                        <td>${item.URNUOMUnit}</td>
+                        <td align="right">${item.URNPricePerDealUnit}</td>
+                        <td align="right">${item.URNPriceTotal}</td>
+                        <td align="right">${item.URNConversion}</td>
+                        <td align="right">${item.URNSmallQuantity}</td>
+                        <td>${item.URNSmallUOMUnit}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</template>

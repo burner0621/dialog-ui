@@ -1,0 +1,73 @@
+<template>
+    <h1 class="page-header">Monitoring Nota Debit</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            label="Buyer Agent"
+            value.bind="buyerAgent"
+            error.bind="error.BuyerAgent"
+            loader.bind="garmentbuyerLoader"
+            text.bind = "buyerAgentView"
+            key="Code"
+            placeholder="Cari Buyer Agent"
+            options.bind="controlOptions">
+        </au-autocomplete>
+ 
+       <au-datepicker label="Tanggal Nota Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Nota Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">No Debit Note</th>
+                    <th class="text-center">Tgl Debit Note</th>
+                    <th class="text-center">Kode Buyer</th>
+                    <th class="text-center">Nama Buyer</th>
+                    <th class="text-center">K e t e r a n g a n</th>
+                    <th class="text-center">Mata Uang</th>
+                    <th class="text-center">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.dnNo}</td>
+                        <td>${data.dnDate}</td>
+                        <td>${data.buyerCode}</td>
+                        <td>${data.buyerName}</td>
+                        <td>${data.description}</td>
+                        <td>${data.currencyCode}</td>
+                        <td class="text-right"><strong>${data.amount}</strong></td>                        
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td colspan="5"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal}</strong></td>                       
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="7"><strong>T   O   T   A   L   . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${TotAmount}</strong></td>                       
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

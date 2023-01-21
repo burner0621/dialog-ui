@@ -1,0 +1,93 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <style>
+        table>tbody>tr>td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Loading</h1>
+
+    <form class="form-horizontal">
+      <au-autocomplete 
+          value.bind="unit" 
+          label="Unit" 
+          loader.bind="unitLoader"
+          placeholder="Cari Nama Unit" 
+          read-only.bind="readOnly" 
+          text.bind="unitView"
+          options.bind="controlOptions">
+      </au-autocomplete>
+
+      <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+      <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+      <div class="form-group">
+          <label for="contact" class="col-sm-6 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+
+      <div class="btn-group pull-left">
+          <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+      </div>
+  </form>
+  <br>
+</br>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <tr>
+                <td>NO RO JOB</td>
+                <td>ARTICLE</td>
+                <td>KODE BUYER</td>
+                <td>QTY ORDER</td>
+                <td>STYLE</td>
+                <td>HARGA(M)</td>
+                <td>STOCK AWAL</td>
+                <td>BARANG MASUK</td>
+                <td>BARANG KELUAR</td>
+                <td>SISA</td>
+                <td>NOMINAL SISA</td>
+                <td>SATUAN</td>
+              
+            </tr>
+        </thead>
+ 
+        <tbody>
+            <require from="../../../lib/number-format-value-converter"></require>
+            <tr repeat.for="item of data">
+                <td class="text-center">${item.roJob}</td>
+                <td class="text-center">${item.article}</td>
+                <td class="text-center">${item.buyerCode}</td>
+                <td class="text-right">${item.qtyOrder}</td>
+                <td class="text-center">${item.style}</td>
+                <td class="text-right">${item.prices}</td>
+                <td class="text-right">${item.stocks}</td>
+                <td class="text-right">${item.cuttingsQtyPcs}</td> 
+                <td class="text-right">${item.loadingQstyPcs}</td>
+                <td class="text-right">${item.remainsQty}</td>
+                <td class="text-right">${item.remainNominal}</td>
+                <td class="text-center">${item.uomUnit}</td>
+            </tr>
+            <tr class="active">
+                <td class="text-center" colspan="6"><strong>T O T A L </strong></td>
+                <td class="text-right"><strong>${sumStock}</strong></td>        
+                <td class="text-right"><strong>${sumCuttingQtyPcs}</strong></td>
+                <td class="text-right"><strong>${sumloadingQtyPcs}</strong></td>
+                <td class="text-right"><strong>${sumRemainQty}</strong></td>
+                <td class="text-right"><strong>${sumNominal}</strong></td>
+                <td class="text-right"><strong></strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+  Tidak ada data.
+</div>
+<hr/>
+  </au-input-form>
+  <div class="row"></div>
+</template>

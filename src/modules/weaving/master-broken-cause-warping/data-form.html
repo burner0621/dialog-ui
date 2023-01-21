@@ -1,0 +1,40 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div class="col-md-12">
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Kategori Putus Benang" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-dropdown value.bind="data.WarpingBrokenCauseCategory" items.bind="categories"
+            error.bind="error.WarpingBrokenCauseCategory" read-only.bind="readOnly">
+          </au-dropdown>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Nama Penyebab" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Nama Penyebab" value.bind="data.WarpingBrokenCauseName" error.bind="error.WarpingBrokenCauseName"
+            read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Information" read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Information" value.bind="data.Information" error.bind="error.Information"
+            read-only.bind="readOnly">
+          </au-textbox>
+        </div>
+      </div>
+
+    </div>
+  </au-input-form>
+</template>

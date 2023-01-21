@@ -1,0 +1,111 @@
+<template>
+  <h1 class="page-header">Kartu Hutang</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete
+      value.bind="info.supplier"
+      error.bind="error.supplier"
+      label="Supplier"
+      loader.bind="supplierLoader"
+      text.bind="supplierView"
+      placeholder="Input Supplier"
+      read-only.bind="readOnly"
+      options.bind="controlOptions"
+    >
+    </au-autocomplete>
+    <au-dropdown
+      value.bind="info.month"
+      label="Bulan"
+      options.bind="controlOptions"
+      items.bind="itemMonths"
+      key="value"
+      text="text"
+    >
+    </au-dropdown>
+    <au-dropdown
+      value.bind="info.year"
+      label="Tahun"
+      options.bind="controlOptions"
+      items.bind="itemYears"
+      key="value"
+      text="text"
+    >
+    </au-dropdown>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-12" style="overflow-x: auto">
+      <!--Table-->
+      <table class="table table-bordered">
+        <!--Table head-->
+        <thead>
+          <tr>
+            <th rowspan="2">Tanggal</th>
+            <th rowspan="2">Nama Barang</th>
+            <th rowspan="2">Nomor Bon Terima Unit</th>
+            <th rowspan="2">Nomor Bukti Pengeluaran Bank</th>
+            <th rowspan="2">No SPB/NI</th>
+            <th rowspan="2">No Invoice</th>
+            <th rowspan="2">No Koreksi</th>
+            <th rowspan="2">Tempo Pembayaran</th>
+            <th colspan="4">Nilai Invoice</th>
+            <th colspan="2">Mutasi</th>
+            <th rowspan="2">Saldo Akhir</th>
+          </tr>
+          <tr>
+            <th>DPP</th>
+            <th>DPP Valas</th>
+            <th>PPN</th>
+            <th>Total</th>
+            <th>Pembelian</th>
+            <th>Pembayaran</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+        <!--Table body-->
+        <tbody>
+          <tr show.bind="isEmpty">
+            <td colspan="15">
+              <div class="alert alert-info">Tidak ada data</div>
+            </td>
+          </tr>
+          <tr repeat.for="datum of data">
+            <td
+              repeat.for="key of datum | keys"
+              style="white-space: pre"
+              class="key.toString().toLowerCase() == 'dpp' || key.toString().toLowerCase() == 'dppcurrency' || key.toString().toLowerCase() == 'ppn' || key.toString().toLowerCase() == 'total' || key.toString().toLowerCase() == 'purchase' || key.toString().toLowerCase() == 'payment' || key.toString().toLowerCase() == 'finalbalance' ? text-right : '';"
+              colspan="${key.toString().toLowerCase() == 'previous' ? 8 : key.toString().toLowerCase() == 'date' && datum[key] === null ? 8 : key.toString().toLowerCase() == 'dpp' && datum[key] === null ? 6 : 1}"
+            >
+              ${datum[key]}
+            </td>
+          </tr>
+          <tr>
+            <td class="text-right" colspan="8">TOTAL</td>
+            <td class="text-right" colspan="4">${currency}</td>
+            <td>${purchase}</td>
+            <td>${payment}</td>
+            <td>${closingBalance}</td>
+          </tr>
+        </tbody>
+        <!--Table body-->
+        <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+          <button class="btn btn-primary" click.delegate="excel()">
+            Cetak Excel
+          </button>
+          <button class="btn btn-primary" click.delegate="pdf()">
+            Cetak PDF
+          </button>
+        </div>
+      </table>
+      <!--Table-->
+    </div>
+  </div>
+</template>

@@ -1,0 +1,17 @@
+<template >
+    <tr>
+        
+        <th width="5%" if.bind="options.hasView"  >
+          <au-checkbox 
+            value.bind="saveAll"
+            change.delegate="saveAllChanged($event)">
+          </au-checkbox>
+        </th>
+        <th width="15%">No Surat Jalan</th>
+        <th width="15%">Tanggal Surat Jalan</th>
+        <th width="15%">Tanggal Datang Barang</th>
+        <th width="15%">Total Jumlah</th>
+        <th width="15%">Total Harga</th>
+       
+    </tr>
+  </template>

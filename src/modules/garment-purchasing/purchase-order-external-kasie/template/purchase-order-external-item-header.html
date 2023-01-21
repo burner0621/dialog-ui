@@ -1,0 +1,20 @@
+<template >
+    <tr>
+        <th width="10%">Nomor PR - No. Referensi PR - Article</th>
+        <th width="5%">Nomor RO</th>
+        <th width="8%">Barang</th>
+        <th width="4%">Jumlah Diminta</th>
+        <th width="5%">Satuan Diminta</th>
+        <th width="7%">Jumlah Beli</th>
+        <th width="7%">Satuan Beli</th>
+        <th width="4%">Jumlah Kecil</th>
+        <th width="2%">Satuan Kecil</th>
+        <th width="4%">Konversi</th>
+        <th width="8%">Harga Satuan</th>
+        <th width="4%" show.bind="options.checkOverBudget">Over Budget?</th>
+        <th width="6%" show.bind="options.checkOverBudget">Keterangan Over Budget</th>
+        <!--<th width="4%" show.bind="options.isUseIncomeTax">Include Ppn?</th>-->
+        <th width="11%">Keterangan</th>
+        <th width="2%" show.bind="!readOnly"></th>
+    </tr>
+</template>

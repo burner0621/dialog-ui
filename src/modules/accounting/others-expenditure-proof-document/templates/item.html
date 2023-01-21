@@ -1,0 +1,41 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-textbox value.bind="data.Remark"
+                          placeholder="tambah keterangan"
+                          read-only.bind="readOnly"
+                          options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="selectedCOA.Code"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-autocomplete placeholder="pilih akun"
+                             value.bind="selectedCOA"
+                             error.bind="error.COA"
+                             loader.one-time="coaLoader"
+                             text="Name"
+                             read-only.bind="readOnly"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Debit"
+                        error.bind="error.Debit"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

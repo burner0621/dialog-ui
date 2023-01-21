@@ -1,0 +1,121 @@
+<template>
+    <tr>
+        <td show.bind="!readOnly">
+            <au-checkbox 
+                value.bind="data.Select"
+                read-only.bind="readOnly">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.dispositionNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.dispositionDate"
+                read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.paymentDueDate"
+                read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.proformaNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.SupplierName"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.category.name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.division.name"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.vatValue"
+                format="0,000.0000"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.payToSupplier"
+                format="0,000.0000"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.Currency"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td show.bind= "IDR && !sameCurrency">
+            <au-numeric
+                value.bind="data.payToSupplierIDR"
+                format="0,000.0000"
+                if.bind="IDR && !sameCurrency"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td show.bind= "IDR && !sameCurrency">
+            <au-textbox
+                value.bind="data.currencyIDR"
+                if.bind="IDR && !sameCurrency"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+          <au-numeric
+              value.bind="data.AmountPaid"
+              format="0,000.0000"
+              read-only.bind="true">
+          </au-numeric>
+        </td>
+        <td>
+          <au-numeric 
+              value.bind="SupplierPayment" 
+              read-only.bind="options.readOnly" 
+              format = "0,0.000"
+              options.bind="controlOptions">
+          </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.PaymentDifference"
+                format="0,000.0000"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-info" click.delegate="toggle()">i</button> 
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="11">
+            <au-collection
+                items.bind="data.Details" 
+                columns.bind="columns"
+                item-template="modules/expedition/payment-disposition-note/templates/detail-view">
+            </au-collection>
+        </td>  
+    </tr>
+</template>

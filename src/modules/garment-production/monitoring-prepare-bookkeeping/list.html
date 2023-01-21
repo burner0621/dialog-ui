@@ -1,0 +1,102 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <style>
+        table>tbody>tr>td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Prepare Pembukuan</h1>
+
+    <form class="form-horizontal">
+      <au-autocomplete 
+          value.bind="unit" 
+          label="Unit" 
+          loader.bind="unitLoader"
+          placeholder="Cari Nama Unit" 
+          read-only.bind="readOnly" 
+          text.bind="unitView"
+          options.bind="controlOptions">
+      </au-autocomplete>
+
+      <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+      <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+      <div class="form-group">
+          <label for="contact" class="col-sm-6 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+
+      <div class="btn-group pull-left">
+          <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+      </div>
+  </form>
+  <br>
+</br>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <tr>
+                <td>RO JOB</td>
+                <td>Article</td>
+                <td>Kode Buyer</td>
+                <td>Kode Barang</td>
+                <td>Satuan</td>
+                <td>Asal Barang</td>
+                <td>Keterangan Barang</td>
+                <td>Harga(M)</td>
+                <td>Stock Awal</td>
+                <td>Barang Masuk</td>
+                <td>Keluar Ke Cutting (MAIN FABRIC)</td>
+                <td>Keluar Ke Cutting (NON MAIN FABRIC)</td>
+                <td>BARANG Keluar ke Gudang</td>
+                <td>Aval</td>
+                <td>Sisa</td>
+                <td>Nominal Sisa</td>
+            </tr>
+        </thead>
+        <tbody>
+            <require from="../../../lib/number-format-value-converter"></require>
+            <tr repeat.for="item of data">
+                <td class="text-center">${item.roJob}</td>
+                <td class="text-center">${item.article}</td>
+                <td class="text-center">${item.buyerCode}</td>
+                <td class="text-center">${item.productCode}</td>
+                <td class="text-center">${item.uomUnit}</td>
+                <td class="text-center">${item.roAsal}</td>
+                <td class="text-center">${item.remark}</td>
+                <td class="text-right">${item.prices}</td>
+                <td class="text-right">${item.stocks}</td>
+                <td class="text-right">${item.receipts}</td>
+                <td class="text-right">${item.mainFabricExpenditures}</td>
+                <td class="text-right">${item.nonMainFabricExpenditures}</td>
+                <td class="text-right">${item.expenditures}</td>
+                <td class="text-right">${item.avals}</td>
+                <td class="text-right">${item.remainQtys}</td>
+                <td class="text-right">${item.remainNominals}</td>
+            </tr>
+            <tr class="active">
+                <td class="text-center" colspan="7"><strong>T O T A L </strong></td>
+                <td class="text-right"><strong></strong></td>
+                <td class="text-right"><strong>${sumStock}</strong></td>        
+                <td class="text-right"><strong>${sumReceipt}</strong></td>
+                <td class="text-right"><strong>${sumMainFabricExpenditure}</strong></td>
+                <td class="text-right"><strong>${sumNonMainFabricExpenditure}</strong></td>
+                <td class="text-right"><strong>${sumExpenditure}</strong></td>
+                <td class="text-right"><strong>${sumAval}</strong></td>
+                <td class="text-right"><strong>${sumRemainQty}</strong></td>
+                <td class="text-right"><strong>${sumNominal}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+  Tidak ada data.
+</div>
+<hr/>
+  </au-input-form>
+  <div class="row"></div>
+</template>

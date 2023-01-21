@@ -1,0 +1,12 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="data.Size" error.bind="error.Size" loader.one-time="sizeLoader" options.bind="controlOptions"
+                key="Code" text="Name" read-only.bind="readOnly">
+            </au-autocomplete>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(stepIndicators, $event)">-</button>
+        </td>
+    </tr>
+</template>

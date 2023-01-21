@@ -1,0 +1,38 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions"
+      >
+        <au-textbox
+          label="Kode"
+          value.bind="data.Code"
+          error.bind="error.Code"
+          read-only.bind="(readOnly || isEdit)"
+        ></au-textbox>
+
+        <au-autocomplete
+          value.bind="data.DivisionName"
+          error.bind="error.DivisionName"
+          loader.bind="divisionLoader"
+          label="Nama Divisi"
+          placeholder="cari divisi"
+          read-only.bind="readOnly"
+          change.delegate="divisionChanged($event)"
+        >
+        </au-autocomplete>
+
+        <au-textbox
+          label="Nama Unit"
+          value.bind="data.Name"
+          error.bind="error.Name"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+</template>

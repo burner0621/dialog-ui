@@ -1,0 +1,20 @@
+<template>
+    <h1 class="page-header">DO</h1>
+    <au-table 
+        view-model.ref="table" 
+        data.bind="loader" 
+        columns.bind="columns" 
+        sortable.bind="true" 
+        page-size="25" 
+        data-click-to-select="true"
+        context.bind="context" 
+        context-click.delegate="contextClickCallback($event)"
+        context-show.call="contextShowCallback(index, context, data)"
+        row-formatter.bind="rowFormatter"
+        selections.bind="selectedItem">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="create()">Buat</button>
+            <button class="btn btn-primary" disabled.bind="selectedItem.length < 1" click.delegate="post()">Posting</button>
+        </div>
+  </au-table>
+</template>

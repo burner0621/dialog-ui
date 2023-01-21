@@ -1,0 +1,8 @@
+<template>
+  <!--<div class="display-wrapper">-->
+  <h1 class="page-header">Monitoring Migration Log</h1>
+  <au-table view-model.ref="table" data.bind="loader" columns.bind="columns" sortable.bind="false" page-size="25" context.bind="context" context-click.delegate="contextClickCallback($event)"
+  +    context-show.call="contextShowCallback(index, context, data)" selectable.bind="true" options.bind="options">
+
+  </au-table>
+</template>

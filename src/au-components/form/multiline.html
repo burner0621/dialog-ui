@@ -1,0 +1,7 @@
+<template>
+  <require from="./_layout"></require> 
+  <au-layout options.bind="options" label.bind="label" error.bind="error">
+    <textarea ref="element" value.bind="value" placeholder.bind="placeholder" class="form-control" if.bind="!readOnly" focus.trigger="onFocus($event)" blur.trigger="onBlur($event)" rows.bind="rows"></textarea>
+    <p class="form-control-static" style="white-space: pre-wrap;" if.bind="readOnly">${value}</p>
+  </au-layout>
+</template>

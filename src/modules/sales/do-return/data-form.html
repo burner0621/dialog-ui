@@ -1,0 +1,43 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <div class="row">
+      <div class="col-md-8">
+        <au-textbox label="No. Retur" value.bind="data.DOReturnNo" if.bind="readOnly || isEdit" read-only.bind="true">
+        </au-textbox>
+
+        <au-dropdown label="Seri DO Retur" value.bind="data.DOReturnType" items.bind="doReturnTypeOptions"
+          error.bind="error.DOReturnType" read-only.bind="readOnly || isEdit">
+        </au-dropdown>
+
+        <au-datepicker label="Tanggal" value.bind="data.DOReturnDate" error.bind="error.DOReturnDate"
+          read-only.bind="readOnly">
+        </au-datepicker>
+
+        <au-autocomplete label="Dari Bagian/Retur Dari" placeholder="Pilih Nama" value.bind="selectedReturnFrom"
+          error.bind="error.ReturnFrom" loader.bind="buyersLoader" key="Name" text="Name" read-only.bind="readOnly">
+        </au-autocomplete>
+
+        <au-textbox label="No. LTKP" value.bind="data.LTKPNo" error.bind="error.LTKPNo" read-only.bind="readOnly"
+          placeholder="Input No. LTKP" keypress.delegate="enterDelegate($event)">
+        </au-textbox>
+
+        <au-textbox label="Kepala Gudang" value.bind="data.HeadOfStorage" error.bind="error.HeadOfStorage"
+          read-only.bind="readOnly" placeholder="Input Nama Kepala Gudang" keypress.delegate="enterDelegate($event)">
+        </au-textbox>
+
+        <au-multiline label="Catatan" value.bind="data.Remark" read-only.bind="readOnly"
+          keypress.delegate="enterDelegate($event)" placeholder="Input Catatan">
+        </au-multiline>
+      </div>
+    </div>
+    <au-textbox show.bind="error.DOReturnDetail" error.bind="error.DOReturnDetail" read-only.bind="true">
+    </au-textbox>
+
+    <au-collection columns.bind="doReturnDetailsInfo.columns" items.bind="data.DOReturnDetails"
+      errors.bind="error.DOReturnDetails" read-only.bind="readOnly" add.bind="doReturnDetailsInfo.onAdd"
+      remove.bind="onRemove" item-template="modules/sales/do-return/template/do-return-detail"
+      options.bind="itemOptions">
+    </au-collection>
+
+  </au-input-form>
+</template>

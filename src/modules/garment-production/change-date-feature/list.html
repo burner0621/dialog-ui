@@ -1,0 +1,78 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+      <style>
+          table>tbody>tr>td {
+              white-space: pre;
+          }
+      </style>
+  
+      <h1 class="page-header">Fitur Ubah Tanggal</h1>
+  
+      <form class="form-horizontal">
+        <au-dropdown
+            label="Proses"
+            value.bind="selectedProcess"
+            read-only.bind="readOnly || isEdit"
+            items.bind="processOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+        
+        <au-textbox
+            value.bind="ro" 
+            label="RO"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="no" 
+            label="No Dokumen"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="unit"
+            label="Unit"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+    <br> </br>
+    <div class="row">
+        <div class="table-responsive" >
+            <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+            <h5 if.bind="data"> <b>Jumlah yang dipilih :  ${totalQuantity}</b> </h5>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <hr/> 
+    </div>
+    <div class="row">
+        <div class = "col-sm-6">
+            <au-datepicker
+                label="Ubah Tanggal"
+                value.bind="date"
+                error.bind="error"
+               
+                if.bind="data"
+            ></au-datepicker>
+        </div>
+        <div class ="col-sm-3" if.bind="data">
+            <button class="btn btn-info" click.delegate="changeDate()">Ubah</button>
+        </div>
+    </div>
+
+    </div>
+    <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+    </au-input-form>
+  </template>

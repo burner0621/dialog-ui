@@ -1,0 +1,34 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown label="Area" value.bind="data.area" error.bind="error.Area" read-only.bind="readOnly"
+      items.bind="areas" show.bind="false"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly" items.bind="shifts"></au-dropdown>
+
+      <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly" items.bind="groups"></au-dropdown>
+
+    <au-autocomplete options.bind="controlOptions" value.bind="selectedPackaging" label="Nomor Bon"
+      read-only.bind="readOnly || isEdit" error.bind="error.BonNo" loader.bind="packagingAreaLoader"
+      text.bind="areaMovementTextFormatter">
+    </au-autocomplete>
+    <br/>
+    <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+    <br/>
+    <au-collection columns.bind="itemColumns" items.bind="data.packagingProductionOrders"
+      errors.one-way="error.packagingOrders" remove.bind="onremove" add.bind="addItemCallback"
+      read-only.bind="readOnly" item-template="modules/packing-sku-inventory/dyeing-printing-in-packaging/template/item">
+    </au-collection>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+
+
+</template>

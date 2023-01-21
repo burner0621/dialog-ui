@@ -1,0 +1,23 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>
+            <h3>Alasan Unpost</h3>
+        </ai-dialog-header>
+
+        <ai-dialog-body width>
+            <form class="form-horizontal">
+                <au-multiline
+                    rows.bind="5"
+                    placeholder="Alasan Unpost"
+                    value.bind="reason">
+                </au-multiline>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.trigger="controller.cancel()">Batal</button>
+            <button class="btn btn-primary" click.trigger="controller.ok(reason)">Ok</button>
+        </ai-dialog-footer>
+
+    </ai-dialog>
+</template>

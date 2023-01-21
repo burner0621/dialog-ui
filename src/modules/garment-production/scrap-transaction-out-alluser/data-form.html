@@ -1,0 +1,45 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <!-- <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button> -->
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <!-- <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button> -->
+        </div>
+        <au-datepicker
+            label="Tgl. Keluar"
+            value.bind="data.TransactionDate"
+            error.bind="error.TransactionDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <au-autocomplete
+            label="Asal Barang"
+            value.bind=" selectedDestination"
+            error.bind="error.ScrapDestinationName"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            loader.bind="destinationLoader"
+            text.bind = "destinationView"
+            placeholder="Asal Barang">
+      </au-autocomplete>
+  
+      <div class="form-group has-error">
+        <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+    </div>
+
+    <au-collection 
+          items.bind="data.Items" 
+          errors.bind="error.Items" 
+          columns.bind="itemsInfo.columns" 
+          options.bind="itemsInfo.options"
+          read-only.bind="readOnly"
+          show.bind="selectedDestination || data.ScrapDestinationName "
+          item-template="modules/garment-production/scrap-transaction-out/template/item"
+          view-model.ref="ItemsCollection">
+</au-collection>
+  </au-input-form>
+</template>

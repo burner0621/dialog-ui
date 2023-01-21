@@ -1,0 +1,19 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-numeric value.bind="data.YarnWeightPerCone" error.bind="error.YarnWeightPerCone" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.GoodOutput" error.bind="error.GoodOutput" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.BadOutput" error.bind="error.BadOutput" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.DrumTotal" error.bind="error.DrumTotal" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

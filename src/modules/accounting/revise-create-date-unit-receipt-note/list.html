@@ -1,0 +1,28 @@
+<template>
+    <div class="display-wrapper">
+        <h1 class="page-header">Revisi Tanggal Bon Terima Unit</h1>
+        <br>
+        
+        <au-table
+            data.bind="loader"
+            //context.bind="context"
+            //context-click.delegate="contextClickCallback($event)"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="10"
+            selectable.bind="true"
+            selections.bind="dataToBePosted" row-formatter.bind="rowFormatter"
+            >
+        </au-table>
+   
+		<hr/>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            <au-datepicker label="Tanggal" value.bind="revisiondate" options.bind="controlOptions"></au-datepicker>
+            <button class="btn btn-primary" disabled.bind="!dataToBePosted.length > 0" click.delegate="posting()">Ubah</button>
+        </div>
+    </div>
+
+</template>

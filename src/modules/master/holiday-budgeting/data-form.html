@@ -1,0 +1,46 @@
+<template>
+  <div class="row">
+      <div class="col-md-6">
+        <au-input-form 
+          title.bind="title" 
+          with.bind="context"
+          options.bind="formOptions">  
+
+        <au-datepicker 
+            label="Tanggal Libur" 
+            value.bind="data.date" 
+            error.bind="error.date" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+          <au-textbox
+            label="Nama"
+            value.bind="data.name"
+            error.bind="error.name"
+            read-only.bind="readOnly"
+          ></au-textbox>
+
+          <au-autocomplete
+            label="Division"
+            value.bind="data.division"
+            error.bind="error.division"
+            loader.bind="divisionLoader"
+            read-only.bind="readOnly"
+            key="name"
+            text="name"
+          ></au-autocomplete>
+
+          <au-multiline
+            label="Keterangan"
+            value.bind="data.description"
+            error.bind="error.description"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <template replaceable part="actions"></template>
+
+        </au-input-form>
+      </div>
+  </div>
+</template>

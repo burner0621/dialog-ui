@@ -1,0 +1,21 @@
+<template>
+<tr>
+  <td>
+    <au-textbox value.bind="data.ColorTemplate" error.bind="error.ColorTemplate" read-only.bind="options.readOnly" options.bind="controlOption"></au-textbox>
+  </td>
+  <td>
+    <au-textbox value.bind="data.ColorRequest" error.bind="error.ColorRequest" read-only.bind="options.readOnly" options.bind="controlOption"></au-textbox>
+  </td>
+  <td>
+    <au-autocomplete value.bind="ColorType" error.bind="error.ColorType" read-only.bind="options.readOnly" text="Name"
+      loader.bind="loader" options.bind="controlOption" ></au-autocomplete>
+  </td>
+  <td>
+    <numeric value.bind="data.Quantity" error.bind="error.quantity" read-only.bind="options.readOnly" options.bind="controlOption"></numeric>
+  </td>
+  <td>
+    <au-textbox value.one-way="data.Uom.Unit" error.bind="error.Uom" read-only.bind="true" options.bind="controlOption"></au-textbox>
+  </td>
+  <td if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button></td>
+</tr>
+</template>

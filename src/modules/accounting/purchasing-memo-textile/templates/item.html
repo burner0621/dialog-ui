@@ -1,0 +1,42 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-autocomplete placeholder="pilih akun"
+                             value.bind="data.ChartOfAccount"
+                             error.bind="error.ChartOfAccount"
+                             loader.one-time="coaLoader"
+                             text="Code"
+                             read-only.bind="readOnly"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ChartOfAccount.Name"
+                        read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.DebitAmount"
+                        error.bind="error.DebitAmount"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.CreditAmount"
+                        error.bind="error.CreditAmount"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

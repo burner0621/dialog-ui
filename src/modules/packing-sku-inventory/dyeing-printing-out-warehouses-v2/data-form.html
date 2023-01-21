@@ -1,0 +1,73 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown options.bind="controlOptions" label="Jenis" value.bind="data.type" error.bind="error.Type"
+      read-only.bind="readOnly || isEdit" items.bind="types"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-dropdown if.bind="!isAdj" options.bind="controlOptions" label="Zona" value.bind="destinationArea"
+      error.bind="error.DestinationArea" read-only.bind="readOnly || isEdit" items.bind="destinationAreas">
+    </au-dropdown>
+
+
+    <au-autocomplete if.bind="!isAdj" options.bind="controlOptions" value.bind="selectedFilterSPP"
+      label="Filter Nomor SPP" show.bind="!readOnly && !isEdit" read-only.bind="readOnly" loader.bind="filterSPPLoader"
+      text.bind="sppTextFormatter">
+    </au-autocomplete>
+
+
+    <!-- <au-autocomplete options.bind="controlOptions" value.bind="selectedWarehouse" label="Nomor Bon"
+      read-only.bind="readOnly || isEdit" error.bind="error.BonNo" loader.bind="bonWarehouseLoader"
+      add.bind="addItemCallback"
+      text.bind="areaMovementTextFormatter">
+    </au-autocomplete> -->
+    <p style="color:red;" show.bind="!readOnly && !isEdit"> ** Perhatian!!! Maksimal simpan 30 Barcode </p>
+     <div if.bind="!isAdj">
+      <au-textbox show.bind="error.WarehousesProductionOrder" read-only.bind="true"
+        value.bind="error.WarehousesProductionOrder" style="color: red;"></au-textbox>
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+      <au-collection columns.bind="itemColumns" view-model.ref="ItemsCollection"
+        items.bind="data.displayWarehousesProductionOrders" errors.one-way="error.WarehousesProductionOrders"
+        options.bind="detailOptions" read-only.bind="readOnly" 
+        header-template="modules/packing-sku-inventory/dyeing-printing-out-warehouses-v2/template/item-header"
+        item-template="modules/packing-sku-inventory/dyeing-printing-out-warehouses-v2/template/item"
+       
+        >
+
+      </au-collection>
+    </div>
+
+    <div if.bind="isAdj">
+      <au-textbox show.bind="error.WarehousesProductionOrder" read-only.bind="true"
+        value.bind="error.WarehousesProductionOrder" style="color: red;"></au-textbox>
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+      <au-collection class="adjTable" columns.bind="adjItemColumns" items.bind="data.adjWarehousesProductionOrders"
+        options.bind="detailOptions" errors.one-way="error.WarehousesProductionOrders" add.bind="addItemCallback"
+        remove.bind="onremove" read-only.bind="readOnly"
+        item-template="modules/packing-sku-inventory/dyeing-printing-out-warehouses-v2/template/adjItem">
+      </au-collection>
+
+    </div>
+
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

@@ -1,0 +1,155 @@
+<template>
+  <h1 class="page-header">Laporan Efisiensi Weaving</h1>
+  <div class="row">
+    <div class="col-md-1">
+      <textbox label="Periode" read-only="true"></textbox>
+    </div>
+    <div class="col-md-1">
+      <button
+        class="btn btn-default"
+        click.delegate="periodByDay()"
+        style="margin-left: 16px;margin-top:12px;color:black; white-space: nowrap; width: 62px;"
+      >
+        Harian
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button
+        class="btn btn-default"
+        click.delegate="periodByMonth()"
+        style="margin-left: 8px;margin-top:12px;color:black; padding-left:0px; padding-right:0px;white-space: nowrap; width: 62px;"
+      >
+        Bulanan
+      </button>
+    </div>
+  </div>
+
+  <div id="byDay" show.bind="periodDay">
+    <div class="row">
+      <div class="col-md-1">
+        <textbox
+          label="Harian"
+          read-only="true"
+          style="white-space: nowrap;"
+        ></textbox>
+      </div>
+      <div class="col-md-3">
+        <au-datepicker
+          value.bind="data.RangeOne"
+          error.bind="error.RangeOne"
+          read-only.bind="readOnly"
+          options.bind="controlOptions"
+        ></au-datepicker>
+      </div>
+      <div class="col-md-1" style="padding-left: 0px; padding-right: 0px;">
+        <textbox label="Sampai Dengan" read-only="true"></textbox>
+      </div>
+      <div class="col-md-3">
+        <au-datepicker
+          value.bind="data.RangeTwo"
+          error.bind="error.RangeTwo"
+          read-only.bind="readOnly"
+          options.bind="controlOptions"
+        ></au-datepicker>
+      </div>
+    </div>
+  </div>
+
+  <div id="byMonth" show.bind="periodMonth">
+    <div class="row">
+      <div class="col-md-1">
+        <textbox
+          label="Bulanan"
+          read-only="true"
+          style="white-space: nowrap;"
+        ></textbox>
+      </div>
+      <div class="col-md-3">
+        <au-dropdown
+          value.bind="data.PeriodTypes"
+          error.bind="error.PeriodTypes"
+          read-only.bind="readOnly"
+          items.bind="months"
+        ></au-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1">
+      <textbox label="All Shift" read-only="true"></textbox>
+    </div>
+    <div class="col-md-1">
+      <au-checkbox
+        value.bind="AllShift"
+        error.bind="error.AllShift"
+        read-only.bind="readOnly"
+      >
+      </au-checkbox>
+    </div>
+  </div>
+
+  <div id="allShift" show.bind="shiftElement">
+    <div class="row">
+      <div class="col-md-1">
+        <textbox label="Shift" read-only="true"></textbox>
+      </div>
+      <div class="col-md-3">
+        <au-autocomplete
+          value.bind="data.Shift"
+          error.bind="error.Shift"
+          read-only.bind="readOnly"
+          items.bind="shift"
+        >
+        </au-autocomplete>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1">
+      <textbox label="Periode" read-only="true"></textbox>
+    </div>
+    <div class="col-md-3">
+      <au-autocomplete
+        value.bind="data.WeavingUnit"
+        error.bind="error.WeavingUnit"
+        read-only.bind="readOnly"
+        items.bind="weavingUnit"
+      >
+      </au-autocomplete>
+    </div>
+  </div>
+  <div class="row" style="margin-left:2px;">
+    <div class="col-md-1">
+      <button
+        class="btn btn-success"
+        click.delegate="printExcel()"
+        style="margin-top: 16px;"
+      >
+        Excel
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button
+        class="btn btn-success"
+        click.delegate="search()"
+        style="margin-top: 16px;"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+  <!-- <div class="row" style="white-space: nowrap; margin-top: 16px;"> -->
+  <au-table
+    data.bind="loader"
+    columns.bind="columns"
+    sortable.bind="true"
+    view-model.ref="orderProductionsTable"
+    page-size="25"
+    options.bind="tableOptions"
+    context.bind="context"
+  >
+  </au-table>
+  <!-- </div> -->
+</template>

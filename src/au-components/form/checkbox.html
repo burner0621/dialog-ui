@@ -1,0 +1,11 @@
+<template> 
+  <require from="./_layout"></require>
+  <au-layout options.bind="options" label.bind="label" error.bind="error"> 
+    <div class="checkbox" if.bind="!readOnly">
+      <label>
+        <input type="checkbox" checked.bind="value" disabled.bind="disabled">
+      </label>
+    </div>
+    <p class="form-control-static" if.bind="readOnly">${value? "Ya":"Tidak"}</p>
+  </au-layout>
+</template>

@@ -1,0 +1,181 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+        <div class="row">
+            <div class="col-sm-6">
+                <au-textbox
+                    error.bind="error.ContractNo"
+                    value.bind="data.ContractNo"
+                    label="No Kontrak"
+                    read-only.bind="true"
+                    if.bind="data.ContractNo"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-dropdown 
+                    label="Jenis Kontrak" 
+                    value.bind="selectedContractType" 
+                    error.bind="error.ContractType" 
+                    read-only.bind="readOnly || data.IsUsed || isEdit"
+                    items.bind="ContractTypeOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+                <au-dropdown 
+                    label="Kategori Subcon" 
+                    value.bind="selectedSubconCategory" 
+                    error.bind="error.SubconCategory" 
+                    read-only.bind="readOnly || data.IsUsed || isEdit"
+                    if.bind="selectedContractType"
+                    items.bind="SubconCategoryTypeOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+                
+                <au-datepicker 
+                    label="Tanggal Kontrak"
+                    value.bind="data.ContractDate"
+                    error.bind="error.ContractDate"
+                    read-only.bind="readOnly || data.IsUsed || isEdit"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <!-- <au-autocomplete
+                    value.bind="data.Buyer"
+                    error.bind="error.Buyer"
+                    label="Buyer"
+                    loader.bind="buyerLoader"
+                    text.bind = "buyerView"
+                    placeholder="Cari Buyer"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+                </au-autocomplete> -->
+
+                <au-autocomplete
+                    value.bind="data.Supplier"
+                    error.bind="error.Supplier"
+                    label="Penerima"
+                    loader.bind="supplierLoader"
+                    text.bind="supplierView"
+                    placeholder="cari supplier"
+                    read-only.bind="readOnly || data.IsUsed || data.Id || isEdit"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-textbox
+                    error.bind="error.JobType"
+                    value.bind="JobType"
+                    label="Jenis Pekerjaan"
+                    read-only.bind="readOnly || data.IsUsed || isEdit"
+                    options.bind="controlOptions"
+                    textstyle="upper-case">
+                </au-textbox>
+
+                <au-textbox
+                    error.bind="error.FinishedGoodType"
+                    value.bind="FinishedGoodType"
+                    label="Jenis Barang"
+                    read-only.bind="readOnly || data.IsUsed || isEdit"
+                    options.bind="controlOptions">
+                </au-textbox>
+                <au-numeric
+                    error.bind="error.NettWeight"
+                    value.bind="data.NettWeight"
+                    label="NW per Satuan"
+                    format="0.0000"
+                    read-only.bind="readOnly || data.IsUsed "
+                    if.bind="data.ContractType != 'SUBCON GARMENT'"
+                    options.bind="controlOptions2">
+                </au-numeric>
+                <au-numeric
+                    error.bind="error.GrossWeight"
+                    value.bind="data.GrossWeight"
+                    if.bind="data.ContractType != 'SUBCON GARMENT'"
+                    label="GW per Satuan"
+                    format="0.0000"
+                    read-only.bind="readOnly || data.IsUsed "
+                    options.bind="controlOptions2">
+                </au-numeric>
+            </div>
+            <div class="col-sm-6">
+                <au-numeric
+                    error.bind="error.Quantity"
+                    value.bind="data.Quantity"
+                    label="Jumlah"
+                    format="0.00"
+                    read-only.bind="readOnly || data.IsUsed "
+                    options.bind="controlOptions2">
+                </au-numeric>
+        
+                <au-autocomplete 
+                    label="Satuan"
+                    value.bind="data.Uom" 
+                    error.bind="error.Uom" 
+                    loader.bind="uomLoader"
+                    text="Unit" 
+                    placeholder="Satuan" 
+                    query.bind="Uomfilter"
+                    read-only.bind="readOnly || data.IsUsed "
+                    options.bind="controlOptions2">
+                </au-autocomplete>
+        
+                <au-textbox
+                    error.bind="error.SKEPNo"
+                    value.bind="SKEPNo"
+                    label="No SKEP"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions2">
+                </au-textbox>
+        
+                <au-textbox
+                    error.bind="error.BPJNo"
+                    value.bind="BPJNo"
+                    label="No BPJ"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions2">
+                </au-textbox>
+        
+                <au-datepicker 
+                    label="Tanggal Persetujuan"
+                    value.bind="data.AgreementDate"
+                    error.bind="error.AgreementDate"
+                    read-only.bind="readOnly || data.IsUsed"
+                    options.bind="controlOptions2">
+                </au-datepicker>
+        
+                <au-datepicker 
+                    label="Tanggal Jatuh Tempo"
+                    value.bind="data.DueDate"
+                    error.bind="error.DueDate"
+                    read-only.bind="readOnly || data.IsUsed"
+                    options.bind="controlOptions2">
+                </au-datepicker>
+
+                <au-numeric
+                    error.bind="error.CIF"
+                    value.bind="data.CIF"
+                    label="Nilai CIF"
+                    format="0.00"
+                    read-only.bind="readOnly || data.IsUsed "
+                    options.bind="controlOptions2"
+                    if.bind="data.ContractType == 'SUBCON BAHAN BAKU' || data.ContractType == 'SUBCON JASA'">
+                </au-numeric>
+            </div>
+        </div>
+        <div class="row">
+            <au-collection
+                items.bind="data.Items"
+                errors.bind="error.Items"
+                columns.bind="data.ContractType == 'SUBCON GARMENT' ? garmentColumns : columns"
+                read-only.bind="readOnly"
+                remove.bind="removeItems"
+                add.bind="addItems"
+                if.bind="isItems"
+                options.bind="itemOptions"
+                item-template="modules/garment-subcon/garment-subcon-contract/template/item">
+            </au-collection>
+        </div>
+    </au-input-form>
+    <div class="row"></div>
+</template>

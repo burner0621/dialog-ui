@@ -1,0 +1,9 @@
+<template>
+  <div class="col-md-9">
+    <au-input-form title.bind="title" with.bind="context">
+      <au-textbox label="Kode" placeholder="Kode Line" value.bind="data.Code" error.bind="error.Code" options.bind="customOptions"
+        read-only.bind="readOnly"></au-textbox>
+      <au-textbox label="Nama" placeholder="Nama Line" value.bind="data.Name" error.bind="error.Name" options.bind="customOptions" read-only.bind="readOnly"></au-textbox>
+    </au-input-form>
+  </div>
+</template>

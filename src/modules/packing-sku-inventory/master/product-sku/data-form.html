@@ -1,0 +1,45 @@
+<template>
+
+  <au-input-form title.bind="title"
+                 with.bind="context"
+                 options.bind="formOptions">
+
+    <au-textbox label="Kode"
+                value.bind="data.code"
+                error.bind="error.Code"
+                read-only.bind="readOnly">
+    </au-textbox>
+
+    <au-textbox label="Nama"
+                value.bind="data.name"
+                error.bind="error.Name"
+                read-only.bind="readOnly">
+    </au-textbox>
+
+    <au-autocomplete value.bind="selectedUOM"
+                     error.bind="error.UOM"
+                     label="Satuan"
+                     loader.bind="uomLoader"
+                     read-only.bind="readOnly"
+                     text="unit">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedCategory"
+                     error.bind="error.Category"
+                     label="Kategori"
+                     loader.bind="categoryLoader"
+                     read-only.bind="readOnly"
+                     text="name">
+    </au-autocomplete>
+
+    <au-multiline label="Keterangan"
+                  value.bind="data.description"
+                  read-only.bind="readOnly">
+    </au-multiline>
+
+    <template replaceable
+              part="actions"></template>
+  </au-input-form>
+
+
+</template>

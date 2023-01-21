@@ -1,0 +1,154 @@
+<template>
+    <h1 class="page-header">Monitoring Pemasukan</h1>
+    <form class="form-horizontal">
+        <au-dropdown 
+        label="Jenis" 
+        value.bind="type"
+        items.bind="Types"
+        options.bind="controlOptions" >
+        </au-dropdown>
+        <!-- <delivery-order-auto-suggest label="No. Surat Jalan" value.bind="no"></delivery-order-auto-suggest> -->
+        <!-- <au-autocomplete 
+                value.bind="internNote" 
+                label="Nomor Nota Intern" 
+                loader.bind="internNoteLoader"
+                placeholder="Cari Nomor Nota Intern" 
+                read-only.bind="readOnly" 
+                key="Id" 
+                text="inNo"
+                options.bind="controlOptions">
+            </au-autocomplete> -->
+            <!--<au-textbox
+            value.bind="internNote" 
+                label="Nomor Nota Intern" 
+                options.bind="controlOptions"
+                placeholder="Cari Nomor Nota Intern"></au-textbox>-->
+
+   <!-- <au-autocomplete 
+                value.bind="supplier" 
+                label="Supplier" 
+                loader.bind="supplierLoader"
+                placeholder="Cari Supplier" 
+                read-only.bind="readOnly" 
+                key="_id" 
+                text="name"
+                options.bind="controlOptions">
+            </au-autocomplete> -->
+            
+        <!-- <au-autocomplete 
+                value.bind="currency" 
+                label="Mata Uang" 
+                loader.bind="currencyLoader"
+                placeholder="Cari Mata Uang" 
+                read-only.bind="readOnly" 
+                key="Id" 
+                text="Code"
+                options.bind="controlOptions">
+            </au-autocomplete> -->
+        <!-- <supplier-auto-suggest label="Supplier" value.bind="supplierId"></supplier-auto-suggest> -->
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+
+        <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <!--<au-table
+            view-model.ref="doTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Cetak Excel</button>
+            </div>
+        </au-table>-->
+        <!--<hr/>
+    </form>
+</template>-->
+         <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                    <td>No BUM</td>
+                    <td>Nomor PO</td>
+                    <td>Nomor Surat Jalan</td>
+                    <td>Unit</td>
+                    <td>Tanggal Masuk</td>
+                    <td>Tanggal Buat Bon</td>
+                    <td>Gudang</td>
+                    <td>Supplier</td>
+                    <td>Asal Terima</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>Keterangan</td>
+                    <td>Nomor RO</td>
+                    <td>Jumlah Diterima</td>
+                    <td>Satuan</td>
+                    <td>Jumlah Kecil</td> 
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                        <td>${$index + 1}</td>
+                        <td>${IN.NoBUM}</td>
+                        <td>${IN.NoPO}</td>
+                        <td>${IN.NoSuratJalan}</td>
+                        <td>${IN.UNit}</td>
+                        <td>${IN.TanggalMasuk | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${IN.TanggalBuatBon | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${IN.Gudang}</td>
+                        <td>${IN.Supplier}</td>
+                        <td>${IN.AsalTerima}</td>
+                        <td>${IN.KodeBarang}</td>
+                        <td>${IN.NamaBarang}</td>
+                        <td>${IN.Keterangan}</td>
+                        <td>${IN.NoRO}</td>
+                        <td>${IN.JumlahDiterima}</td>
+                        <td>${IN.Satuan}</td>
+                        <td>${IN.JumlahKecil}</td>
+                        <!--<td>${SJ['Satuan Barang']}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</template> 
+
+
+
+
+
+
+
+

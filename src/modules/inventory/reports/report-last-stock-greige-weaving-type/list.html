@@ -1,0 +1,78 @@
+<template>
+    <h1 class="page-header">Laporan Saldo Akhir Gudang Greige Per Jenis</h1>
+
+    <form class="form-horizontal">
+        <!-- <au-datepicker options.bind="controlOptions" label="Tanggal Awal" value.bind="dateFrom">
+        </au-datepicker> -->
+        <au-datepicker options.bind="controlOptions" label="Per Tanggal" value.bind="dateTo">
+        </au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        
+         <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td rowspan="2">Konstruksi</td>
+                        <td rowspan="2">JL</td>
+                        <td rowspan="2">JP</td>
+                        <td rowspan="2">Gr</td>
+                        <td rowspan="2">Jn</td>
+                        <td colspan="2">Awal</td>
+                        <td colspan="2">Masuk</td>
+                        <td colspan="2">Keluar</td>
+                        <td colspan="2">Akhir</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Piece</td>
+                        <td>Meter</td>
+                        <td>Piece</td>
+                        <td>Meter</td>
+                        <td>Piece</td>
+                        <td>Meter</td>
+                        <td>Piece</td>
+                        <td>Meter</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                       
+                        <td>${IN.Nomor}</td>
+                        <td>${IN.Construction}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>${IN.BeginQuantityPiece}</td>
+                        <td>${IN.BeginQuantity}</td>
+                        <td>${IN.InQuantityPiece}</td>
+                        <td>${IN.InQuantity}</td>
+                        <td>${IN.OutQuantityPiece}</td>
+                        <td>${IN.OutQuantity}</td>
+                        <td>${IN.EndingQuantityPiece}</td>
+                        <td>${IN.EndingQuantity}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+    
+</template> 

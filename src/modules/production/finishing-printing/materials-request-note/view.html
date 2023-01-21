@@ -1,0 +1,19 @@
+<template>
+    <style>
+        multiline {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Surat Permintaan Barang</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error" read-only="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+            <a click.delegate="edit(data)" if.bind="!data.IsDistributed" class='btn btn-primary btn-sm'>Ubah</a>
+            <a click.delegate="complete(data)" if.bind="isAwal && data.IsDistributed" class='btn btn-primary btn-sm'>Complete / Incomplete</a>
+            <a click.delegate="promptDelete()" if.bind="!data.IsDistributed" class='btn btn-danger btn-sm'>Hapus</a>
+        </div>
+    </block>
+</template>

@@ -1,0 +1,142 @@
+<template>
+    <h1 class="page-header">Laporan Flow Penerimaan Sample</h1>
+    <form class="form-horizontal">
+        <au-dropdown 
+              label="Kategori" 
+              value.bind="KtgrItem"
+              items.bind="KategoriItem"
+              options.bind="controlOptions" >
+        </au-dropdown>
+                
+        <au-autocomplete label="Unit" value.bind="selectedUnit"  read-only.bind="true"
+        options.bind="controlOptions" loader.bind="unitLoader" text.bind="unitView" placeholder="Unit">
+        </au-autocomplete>
+    
+       
+        <au-datepicker 
+                    label="Tanggal Awal" 
+                    value.bind="dateFrom">
+                </au-datepicker>
+        <au-datepicker 
+                label="Tanggal Akhir" 
+                value.bind="dateTo">
+            </au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Export To Excel</button>
+          </div>
+        <br>
+    <div class="table-responsive">  
+        <table class="table table-bordered table-hover" border="1" id="doReport">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>No PO</td>
+                    <td>Keterangan Barang</td>
+                    <td>No R/O</td>
+                    <td>Artikel</td>
+                    <td>Kode Buyer</td>
+                    <!-- <td>Untuk RO</td>
+                    <td>Untuk Artikel</td> -->
+                    <td>Jenis</td>
+                    <td>Asal</td>
+                    <td>No. Bukti</td>
+                    <td>Tanggal</td>
+                    <td>Jumlah Beli</td>
+                    <td>Satuan Beli</td>
+                    <td>Jumlah Terima</td>
+                    <td>Satuan Terima</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="IN of data">
+                    <td>${$index + 1}</td>
+                    <td>${IN.kdbarang}</td>
+                    <td>${IN.nmbarang}</td>
+                    <td>${IN.nopo}</td>
+                    <td>${IN.keterangan}</td>
+                    <td>${IN.noro}</td>
+                    <td>${IN.artikel}</td>
+                    <td>${IN.kdbuyer}</td>
+                    <!-- <td>${IN.RONoDO}</td> -->
+                    <!-- <td>${IN.ArticleDO}</td> -->
+                    <td>${IN.Jenis}</td>
+                    <td>${IN.asal}</td>
+                    <td>${IN.nobukti}</td>
+                    <td>${IN.tanggal | dateFormat:'DD MMMM YYYY' }</td>
+                    <td>${IN.jumlahbeli}</td>
+                    <td>${IN.satuanbeli}</td>
+                    <td>${IN.jumlahterima}</td>
+                    <td>${IN.satuanterima}</td>
+                    <!--<td>${SJ['Satuan Barang']}</td>-->
+                </tr>
+                <tr class="active">
+                    <td class="text-center" colspan="14"><strong>T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                    <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+    <!-- <form class="form-horizontal">
+
+
+        <au-dropdown 
+              label="Kategori" 
+              value.bind="KtgrItem"
+              items.bind="KategoriItem"
+              options.bind="controlOptions" >
+        </au-dropdown>
+        <au-autocomplete value.bind="unit" label="Unit" loader.bind="unitLoader" placeholder="Cari Unit"
+          read-only.bind="readOnly" text.bind="unitView" options.bind="controlOptions">
+        </au-autocomplete> -->
+        <!-- <au-dropdown label="Unit" value.bind="unitselect" items.bind="unitOption"></au-dropdown> -->
+        <!-- <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form> -->
+
+    <!-- <au-table
+        view-model.ref="tableList"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable="true"
+        page-size="25"
+        options.bind="tableOptions">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-primary" click.delegate="xls()">Export ke Excel</button>
+        </div>
+    </au-table> --> 
+
+
+</template>

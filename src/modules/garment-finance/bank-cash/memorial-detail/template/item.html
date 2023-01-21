@@ -1,0 +1,40 @@
+<template>
+	<tr>
+		<td>
+			<au-autocomplete value.bind="selectedInvoice" loader.one-time="invoiceLoader"
+				error.bind="error.Invoice" text="invoiceNo"
+				read-only.bind="readOnly || (isEdit && data.Id)" options.bind="controlOptions"
+				placeholder="Pilih No Invoice">
+			</au-autocomplete>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Buyer.Code" error.bind="error.Buyer" read-only.bind="true">
+				</au-autocomplete>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Buyer.Name" error.bind="error.Buyer" read-only.bind="true">
+				</au-autocomplete>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Currency.Code" error.bind="error.Currency" read-only.bind="true">
+				</au-autocomplete>
+		</td>
+		<td>
+			<au-numeric value.bind="data.Currency.Rate" error.bind="error.Currency" read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.Amount" error.bind="error.Amount" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="amountIDR" read-only.bind="true" show.bind="selectedInvoice">
+			</au-numeric>
+		</td>
+		<td if.bind="readOnly"></td>
+
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+	</tr>
+</template>

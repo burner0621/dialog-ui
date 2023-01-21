@@ -1,0 +1,66 @@
+<template>
+	<au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+		<au-textbox if.bind="data.ServiceSubconShrinkagePanelNo" value.bind="data.ServiceSubconShrinkagePanelNo"
+			label="No Subcon BB Shrinkage / Panel" read-only="true" options.bind="controlOptions">
+		</au-textbox>
+
+		<au-datepicker label="Tanggal Subcon BB Shrinkage / Panel" value.bind="data.ServiceSubconShrinkagePanelDate"
+			error.bind="error.ServiceSubconShrinkagePanelDate" read-only.bind="readOnly" options.bind="controlOptions">
+		</au-datepicker>
+
+		<au-multiline label="Keterangan" error.bind="error.Remark" read-only.bind="readOnly" value.bind="data.Remark"
+			options.bind="controlOptions">
+		</au-multiline>
+
+		<au-numeric
+            value.bind="data.QtyPacking"
+            error.bind="error.QtyPacking"
+            label="Jumlah Kemasan"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-dropdown 
+            label="Satuan Kemasan" 
+            value.bind="data.UomUnit" 
+            error.bind="error.UomUnit" 
+            read-only.bind="readOnly "
+            items.bind="UomOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+		<au-numeric
+			error.bind="error.NettWeight"
+			value.bind="data.NettWeight"
+			label="NW"
+			format="0.00"
+			read-only.bind="readOnly"
+			options.bind="controlOptions">
+		</au-numeric>
+
+		<au-numeric
+			error.bind="error.GrossWeight"
+			value.bind="data.GrossWeight"
+			label="GW"
+			format="0.00"
+			read-only.bind="readOnly"
+			options.bind="controlOptions">
+		</au-numeric>
+		
+		<div class="form-group has-error">
+			<p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+			<p if.bind="error.Price" class="help-block text-center">${error.Price}</p>
+		</div>
+
+		<au-collection items.bind="data.Items" errors.bind="error.Items" columns.bind="itemsInfo.columns"
+			read-only.bind="readOnly" remove.bind="removeItems" add.bind="addItems"
+			options.bind="itemOptions"
+			item-template="modules/garment-subcon/garment-service-subcon-shrinkage-panel/template/item">
+		</au-collection>
+
+		<!--<p if.bind="data.Items"><b>Jumlah Total Subcon Sewing : ${totalQuantity} PCS</b></p>-->
+
+	</au-input-form>
+	<div class="row"></div>
+</template>

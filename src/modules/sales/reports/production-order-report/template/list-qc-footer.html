@@ -1,0 +1,11 @@
+<template>
+<tr>
+  <td colspan="3" class="text-right" style="padding-right:10%">
+    <b>Total<b>
+  </td>
+  <td class="text-right">
+    <require from="../../../../../lib/number-format-value-converter"></require>
+    <b>${itemSum | numberFormat:"0,000"}<b>
+  </td>
+</tr>
+</template>

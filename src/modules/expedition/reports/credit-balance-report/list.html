@@ -1,0 +1,37 @@
+<template>
+    <h1 class="page-header">Saldo Hutang</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="info.supplier" error.bind="error.supplier" label="Supplier" loader.bind="supplierLoader"
+            text.bind="supplierView" placeholder="Input Supplier" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+        <au-dropdown value.bind="info.month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths" key="value"
+            text="text">
+        </au-dropdown>
+        <au-dropdown value.bind="info.year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value"
+            text="text">
+        </au-dropdown>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="credit-balance-table">
+        <au-table
+            view-model.ref="tableList"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable="true"
+            page-size="25"
+            options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+    </div>
+</template>

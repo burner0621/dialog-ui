@@ -1,0 +1,43 @@
+<template>
+    <tr>
+        <td colspan="3"
+            class="text-right">
+            <au-textbox value.bind="'Total'"
+                        read-only.bind="true">
+            </au-textbox>
+            <au-textbox error.bind="'Selisih'"
+                        show.bind="isDebitSmaller || isCreditSmaller"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <!--<td class="text-left">
+        <require from="../../../../lib/number-format-value-converter"></require>
+        ${itemSum | numberFormat:"0,000"}
+      </td>-->
+
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.bind="getDebitSum"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOption">
+            </au-numeric>
+            <au-textbox error.bind="getDifference"
+                        show.bind="isDebitSmaller"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.bind="getCreditSum"
+                        format="0,0.0000"
+                        read-only.bind="true"
+                        options.bind="controlOption">
+            </au-numeric>
+            <au-textbox error.bind="getDifference"
+                        show.bind="isCreditSmaller"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,14 @@
+<template>
+  <tr>
+    <td colspan="5" class="text-left"><b>Total Valas : ${currency} ${totalValas | numberFormat:"0,000.00"}</b></td>
+  </tr>
+  <tr>
+    <td colspan="5" class="text-left"><b>Total IDR : ${totalIDR | numberFormat:"0,000.00"}</b>
+    </td>
+  </tr>
+  <tr>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <!-- <td colspan="2" class="text-left"><b>Total Harga barang yang datang : ${currency} ${grandTotalPrice |
+        numberFormat:"0,000.00"}</b></td> -->
+  </tr>
+</template>

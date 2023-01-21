@@ -1,0 +1,13 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.LossEventCategory" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Value" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+
+</template>

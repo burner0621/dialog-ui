@@ -1,0 +1,23 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedDeliveryNote" error.bind="error.BonNo" read-only.bind="readOnly"
+                loader.one-time="deliveryNoteLoader" key="bonCode" text="bonCode"
+                keypress.delegate="enterDelegate($event)" placeholder="Pilih No. Bon Pengiriman">
+            </au-autocomplete>
+
+            <au-textbox error.bind="error.SalesInvoiceItem" read-only.bind="true"></au-textbox>
+
+            <au-collection show.bind="data.BonNo" columns.bind="salesInvoiceItemsInfo.columns"
+                items.bind="data.SalesInvoiceItems" view-model.ref="SalesInvoiceItems"
+                errors.bind="error.SalesInvoiceItems" read-only.bind="readOnly" options.bind="shippingOutTableOptions"
+                item-template="modules/sales/sales-invoice/template/spinning-item"
+                add.bind="salesInvoiceItemsInfo.onAdd" remove.bind="salesInvoiceItemsInfo.onRemove">
+            </au-collection>
+        </td>
+        <td if.bind="!readOnly">
+            <button if.bind="!readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

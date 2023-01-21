@@ -1,0 +1,48 @@
+<template>
+    <div class="row">
+        <div class="col-sm-12">
+
+            <au-input-form title.bind="title" with.bind="context">
+
+                <au-textbox label="Nomor" value.bind="data.noteNo" read-only="true" options.bind="controlOptions"
+                    if.bind="readOnly || isEdit">
+                </au-textbox>
+
+                <au-datepicker label="TGL" value.bind="data.date" error.bind="error.date" read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-autocomplete label="Buyer" placeholder="Pilih Buyer" value.bind="data.buyer"
+                    error.bind="error.buyer" loader.bind="buyerLoader" text.bind="buyerView"
+                    read-only.bind="readOnly" options.bind="controlOptions">
+                </au-autocomplete>
+
+                <au-numeric label="Amount" value.to-view="totalAmount" error.bind="error.amount" read-only="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-multiline label="Deskripsi" value.bind="data.description" error.bind="error.description" read-only.bind="readOnly"
+                     placeholder="Description" read-only.bind="readOnly || isEdit" options.bind="controlOptions"> 
+                </au-multiline>
+
+                <au-textbox label="No Kwitansi" value.bind="data.receiptNo" error.bind="error.receiptNo" read-only.bind="readOnly"
+                    placeholder="No Kwitansi" read-only.bind="readOnly || isEdit" options.bind="controlOptions"> 
+                </au-textbox>
+
+                <au-datepicker label="Tanggal Kwitansi" value.bind="data.receiptDate" error.bind="error.receiptDate" read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-textbox error.bind="error.itemsCount" read-only.bind="true" show.bind="error.itemsCount"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-collection columns.bind="items.columns" items.bind="data.items" errors.bind="error.items"
+                    add.bind="items.onAdd" read-only.bind="readOnly" options.bind="items.options"
+                    item-template="modules/garment-shipping/credit-note/template/item">
+                </au-collection>
+
+            </au-input-form>
+        </div>
+    </div>
+</template>

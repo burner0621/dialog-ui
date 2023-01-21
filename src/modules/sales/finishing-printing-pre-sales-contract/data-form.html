@@ -1,0 +1,94 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox
+            label="No. Sales Contract"
+            value.bind="data.No"
+            read-only="true"
+            if.bind="data.No"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            label="Unit"
+            value.bind="unit"
+            error.bind="error.Unit"
+            loader.bind="unitLoader"
+            text.bind = "unitView"
+            key="Id"
+            aria-placeholder="Cari Unit"
+            read-only.bind="data.No"
+            query.bind="unitQuery"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker
+            label="Tgl. Sales Contract"
+            value.bind="data.Date"
+            error.bind="error.Date"
+            read-only.bind="data.No"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown
+            label="Jenis Sales Contract"
+            value.bind="data.Type"
+            error.bind="error.Type"
+            read-only.bind="data.No"
+            items.bind="scTypes"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete 
+            label="Buyer"
+            value.bind="buyer"
+            error.bind="error.Buyer"
+            loader.bind="buyerLoader"
+            text.bind = "buyerView"
+            key="Id"
+            aria-placeholder="Cari Buyer"
+            read-only.bind="data.No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Jenis Proses"
+            value.bind="processType"
+            error.bind="error.ProcessType"
+            loader.bind="processTypeLoader"
+            text.bind = "processTypeView"
+            key="Id"
+            aria-placeholder="Cari Jenis Proses"
+            
+            read-only.bind="data.No"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-numeric 
+            label="Jumlah Order"
+            value.bind="data.OrderQuantity" 
+            error.bind="error.OrderQuantity"
+            format="0"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+        
+    </au-input-form>
+</template>

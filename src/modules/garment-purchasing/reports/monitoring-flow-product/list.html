@@ -1,0 +1,107 @@
+<template>
+    <h1 class="page-header">History Barang Masuk</h1>
+    <form class="form-horizontal">
+        <au-textbox label="No Surat Jalan" value.bind="NoSJ" options.bind="controlOptions"></au-textbox>
+        <au-textbox label="No Beacukai" value.bind="BeacukaiNo" options.bind="controlOptions"></au-textbox>
+        <au-textbox label="Kode Barang" value.bind="code" options.bind="controlOptions"></au-textbox>
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="flowReport">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Nomor Surat Jalan</td>
+                        <td>Tanggal Surat Jalan</td>
+                        <td>Tanggal Tiba</td>
+                        <td>Nama Supplier</td>
+                        <td>Jenis Supplier</td>
+                        <td>No Beacukai</td>
+                        <td>Tipe</td>
+                        <td>Tanggal Beacukai</td>
+                        <!-- <td>Untuk RO</td>
+                        <td>Untuk Artikel</td> -->
+                        <td>No PO</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah SJ</td>
+                        <td>Satuan SJ</td>
+                        <td>No Bon Masuk</td>
+                        <td>Tanggal Bon Masuk</td>
+                        <td>Jumlah Terima</td>
+                        <td>Satuan Terima</td>
+                        <td>Jenis Penerimaan</td>
+                        <td>No Bon Keluar</td>
+                        <td>Jumlah Keluar</td>
+                        <td>Satuan Keluar</td>
+                        <td>Jenis Pengeluaran</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                        <!-- <td>${$index + 1}</td>
+                        <td>${IN.DONo}</td>
+                        <td>${IN.DODate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${IN.ArrivalDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${IN.SupplierName}</td>
+                        <td>${IN.SupplierType}</td>
+                        <td>${IN.BCNo}</td>
+                        <td>${IN.BCType}</td>
+                        <td>${IN.BCDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${IN.PO}</td>
+                        <td>${IN.ProductCode}</td>
+                        <td>${IN.ProductName}</td>
+                        <td>${IN.DOQty}</td>
+                        <td>${IN.DOUom}</td>
+                        <td>${IN.Urnno}</td>
+                        <td>${IN.ReceiptDate}</td>
+                        <td>${IN.ReceiptQty}</td>
+                        <td>${IN.ReceiptUom}</td>
+                        <td>${IN.URNType}</td>
+                        <td>${IN.UENno}</td>
+                        <td>${IN.ExpendQty}</td>
+                        <td>${IN.ExpendUom}</td>
+                        <td>${IN.ExpenditureType}</td> -->
+
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.count}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.DONo}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.DODate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.ArrivalDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.SupplierName}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.SupplierType}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.BCNo}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.BCType}</td>
+                        <td if.bind="IN.donospan" rowspan="${IN.donospan}">${IN.BCDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td if.bind="IN.ponospan" rowspan="${IN.ponospan}">${IN.PO}</td>
+                        <td if.bind="IN.ponospan" rowspan="${IN.ponospan}">${IN.ProductCode}</td>
+                        <td if.bind="IN.ponospan" rowspan="${IN.ponospan}">${IN.ProductName}</td>
+                        <td if.bind="IN.ponospan" rowspan="${IN.ponospan}">${IN.DOQty}</td>
+                        <td if.bind="IN.ponospan" rowspan="${IN.ponospan}">${IN.DOUom}</td>
+                        <td if.bind="IN.urnspan" rowspan="${IN.urnspan}">${IN.Urnno}</td>
+                        <td if.bind="IN.urnspan" rowspan="${IN.urnspan}">${IN.ReceiptDate}</td>
+                        <td if.bind="IN.urnspan" rowspan="${IN.urnspan}">${IN.ReceiptQty}</td>
+                        <td if.bind="IN.urnspan" rowspan="${IN.urnspan}">${IN.ReceiptUom}</td>
+                        <td if.bind="IN.urnspan" rowspan="${IN.urnspan}">${IN.URNType}</td>
+                        <td>${IN.UENno}</td>
+                        <td>${IN.ExpendQty}</td>
+                        <td>${IN.ExpendUom}</td>
+                        <td>${IN.ExpenditureType}</td>
+
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+    </form>
+</template>

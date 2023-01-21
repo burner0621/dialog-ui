@@ -1,0 +1,16 @@
+<template>
+    <h1 class="page-header">Close Date</h1>
+    <au-table
+        data.bind="loader"
+        columns.bind="columns"
+        sortable="false"
+        page-size="1"
+        context.bind="context" 
+        context-click.delegate="contextClickCallback($event)"
+        options.bind="tableOptions">
+
+       <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="edit()">Edit</button>
+        </div>
+    </au-table>
+</template>

@@ -1,0 +1,403 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <div class="row">
+            <div class="col-md-3">
+                <au-autocomplete
+                    value.bind="selectedPreSalesContract"
+                    error.bind="error.PreSalesContract"
+                    query.bind="preSalesContractFilter"
+                    label="No Pre Sales Contract"
+                    loader.bind="preSalesContractLoader"
+                    text="SCNo"
+                    placeholder="No Sales Contract"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="length4"
+                    keypress.delegate="enterDelegate($event)">
+                </au-autocomplete>
+                <au-textbox
+                    label="Artikel"
+                    placeholder="Nama Artikel"
+                    value.bind="data.Article"
+                    error.bind="error.Article"
+                    options.bind="length4">
+                </au-textbox>
+
+                <au-autocomplete
+                    label="Unit"
+                    value.bind="selectedUnit"
+                    error.bind="error.Unit"
+                    loader.bind="unitLoader"
+                    text.bind="unitView"
+                    placeholder="Unit"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="length4"
+                    keypress.delegate="enterDelegate($event)">
+                </au-autocomplete>
+                <au-autocomplete
+                    label="Komoditi"
+                    placeholder="Cari Komoditi"
+                    value.bind="selectedComodity"
+                    text.bind="comodityView"
+                    error.bind="error.Commodity"
+                    query.bind="comodityQuery"
+                    loader.one-time="comodityLoader"
+                    options.bind="length4"
+                    keypress.delegate="enterDelegate($event)">
+                </au-autocomplete>
+                <au-multiline
+                    placeholder="Deskripsi Komoditi"
+                    label="Deskripsi Komoditi"
+                    value.bind="data.CommodityDescription"
+                    error.bind="error.CommodityDescription"
+                    options.bind="length4">
+                </au-multiline>
+                <au-numeric
+                    label="Fabric (%)"
+                    value.bind="fabricAllowance"
+                    error.bind="error.FabricAllowance"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="Accessories (%)"
+                    value.bind="accessoriesAllowance"
+                    error.bind="error.AccessoriesAllowance"
+                    options.bind="length4">
+                </au-numeric>
+            </div>
+            <div class="col-md-3">
+                <au-textbox
+                    label="Seksi"
+                    value.bind="dataSection"
+                    read-only="true"
+                    options.bind="length4">
+                </au-textbox>
+                <au-autocomplete 
+                    label="Marketing Garment"
+                    value.bind="selectedGarmentMarketing"
+                    error.bind="error.GarmentMarketing"
+                    loader.bind="garmentMarketingLoader"
+                    text.bind="garmentMarketingView"                     
+                    placeholder="Cari Marketing Garment"
+                    read-only.bind="readOnly"
+                    options.bind="length4">
+                </au-autocomplete>
+
+                <au-autocomplete
+                    value.bind="selectedBookingOrder"
+                    error.bind="error.BookingOrder"                    
+                    label="No Booking Order"
+                    loader.bind="bookingOrderLoader" 
+                    query.bind="filter"
+                    text.bind="bookingOrderView"                                                         
+                    placeholder="No Booking Order"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="length4">
+                </au-autocomplete>
+                <strong><au-numeric
+                    label="Remaining Confirm Quantity"
+                    format="0"
+                    value.bind="data.BOQuantity"
+                    error.bind="error.BOQuantity"
+                    read-only="true"
+                    options.bind="length4">
+                </au-numeric></strong>
+                <au-numeric
+                    label="Quantity"
+                    format="0"
+                    value.bind="quantity"
+                    error.bind="error.Quantity"
+                    options.bind="length4">
+                </au-numeric>
+                <au-autocomplete
+                    label="Satuan"
+                    placeholder="Cari Satuan"
+                    value.bind="data.UOM"
+                    error.bind="error.UOM"
+                    text.bind="uomView"
+                    loader.one-time="uomLoader"
+                    options.bind="length4"
+                    keypress.delegate="enterDelegate($event)">
+                </au-autocomplete>
+                <au-textbox
+                    placeholder="Size Range"
+                    label="Size Range"
+                    value.bind="data.SizeRange"
+                    error.bind="error.SizeRange"
+                    options.bind="length4">
+                </au-textbox>
+                <au-datepicker
+                    label="Delivery Date"
+                    value.bind="data.DeliveryDate"
+                    error.bind="error.DeliveryDate"
+                    options.bind="length4">
+                </au-datepicker>
+                <!--query.bind="bookingOrderFilter"-->
+                <!--<au-autocomplete
+                    value.bind="selectedBookingOrder"
+                    error.bind="error.BookingOrder"                    
+                    label="No Booking Order"
+                    loader.bind="bookingOrderLoader" 
+                    text.bind="bookingOrderView"                                                         
+                    placeholder="No Booking Order"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="length4">
+                </au-autocomplete>-->
+                <au-datepicker
+                    label="Confirm Date"
+                    value.bind="data.ConfirmDate"
+                    error.bind="error.ConfirmDate"
+                    read-only="true"
+                    options.bind="length4">
+                </au-datepicker>
+                <!--<au-datepicker
+                    label="Confirm Date"
+                    value.bind="data.ConfirmDate"
+                    error.bind="error.ConfirmDate"
+                    options.bind="length4"
+                    key="Code"
+                    text="Name"
+                    loader.bind="sizeRangeLoader">
+                </au-datepicker>-->
+            </div>
+            <div class="col-md-3">
+                <au-dropdown
+                    label="Lead Time"
+                    value.bind="selectedLeadTime"
+                    read-only.bind="readOnly"
+                    error.bind="error.LeadTime"
+                    options.bind="length4"
+                    items.bind="leadTimeList">
+                </au-dropdown>
+                <au-numeric
+                    label="SMV Cutting"
+                    value.bind="selectedSMV_Cutting"
+                    error.bind="error.SMV_Cutting"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="SMV Sewing"
+                    value.bind="selectedSMV_Sewing"
+                    error.bind="error.SMV_Sewing"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="SMV Finishing"
+                    value.bind="selectedSMV_Finishing"
+                    error.bind="error.SMV_Finishing"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="SMV Total"
+                    value.bind="SMV_Total"
+                    options.bind="length4"
+                    read-only="disabled">
+                </au-numeric>
+            </div>
+            <div class="col-md-3">
+                <au-textbox
+                    label="Buyer Agent"
+                    value.bind="dataBuyer"
+                    read-only="true"
+                    options.bind="length4">
+                </au-textbox>
+                <au-textbox
+                    label="Buyer Brand"
+                    value.bind="dataBuyerBrand"
+                    read-only="true"
+                    options.bind="length4">
+                </au-textbox>
+                <div class="row">
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="Eff (%)"
+                            value.bind="data.Efficiency.Value"
+                            format="0,0.00"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="Index"
+                            value.bind="data.Index"
+                            format="0,0.00"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="Upah"
+                            value.bind="data.Wage.Value"
+                            error.bind="error.Wage"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="THR"
+                            value.bind="data.THR.Value"
+                            error.bind="error.THR"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                </div>
+                <au-numeric
+                    label="Confirm Price"
+                    value.bind="data.ConfirmPrice"
+                    error.bind="error.ConfirmPrice"
+                    format="0,0.0000"
+                    options.bind="length4">
+                </au-numeric>
+                <div class="row">
+                    <div class="col-md-6">
+                        <au-textbox
+                            label="Rate"
+                            value.bind="selectedRate"
+                            error.bind="error.Rate"
+                            options.bind="length4"
+                            read-only.bind="true"
+                            options.bind="length4">
+                        </au-textbox>
+                    </div>
+                    <div class="col-md-6">
+                        <au-numeric
+                            value.bind="data.Rate.Value"
+                            options.bind="length4"
+                            read-only="true">
+                        </au-numeric>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="help-block" style="color:#dd4b39;" if.bind="hasError">
+            ${error.CostCalculationGarment_MaterialTable}
+        </span>
+        <div class="row">
+            <div class="col-md-12">
+                <au-collection
+                    view-model.ref="itemsCollection"
+                    items.bind="data.CostCalculationGarment_Materials"
+                    errors.bind="error.CostCalculationGarment_Materials"
+                    columns.bind="costCalculationGarment_MaterialsInfo.columns"
+                    add.bind="costCalculationGarment_MaterialsInfo.onAdd"
+                    remove.bind="costCalculationGarment_MaterialsInfo.onRemove"
+                    options.bind="costCalculationGarment_MaterialsInfo.options"
+                    responsive.bind="true"
+                    item-template="modules/merchandiser/cost-calculation/template/data-form/cost-calculation-material"
+                    footer-template="modules/merchandiser/cost-calculation/template/data-form/cost-calculation-material-footer">
+                </au-collection>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <au-numeric
+                    label="Biaya Kargo"
+                    value.bind="data.Freight"
+                    error.bind="error.Freight"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="Asuransi"
+                    value.bind="data.Insurance"
+                    error.bind="error.Insurance"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="Komisi (%)"
+                    value.bind="data.CommissionPortion"
+                    error.bind="error.CommissionPortion"
+                    options.bind="length4">
+                </au-numeric>
+                <au-numeric
+                    label="Komisi"
+                    value.bind="commissionRate"
+                    options.bind="length4"
+                    read-only="disabled"
+                    style="display:none">
+                </au-numeric>
+            </div>
+            <div class="col-md-2">
+                <au-numeric
+                    label="OTL 1"
+                    value.bind="calculatedRateOTL1"
+                    options.bind="length4"
+                    read-only="disabled">
+                </au-numeric>
+                <au-numeric
+                    label="OTL 2"
+                    value.bind="calculatedRateOTL2"
+                    options.bind="length4"
+                    read-only="disabled">
+                </au-numeric>
+                <au-numeric
+                    label="Resiko (%)"
+                    value.bind="data.Risk"
+                    options.bind="length4"
+                    read-only="disabled">
+                </au-numeric>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="Biaya Produksi"
+                            value.bind="productionCost"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="NET/FOB"
+                            value.bind="NETFOB"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="Biaya Angkut"
+                            value.bind="freightCost"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                    <div class="col-md-6">
+                        <au-numeric
+                            label="NET/FOB (%)"
+                            value.one-way="NETFOBP"
+                            options.bind="length4"
+                            read-only="disabled">
+                        </au-numeric>
+                    </div>
+                </div>
+                <au-multiline
+                    label="Keterangan"
+                    placeholder="Keterangan"
+                    value.bind="data.Description"
+                    error.bind="error.Description"
+                    options.bind="length4">
+                </au-multiline>
+            </div>
+            <div class="col-md-2">
+                <input
+                    type="file"
+                    id="imageInput"
+                    class="center-block"
+                    value.bind="imageUpload"
+                    accept="image/*"
+                    style="width: 60%">
+                <br>
+                <img src.bind="imageSrc" class="center-block" height="auto" width="60%">
+            </div>
+        </div>
+        <br>
+    </au-input-form>
+</template>

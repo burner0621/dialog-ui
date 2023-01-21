@@ -1,0 +1,54 @@
+<template>
+    <tr>
+        <td class="col-sm-2">
+            <au-autocomplete
+                value.bind="selectedSize"
+                error.bind="error.Size"
+                loader.bind="sizeLoader"
+                read-only.bind="true"
+                placeholder="Size"
+                text="Size">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.RemQty"
+                error.bind="error.Quantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.ReprocessQuantity"
+                error.bind="error.ReprocessQuantity"
+                read-only.bind="readOnly"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox 
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox 
+                value.bind="data.Color"
+                error.bind="error.Color"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox 
+                value.bind="data.DesignColor"
+                error.bind="error.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

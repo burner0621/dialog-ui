@@ -1,0 +1,100 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table>tbody>tr>td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Penerimaan Packing Gudang Jadi</h1>
+        <form class="form-horizontal">
+
+
+            <au-autocomplete value.bind="filter.packingCode" label="Kode Packing" loader.bind="packingReceiptLoader" key="packingCode"
+                text="packingCode"></au-autocomplete>
+
+            <au-autocomplete 
+              value.bind="filter.buyer" 
+              label="Buyer" 
+              loader.bind="buyerLoader" 
+              key="code" 
+              text="name"
+            ></au-autocomplete>
+
+            <au-autocomplete value.bind="filter.productionOrderNo" label="Nomor Order" loader.bind="productionOrderLoader" key="orderNo"
+                text="orderNo"></au-autocomplete>
+            
+            <au-autocomplete 
+            value.bind="filter._createdBy" 
+            label="Diterima Oleh" 
+            loader.bind="accountLoader" 
+            key="_id"
+            text="username"></au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="exportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <!--thead before search-->
+                <!--thead after search-->
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Kode Packing</td>
+                        <td>Tanggal</td>
+                        <td>Buyer</td>
+                        <td>Nomor Order</td>
+                        <td>Warna</td>
+                        <td>Konstruksi</td>
+                        <td>Diterima Oleh</td>
+                        <td>UOM</td>
+                        <td>Nama Barang</td>
+                        <td>Kuantiti Diterima</td>
+                        <td>Remark</td>
+                        <td>Catatan</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of newData">
+                        <td class="text-center">${item.no}</td>
+                        <td>${item.packingCode}</td>
+                        <td>${item.date | dateFormat:'DD/MM/YYYY'}</td>
+                        <td>${item.buyer}</td>
+                        <td>${item.productionOrderNo}</td>
+                        <td>${item.colorName}</td>
+                        <td>${item.construction}</td>
+                        <td>${item._createdBy}</td>
+                        <td>${item.packingUom}</td>
+                        <td>${item.product}</td>
+                        <td>${item.quantity}</td>
+                        <td>${item.remark}</td>
+                        <td>${item.notes}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data.
+        </div>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

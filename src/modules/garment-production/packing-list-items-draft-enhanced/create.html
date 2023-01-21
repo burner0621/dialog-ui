@@ -1,0 +1,8 @@
+<template>
+    <au-input-form title="Buat Item Draft Packing List" options.bind="formOptions">
+        <au-autocomplete value.bind="packingList" error.bind="error.PackingList" label="No Invoice"
+            loader.bind="packingListLoader" query.bind="packingListFilter" text="invoiceNo"
+            placeholder="Cari No Invoice" options.bind="controlOptions">
+        </au-autocomplete>
+    </au-input-form>
+</template>

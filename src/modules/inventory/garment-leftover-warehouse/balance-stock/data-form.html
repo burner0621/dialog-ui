@@ -1,0 +1,41 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-12">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-datepicker label="Tgl Balance Stock" value.bind="data.BalanceStockDate"
+                    error.bind="error.BalanceStockDate" read-only.bind="true" options.bind="controlOptions">
+                </au-datepicker>
+
+                <au-dropdown label="Jenis Barang" items.bind="typeOfGoodsOptions" value.bind="selectedTypeOfGoods"
+                    error.bind="error.TypeOfGoods" read-only.bind="readOnly" options.bind="controlOptions">
+                </au-dropdown>
+
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+
+                <au-collection items.bind="data.Items" errors.bind="error.Items" columns.bind="itemsColumnsFabric"
+                    read-only.bind="readOnly" add.bind="addItems" remove.bind="removeItems" options.bind="Options"
+                    if.bind="data.TypeOfGoods=='FABRIC'"
+                    item-template="modules/inventory/garment-leftover-warehouse/balance-stock/template/item-fabric">
+                </au-collection>
+
+                <au-collection items.bind="data.Items" errors.bind="error.Items" columns.bind="itemsColumnsAcc"
+                    read-only.bind="readOnly" add.bind="addItems" remove.bind="removeItems" options.bind="Options"
+                    if.bind="data.TypeOfGoods=='ACCESSORIES'"
+                    item-template="modules/inventory/garment-leftover-warehouse/balance-stock/template/item-acc">
+                </au-collection>
+
+                <au-collection items.bind="data.Items" errors.bind="error.Items" columns.bind="itemsColumnsFinishedGood"
+                    read-only.bind="readOnly" add.bind="addItems" remove.bind="removeItems" options.bind="Options"
+                    if.bind="data.TypeOfGoods=='BARANG JADI'"
+                    item-template="modules/inventory/garment-leftover-warehouse/balance-stock/template/item-finished-good">
+                </au-collection>
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

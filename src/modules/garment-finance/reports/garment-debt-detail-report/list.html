@@ -1,0 +1,72 @@
+<template>
+  <require from="../../../../lib/number-format-value-converter"></require>
+
+  <h1 class="page-header">Laporan Rincian Hutang</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete value.bind="info.supplier"
+                     error.bind="error.supplier"
+                     label="Supplier"
+                     loader.bind="supplierLoader"
+                     text.bind="supplierView"
+                     placeholder="Input Supplier"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+    <au-dropdown value.bind="info.supplierTypeFilter"
+                 label="Jenis Supplier"
+                 options.bind="controlOptions"
+                 items.bind="itemSupplierTypes"
+                 key="value"
+                 text="text">
+    </au-dropdown>
+    <au-autocomplete value.bind="info.currency"
+                     error.bind="error.currency"
+                     label="Mata Uang"
+                     loader.bind="currencyLoader"
+                     text="code"
+                     placeholder="Input Mata Uang"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+    <au-dropdown value.bind="info.paymentType"
+                 label="Jenis Pembayaran"
+                 options.bind="controlOptions"
+                 items.bind="itemPaymentTypes"
+                 key="value"
+                 text="text">
+    </au-dropdown>
+    <au-datepicker value.bind="info.arrivalDate"
+                   label="Tanggal"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact"
+             class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()"
+                class="btn btn-success">Cari</button>
+        <button click.delegate="reset()"
+                class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="credit-balance-table">
+    <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              sortable="true"
+              page-size="25"
+              options.bind="tableOptions">
+      <div slot="toolbar"
+           class="btn-group">
+        <button class="btn btn-primary"
+                click.delegate="excel()">Excel</button>
+        <button class="btn btn-primary"
+                click.delegate="pdf()">PDF</button>
+      </div>
+    </au-table>
+  </div>
+</template>

@@ -1,0 +1,20 @@
+<template>
+    <h1 class="page-header">Booking Order Expired</h1>
+    <au-table 
+        view-model.ref="table" 
+        data.bind="loader" 
+        columns.bind="columns" 
+        sortable.bind="true" 
+        context.bind="context"
+        context-click.delegate="contextClickCallback($event)" 
+        row-formatter.bind="rowFormatter"
+        selectable.bind="true"
+        selections.bind="dataToBeDeleted"
+        options.bind="options">
+        
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-danger" click.delegate="delete()">Hapus Sisa Booking</button>
+            
+        </div>
+    </au-table>
+</template>

@@ -1,0 +1,203 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    /* table.leftTable {
+      width: 70%;
+      margin-left: 25%;
+      margin-right: 5%;
+    }
+
+    table.rightTable {
+      width: 70%;
+      margin-left: 5%;
+      margin-right: 25%;
+    } */
+
+    table {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    table,
+    td,
+    th {
+      border: 1px solid black;
+      padding: 16px;
+      text-align: left;
+    }
+
+    /* th.avalTypesHeader {
+      width: 160px;
+    } */
+
+    .btn-primary {
+      background-color: #3c8dbc;
+      margin-bottom: 4px;
+    }
+  </style>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <au-dropdown options.bind="controlOptions" label="Jenis" value.bind="data.type" error.bind="error.Type"
+      read-only.bind="readOnly || isEdit" items.bind="types"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" label="Tanggal" value.bind="data.Date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit"></au-datepicker>
+
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.Shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.Group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-dropdown if.bind="!isAdj" options.bind="controlOptions" label="Zona" value.bind="selectedZona"
+      error.bind="error.DestinationArea" read-only.bind="readOnly || isEdit" items.bind="destinationAreas"
+      change-delegate="selectedZonaChanged"></au-dropdown>
+
+    <au-autocomplete if.bind="!isPenjualan && !isAdj" options.bind="controlOptions" value.bind="selectedAvalBon"
+      label="Nomor Bon" read-only.bind="readOnly || isEdit" error.bind="error.BonNo" loader.bind="avalAreaLoader"
+      text.bind="avalBonTextFormatter" change.delegate="selectedAvalBonChanged" query.bind="penjualanFilter">
+    </au-autocomplete>
+
+    <au-autocomplete if.bind="!isAdj" options.bind="controlOptions" value.bind="selectedDOAval" label="No. DO"
+      read-only.bind="readOnly || !isPenjualan || isEdit" error.bind="error.DeliveryOrderAvalNo"
+      loader.bind="doAvalLoader" text.bind="doAvalTextFormatter">
+    </au-autocomplete>
+    <!-- <au-autocomplete
+      options.bind="controlOptions"
+      label="No. DO"
+      value.bind="data.doNO"
+      error.bind="error.DoNO"
+      read-only.bind="readOnly"
+      items.bind="selectedAvalBon"
+      loader.bind="DOLoader"
+      text.bind = "DOFormatter"
+    ></au-autocomplete> -->
+    <!-- <au-textbox if.bind="!isAdj" options.bind="controlOptions" label="No. DO" value.bind="data.doNO"
+      error.bind="error.DoNO" read-only.bind="readOnly || !isPenjualan || isEdit"></au-textbox> -->
+    <!-- <div class="form-group"show.bind="isShowed">
+      <div class="col-sm-12 text-center">
+        <button click.delegate="searching()" class="btn btn-success">
+          Cari
+        </button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div> -->
+
+    <!-- <div class="row" show.bind="isShowed">
+      <table>
+        <tr>
+          <th rowspan="2">SAMBUNGAN</th>
+          <th>Jml MTR</th>
+          <th rowspan="2">AVAL A</th>
+          <th>Jml MTR</th>
+          <th rowspan="2">AVAL B</th>
+          <th>Jml MTR</th>
+        </tr>
+        <tr>
+          <td>
+            <au-numeric
+              value.bind="data.AvalJointValue"
+              error.bind="error.AvalJointValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+          <td>
+            <au-numeric
+              value.bind="data.AvalAValue"
+              error.bind="error.AvalAValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+          <td>
+            <au-numeric
+              value.bind="data.AvalBValue"
+              error.bind="error.AvalBValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+        </tr>
+        <tr>
+          <th rowspan="2">PANCINGAN</th>
+          <th>Jml MTR</th>
+          <th rowspan="2">TALI KOTOR</th>
+          <th>Jml MTR</th>
+          <th rowspan="2">KAIN KOTOR</th>
+          <th>Jml MTR</th>
+        </tr>
+        <tr>
+          <td>
+            <au-numeric
+              value.bind="data.AvalInducementValue"
+              error.bind="error.AvalInducementValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+          <td>
+            <au-numeric
+              value.bind="data.AvalDirtyRopeValue"
+              error.bind="error.AvalDirtyRopeValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+          <td>
+            <au-numeric
+              value.bind="data.AvalDirtyClothValue"
+              error.bind="error.AvalDirtyClothValue"
+              read-only.bind="true"
+            ></au-numeric>
+          </td>
+        </tr>
+      </table>
+    </div> -->
+
+
+    <div if.bind="!isAdj">
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+
+      <au-collection columns.bind="dyeingPrintingItemsColumns" items.bind="data.DyeingPrintingItems"
+        errors.bind="error.AvalItems" options.bind="itemOptions" read-only.bind="readOnly"
+        item-template="modules/packing-sku-inventory/aval-area-output/templates/items" add.bind="addItems"
+        if.bind="isPenjualan" remove.bind="onremove">
+      </au-collection>
+
+      <au-collection columns.bind="dyeingPrintingBuyerItemsColumns" items.bind="data.DyeingPrintingItems"
+        errors.bind="error.AvalItemsBuyer" options.bind="itemOptions" read-only.bind="readOnly"
+        remove.bind="removeDetails" item-template="modules/packing-sku-inventory/aval-area-output/templates/items"
+        if.bind="!isPenjualan">
+      </au-collection>
+    </div>
+    <div if.bind="isAdj">
+      <au-textbox show.bind="error.AvalItem" read-only.bind="true" value.bind="error.AvalItem" style="color: red;">
+      </au-textbox>
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+      <au-collection class="adjTable" columns.bind="adjItemColumns" items.bind="data.adjAvalItems"
+        options.bind="detailOptions" errors.one-way="error.AvalItems" add.bind="addItemCallback" remove.bind="onremove"
+        read-only.bind="readOnly" item-template="modules/packing-sku-inventory/aval-area-output/templates/adjItem">
+      </au-collection>
+    </div>
+
+    <!-- <div
+      class="alert alert-info text-center"
+      role="alert"
+      if.bind="isHasData == false"
+    >
+      There is no data found in the list.
+    </div> -->
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+</template>

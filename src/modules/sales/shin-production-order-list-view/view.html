@@ -1,0 +1,16 @@
+<template>
+    <style>
+        multiline {
+            white-space:pre;
+        }
+    </style>
+    <h1 class="page-header">Surat Perintah Produksi</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error" read-only="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+        </div>
+    </block>
+</template>

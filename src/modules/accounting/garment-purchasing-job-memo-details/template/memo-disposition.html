@@ -1,0 +1,44 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td class="col-sm-10">
+            <au-autocomplete value.bind="data.Disposition"
+                             error.bind="error.DispositionId"
+                             loader.bind="dispositionLoader"
+                             placeholder="Cari Disposisi"
+                             text="DispositionNo"
+                             read-only.bind="readOnly"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td class="col"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    <tr>
+        <td if.bind="!readOnly">
+            <!-- <div if.bind="error.fulfillmentscount"
+                 class="form-group has-error"><span class="text-danger help-block">${error.fulfillmentscount}</span>
+            </div> -->
+            <au-collection items.bind="data.Disposition.MemoDetails"
+                           columns.bind="memoDetailsColumns"
+                           read-only.bind="readOnly"
+                           checkall.delegate="onCheckAll($event)"
+                           item-template="modules/accounting/garment-purchasing-job-memo-details/template/memo-detail-purchased-item">
+            </au-collection>
+        </td>
+
+        <td if.bind="readOnly">
+            <!-- <div if.bind="error.fulfillmentscount"
+                 class="form-group has-error"><span class="text-danger help-block">${error.fulfillmentscount}</span>
+            </div> -->
+            <au-collection items.bind="data.Disposition.MemoDetails"
+                           columns.bind="memoDetailsColumnsView"
+                           read-only.bind="readOnly"
+                           item-template="modules/accounting/garment-purchasing-job-memo-details/template/memo-detail-purchased-item">
+            </au-collection>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,17 @@
+<template>
+  <ai-dialog style="width:500px;">
+    <ai-dialog-header>
+      <h4>Daftar Penyebab Putus</h4>
+    </ai-dialog-header>
+    <ai-dialog-body>
+      <au-collection view-model.ref="brokenCausesCollection" items.bind="data" columns.bind="columns"
+        item-template="modules/weaving/daily-operation-warping/templates/data-form/broken-causes"
+        footer-template="modules/weaving/daily-operation-warping/templates/data-form/broken-causes-footer">
+      </au-collection>
+    </ai-dialog-body>
+
+    <ai-dialog-footer>
+      <button class="btn btn-default" click.delegate="dialogController.cancel()">Tutup</button>
+    </ai-dialog-footer>
+  </ai-dialog>
+</template>

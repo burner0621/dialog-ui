@@ -1,0 +1,46 @@
+<template>
+    <tr>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="selectedSize"
+                error.bind="error.Size"
+                loader.bind="sizeLoader"
+                read-only.bind="readOnly"
+                placeholder="Size"
+                text="Size">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-3">
+            <au-numeric 
+                value.bind="data.CuttingOutQuantity"
+                error.bind="error.CuttingOutQuantity"
+                change.delegate="CuttingOutQuantityChanged($event)"
+                read-only.bind="readOnly"
+                format="0">
+            </au-numeric>
+        </td>
+        <!-- <td class="col-sm-3">
+            <au-numeric 
+                value.bind="data.RemainingQuantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td> -->
+        <td class="col-sm-3">
+            <au-textbox 
+                value.bind="data.CuttingOutUom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-3">
+            <au-textbox 
+                value.bind="data.Remark"
+                error.bind="error.Remark"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

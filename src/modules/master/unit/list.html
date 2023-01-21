@@ -1,0 +1,50 @@
+<template>
+  <h1 class="page-header">Unit</h1>
+
+  <au-table
+    data.bind="loader"
+    columns.bind="columns"
+    sortable.bind="true"
+    page-size="25"
+    context.bind="context"
+    context-click.delegate="contextCallback($event)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-default" click.delegate="upload()">Unggah CSV</button>
+    </div>
+  </au-table>
+</template>
+
+<!--<template>
+    <h1 class="page-header">Unit</h1>
+    <br>
+    <div class="row">
+        <div class="col-sm-8">
+        </div>
+        <div class="col-sm-4">
+            <div class="pull-right">
+                <button class="btn btn-primary" click.delegate="upload()">Upload File CSV</button>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Kode</th>
+                <th>Nama Divisi</th>
+                <th>Nama Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data" click.delegate="view(item)">
+                <td>${item.code}</td>
+                <td>${item.division.name}</td>
+                <td>${item.name}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Data unit tidak ada.
+    </div>
+    <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+    <hr/>
+</template>-->

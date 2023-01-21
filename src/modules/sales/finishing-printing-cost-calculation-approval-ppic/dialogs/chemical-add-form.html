@@ -1,0 +1,68 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>
+            <h4>Masukan Chemical</h4>
+        </ai-dialog-header>
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-textbox label="Mesin"
+                            value.bind="data.Name"
+                            error.bind="error.Name"
+                            read-only.bind="true">
+                </au-textbox>
+
+                <au-textbox label="Jenis Proses"
+                            value.bind="data.Process"
+                            error.bind="error.Process"
+                            read-only.bind="true">
+                </au-textbox>
+
+                <au-textbox label="Pick Up Mesin"
+                            value.bind="data.Pickup"
+                            error.bind="error.Pickup"
+                            read-only.bind="true">
+                </au-textbox>
+
+                <au-textbox label="Saturator"
+                            value.bind="data.Saturator"
+                            error.bind="error.Saturator"
+                            read-only.bind="true">
+                </au-textbox>
+
+                <au-autocomplete label="Chemical"
+                                 value.bind="selectedChemical"
+                                 error.bind="error.Chemical"
+                                 loader.bind="productLoader"
+                                 read-only.bind="readOnly"
+                                 text="Name"
+                                 placeholder="pilih chemical">
+                </au-autocomplete>
+
+                <au-numeric label="Quantity"
+                            value.bind="data.ChemicalQuantity"
+                            error.bind="error.ChemicalQuantity"
+                            format="0"
+                            read-only.bind="readOnly">
+                </au-numeric>
+
+                <au-numeric label="Harga"
+                            value.bind="totalPrice"
+                            format="0,000.00"
+                            read-only.bind="true">
+                </au-numeric>
+
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default"
+                    click.delegate="close($event)">Tutup</button>
+            <button class="btn btn-primary"
+                    click.delegate="saveAndAddOthers($event)">Simpan & Tambah yang lain</button>
+            <button class="btn btn-success"
+                    click.delegate="saveAndClose($event)">Simpan & Tutup</button>
+
+
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

@@ -1,0 +1,90 @@
+<template>
+    <h1 class="page-header">Laporan Kualitas Hasil Produksi Spinning</h1>
+    <form class="form-horizontal">
+        <dropdown label="Bulan" value.bind="currentMonth" items.bind="months" ></dropdown>
+        <dropdown label="Tahun" value.bind="currentYear" items.bind="years" ></dropdown>
+        <unit-auto-suggest label="Spinning" value.bind="data.unit" error.bind="error.unit" read-only.bind="(readOnly)" change.delegate="spinningChanged($event)" filter.bind="spinningUnitFilter"></unit-auto-suggest>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="table-responsive" if.bind="data.date.length > 0">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Item</th>
+                    <th class="text-center" repeat.for="i of last">${i + 1}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data.entries">
+                    <td>${item.name}</td>
+                    <td repeat.for="thread of item.threadCountInBale">${thread.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Total per Hari</td>
+                    <td repeat.for="item of data.threadCountInBale">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Total Kumulatif</td>
+                    <td repeat.for="item of data.mtdThreadCountInBale">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Ave. Count</td>
+                    <td repeat.for="item of data.averageCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Fact std 30s</td>
+                    <td repeat.for="item of data.factorStandard30s">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Prod.std 30s</td>
+                    <td repeat.for="item of data.productionStandard30s">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Total Pemakaian Mesin</td>
+                    <td repeat.for="item of data.usedMachineCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Jumlah mesin actual</td>
+                    <td repeat.for="item of data.actualMachineCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Jumlah Mesin Actual Kumulatif</td>
+                    <td repeat.for="item of data.mtdActualMachineCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Jumlah spindle</td>
+                    <td repeat.for="item of data.spindleCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Total Pemakaian Mesin</td>
+                    <td repeat.for="item of data.mtdUsedMachineCount">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Utilitas (%)</td>
+                    <td repeat.for="item of data.utilityPercentage">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+                <tr>
+                    <td>Utilitas Kumulasi (%)</td>
+                    <td repeat.for="item of data.mtdUtilityPercentage">${item.toLocaleString("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Tidak ada data ditemukan.
+    </div>
+    <span if.bind="data.length > 0">
+            *Persentase diatas merupakan hasil pembulatan.
+        </span>
+    <hr/>
+    </form>
+
+</template>

@@ -1,0 +1,167 @@
+<template>
+  <style>
+    /*Setting the table width is important!*/
+    .detailTable table {
+      table-layout: fixed;
+      width: 100%;
+      overflow-wrap: break-word;
+    }
+
+    .detailTable th,
+    .detailTable td {
+      overflow: hidden;
+    }
+
+    /* Setting the width of column 1. */
+    .detailTable th:nth-of-type(1),
+    .detailTable td:nth-of-type(1) {
+      width: 3%;
+    }
+
+    /* .adjTable table {
+      table-layout: fixed;
+      width: 100%;
+      overflow-wrap: break-word;
+    }
+
+    .adjTable th,
+    .adjTable td {
+      overflow: visible;
+    }
+
+    .adjTable th:nth-of-type(1),
+    .adjTable td:nth-of-type(1) {
+      width: 10%;
+    } */
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown label="Area" value.bind="data.area" error.bind="error.Area" read-only.bind="readOnly"
+      items.bind="areas" show.bind="false"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Jenis" value.bind="data.type" error.bind="error.Type"
+      read-only.bind="readOnly || isEdit" items.bind="types"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-dropdown if.bind="!isAdj" options.bind="controlOptions" label="Zona" value.bind="destinationArea"
+      error.bind="error.DestinationArea" read-only.bind="readOnly || isEdit" items.bind="destinationAreas">
+    </au-dropdown>
+
+    <au-textbox if.bind="!isAdj" show.bind="isPenjualan" options.bind="controlOptions" value.bind="data.shippingCode"
+      error.bind="error.ShippingCode" label="Kode" read-only.bind="readOnly || isEdit">
+    </au-textbox>
+
+    <au-textbox if.bind="!isAdj" show.bind="isSales && readOnly && data.bonNo" options.bind="controlOptions"
+      value.bind="data.bonNo" label="Nomor Bon" read-only.bind="true">
+    </au-textbox>
+
+    <au-autocomplete if.bind="!isAdj" show.bind="isSales && destinationArea == 'PENJUALAN'"
+      options.bind="controlOptions" value.bind="selectedDO" label="Nomor DO" read-only.bind="readOnly || isEdit"
+      error.bind="error.DeliveryOrder" loader.bind="doSalesLoader"
+      text.bind="doTextFormatter">
+    </au-autocomplete>
+
+    <au-autocomplete if.bind="!isAdj" show.bind="!isSales" options.bind="controlOptions" value.bind="selectedShipping"
+      label="Nomor Bon" read-only.bind="readOnly || isEdit" error.bind="error.BonNo" loader.bind="shippingAreaLoader"
+      text.bind="areaMovementTextFormatter" query.bind="shippingQuery">
+    </au-autocomplete>
+
+    <au-textbox if.bind="!isAdj" show.bind="!isSales" options.bind="controlOptions" value.bind="data.deliveryOrder.no"
+      label="Nomor DO" read-only.bind="true" error.bind="error.DeliveryOrder">
+    </au-textbox>
+
+    <au-textbox if.bind="!isSales" show.bind="!isCreate" options.bind="controlOptions" value.bind="data.packingListNo"
+      label="Nomor Packing List" read-only.bind="true" error.bind="error.PackingListNo">
+    </au-textbox>
+
+    <au-dropdown  if.bind="!isAdj" show.bind="!isSales" options.bind="controlOptions" label="Jenis Packing" value.bind="data.packingType" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="packingType"></au-dropdown>
+
+    <au-multiline
+      if.bind="!isAdj" 
+      show.bind="!isSales"
+      label="Keterangan"
+      value.bind="data.packingListRemark "
+      read-only.bind="readOnly"
+      rows.bind="8"
+      options.bind="controlOptions"
+      placeholder="Keterangan">
+    </au-multiline>
+
+    <au-textbox if.bind="isEdit" show.bind="!isSales" options.bind="controlOptions" value.bind="data.packingListLCNumber"
+    label="LC NUMBER" read-only.bind="readOnly" error.bind="error.packingListLCNumber">
+    </au-textbox>
+
+    <au-textbox if.bind="isEdit"  show.bind="!isSales" options.bind="controlOptions" value.bind="data.packingListIssuedBy"
+    label="Issued By" read-only.bind="readOnly" error.bind="error.packingListIssuedBy">
+    </au-textbox>
+    <au-multiline
+      if.bind="isEdit" 
+      show.bind="!isSales"
+      label="Description"
+      value.bind="data.packingListDescription"
+      read-only.bind="readOnly"
+      rows.bind="8"
+      options.bind="controlOptions"
+      placeholder="Description">
+    </au-multiline>
+
+    <au-dropdown  if.bind="!isAdj" show.bind="!isSales" options.bind="controlOptions" label="Authorized" value.bind="data.packingListAuthorized" error.bind="error.packingListAuthorized"
+      read-only.bind="readOnly" items.bind="authorizedItems"></au-dropdown>
+
+    
+    <au-autocomplete if.bind="!isAdj" show.bind="isSales && destinationArea != 'PENJUALAN'" options.bind="controlOptions" value.bind="selectedFilterSPP"
+      label="Filter Nomor SPP" show.bind="!readOnly && !isEdit" read-only.bind="readOnly"
+      error.bind="error.ProductionOrder" loader.bind="filterSPPLoader" text.bind="sppTextFormatter">
+    </au-autocomplete>
+
+    <div if.bind="!isAdj">
+      <au-textbox show.bind="error.ShippingProductionOrder" read-only.bind="true"
+        value.bind="error.ShippingProductionOrder" style="color: red;"></au-textbox>
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+      <au-collection class="detailTable" columns.bind="itemColumns" items.bind="data.displayShippingProductionOrders"
+        if.bind="!isEdit" errors.one-way="error.ShippingProductionOrders" options.bind="detailOptions"
+        read-only.bind="readOnly" view-model.ref="ItemsCollection"
+        header-template="modules/packing-sku-inventory/shipping-area-output/template/item-header"
+        item-template="modules/packing-sku-inventory/shipping-area-output/template/item">
+      </au-collection>
+
+      <au-collection class="detailTable" columns.bind="itemColumns" items.bind="data.displayShippingProductionOrders"
+        if.bind="isEdit" errors.one-way="error.ShippingProductionOrders" options.bind="detailOptions"
+        read-only.bind="readOnly" remove.bind="onremove" view-model.ref="ItemsCollection"
+        header-template="modules/packing-sku-inventory/shipping-area-output/template/item-header"
+        item-template="modules/packing-sku-inventory/shipping-area-output/template/item">
+      </au-collection>
+    </div>
+
+    <div if.bind="isAdj">
+      <au-textbox show.bind="error.ShippingProductionOrder" read-only.bind="true"
+        value.bind="error.ShippingProductionOrder" style="color: red;"></au-textbox>
+      <br>
+      <button show.bind="data.id" class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+      <br>
+      <au-collection class="adjTable" columns.bind="adjItemColumns" items.bind="data.adjShippingProductionOrders"
+        options.bind="detailOptions" errors.one-way="error.ShippingProductionOrders" add.bind="addItemCallback"
+        remove.bind="onremove" read-only.bind="readOnly"
+        item-template="modules/packing-sku-inventory/shipping-area-output/template/adjItem">
+      </au-collection>
+
+    </div>
+
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+
+
+</template>

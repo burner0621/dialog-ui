@@ -1,0 +1,42 @@
+<template>
+  <form class="form-horizontal">
+    <h3>Monitoring Remaining EH</h3>
+    <hr/>
+
+    <au-autocomplete 
+      value.bind="year" 
+      label="Year" 
+      loader.bind="yearLoader"
+      text="year"
+      placeholder="Tahun"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete 
+      value.bind="unit" 
+      label="Unit" 
+      loader.bind="unitLoader"
+      text.bind = "unitView"
+      placeholder="Unit" 
+      select.bind="selectUnit"
+      query.bind="filterUnit"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <div class="text-center">
+      <button class="btn btn-primary" click.delegate="searching()">Cari</button>
+      <button class="btn btn-success" click.delegate="reset()">Reset</button>
+    </div>
+
+  </form>
+
+  <br>
+  <div class="btn-group pull-left">
+    <button class="btn btn-primary" click.delegate="ExportToExcel()">Export to Excel</button>
+  </div>
+  <br>
+  <br>
+
+  <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+
+</template>

@@ -1,0 +1,87 @@
+<template>
+ <h1 class="page-header">Laporan Monitoring Event</h1>
+     <form class="form-horizontal">
+        <!-- <machine-auto-suggest-by-division 
+            label="Mesin"
+            value.bind="machine"
+            filter.bind="divisionFilter"
+            change.delegate="machineChanged($event)">
+        </machine-auto-suggest-by-division> -->
+
+        <!-- <machine-event-auto-suggest
+            label="Event Mesin" 
+            value.bind="machineEvent"
+            filter.bind="machineCodeFilter"
+            if.bind="hasMachine"> 
+        </machine-event-auto-suggest>
+
+        <production-order-auto-suggest 
+            label="Nomor Order Produksi" 
+            value.bind="productionOrder">
+        </production-order-auto-suggest> -->
+
+        <au-autocomplete value.bind="Machine" error.bind="error.Machine" label="Mesin" loader.bind="machineLoader" placeholder="Cari machine"
+                    read-only.bind="(readOnly)" key="Id" text="Name" query.bind="divisionFilter" options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="machineEvent" error.bind="error.machineEvent" label="Event Mesin" loader.bind="machineEventLoader"
+                    placeholder="Cari Machine Event" query.bind="machineIdFilter" if.bind="hasmachine" read-only.bind="(readOnly)" key="Id" text="Name" options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="productionOrder" error.bind="error.productionOrder" label="Nomor Order Produksi" loader.bind="productionOrderLoader"
+                    placeholder="Cari Nomor Order Produksi" read-only.bind="(readOnly)" key="OrderNo" text="OrderNo" options.bind="auInputOptions">
+                </au-autocomplete>
+        
+
+        <datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind="auInputOptions"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind="auInputOptions"></datepicker> 
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+               <button click.delegate="searching()" class='btn btn-success'>Cari</button> 
+               <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div> 
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+<br>
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <th>No</th>
+            <th>Mesin</th>
+            <th>Nomor Order Produksi </th>
+            <th>Warna</th>
+            <th>Tanggal Mulai</th>
+            <th>Jam Mulai</th>
+            <th>Tanggal Selesai</th>
+            <th>Jam Selesai</th>
+            <th>Nomor Kereta</th>
+            <th>Event Mesin</th>
+            <th>Keterangan</th>
+        </thead>
+        <tbody>
+            <tr repeat.for="monitoringEvent of data" click.delegate="detail(monitoringEvent,dateFrom,dateTo)">
+                <td class="text-center">${$index + 1}</td>
+                <td class="text-right">${monitoringEvent.machineName}</td>
+                <td class="text-right">${monitoringEvent.productionOrderOrderNo}</td>
+                <td class="text-right">${monitoringEvent.productionOrderDetailColorRequest}</td>
+                <td class="text-center">${monitoringEvent.dateStart | dateFormat:'D MMM YYYY'}</td>
+                <td class="text-center">${monitoringEvent.timeInMomentStart}</td>
+                <td class="text-center">${monitoringEvent.dateEnd | dateFormat:'D MMM YYYY'}</td>
+                <td class="text-center">${monitoringEvent.timeInMomentEnd}</td>
+                <td class="text-right">${monitoringEvent.cartNumber}</td>
+                <td class="text-right">${monitoringEvent.machineEventName}</td>
+                <td class="text-right">${monitoringEvent.remark}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+    
+</template>

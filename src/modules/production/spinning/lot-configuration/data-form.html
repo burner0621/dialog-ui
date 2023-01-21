@@ -1,0 +1,40 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal" value.bind="data.LotDate" error.bind="error.LotDate" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="Lot" value.bind="data.LotNo" error.bind="error.LotNo" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+        <!-- 
+        <au-dropdown label="Tipe Benang" value.bind="data.YarnType" error.bind="error.YarnType" read-only.bind="readOnly"
+            items.bind="yarnTypeList" options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-autocomplete label="Tipe Benang" value.bind="yarn" error.bind="error.YarnTypeIdentity"
+            loader.bind="materialTypeLoader" placeholder="Cari tipe benang" key="Id" text="Name"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <!-- <au-autocomplete value.bind="yarn" label="Tipe Benang" error.bind="YarnId" loader.one-time="yarnLoader" text="Name"
+            placeholder="cari tipe benang" key="Id" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete> -->
+
+        <!-- <au-collection items.bind="data.Details" errors.bind="error.Details" add.bind="inputInfo.onAdd" remove.bind="inputInfo.onRemove"
+            columns.bind="inputInfo.columns" read-only.bind="readOnly" item-template="modules/production/spinning/lot-configuration/template/item">
+        </au-collection> -->
+
+        <au-collection columns.bind="itemColumns" items.bind="data.CottonCompositions"
+            errors.one-way="error.CottonCompositions" add.bind="addItemCallback" remove.bind="onremove"
+            read-only.bind="readOnly" item-template="modules/production/spinning/lot-configuration/template/item">
+        </au-collection>
+
+    </au-input-form>
+</template>

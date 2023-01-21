@@ -1,0 +1,228 @@
+<template>
+    <h1 class="page-header">Laporan Status Bayar Nota Intern</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+        value.bind="InternNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Nomor Nota Intern"
+        loader.bind="innoLoader"
+        text.bind = "internView"
+        options.bind="controlOptions">
+        </au-autocomplete >
+        <au-autocomplete
+        value.bind="invoiceNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No Invoice"
+        loader.bind="invoiceLoader"
+        text.bind = "invoiceView"
+        options.bind="controlOptions">
+        </au-autocomplete>        
+        <au-autocomplete
+        value.bind="DONo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Surat Jalan"
+        loader.bind="DOLoader"
+        text.bind = "DoView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+        value.bind="BillNo"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No BP Besar"
+        loader.bind="DOBBLoader"
+        text.bind = "DoBPBsrView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+        value.bind="PaymentBill"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="No BP Kecil"
+        loader.bind="DOBKLoader"
+        text.bind = "DoBPKclView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+        
+        <au-autocomplete
+        value.bind="NPN"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Nota Pajak PPN"
+        loader.bind="NPNLoader"
+        text.bind = "NPNView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+        value.bind="NPH"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Nota Pajak PPH"
+        loader.bind="NPHLoader"
+        text.bind = "NPHView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+        value.bind="NK"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Nota Koreksi"
+        loader.bind="NKLoader"
+        text.bind = "NKView"
+        options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+        value.bind="SupplierName"
+        error.bind="error.Description"
+        read-only.bind="readOnly"
+        label="Supplier"
+        loader.bind="SupplierLoader"
+        options.bind="controlOptions">
+        </au-autocomplete>
+            
+        
+        <au-datepicker
+            value.bind="dateFromNI"
+            label="Tanggal NI Awal"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateToNI"
+            label="Tanggal NI Akhir"
+            options.bind="controlOptions"   
+            error.bind="error.date">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="datefromDueDate"
+            label="Tanggal Jatuh Tempo Awal"
+            options.bind="controlOptions"   
+            error.bind="error.date">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateToDueDate"
+            label="Tanggal Jatuh Tempo Awal"
+            options.bind="controlOptions"   
+            error.bind="error.date">
+        </au-datepicker>
+        <au-dropdown 
+        label="Status" 
+        value.bind="status"
+        items.bind="statuses"
+        options.bind="controlOptions" >
+        </au-dropdown>
+
+        <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <!--<au-table
+            view-model.ref="doTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Cetak Excel</button>
+            </div>
+        </au-table>-->
+        <!--<hr/>
+    </form>
+</template>-->
+         <div >
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="doReport">
+                <thead align="center">
+                    <tr>
+                    <td>No</td>
+                    <td>No Nota Intern</td>
+                    <td>Tgl Nota Intern</td>
+                    <td>Kode Supplier</td>
+                    <td>Nama Supplier</td>
+                    <td>Term Pembayaran</td>
+                    <td>Mata Uang</td>
+                    <td>Tgl Jatuh Tempo</td>
+                    <td>Invoice</td>
+                    <td>Tgl Invoice</td>
+                    <td>Surat Jalan</td>
+                    <td>Tgl Surat Jalan</td>
+                    <td>Nominal SJ</td>
+                    <td>BP Besar</td>
+                    <td>BP Kecil</td>
+                    <td>Nota Pajak PPN</td>
+                    <td>Tgl Nota Pajak PPN</td>
+                    <td>Nota Pajak PPH</td>
+                    <td>Tgl Nota Pajak PPH</td>
+                    <td>Nota Koreksi</td>
+                    <td>Tgl Nota Koreksi</td>
+                    <td>Jenis Koreksi</td>
+                    <td>No Kasbon</td>
+                    <td>Tgl Kasbon</td>
+                    <td>Jumlah Bayar</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="IN of data">
+                        <!-- <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.count}</td>
+                        <td if.bind="item.rowspan" rowspan="${item.rowspan}">${IN.BCType}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.BCNo}</td>
+                        <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.BCDate | dateFormat:'D MMM YYYY'}</td> -->
+                        <td >${$index+1}</td>
+                        <td >${IN.INNo}</td>
+                        <td >${IN.INDate | dateFormat:'D MMM YYYY'}</td>
+                        <td >${IN.SuppCode}</td>
+                        <!-- <td if.bind="item.docspan" rowspan="${item.docspan}">${IN.BonNo}</td> -->
+                        <td >${IN.SuppName}</td>
+                        <td >${IN.PaymentMethod}</td>
+                        <td >${IN.CurrCode}</td>
+                        <td >${IN.PaymentDueDate | dateFormat:'D MMM YYYY'}</td>
+                        <td>${IN.InvoiceNo}</td>
+                        <td>${IN.InvoDate | dateFormat:'D MMM YYYY'}</td>
+                        <td>${IN.DoNo}</td>
+                        <td>${IN.DoDate | dateFormat:'D MMM YYYY'}</td>
+                        <td>${IN.PriceTot}</td>
+                        <td>${IN.BillNo}</td>
+                        <td>${IN.PayBill}</td>
+                        <td>${IN.NPN}</td>
+                        <td>${IN.VatDate}</td>
+                        <td>${IN.NPH}</td>
+                        <td>${IN.IncomeTaxDate}</td>
+                        <td>${IN.CorrNo}</td>
+                        <td>${IN.CorDate}</td>
+                        <td>${IN.CorrType}</td>
+                        <td>${IN.Nomor}</td>
+                        <td>${IN.Tgl}</td>
+                        <!-- <td >${IN.Jumlah}</td> -->
+                        <td if.bind="IN.docspan" rowspan="${IN.docspan}">${IN.Jumlah}</td>
+                        <!--<td>${SJ['Satuan Barang']}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+    
+</template> 

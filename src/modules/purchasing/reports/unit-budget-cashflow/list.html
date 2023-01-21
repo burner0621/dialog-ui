@@ -1,0 +1,339 @@
+<template>
+  <style>
+    .text-rotate {
+      -webkit-writing-mode: tb-rl;
+      -ms-writing-mode: tb-rl;
+      -moz-writing-mode: tb-rl;
+      -o-writing-mode: tb-rl;
+      writing-mode: tb-rl;
+      -webkit-transform: rotate(-180deg);
+      -ms-transform: rotate(-180deg);
+      -moz-transform: rotate(-180deg);
+      -o-transform: rotate(-180deg);
+      transform: rotate(-180deg);
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-bold {
+      font-weight: 600 !important;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .v-center {
+      vertical-align: middle !important;
+    }
+
+    .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Use overflow:scroll on your container to enable scrolling: */
+    .table-responsive {
+      overflow: scroll;
+      max-width: 1366px;
+      max-height: 500px;
+      /* height: 500px; */
+    }
+
+    .table-responsive table {
+      border-collapse: separate;
+    }
+
+    .table-responsive thead tr th {
+      position: sticky;
+      top: 0;
+      background-color: #173250;
+    }
+
+    .table-responsive tbody th {
+      text-align: left;
+    }
+
+    .nester {
+      border-bottom: none !important;
+      border-top: none !important;
+    }
+
+    .ket-header {
+      min-width: 400px;
+    }
+
+    .curr-header {
+      min-width: 100px;
+    }
+
+    .nom-header {
+      min-width: 170px;
+    }
+  </style>
+
+  <au-input-form title="Budget Cashflow Unit">
+    <au-autocomplete value.bind="unit"
+                     error.bind="error.unit"
+                     label="Unit"
+                     loader.bind="unitLoader"
+                     text="Name"
+                     placeholder="Cari Unit"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+    <au-datepicker label="Periode"
+                   value.bind="date"
+                   error.bind="error.date"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <div class="form-group">
+      <div class="col-sm-6"></div>
+      <div class="col-sm-3">
+        <button click.delegate="search()"
+                class="btn btn-success">Cari</button>
+        <button click.delegate="reset()"
+                class="btn btn-success">Reset</button>
+      </div>
+    </div>
+    <div if.bind="!isEmpty"
+         class="btn-group pull-left">
+      <a click.delegate="printXls()"
+         class="btn btn-primary">Cetak Excel</a>
+      <a click.delegate="printPdf()"
+         class="btn btn-info">Cetak Pdf</a>
+    </div>
+
+    <br /><br />
+
+    <div if.bind="!isEmpty"
+         class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th class="ket-header"
+                colspan="5">KETERANGAN</th>
+            <th class="curr-header">MATA UANG</th>
+            <th class="nom-header">VALAS</th>
+            <th class="nom-header">IDR</th>
+            <th class="nom-header">ACTUAL IDR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="item of items">
+            <!-- Contoh: Kegiatan Operasional -->
+            <th if.bind="item.IsUseSection"
+                rowspan="${item.SectionRowSpan || 1}"
+                class="v-center">
+              <span class="text-rotate text-bold">${item.CashflowTypeName}</span>
+            </th>
+
+            <!-- Contoh: Cash In -->
+            <th if.bind="item.IsUseGroup"
+                rowspan="${item.GroupRowSpan || 1}"
+                class="v-center">
+              <span class="text-rotate text-bold">${item.TypeName}</span>
+            </th>
+
+            <!-- Contoh: Pendapatan Operasional: -->
+            <th if.bind="item.CashflowCategoryId"
+                colspan="3"
+                class="text-bold">
+              ${item.CashflowCategoryName}
+            </th>
+
+            <!-- Contoh: Penjualan Export -->
+            <th if.bind="item.SubCategoryId"
+                class="nester"></th>
+            <th if.bind="item.SubCategoryId"
+                colspan="${!item.IsReadOnly && item.IsShowSubCategoryLabel ? 1 : 2}">
+              <span class="${!item.IsShowSubCategoryLabel ? 'hide' : ''}">
+                ${item.SubCategoryName}
+              </span>
+            </th>
+            <!-- Tombol tambah dan edit -->
+            <th if.bind="!item.IsReadOnly && item.IsShowSubCategoryLabel">
+              <div class="flex-center">
+                <button class="btn btn-primary"
+                        click.delegate="addItem(item)"
+                        style="margin-right: 5px">
+                  +
+                </button>
+                <button class="btn btn-primary ${!item.Currency || !item.Currency.Code ? 'hide' : ''}"
+                        click.delegate="updateItem(item)">
+                  Edit
+                </button>
+              </div>
+            </th>
+
+            <!-- Contoh: Total Penerimaan Kegiatan Operasional -->
+            <th if.bind="item.TotalLabel"
+                colspan="3"
+                class="text-bold">
+              <span class="${!item.IsShowTotalLabel ? 'hide' : ''}">
+                ${item.TotalLabel}
+              </span>
+            </th>
+
+            <!-- Contoh: Surplus/Deficit-Kas dari Kegiatan Investasi -->
+            <th if.bind="item.IsShowDifference"
+                colspan="4"
+                class="text-bold">
+              <span class="${!item.IsShowDifferenceLabel ? 'hide' : ''}">
+                ${item.DifferenceLabel}
+              </span>
+            </th>
+
+            <!-- Contoh: Saldo Awal/Akhir Kas -->
+            <th if.bind="item.IsSummaryBalance"
+                colspan="${!item.IsReadOnly && item.IsSummaryBalance ? 4 : 5}"
+                class="text-bold">
+              <span class="${!item.IsShowSummaryBalance ? 'hide' : ''}">
+                ${item.SummaryBalanceLabel}
+              </span>
+            </th>
+            <!-- Tombol tambah dan edit -->
+            <th if.bind="!item.IsReadOnly && item.IsSummaryBalance">
+              <div class="flex-center">
+                <button class="btn btn-primary"
+                        click.delegate="addItem(item)"
+                        style="margin-right: 5px">
+                  +
+                </button>
+                <button class="btn btn-primary ${!item.Currency || !item.Currency.Code ? 'hide' : ''}"
+                        click.delegate="updateItem(item)">
+                  Edit
+                </button>
+              </div>
+            </th>
+
+            <!-- Contoh: SURPLUS/DEFISIT KAS -->
+            <th if.bind="item.IsShowSummary"
+                colspan="5"
+                class="text-bold">
+              <span class="${!item.IsShowSummaryLabel ? 'hide' : ''}">
+                ${item.SummaryLabel}
+              </span>
+            </th>
+
+            <!-- Contoh: Saldo Real Kas -->
+            <th if.bind="item.IsRealCashBalance"
+                colspan="${!item.IsReadOnly && item.IsRealCashBalance ? 4 : 5}"
+                class="text-bold">
+              <span class="${!item.IsShowRealCashBalanceLabel ? 'hide' : ''}">
+                Saldo Real Kas
+              </span>
+            </th>
+            <!-- Tombol tambah dan edit -->
+            <th if.bind="!item.IsReadOnly && item.IsRealCashBalance">
+              <div class="flex-center">
+                <button class="btn btn-primary"
+                        click.delegate="addItem(item)"
+                        style="margin-right: 5px">
+                  +
+                </button>
+                <button class="btn btn-primary ${!item.Currency || !item.Currency.Code ? 'hide' : ''}"
+                        click.delegate="updateItem(item)">
+                  Edit
+                </button>
+              </div>
+            </th>
+
+            <!-- Contoh: Rate -->
+            <th if.bind="item.IsShowCurrencyRate"
+                colspan="4"></th>
+            <th if.bind="item.IsShowCurrencyRate"
+                class="text-bold">
+              <span class="${!item.IsShowCurrencyRateLabel ? 'hide' : ''}">
+                Rate
+              </span>
+            </th>
+
+            <!-- Contoh: Selisih -->
+            <th if.bind="item.IsShowRealCashDifference"
+                colspan="4"></th>
+            <th if.bind="item.IsShowRealCashDifference"
+                class="text-bold">
+              <span class="${!item.IsShowRealCashDifferenceLabel ? 'hide' : ''}">
+                ${item.RealCashDifferenceLabel}
+              </span>
+            </th>
+
+            <!-- Contoh: Total Surplus (Defisit) Equivalent -->
+            <th if.bind="item.IsEquivalentDifference"
+                colspan="5"
+                class="text-bold">
+              <span>${item.EquivalentDifferenceLabel}</span>
+            </th>
+
+            <!-- Kosong jika hanya label -->
+            <td if.bind="item.IsLabelOnly"
+                colspan="4"></td>
+
+            <!-- Fields khusus Rate -->
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && item.IsShowCurrencyRate"
+                class="text-center">
+              <au-textbox value.bind="item.Currency ? item.Currency.Code : '-'"
+                          read-only.bind="true">
+              </au-textbox>
+            </td>
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && item.IsShowCurrencyRate">
+              <au-numeric value.bind="item.Currency.Rate"
+                          format="0,000.00"
+                          read-only.bind="true">
+              </au-numeric>
+            </td>
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && item.IsShowCurrencyRate"
+                colspan="2"></td>
+
+            <!-- Fields khusus equivalent -->
+            <td if.bind="!item.IsLabelOnly && item.IsEquivalentDifference && !item.IsShowCurrencyRate"
+                class="text-center">
+              <au-textbox value.bind="'IDR'"
+                          read-only.bind="true">
+              </au-textbox>
+            </td>
+
+            <td if.bind="!item.IsLabelOnly && item.IsEquivalentDifference && !item.IsShowCurrencyRate"
+                colspan="2"></td>
+            <td if.bind="!item.IsLabelOnly && item.IsEquivalentDifference && !item.IsShowCurrencyRate">
+              <au-numeric value.bind="item.Total"
+                          format="0,000.00"
+                          read-only.bind="true">
+              </au-numeric>
+            </td>
+
+            <!-- Fields mata uang dan nominal -->
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && !item.IsShowCurrencyRate"
+                class="text-center">
+              <au-textbox value.bind="item.Currency ? item.Currency.Code : '-'"
+                          read-only.bind="true">
+              </au-textbox>
+            </td>
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && !item.IsShowCurrencyRate">
+              <au-numeric value.bind="item.CurrencyNominal"
+                          format="0,000.00"
+                          read-only.bind="true">
+              </au-numeric>
+            </td>
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && !item.IsShowCurrencyRate">
+              <au-numeric value.bind="item.Nominal"
+                          format="0,000.00"
+                          read-only.bind="true">
+              </au-numeric>
+            </td>
+            <td if.bind="!item.IsLabelOnly && !item.IsEquivalentDifference && !item.IsShowCurrencyRate">
+              <au-numeric value.bind="item.Total"
+                          format="0,000.00"
+                          read-only.bind="true">
+              </au-numeric>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </au-input-form>
+</template>

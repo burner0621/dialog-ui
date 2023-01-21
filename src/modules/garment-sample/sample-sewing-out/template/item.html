@@ -1,0 +1,59 @@
+<template>
+    <tr>
+        <!-- <td align='center' if.bind="options.isCreate || options.isEdit" class="bg-primary"  class="col-sm-1">
+            <au-checkbox 
+                value.bind="data.IsSave" 
+                if.bind="options.isCreate || options.isEdit"
+                options.bind="controlOptions"
+                change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td> -->
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Size.Size"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary" if.bind="!readOnly">
+            <au-numeric
+                value.bind="data.SewingInQuantity"
+                error.bind="error.SewingInQuantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-numeric
+                value.bind="data.Quantity"
+                error.bind="error.Quantity"
+                read-only.bind="readOnly"
+                format="0">
+            </au-numeric>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Uom.Unit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox
+                value.bind="data.Color"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+    
+</template>

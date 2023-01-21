@@ -1,0 +1,142 @@
+<template>
+    <h1 class="page-header">Monitoring Bon Belum Buat SPB</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="unitReceiptNote" 
+            label="Nomor Bon" 
+            loader.bind="urnLoader"
+            placeholder="Cari Nomor Bon" 
+            text.bind = "urnView"
+            key="URNNo"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier"
+            loader.one-time="supplierLoader"
+            label="Supplier"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier"
+            select.bind="selectSupplier">
+        </au-autocomplete>
+
+       <au-autocomplete 
+            value.bind="doNo" 
+            label="Nomor SJ" 
+            loader.bind="doLoader"
+            placeholder="Cari Nomor SJ" 
+            text.bind = "doView"
+            key="DONo"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Dari Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <au-datepicker
+            value.bind="dateTo"
+            label="Sampai Tgl"
+            options.bind="controlOptions"
+            error.bind="error.date">
+        </au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button> 
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    
+        <au-table
+            view-model.ref="spbTable"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable.bind="true"
+            page-size="25"
+            options.bind="tableOptions">
+            
+            <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Cetak Excel</button>
+            </div>
+        </au-table>
+        <hr/>
+    </form>
+</template>
+
+<!--<template>
+    <h1 class="page-header">Monitoring Bon Terima Unit</h1>
+    <form class="form-horizontal">
+        <unit-receipt-note-auto-suggest label="No. Bon Unit" value.bind="no"></unit-receipt-note-auto-suggest>
+        <purchase-request-auto-suggest-by-user  label="Nomor PR"        value.bind="purchaseOrder"  filter.bind="filter"></purchase-request-auto-suggest-by-user>
+        <unit-auto-suggest label="Unit" value.bind="unitId"></unit-auto-suggest>
+        <category-auto-suggest label="Kategori" value.bind="categoryId"></category-auto-suggest>
+        <supplier-auto-suggest label="Supplier" value.bind="supplierId"></supplier-auto-suggest>
+        <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">NO.</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">UNIT</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">KATEGORI</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">NO. PO INTERNAL</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">NAMA BARANG</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">KODE BARANG</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">SUPPLIER</th>
+                        <th style="vertical-align:middle; text-align: center;" colspan="2">BON PENERIMAAN</th>
+                        <th style="vertical-align:middle; text-align: center;" colspan="2">BELI</th>
+                        <th style="vertical-align:middle; text-align: center;" colspan="2">TERIMA</th>
+                        <th style="vertical-align:middle; text-align: center;" rowspan="2">JUMLAH (+/-/0)</th>
+                    </tr>
+                    <tr>
+                        <th style="vertical-align:middle; text-align: center;">TANGGAL</th>
+                        <th style="vertical-align:middle; text-align: center;">NOMOR</th>
+                        <th style="vertical-align:middle; text-align: center;">JUMLAH</th>
+                        <th style="vertical-align:middle; text-align: center;">SATUAN</th>
+                        <th style="vertical-align:middle; text-align: center;">JUMLAH</th>
+                        <th style="vertical-align:middle; text-align: center;">SATUAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="unitReceiptNote of data">
+                        <td align="center">${unitReceiptNote['No']}</td>
+                        <td align="center">${unitReceiptNote['Unit']}</td>
+                        <td align="center">${unitReceiptNote['Kategori']}</td>
+                        <td align="center">${unitReceiptNote['No PO Internal']}</td>
+                        <td align="center">${unitReceiptNote['Nama Barang']}</td>
+                        <td align="center">${unitReceiptNote['Kode Barang']}</td>
+                        <td align="center">${unitReceiptNote['Supplier']}</td>
+                        <td align="center">${unitReceiptNote['Tanggal Bon Terima Unit']}</td>
+                        <td align="center">${unitReceiptNote['No Bon Terima Unit']}</td>
+                        <td align="right">${unitReceiptNote['Jumlah Diminta']}</td>
+                        <td align="center">${unitReceiptNote['Satuan Diminta']}</td>
+                        <td align="right">${unitReceiptNote['Jumlah Diterima']}</td>
+                        <td align="center">${unitReceiptNote['Satuan Diterima']}</td>
+                        <td align="right">${unitReceiptNote['Jumlah (+/-/0)']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>-->

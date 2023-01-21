@@ -1,0 +1,90 @@
+<template>
+
+  <au-input-form title.bind="title"
+                 with.bind="context"
+                 options.bind="formOptions">
+
+    <au-textbox value.bind="data.code"
+                label="Jenis Anyaman"
+                read-only.bind="true"
+                if.bind="readOnly">
+    </au-textbox>
+
+    <au-autocomplete value.bind="selectedWovenType"
+                     error.bind="error.WovenType"
+                     label="Jenis Anyaman"
+                     loader.bind="wovenTypeLoader"
+                     read-only.bind="readOnly"
+                     text="wovenType">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedConstruction"
+                     error.bind="error.Construction"
+                     label="Konstruksi"
+                     loader.bind="constructionLoader"
+                     read-only.bind="readOnly"
+                     text="type">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedWidth"
+                     error.bind="error.Width"
+                     label="Lebar"
+                     loader.bind="widthLoader"
+                     read-only.bind="readOnly"
+                     text="widthType">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedWarp"
+                     error.bind="error.Warp"
+                     label="Jenis Lusi"
+                     loader.bind="warpLoader"
+                     read-only.bind="readOnly"
+                     text="type">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedWeft"
+                     error.bind="error.Weft"
+                     label="Jenis Pakan"
+                     loader.bind="weftLoader"
+                     read-only.bind="readOnly"
+                     text="type">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedProcessType"
+                     error.bind="error.ProcessType"
+                     label="Jenis Proses"
+                     loader.bind="processTypeLoader"
+                     read-only.bind="readOnly"
+                     text="processType">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedYarnType"
+                     error.bind="error.YarnType"
+                     label="Jenis Benang"
+                     loader.bind="yarnTypeLoader"
+                     read-only.bind="readOnly"
+                     text="yarnType">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedGrade"
+                     error.bind="error.Grade"
+                     label="Grade"
+                     loader.bind="gradeLoader"
+                     read-only.bind="readOnly"
+                     text="type">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="selectedUOM"
+                     error.bind="error.UOM"
+                     label="Satuan"
+                     loader.bind="uomLoader"
+                     read-only.bind="readOnly"
+                     text="unit">
+    </au-autocomplete>
+
+    <template replaceable
+              part="actions"></template>
+  </au-input-form>
+
+
+</template>

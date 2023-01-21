@@ -1,0 +1,206 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-primary" click.delegate="context.cancelPO($event)"   if.one-way="context.hasCancelPo">Cancel PO</button>
+            <button class="btn btn-primary" click.delegate="context.unpostPO($event)"     if.one-way="context.hasUnpost">Unpost</button>
+            <button class="btn btn-primary" click.delegate="context.closePO($event)"    if.one-way="context.hasClosePo">Close PO</button>
+         </div>
+
+        <au-textbox 
+            label="No" 
+            value.bind="data.no" 
+            error.bind="error.no" 
+            read-only.bind="true"
+            if.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="selectedSupplier" 
+            error.bind="error.supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="cari supplier" 
+            key="code" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedUnit" 
+            error.bind="error.unit"
+            label="Unit" 
+            loader.bind="unitLoader"
+            text.bind = "unitView"
+            placeholder="cari unit" 
+            key="code" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tgl. Order" 
+            value.bind="data.orderDate" 
+            error.bind="error.orderDate" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Delivery" 
+            value.bind="data.deliveryDate" 
+            error.bind="error.deliveryDate" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+        
+        <au-dropdown
+            label="Ongkos Kirim Ditanggung oleh"
+            value.bind="data.freightCostBy"
+            error.bind="error.freightCostBy"
+            read-only.bind="readOnly"
+            items.bind="freightCostByOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown
+            label="Term Pembayaran"
+            value.bind="data.paymentMethod"
+            error.bind="error.paymentMethod"
+            read-only.bind="readOnly"
+            items.bind="termPaymentOptions"  
+            change.delegate="paymentMethodChanged($event)"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete 
+            value.bind="selectedCurrency" 
+            error.bind="error.currency"
+            label="Mata Uang" 
+            loader.bind="currencyLoader"
+            text.bind = "currencyView"
+            placeholder="cari mata uang" 
+            key="code" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        
+        <numeric 
+            label="Rate" 
+            value.bind="data.currencyRate" 
+            error.bind="error.currency" 
+            format="0"
+            read-only.bind="true">
+        </numeric>
+
+        <numeric 
+            label="Tempo Pembayaran" 
+            value.bind="data.paymentDueDays" 
+            error.bind="error.paymentDueDays" 
+            format="0"
+            read-only.bind="true"
+            post-fix="hari" 
+            if.bind="data.paymentMethod=='CASH'">
+        </numeric>
+
+        <numeric
+            label="Tempo Pembayaran" 
+            value.bind="data.paymentDueDays" 
+            error.bind="error.paymentDueDays" 
+            format="0"
+            read-only.bind="readOnly"
+            post-fix="hari" 
+            if.bind="data.paymentMethod!='CASH'">
+        </numeric>
+        
+        <au-autocomplete 
+            value.bind="selectedIncomeTax" 
+            error.bind="error.incomeTax"
+            label="Pph" 
+            loader.bind="incomeTaxLoader"
+            text.bind = "incomeTaxView"
+            placeholder="cari pph" 
+            key="" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <numeric 
+            label="Rate Pph" 
+            value.bind="data.incomeTaxRate" 
+            error.bind="error.incomeTaxRate" 
+            format="0"
+            read-only.bind="true"
+            post-fix="%">
+        </numeric>
+
+
+        <au-checkbox 
+            label="Apakah kena Ppn?" 
+            value.bind="data.useVat" 
+            error.bind="error.useVat" 
+            read-only.bind="readOnly"
+            change.delegate="useVatChanged($event)"
+            options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-autocomplete value.bind="selectedVatTax"
+                     error.bind="error.vatTax"
+                     label="PPN"
+                     loader.bind="vatTaxLoader"
+                     text.bind="vatTaxView"
+                     placeholder="cari vat"
+                     key=""
+                     if.bind ="data.useVat"
+                     
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+        </au-autocomplete>
+
+        
+            
+        <au-dropdown
+            label="PPH Ditanggung oleh"
+            value.bind="data.incomeTaxBy"
+            error.bind="error.incomeTaxBy"
+            read-only.bind="readOnly"
+            show.bind="data.useIncomeTax"
+            items.bind="IncomeTaxByOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.items" 
+            errors.bind="error.items" 
+            columns.bind="itemsColumns" 
+            add.bind="addItems" 
+            remove.bind="removeItems"
+            options.bind="options"
+            read-only.bind="readOnly"
+            item-template="modules/purchasing/purchase-order-external-kasei/template/purchase-order-external-item"
+            if.bind="selectedUnit">
+        </au-collection>
+  </au-input-form>
+</template>

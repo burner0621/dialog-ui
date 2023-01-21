@@ -1,0 +1,53 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <button slot="actions" class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+        <button slot="actions" class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+        <button slot="actions" class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+        <button slot="actions" class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+
+        <form class="form-horizontal">
+            <fieldset>
+                <au-datetimepicker label="Tanggal Mulai" value.bind="localStartDate" error.bind="error.DateStart" options.bind="auInputOptions"
+                    read-only.bind="(readOnly)"></au-datetimepicker>
+
+                <au-datetimepicker label="Tanggal Selesai" value.bind="localEndDate" error.bind="error.DateEnd" options.bind="auInputOptions"
+                    read-only.bind="(readOnly)"></au-datetimepicker>
+
+                <au-autocomplete value.bind="Machine" error.bind="error.Machine" label="Mesin" loader.bind="machineLoader" placeholder="Cari machine"
+                    read-only.bind="(readOnly)" key="Code" text="Name" options.bind="auInputOptions">
+                </au-autocomplete>
+
+                <!-- <au-autocomplete value.bind="data.productionOrder" error.bind="error.productionOrder" change.delegate="productionOrderChanged($event)" label="Nomor Order Produksi" loader.bind="productionOrderLoader"
+                    placeholder="Cari Nomor Order Produksi" read-only.bind="(readOnly)"
+                    key="orderNo" text="orderNo" options.bind="auInputOptions">
+                </au-autocomplete> -->
+
+                <au-autocomplete value.bind="productionOrder" error.bind="error.ProductionOrder" label="Nomor Order Produksi" loader.bind="productionOrderLoader"
+                    placeholder="Cari Nomor Order Produksi" read-only.bind="(readOnly)" key="OrderNo" text="OrderNo" options.bind="auInputOptions">
+                </au-autocomplete>
+
+
+                <au-dropdown label="Warna" value.bind="data.ProductionOrderDetail" error.bind="error.SelectedProductionOrderDetail"
+                    read-only.bind="readOnly" items.bind="productionOrderDetails" if.bind="hasProductionOrderDetails && !readOnly"
+                    options.bind="auInputOptions">
+                </au-dropdown>
+
+                <au-textbox label="Warna" value.bind="data.ProductionOrderDetail.ColorRequest" read-only.bind="readOnly" if.bind="readOnly"
+                    options.bind="auInputOptions"></au-textbox>
+
+                <au-textbox label="Nomor Kereta" value.bind="data.CartNumber" error.bind="error.CartNumber" read-only.bind="readOnly" options.bind="auInputOptions"></au-textbox>
+
+                <!-- <machine-event-auto-suggest label="Event Mesin" value.bind="data.MachineEvent" error.bind="error.machineEvent" read-only.bind="(readOnly)"
+                    filter.bind="machineCodeFilter" if.bind="hasMachine" placeholder="Cari Event Mesin">
+                </machine-event-auto-suggest> -->
+
+                <au-autocomplete value.bind="data.MachineEvent" error.bind="error.MachineEvent" label="Event Mesin" loader.bind="machineEventLoader"
+                    placeholder="Cari Machine Event" if.bind="hasMachine" read-only.bind="(readOnly)" key="Code" text="Name" options.bind="auInputOptions">
+                </au-autocomplete>
+
+                <au-multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="(readOnly)" options.bind="auInputOptions"></au-multiline>
+
+            </fieldset>
+        </form>
+        <au-input-form>
+</template>

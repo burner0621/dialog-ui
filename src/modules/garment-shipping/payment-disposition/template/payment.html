@@ -1,0 +1,29 @@
+<template>
+    <tr>
+        <td>
+            <au-datepicker value.bind="data.paymentDate"
+                error.bind="error.paymentDate"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td class="col-sm-6">
+            <au-textbox 
+                value.bind="data.paymentDescription"
+                error.bind="error.paymentDescription" 
+                read-only.bind="readOnly" >
+            </au-textbox>
+        </td>
+        <td class="col-sm-6">
+            <au-numeric 
+                value.bind="data.amount"
+                error.bind="error.amount" 
+                read-only.bind="readOnly" >
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

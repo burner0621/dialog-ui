@@ -1,0 +1,8 @@
+<template>
+    <h1 class="page-header">Size</h1>
+    <au-table data.bind="loader" columns.bind="columns" sortable.bind="true" page-size="25" context.bind="context" context-click.delegate="contextCallback($event)">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-success" click.delegate="create()">Buat</button>
+        </div>
+    </au-table>
+</template>

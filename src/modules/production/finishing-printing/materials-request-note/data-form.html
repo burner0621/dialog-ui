@@ -1,0 +1,57 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <au-textbox
+      label="No."
+      show.bind="isEdit || isView || isComplete"
+      value.bind="data.Code"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-autocomplete
+      placeholder="pilih unit"
+      label="Unit"
+      value.bind="selectedUnit"
+      error.bind="error.UnitId"
+      read-only.bind="isEdit || isView || isComplete"
+      loader.bind="unitLoader"
+      text.bind = "unitView"
+      query.bind="unitFilter"
+      key="Name">
+    </au-autocomplete>
+    
+    <au-dropdown
+      label="Tipe SPB"
+      value.bind="type"
+      items.bind="typeItems"
+      error.bind="error.RequestType"
+      read-only.bind="isEdit || isView || isComplete">
+    </au-dropdown>
+
+    <au-multiline
+      label="Keterangan"
+      value.bind="data.Remark"
+      read-only.bind="readOnly || isComplete">
+    </au-multiline>
+
+    <au-textbox
+      show.bind="!data.MaterialsRequestNote_Items || data.MaterialsRequestNote_Items.length == 0"
+      error.bind="error.MaterialsRequestNote_Items"
+      read-only.bind="true">
+    </au-textbox>
+
+    <au-collection
+      errors.bind="error.MaterialsRequestNote_Items" 
+      items.bind="data.MaterialsRequestNote_Items"
+      options.bind="itemsOptions" 
+      columns.bind="itemHeader" 
+      add.bind="itemInfo.onAdd" 
+      remove.bind="itemInfo.onRemove"
+      read-only.bind="readOnly || isComplete"
+      show.bind="selectedUnit"
+      item-template="modules/production/finishing-printing/materials-request-note/template/materials-request-note-item">
+    </au-collection>
+    
+  </au-input-form>
+
+</template>

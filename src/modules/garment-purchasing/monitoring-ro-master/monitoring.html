@@ -1,0 +1,84 @@
+<template>
+    <h1 class="page-header">Monitoring RO Master</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="selectedPurchaseRequest" 
+            label="Nomor RO Master"
+            loader.bind="purchaseRequestLoader"
+            placeholder="Cari Nomor RO Master" 
+            text="RONo"
+            query.bind="purchaseRequestFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2"><label>PO Master</label></th>
+                        <th rowspan="2"><label>Kode Barang</label></th>
+                        <th rowspan="2"><label>Nama Barang</label></th>
+                        <th rowspan="2"><label>Jumlah Diminta</label></th>
+                        <th rowspan="2"><label>Satuan Diminta</label></th>
+                        <th rowspan="2"><label>Jumlah Beli</label></th>
+                        <th rowspan="2"><label>Satuan Beli</label></th>
+                        <th rowspan="2"><label>No Surat Jalan</label></th>
+                        <th rowspan="2"><label>Supplier</label></th>
+                        <th rowspan="2"><label>Jumlah SJ PO</label></th>
+                        <th colspan="4"><label>Pembagian RO Master</label></th>
+                    </tr>
+                    <tr>
+                        <th><label>RO Job</label></th>
+                        <th><label>PO Job</label></th>
+                        <th><label>Jumlah Pembagian PO</label></th>
+                        <th><label>Satuan</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="14">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <template repeat.for="doIndex of data.DeliveryOrders.length">
+                            <template repeat.for="distIndex of data.DeliveryOrders[doIndex].Distributions.length">
+                                <tr>
+                                    <template if.bind="doIndex==0 && distIndex==0">
+                                        <td rowspan.bind="data.rowSpan">${data.POMaster}</td>
+                                        <td rowspan.bind="data.rowSpan">${data.ProductCode}</td>
+                                        <td rowspan.bind="data.rowSpan">${data.ProductName}</td>
+                                        <td rowspan.bind="data.rowSpan" align="center">${data.Quantity}</td>
+                                        <td rowspan.bind="data.rowSpan" align="center">${data.UomUnit}</td>
+                                        <td rowspan.bind="data.rowSpan" align="center">${data.DealQuantity}</td>
+                                        <td rowspan.bind="data.rowSpan" align="center">${data.DealUomUnit}</td>
+                                    </template>
+                                    <template if.bind="distIndex==0">
+                                        <td rowspan.bind="data.DeliveryOrders[doIndex].Distributions.length || 1">${data.DeliveryOrders[doIndex].DONo}</td>
+                                        <td rowspan.bind="data.DeliveryOrders[doIndex].Distributions.length || 1">${data.DeliveryOrders[doIndex].SupplierName}</td>
+                                        <td rowspan.bind="data.DeliveryOrders[doIndex].Distributions.length || 1" align="center">${data.DeliveryOrders[doIndex].DOQuantity}</td>
+                                    </template>
+                                    <td>${data.DeliveryOrders[doIndex].Distributions[distIndex].RONo}</td>
+                                    <td>${data.DeliveryOrders[doIndex].Distributions[distIndex].POSerialNumber}</td>
+                                    <td align="center">${data.DeliveryOrders[doIndex].Distributions[distIndex].DistributionQuantity}</td>
+                                    <td align="center">${data.DeliveryOrders[doIndex].Distributions[distIndex].UomUnit}</td>
+                                </tr>
+                            </template>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

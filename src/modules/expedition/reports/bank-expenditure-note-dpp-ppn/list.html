@@ -1,0 +1,135 @@
+<template>
+    <h1 class="page-header">Laporan Bukti Pengeluaran Bank DPP + PPN</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="info.bankExpenditureNote"
+            loader.one-time="bankExpenditureNoteLoader"
+            text="DocumentNo"
+            label="No. Bukti Pengeluaran Bank"
+            options.bind="controlOptions"
+            placeholder="Masukkan No Bukti Pengeluaran Bank">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="info.unitPaymentOrder"
+            loader.one-time="purchasingDocumentExpeditionUPONoLoader"
+            text="UnitPaymentOrderNo"
+            label="No. SPB"
+            query.bind="isPaidFilter"
+            options.bind="controlOptions"
+            placeholder="Masukkan No SPB">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="info.invoice"
+            loader.one-time="purchasingDocumentExpeditionInvoiceNoLoader"
+            text="InvoiceNo"
+            label="No. Invoice"
+            query.bind="isPaidFilter"
+            options.bind="controlOptions"
+            placeholder="Masukkan No Invoice">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="info.supplier"
+            loader.one-time="supplierLoader"
+            label="Supplier"
+            text="name"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="info.division"
+            loader.one-time="divisionLoader"
+            label="Divisi"
+            text="Name"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Divisi"
+            select.bind="selectDivision">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="info.paymentMethod"
+            label="Metode Pembayaran"
+            options.bind="controlOptions"
+            items.bind="paymentMethodList">
+        </au-dropdown>
+
+        <au-datepicker
+            value.bind="info.dateFrom"
+            label="Tanggal Awal"
+            options.bind="controlOptions"
+            error.bind="error.dateFrom">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="info.dateTo"
+            label="Tanggal Akhir"
+            options.bind="controlOptions"
+            error.bind="error.dateTo">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="dpp-ppn-bank-table">
+        <au-table
+            view-model.ref="tableList"
+            data.bind="loader"
+            columns.bind="columns"
+            sortable="true"
+            page-size="25"
+            options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+
+        <!-- <table class="table table-bordered"> -->
+            <!--Table head-->
+            <!-- <thead>
+                <tr>
+                    <th>No Bukti Pengeluaran Bank</th>
+                    <th>Tanggal Bayar DPP + PPN</th>
+                    <th>Category</th>
+                    <th>Divisi</th>
+                    <th>Cara Pembayaran</th>
+                    <th>Total Bayar Ke Supplier</th>
+                    <th>Mata Uang</th>
+                    <th>Bank Bayar PPH</th>
+                    <th>Supplier</th>
+                    <th>No SPB</th>
+                    <th>DPP</th>
+                    <th>PPN</th>
+                    <th>No Invoice</th>
+                </tr>
+            </thead> -->
+            <!--Table head-->
+            <!--Table body-->
+            <!-- <tbody>
+                <tr show.bind="isEmpty">
+                    <td colspan="13">
+                        <div class="alert alert-info">Tidak ditemukan data yang cocok</div>
+                    </td>
+                </tr>
+                <tr repeat.for="datum of data">
+                    <td repeat.for="key of datum | keys" style="white-space: pre"
+                        class="${key.toString().toLowerCase() == 'totalcategorybycurrency' || key.toString().toLowerCase() == 'total' ? 'text-right' : ''}"
+                        colspan="${key.toString().toLowerCase() == 'totalcategorybycurrency' ? 8 : 1}">
+                        ${datum[key]}
+                    </td>
+                </tr>
+            </tbody> -->
+            <!--Table body-->
+        <!-- </table> -->
+
+    </div>
+</template>

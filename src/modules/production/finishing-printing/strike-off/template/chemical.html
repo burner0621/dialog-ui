@@ -1,0 +1,15 @@
+<template replace-part="ColorReceiptItems">
+    <tr>
+        <td>
+            <au-textbox value.bind="data.Name" error.bind="error.Name" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Quantity" format="0.00" read-only.bind="readOnly || !isVicositas" error.bind="error.Quantity"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+    
+</template>

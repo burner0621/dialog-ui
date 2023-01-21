@@ -1,0 +1,92 @@
+<template>
+    <style>
+        table .btn-success {
+            float: none !important;
+        }
+
+        .col-sm-12 {
+            margin-top: 0px !important;
+        }
+    </style>
+    <au-input-form title="Rincian Verifikasi Nota Intern"
+                   options.bind="formOptions">
+
+        <au-datepicker label="Tanggal Verifikasi"
+                       value.bind="verificationDate"
+                       read-only.bind="true"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete value.bind="selectedExpedition"
+                         loader.bind="expeditionLoader"
+                         label="No. Nota Intern"
+                         error.bind="error.internalNote"
+                         placeholder="cari nomor nota intern"
+                         text="InternalNoteNo"
+                         read-only.bind="true"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tgl. Nota Intern"
+                       value.bind="selectedExpedition.InternalNoteDate"
+                       read-only.bind="true"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="Mata Uang"
+                    value.bind="selectedExpedition.CurrencyCode"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Supplier"
+                    value.bind="selectedExpedition.SupplierName"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="DPP"
+                    value.bind="selectedExpedition.AmountDPP"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="PPN"
+                    value.bind="selectedExpedition.VAT"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="PPh"
+                    value.bind="selectedExpedition.IncomeTax"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="Koreksi"
+                    value.bind="selectedExpedition.CorrectionAmount"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline label="Keterangan"
+                      value.bind="selectedExpedition.Remark"
+                      read-only.bind="true"
+                      options.bind="controlOptions">
+        </au-multiline>
+
+        <au-collection items.bind="items"
+                       show.bind="items && items.length > 0"
+                       options.bind="options"
+                       columns.bind="invoiceNoteItem.columns"
+                       read-only.bind="true"
+                       add.bind="invoiceNoteItem.onAdd"
+                       view-model.ref="ItemsCollection"
+                       item-template="modules/garment-finance/garment-purchasing-verification/template/intern-note-item">
+        </au-collection>
+    </au-input-form>
+</template>

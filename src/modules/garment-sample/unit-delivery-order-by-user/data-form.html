@@ -1,0 +1,222 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-primary" click.delegate="context.unpostPO($event)"     if.one-way="context.hasUnpost">Unpost</button>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                
+                <au-textbox 
+                    label="Nomor Unit Delivery Order" 
+                    value.bind="data.UnitDONo" 
+                    read-only.bind="true"
+                    if.bind="(readOnly || isEdit)"
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-dropdown 
+                    label="Jenis Unit Delivery Order" 
+                    value.bind="unitDOType" 
+                    error.bind="error.UnitDOType" 
+                    read-only.bind="readOnly || isEdit"
+                    items.bind="typeUnitDeliveryOrderOptions"
+                    options.bind="controlOptions">
+                </au-dropdown>
+        
+                <au-datepicker 
+                    label="Tgl. Delivery Order" 
+                    value.bind="data.UnitDODate" 
+                    error.bind="error.UnitDODate" 
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+                </au-datepicker>
+        
+                <au-autocomplete 
+                    label="Unit yang meminta" 
+                    value.bind="unitRequest" 
+                    error.bind="error.UnitRequest" 
+                    read-only.bind="readOnly || !isOther"
+                    loader.bind="unitRequestLoader"
+                    text.bind = "unitRequestView"
+                    placeholder = "Cari Unit"
+                    options.bind="controlOptions"
+                    view-model.ref="unitRequestViewModel">
+                </au-autocomplete>
+                
+                <au-autocomplete
+                    if.bind="isSample || isOther"
+                    disabled.bind="!data.UnitRequest"
+                    label="Gudang yang meminta"
+                    value.bind="storageRequest"
+                    error.bind="error.StorageRequest"
+                    read-only.bind="readOnly || isEdit"
+                    loader.bind="storageLoader"
+                    text.bind = "storageView"
+                    placeholder = "Cari Gudang"
+                    query.bind = "filterUnitRequest"
+                    options.bind="controlOptions"
+                    view-model.ref="storageRequestViewModel">
+                </au-autocomplete>
+
+                <au-autocomplete
+                    label="Unit yang mengirim"
+                    value.bind = "unitSender"
+                    error.bind="error.UnitSender"
+                    read-only.bind="readOnly || isEdit ||  isRemain || isSubcon || isOther"
+                    loader.bind="unitSenderLoader"
+                    text.bind = "unitSenderView"
+                    placeholder = "Cari Unit"
+                    options.bind="controlOptions"
+                    view-model.ref="unitSenderViewModel">
+                </au-autocomplete>
+        
+                <au-autocomplete
+                    disabled.bind="!data.UnitSender"
+                    label="Gudang yang mengirim"
+                    value.bind="storage"
+                    error.bind="error.Storage"
+                    read-only.bind="readOnly || isEdit"
+                    loader.bind="storageLoader"
+                    text.bind = "storageView"
+                    placeholder = "Cari Gudang"
+                    query.bind = "filterUnit"
+                    options.bind="controlOptions"
+                    view-model.ref="storageViewModel">
+                </au-autocomplete>
+
+                <au-autocomplete
+                    label="No RO Sample"
+                    value.bind = "RONoSample"
+                    error.bind = "error.RONo"
+                    read-only.bind = "readOnly || isEdit"
+                    loader.bind = "roLoader"
+                    text = "RONoSample"
+                    if.bind="isRemain || isSample || isSubcon"
+                    placeholder = "Cari Nomor RO"
+                    view-model.ref="RONoViewModel"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <div class="row form-group">
+                    <label for="name" class="col-sm-4 text-left au-layout control-label" if.bind="isOther">No RO Asal</label>
+                    <div class = "col-sm-5">
+                        <au-textbox 
+                            disabled.bind="!(data.UnitSender && data.Storage)"
+                            value.bind="RONo" 
+                            read-only.bind="readOnly || isEdit"
+                            placeholder = "Cari Nomor RO"
+                            if.bind="isOther">
+                        </au-textbox>
+                    </div>
+                    <div class ="col-sm-3" if.bind="!readOnly && !isEdit">
+                        <button class="btn btn-success" click.delegate="searchRONo()"  if.bind="isOther" disabled.bind="!RONo">Cari</button>
+                    </div>
+                </div>
+                
+                <au-textbox
+                    label="Artikel"
+                    value.bind="data.Article"
+                    error.bind="error.Article" 
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-textbox>
+                
+                <au-multiline
+                    label="Keterangan Lain-lain"
+                    value.bind="data.OtherDescription"
+                    error.bind="error.OtherDescription" 
+                    read-only.bind="readOnly" 
+                    if.bind="isOther"
+                    options.bind="controlOptions">
+                </au-multiline>
+            </div>
+            <div class="col-md-6" show.bind="!readOnly ">
+                <h4>Tambah Data Barang</h4>
+                <au-autocomplete
+                    disabled.bind="!data.RONo"
+                    label="No RO"
+                    value.bind="RONoHeader"
+                    error.bind="error.RONoHeader"
+                    read-only.bind="readOnly"
+                    loader.bind = "garmentUnitReceiptNoteHeaderLoader"
+                    placeholder = "Cari Nomor RO"
+                    text.bind = "roNoView"
+                    query.bind = "filterRONoAddProductByUnit"
+                    options.bind="controlOptions"
+                    view-model.ref="RONoHeaderViewModel"
+                    if.bind="isSample || isRemain || isSubcon || isOther"
+                    >
+                </au-autocomplete>
+
+                <au-textbox 
+                    label="Nama Barang" 
+                    value.bind="newProduct.ProductName" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Kode Barang" 
+                    value.bind="newProduct.ProductCode" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Keterangan Barang" 
+                    value.bind="newProduct.ProductRemark" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="No. RO Asal" 
+                    value.bind="newProduct.RONo" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Jumlah Barang" 
+                    value.bind="newProduct.Quantity" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox 
+                    label="Satuan Barang" 
+                    value.bind="newProduct.UomUnit" 
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+                <div class="form-group">
+                    <div class="col-sm-5 col-sm-offset-4">
+                        <button class="btn btn-success" click.delegate="addProduct()" disabled.bind="!RONoHeader || newProduct.IsDisabled">Tambah Barang</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <au-textbox if.bind="error.ItemsCount" error.bind="error.ItemsCount" read-only.bind="true"></au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items"
+            columns.bind="items.columns"
+            options.bind="options"
+            read-only.bind="readOnly" 
+            show.bind="data.Items && data.Items.length > 0"
+            view-model.ref="ItemsCollection"
+            header-template="modules/garment-sample/unit-delivery-order-by-user/template/unit-delivery-order-header"
+            item-template="modules/garment-sample/unit-delivery-order-by-user/template/unit-delivery-order-item">
+        </au-collection>
+  </au-input-form>
+</template>

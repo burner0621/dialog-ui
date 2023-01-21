@@ -1,0 +1,19 @@
+<template>
+
+    <div class="row">
+        <div class="col-md-6">
+            <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+                <au-textbox label="Nama Marketing" placeholder="Nama Marketing" value.bind="data.Name" error.bind="error.Name"
+                    r read-only.bind="(readOnly || isEdit)">
+                </au-textbox>
+
+                <au-textbox label="Penanggung Jawab" placeholder="Penanggung Jawab" value.bind="data.ResponsibleName" error.bind="error.Address"
+                    read-only.bind="readOnly">
+                </au-textbox>
+
+            </au-input-form>
+        </div>
+    </div>
+
+</template>

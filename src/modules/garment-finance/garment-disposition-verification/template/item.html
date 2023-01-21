@@ -1,0 +1,72 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox value.bind="data.EPONo"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-textbox>
+		</td>
+		<td>
+			<au-checkbox value.bind="data.IsUseVat"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-checkbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.VatValue"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-numeric>
+		</td>
+		<td>
+			<au-checkbox value.bind="data.IsUseIncomeTax"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-checkbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.IncomeTaxName"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.IncomeTaxValue"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.VerifiedAmount"
+						read-only.bind="true"
+						options.bind="controlOptions">
+			</au-numeric>
+		</td>
+		<td>
+			<!-- <div class="col-sm-7">
+				<au-numeric value.bind="data.DispositionAmountCreated"
+							read-only.bind="true"
+							format="0.00"
+							options.bind="controlOptions">
+				</au-numeric>
+			</div> -->
+			<div class="col-sm-1  pull-right">
+				<button class="btn btn-info pull-right"
+						if.bind="data.Details"
+						click.delegate="toggle()">i</button>
+			</div>
+		</td>
+	</tr>
+	<tr show.bind="isShowing">
+		<td colspan="8">
+
+			<au-collection items.bind="data.Details"
+						   columns.bind="itemsColumns"
+						   remove.bind="removeItems"
+						   options.bind="context.context.options"
+						   read-only.bind="options.readOnly"
+						   item-template="modules/garment-finance/garment-disposition-verification/template/detail">
+			</au-collection>
+		</td>
+	</tr>
+</template>

@@ -1,0 +1,61 @@
+<template>
+  <div class="row">
+    <div class="col-md-12">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <!-- MaterialType Code & Name-->
+        <div class="row">
+          <div class="col-md-6" style="white-space: nowrap;">
+            <au-autocomplete label="Kode Material" placeholder="Kode Material" value.bind="MaterialTypeId"
+              error.bind="error.MaterialTypeId" read-only.bind="readOnly" loader.one-time="materialLoader" text="Code">
+            </au-autocomplete>
+          </div>
+          <div class="col-md-4" style="white-space: nowrap;">
+            <au-textbox label="Nama Material" value.bind="data.MaterialTypeId.Name"
+              error.bind="error.MaterialTypeId.Name" read-only.bind="readOnlyViewEdit"></au-textbox>
+          </div>
+        </div>
+
+        <!-- Ring Code & Name-->
+        <div class="row">
+          <div class="col-md-6">
+            <au-autocomplete label="Kode Nomor Benang" placeholder="Kode Nomor Benang" value.bind="YarnNumberId"
+              error.bind="error.YarnNumberId" read-only.bind="readOnly" loader.one-time="ringLoader" text="Code">
+            </au-autocomplete>
+          </div>
+          <div class="col-md-4">
+            <au-textbox label="Tipe" value.bind="data.YarnNumberId.RingType"
+              error.bind="error.YarnNumberId.RingType" read-only.bind="readOnlyViewEdit"></au-textbox>
+          </div>
+          <div class="col-md-2">
+            <au-textbox label="Nomor" value.bind="data.YarnNumberId.Number"
+              error.bind="error.YarnNumberId.Number" read-only.bind="readOnlyViewEdit"></au-textbox>
+          </div>
+        </div>
+
+        <!-- Yarn Code -->
+        <div class="row">
+          <div class="col-md-6" style="white-space: nowrap;">
+            <au-textbox label="Kode Benang" placeholder="Kode Benang" value.bind="data.Code" error.bind="error.Code"
+              read-only.bind="readOnly"></au-textbox>
+          </div>
+        </div>
+
+        <!-- Yarn Name -->
+        <div class="row">
+          <div class="col-md-6" style="white-space: nowrap;">
+            <au-textbox placeholder="Nama Benang" label="Nama Benang" value.bind="data.Name" error.bind="error.Name"
+              read-only.bind="readOnly"></au-textbox>
+          </div>
+        </div>
+
+        <!-- Optional Yarn -->
+        <div class="row">
+          <div class="col-md-6" style="white-space: nowrap;">
+            <au-textbox label="Opsional" placeholder="Nama Benang Tambahan (optional)" value.bind="OptionalName"
+              error.bind="error.OptionalName" read-only.bind="readOnly"></au-textbox>
+          </div>
+        </div>
+      </au-input-form>
+    </div>
+  </div>
+</template>

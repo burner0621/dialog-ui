@@ -1,0 +1,114 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox 
+            value.bind="data.CorrectionNo" 
+            label="Nomor Koreksi"
+            read-only.bind="true"
+            if.bind="isView"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal Koreksi"
+            value.bind="data.CorrectionDate"
+            options.bind="controlOptions"
+            if.bind="isView"
+            read-only.bind="true">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="selectedSupplier" 
+            error.bind="error.Supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="cari supplier" 
+            key="code" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            view-model.ref="supplierViewModel">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="deliveryOrder" 
+            error.bind="error.DONo"
+            label="Nomor Surat Jalan"
+            loader.one-time="garmentDeliveryOrderLoader"
+            text.bind = "doView"
+            placeholder="Cari SJ"
+            options.bind="controlOptions"
+            read-only.bind="readOnly"
+            show.bind="selectedSupplier"
+            view-model.ref="doViewModel">
+        </au-autocomplete>
+
+        
+        <au-checkbox 
+            label="Dikenakan koreksi Ppn?" 
+            value.bind="data.UseVat" 
+            error.bind="error.UseVat" 
+            read-only.bind="true"
+            options.bind="controlOptions"
+            show.bind="data.Supplier"            
+            if.bind="deliveryOrder">
+        </au-checkbox>
+
+        <au-textbox 
+            value.bind="data.Vat.Rate" 
+            error.bind="error.UseVat"
+            label="Ppn Rate"   
+            show.bind="data.Supplier"  
+            read-only.bind="true"
+            options.bind="controlOptions"
+            if.bind="deliveryOrder">
+        </au-textbox>
+
+        <au-checkbox 
+            label="Dikenakan koreksi Pph?" 
+            value.bind="data.UseIncomeTax" 
+            error.bind="error.UseIncomeTax" 
+            read-only.bind="true"
+            options.bind="controlOptions"
+            show.bind="data.Supplier"
+            if.bind="deliveryOrder">
+        </au-checkbox>
+
+        <au-textbox
+            label="Jenis PPH"
+            value.bind="data.IncomeTax"
+            options.bind="controlOptions"
+            read-only="true"
+            if.bind="data.UseIncomeTax && deliveryOrder">
+        </au-textbox>
+
+
+        <au-multiline
+            label="Keterangan"
+            value.bind="data.Remark"
+            options.bind="controlOptions"
+            read-only.bind="readOnly"
+            placeholder=" ">
+        </au-multiline>
+        
+        <au-textbox
+            read-only="true"
+            error.bind="error.ItemsCount">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            columns.bind="deliveryOrderItem.columns"
+            read-only.bind="readOnly" 
+            remove.bind="deliveryOrderItem.onRemove"
+            options.bind="collectionOptions"
+            errors.bind="error.Items"
+            if.bind="deliveryOrder"
+            item-template="modules/garment-purchasing/purchase-quantity-correction/template/purchase-quantity-correction-item"
+            show.bind="hasItems">
+        </au-collection>
+    </au-input-form>
+</template>

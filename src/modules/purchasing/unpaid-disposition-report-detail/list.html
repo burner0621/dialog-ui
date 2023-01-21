@@ -1,0 +1,169 @@
+<template>
+  <!-- <require from="../../../lib/number-format-value-converter"></require>
+  <require from="../../../lib/date-format-value-converter"></require> -->
+  <style>
+    .tab {
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      border-bottom: 6px solid #ccc;
+    }
+
+    .tab:hover {
+      background-color: #ddd;
+    }
+
+    .tab.active {
+      border-color: #173250 !important;
+    }
+
+    .collection .panel-body {
+      padding: 0;
+    }
+    .collection tbody > tr > td:nth-child(odd) {
+      text-align: center;
+    }
+    /* Membuat currency menjadi rata kanan */
+    .collection tbody > tr > td:nth-child(even) {
+      text-align: right;
+    }
+  </style>
+  <div class="row">
+    <template repeat.for="title of titles">
+      <div
+        class="col-sm-4 tab ${activeTitle === title ? 'active' : ''}"
+        \
+        click.trigger="changeTable(title)"
+      >
+        Laporan Dispo Blm Bayar Detail ${title}
+      </div>
+    </template>
+  </div>
+  <br />
+  <br />
+
+  <div class="form-horizontal">
+    <au-autocomplete
+      value.bind="category"
+      label="Kategori"
+      loader.bind="categoryLoader"
+      text="name"
+      placeholder="Cari Kategori"
+      options.bind="controlOptions"
+    >
+    </au-autocomplete>
+    <au-autocomplete
+      value.bind="accountingUnit"
+      label="Unit Pembukuan"
+      loader.bind="accountingUnitLoader"
+      text="Name"
+      placeholder="Cari Unit"
+      options.bind="controlOptions"
+    >
+    </au-autocomplete>
+    <au-autocomplete
+      value.bind="division"
+      label="Divisi"
+      loader.bind="divisionLoader"
+      text="Name"
+      placeholder="Cari Divisi"
+      options.bind="controlOptions"
+    >
+    </au-autocomplete>
+    <au-datepicker
+      label="Periode Sampai"
+      value.bind="dateTo"
+      options.bind="controlOptions"
+    >
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact" class="col-sm-6 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()" class="btn btn-success">Cari</button>
+        <button click.delegate="reset()" class="btn btn-success">Reset</button>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="table-responsive">
+    <!-- <au-table view-model.ref="tableList" data.bind="loader" columns.bind="columns" sortable.bind="false" options.bind="tableOptions">
+        <div slot="toolbar" class="btn-group">
+            <a click.delegate="getExcel()" class='btn btn-primary'>Cetak Excel</a>
+            <a click.delegate="getPdf()" class='btn btn-info'>Cetak Pdf</a>
+        </div>
+    </au-table> -->
+
+    <table class="table table-bordered">
+      <!--Table head-->
+      <thead>
+        <tr>
+          <th>Tgl Disposisi</th>
+          <th>No Disposisi</th>
+          <th>No SPB</th>
+          <th>No BP</th>
+          <th>No Invoice</th>
+          <th>Supplier</th>
+          <th>Kategori</th>
+          <th>Unit</th>
+          <th>Jatuh Tempo</th>
+          <th>Currency</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <!--Table head-->
+      <!--Table body-->
+      <tbody>
+        <tr show.bind="isEmpty">
+          <td colspan="11">
+            <div class="alert alert-info">No data.</div>
+          </td>
+        </tr>
+        <tr repeat.for="datum of data">
+          <td
+            repeat.for="key of datum | keys"
+            style="white-space: pre"
+            class="${key.toString().toLowerCase() == 'totalcategorybycurrency' || key.toString().toLowerCase() == 'total' ? 'text-right' : ''}"
+            colspan="${key.toString().toLowerCase() == 'totalcategorybycurrency' ? 9 : 1}"
+          >
+            ${datum[key]}
+          </td>
+        </tr>
+      </tbody>
+      <!--Table body-->
+      <div slot="toolbar" class="btn-group">
+        <a click.delegate="getExcel()" class="btn btn-primary">Cetak Excel</a>
+        <a click.delegate="getPdf()" class="btn btn-info">Cetak Pdf</a>
+      </div>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <au-collection
+        items.bind="unitSummary"
+        columns.bind="!isImport && !isValas ? columnsUnit : columnsUnitValas"
+        read-only.bind="true"
+      >
+      </au-collection>
+    </div>
+    <div class="col-sm-6">
+      <au-collection
+        items.bind="currencySummary"
+        columns.bind="columnsCurrency"
+        read-only.bind="true"
+      >
+      </au-collection>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <au-collection
+        items.bind="categorySummary"
+        columns.bind="!isImport && !isValas ? columnsCategory : columnsCategoryValas"
+        read-only.bind="true"
+      >
+      </au-collection>
+    </div>
+    </div>
+</template>

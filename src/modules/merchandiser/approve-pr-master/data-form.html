@@ -1,0 +1,98 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <!-- <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button> -->
+            <!-- <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button> -->
+            <!-- <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button> -->
+            <button class="btn btn-primary" click.delegate="context.approveCallback($event)"     if.one-way="context.hasApprove">Approve</button>
+            <button class="btn btn-primary" click.delegate="context.unapproveCallback($event)"     if.one-way="context.hasUnApprove">UnApprove</button>
+        </div>
+
+        <au-textbox 
+            label="Nomor PR"
+            value.bind="data.PRNo"
+            error.bind="error.PRNo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Nomor RO"
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Jenis PR"
+            value.bind="data.PRType"
+            error.bind="error.PRType"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+       
+        <au-textbox
+            label="No Sales Contract"
+            value.bind="data.SCNo"
+            error.bind="error.SCNo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Buyer"
+            value.bind="data.Buyer.Name"
+            error.bind="error.Buyer.Name"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tgl. PR"
+            value.bind="data.Date"
+            error.bind="error.Date"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            label="Tgl. Diminta Datang"
+            value.bind="data.ExpectedDeliveryDate"
+            error.bind="error.ExpectedDeliveryDate"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox
+            label="Keterangan"
+            value.bind="data.Remark"
+            error.bind="error.Remark"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsColumns" 
+            options.bind="options"
+            read-only.bind="readOnly"
+            view-model.ref="ItemsCollection"
+            item-template="modules/merchandiser/approve-pr-master/template/item"
+            view-model.ref="ItemsCollection">
+        </au-collection>
+    </au-input-form>
+</template>

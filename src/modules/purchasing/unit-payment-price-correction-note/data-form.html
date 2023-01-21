@@ -1,0 +1,173 @@
+<template>
+    <form class="form-horizontal">
+
+        <au-dropdown label="Jenis Koreksi"
+                     value.bind="data.correctionType"
+                     read-only.bind="readOnly"
+                     items.bind="correctionTypes"
+                     change.delegate="correctionTypeChanged($event)"
+                     options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox label="No. Koreksi"
+                    value.bind="data.uPCNo"
+                    error.bind="error.uPCNo"
+                    read-only.bind="true"
+                    if.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl. Koreksi"
+                       value.bind="data.correctionDate"
+                       error.bind="error.correctionDate"
+                       read-only.bind="readOnly"
+                       if.bind="false"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="No. Surat Perintah Bayar"
+                         value.bind="selectectedUnitPaymentOrder"
+                         error.bind="error.uPOId"
+                         read-only.bind="readOnly"
+                         loader.bind="upoLoader"
+                         text.bind="upoView"
+                         placeholder="cari SPB"
+                         key="upoNo"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Supplier"
+                    value.bind="selectedSupplier"
+                    if.bind="selectectedUnitPaymentOrder"
+                    error.bind="error.supplier"
+                    read-only.bind="true"
+                    options.bind="controlOptions"></au-textbox>
+
+        <au-textbox label="No. Invoice Koreksi"
+                    value.bind="data.invoiceCorrectionNo"
+                    error.bind="error.invoiceCorrectionNo"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl. Invoice Koreksi"
+                       value.bind="data.invoiceCorrectionDate"
+                       error.bind="error.invoiceCorrectionDate"
+                       read-only.bind="readOnly"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-checkbox label="Apakah kena koreksi PPN?"
+                     value.bind="data.useVat"
+                     error.bind="error.useVat"
+                     change.delegate="useVatChanged($event)"
+                     read-only.bind="readOnly || !selectectedUnitPaymentOrder.useVat"
+                     options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-textbox label="No. Faktur Pajak Koreksi (PPN)"
+                    value.bind="data.vatTaxCorrectionNo"
+                    error.bind="error.vatTaxCorrectionNo"
+                    read-only.bind="readOnly"
+                    show.bind="data.useVat"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl. Faktur Pajak Koreksi (PPN)"
+                       value.bind="data.vatTaxCorrectionDate"
+                       error.bind="error.vatTaxCorrectionDate"
+                       read-only.bind="readOnly"
+                       show.bind="data.useVat"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-checkbox label="Apakah kena koreksi PPH?"
+                     value.bind="data.useIncomeTax"
+                     error.bind="error.useIncomeTax"
+                     change.delegate="useIncomeTaxChanged($event)"
+                     read-only.bind="readOnly || !selectectedUnitPaymentOrder.useIncomeTax"
+                     options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-textbox label="No. Faktur Pajak Koreksi (PPH)"
+                    value.bind="data.incomeTaxCorrectionNo"
+                    error.bind="error.incomeTaxCorrectionNo"
+                    show.bind="data.useIncomeTax"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl. Faktur Pajak Koreksi (PPH)"
+                       value.bind="data.incomeTaxCorrectionDate"
+                       error.bind="error.incomeTaxCorrectionDate"
+                       show.bind="data.useIncomeTax"
+                       read-only.bind="readOnly"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker label="Tgl. Jatuh Tempo"
+                       value.bind="data.dueDate"
+                       error.bind="error.unitPaymentOrder.dueDate"
+                       read-only.bind="true"
+                       if.bind="data.uPOId && data.unitPaymentOrder._id"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline label="Keterangan"
+                      value.bind="data.remark"
+                      error.bind="error.remark"
+                      read-only.bind="readOnly"
+                      options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox show.bind="error.itemscount"
+                    error.bind="error.itemscount"
+                    read-only="true">
+        </au-textbox>
+
+        <au-collection if.bind="!hasView && data.correctionType == 'Harga Satuan'"
+                       items.bind="data.items"
+                       error.bind="error.items"
+                       read-only.bind="readOnly"
+                       columns.bind="UpoItem.columns"
+                       remove.bind="UpoItem.onRemove"
+                       view-model.ref="ItemsCollection"
+                       options.one-way="pricePerUnitCorrectionReadOnly"
+                       item-template="modules/purchasing/unit-payment-price-correction-note/template/item">
+        </au-collection>
+
+        <au-collection if.bind="hasView && data.correctionType == 'Harga Satuan'"
+                       items.bind="data.items"
+                       error.bind="error.items"
+                       read-only.bind="readOnly"
+                       columns.bind="UpoItem.columns"
+                       remove.bind="UpoItem.onRemove"
+                       view-model.ref="ItemsCollection"
+                       options.one-way="pricePerUnitCorrectionReadOnly"
+                       item-template="modules/purchasing/unit-payment-price-correction-note/template/itemView">
+        </au-collection>
+
+        <au-collection if.bind="!hasView && data.correctionType == 'Harga Total'"
+                       items.bind="data.items"
+                       error.bind="error.items"
+                       read-only.bind="readOnly"
+                       columns.bind="UpoItemTotal.columns"
+                       remove.bind="UpoItemTotal.onRemove"
+                       view-model.ref="ItemsCollection"
+                       options.one-way="pricePerUnitCorrectionReadOnly"
+                       item-template="modules/purchasing/unit-payment-price-correction-note/template/item-total">
+        </au-collection>
+
+        <au-collection if.bind="hasView && data.correctionType == 'Harga Total'"
+                       items.bind="data.items"
+                       error.bind="error.items"
+                       read-only.bind="readOnly"
+                       columns.bind="UpoItemTotal.columns"
+                       remove.bind="UpoItemTotal.onRemove"
+                       view-model.ref="ItemsCollection"
+                       options.one-way="pricePerUnitCorrectionReadOnly"
+                       item-template="modules/purchasing/unit-payment-price-correction-note/template/itemView-total">
+        </au-collection>
+
+    </form>
+</template>

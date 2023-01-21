@@ -1,0 +1,41 @@
+<template>
+    <tr>
+        <!-- <td>
+            <au-textbox
+                value.bind="data.SizeName"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.UomUnit"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.Remark"
+                read-only.bind="true">
+            </au-textbox>
+        </td> -->
+        <td>
+            <au-autocomplete value.bind="selectedComodity"
+                             error.bind="error.LeftoverComodity"
+                             loader.bind="leftoverComodityLoader"
+                             read-only.bind="readOnly || data.Id"
+                             placeholder="leftoverComodity"
+                             text.bind="leftoverComodityView">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.qty"
+                        read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+
+</template>

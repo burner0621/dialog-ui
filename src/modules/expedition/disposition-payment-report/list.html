@@ -1,0 +1,75 @@
+<template>
+    <h1 class="page-header">Laporan Bukti Pembayaran Disposisi</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="info.bankExpenditureNote"
+                         loader.one-time="bankExpenditureNoteLoader"
+                         text="PaymentDispositionNo"
+                         label="No. Bukti Pengeluaran Bank"
+                         options.bind="controlOptions"
+                         placeholder="Masukkan No Bukti Pengeluaran Bank">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="info.dispositionNote"
+                         loader.one-time="dispositionNoteLoader"
+                         text="DispositionNo"
+                         label="No. Disposisi"
+                         options.bind="controlOptions"
+                         placeholder="Masukkan No Disposisi">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="info.supplier"
+                         loader.one-time="supplierLoader"
+                         label="Supplier"
+                         text="name"
+                         options.bind="controlOptions"
+                         placeholder="Masukkan Nama Supplier">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="info.division"
+                         loader.one-time="divisionLoader"
+                         label="Divisi"
+                         text="name"
+                         options.bind="controlOptions"
+                         placeholder="Masukkan Nama Divisi"
+                         select.bind="selectDivision">
+        </au-autocomplete>
+
+        <au-datepicker value.bind="info.startDate"
+                       label="Tanggal Awal"
+                       options.bind="controlOptions"
+                       error.bind="error.startDate">
+        </au-datepicker>
+
+        <au-datepicker value.bind="info.endDate"
+                       label="Tanggal Akhir"
+                       options.bind="controlOptions"
+                       error.bind="error.endDate">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact"
+                   class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()"
+                        class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()"
+                        class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              sortable="true"
+              page-size="25"
+              options.bind="tableOptions">
+        <div slot="toolbar"
+             class="btn-group">
+            <button class="btn btn-primary"
+                    click.delegate="excel()">Excel</button>
+        </div>
+    </au-table>
+
+</template>

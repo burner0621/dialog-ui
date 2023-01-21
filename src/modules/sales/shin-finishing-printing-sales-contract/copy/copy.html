@@ -1,0 +1,12 @@
+<template>
+    <div>Nomor Sales Contract Asal : <b>${data.SCNoSource}</b></div>
+    <br>
+    <br>
+    <require from="modules/sales/shin-finishing-printing-sales-contract/data-form"></require>
+    <data-form data.bind="data" error.bind="error" is-copy="true"></data-form>
+    <hr />
+    <div class="btn-group pull-right">
+        <button class="btn btn-default" click.delegate="back()">Kembali</button>
+        <button class="btn btn-success" click.delegate="save()">Simpan</button>
+    </div>
+</template>

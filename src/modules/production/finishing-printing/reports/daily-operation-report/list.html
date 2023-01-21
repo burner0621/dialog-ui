@@ -1,0 +1,107 @@
+<template>
+    <style>
+        #dailyReport td {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Laporan Monitoring Daily Operational setiap Mesin</h1>
+    <form class="form-horizontal">
+        <!-- <kanban-auto-suggest label="Nomor Order/Kereta" value.bind="kanban"></kanban-auto-suggest> -->
+        
+        <au-autocomplete value.bind="Kanban" error.bind="error.Kanban" label="Nomor Order/Kereta" loader.bind="kanbanLoader" placeholder="Cari nomor Order/Kereta"
+            read-only.bind="(readOnly)" options.bind="auInputOptions">
+        </au-autocomplete>
+        <!-- <machine-auto-suggest label="Mesin" value.bind="machine"></machine-auto-suggest> -->
+
+        <au-autocomplete value.bind="Machine" error.bind="error.Machine" label="Machine" loader.bind="machineLoader" placeholder="Cari machine"
+            key="Code" text="Name" read-only.bind="(readOnly)" options.bind="auInputOptions">
+        </au-autocomplete>
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+    <br>
+    <!-- <div class="fixed-table-body">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td rowspan="3">No</td>
+                    <td rowspan="3">No. Order</td>
+                    <td rowspan="3">No Kereta</td>
+                    <td rowspan="3">Reproses</td>
+                    <td rowspan="3">Mesin</td>
+                    <td rowspan="3">Step Proses</td>
+                    <td rowspan="3">Material</td>
+                    <td rowspan="3">Warna</td>
+                    <td rowspan="3">Lebar Kain (Inch)</td>
+                    <td rowspan="3">Jenis Proses</td>
+                    <td colspan="3">Panjang In (m)</td>
+                    <td colspan="4">Panjang Out (m)</td>
+                    <td rowspan="3" width="">Keterangan BS</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">Tgl</td>
+                    <td rowspan="2">Jam</td>
+                    <td rowspan="2">In Qty</td>
+                    <td rowspan="2">Tgl</td>
+                    <td rowspan="2">Jam</td>
+                    <td colspan="2">Out Qty</td>
+                </tr>
+                <tr>
+                    <td>BQ</td>
+                    <td>BS</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center">${$index + 1}</td>
+                    <td class="text-right">${item.kanban.productionOrder.orderNo}</td>
+                    <td class="text-right">${item.kanban.cart.cartNumber}</td>
+                    <td class="text-right">${item.kanban.isReprocess}</td>
+                    <td class="text-right">${item.machine.name}</td>
+                    <td class="text-right">${item.step.process}</td>
+                    <td class="text-right">${item.kanban.productionOrder.material.name}</td>
+                    <td class="text-right">${item.kanban.selectedProductionOrderDetail.colorRequest}</td>
+                    <td class="text-right">${item.kanban.productionOrder.finishWidth}</td>
+                    <td class="text-right">${item.kanban.productionOrder.processType.name}</td>
+                    <td class="text-center" if.bind="item.dateInput">${item.dateInput | dateFormat:'D MMM YYYY'}</td>
+                    <td class="text-center" if.bind="!item.dateInput">-</td>
+                    <td class="text-center">${item.timeInput}</td>
+                    <td class="text-center">${item.input}</td>
+                    <td class="text-center" if.bind="item.dateOutput">${item.dateOutput | dateFormat:'D MMM YYYY'}</td>
+                    <td class="text-center" if.bind="!item.dateOutput">-</td>
+                    <td class="text-center">${item.timeOutput}</td>
+                    <td class="text-center">${item.goodOutput}</td>
+                    <td class="text-center">${item.badOutput}</td>
+                    <td class="text-right">${item.badOutputDescription}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+    <div id="dailyReport">
+        <au-table
+            data.bind="loader"
+            columns.bind="columns"
+            options.bind="tableOptions"
+            view-model.ref="dailyTable"
+            context.bind="contextTable"
+            row-formatter.bind="rowFormatter">
+        </au-table>
+    </div>
+    <!-- <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Tidak ada data ditemukan.
+    </div> -->
+    <!-- <hr/> -->
+    </form>
+
+</template>

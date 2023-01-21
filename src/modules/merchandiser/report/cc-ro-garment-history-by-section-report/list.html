@@ -1,0 +1,81 @@
+<template>
+    <h1 class="page-header">Display History Cost Calculation | RO Garment Per Seksi</h1>
+    <form class="form-horizontal">
+         <au-autocomplete 
+            value.bind="selectedROGarment" 
+            label="Nomor RO" 
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO" 
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            label="Seksi"
+            value.bind="section"
+            error.bind="error.Section"
+            loader.bind="sectionLoader"
+            text.bind = "sectionView"
+            key="SectionCode"
+            aria-placeholder="Cari Seksi"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        
+        <au-datepicker label="Tanggal Validasi RO Kabag Md Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Validasi RO Kabag Md Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">No RO</th>
+                    <th class="text-center">Seksi</th>
+                    <th class="text-center">Brand Buyer</th>
+                    <th class="text-center">Nama Brand Buyer</th>
+                    <th class="text-center">Article / Style</th>
+                    <th class="text-center">Tgl Shipment</th>        
+                    <th class="text-center">Tgl Validasi CC Kabag Md</th>        
+                    <th class="text-center">Tgl Validasi CC IE</th>        
+                    <th class="text-center">Tgl Validasi CC Kabag Pembelian</th>        
+                    <th class="text-center">Tgl Validasi CC Kadiv Md</th>        
+                    <th class="text-center">Tgl Validasi RO Kabag Md</th>        
+                    <th class="text-center">Tgl Validasi RO Sample</th>                                    
+                 </tr>
+            </thead>
+            <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${item.RO_Number}</td>
+                        <td>${item.Section}</td>
+                        <td>${item.BrandCode}</td>
+                        <td>${item.BrandName}</td>
+                        <td>${item.Article}</td>
+                        <td>${item.DeliveryDate}</td>                        
+                        <td>${item.ApprovalMDDate}</td>
+                        <td>${item.ApprovalIEDate}</td>                                  
+                        <td>${item.ApprovalPurchDate}</td>
+                        <td>${item.ApprovalKadivMDDate}</td>
+                        <td>${item.ValidatedMDDate}</td>
+                        <td>${item.ValidatedSampleDate}</td>   
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

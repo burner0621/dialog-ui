@@ -1,0 +1,109 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-primary"  click.delegate="context.confirmBooking($event)"     if.one-way="context.hasConfirm">Confirm Booking</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+            <button class="btn btn-danger"  click.delegate="context.cancelBooking($event)"     if.one-way="context.hascancelConfirm">Cancel Sisa</button>
+            <button class="btn btn-success"  click.delegate="context.masterPlan($event)"     if.one-way="context.hasMasterPlan">Detail Blocking Plan Sewing</button>
+            <button class="btn btn-primary"  click.delegate="context.expired($event)"     if.one-way="context.expireBooking">Hapus Sisa</button>
+        </div>
+
+        <au-textbox
+            label="Kode Booking"
+            value.bind="data.BookingOrderNo"
+            error.bind="error.BookingOrderNo"
+            read-only="true"
+            if.bind="data.BookingOrderNo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="selectedSection"
+            error.bind="error.Section"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            text.bind = "sectionView"
+            placeholder="cari seksi"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        
+        <au-datepicker
+            label="Tanggal Booking"
+            value.bind="data.BookingOrderDate"
+            error.bind="error.BookingOrderDate"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-autocomplete
+            value.bind="selectedBuyer"
+            error.bind="error.Buyer"
+            label="Buyer"
+            loader.bind="buyerLoader"
+            text.bind = "buyerView"
+            placeholder="cari buyer"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <numeric
+            label="Jumlah Order Awal"
+            value.bind="beginingOrderQuantity"
+            error.bind="error.beginingOrderQuantity"
+            show.bind="data.ExpiredBookingQuantity || data.CanceledQuantity"
+            format="0"
+            read-only="true">
+        </numeric>
+
+        <numeric
+            label="Jumlah Order" 
+            value.bind="data.OrderQuantity"
+            error.bind="error.OrderQuantity"
+            format="0"
+            read-only.bind="readOnly">
+        </numeric>
+
+
+        <au-datepicker 
+            label="Tanggal Pengiriman"
+            value.bind="data.DeliveryDate"
+            error.bind="error.DeliveryDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+        
+        <au-multiline 
+            label="Keterangan"
+            value.bind="data.Remark"
+            placeholder="tambah keterangan"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <label for="Detail Confirm" if.bind="data.BookingOrderNo">Detail Confirm : </label>
+        <au-layout error.bind="error.detail" if.bind="error.detail"></au-layout>
+        <au-collection 
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="detailColumns"
+            add.bind="addItems"
+            remove.bind="removeItems"
+            options.bind="options"
+            read-only="true"
+            if.bind="data.BookingOrderNo"
+            change.delegate="onitemchange($event)"
+            header-template="modules/garment-master-plan/booking-order/templates/booking-order-detail-header"
+            item-template="modules/garment-master-plan/booking-order/templates/booking-order-detail"
+            footer-template="modules/garment-master-plan/booking-order/templates/booking-order-detail-footer">
+        </au-collection>
+        
+        <au-layout error.bind="error.totalQuantity" if.bind="error.totalQuantity"></au-layout>
+  </au-input-form>
+</template>

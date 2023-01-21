@@ -1,0 +1,40 @@
+<template replace-part="item">
+    <tr>
+        <td>
+            <au-textbox value.bind="data.Lot" error.bind="error.Lot" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td width="10%">
+            <au-dropdown value.bind="data.Grade" error.bind="error.Grade" items.bind="Grades" read-only.bind="readOnly"></au-dropdown>
+        </td>
+        <td show.bind="!readOnly">
+            <au-numeric value.bind="data.Quantity" error.bind="error.Quantity" format="0,000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td if.bind="readOnly">
+            <au-numeric value.bind="Quantity" error.bind="error.Quantity" format="0,000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td show.bind="!readOnly">
+            <au-numeric value.bind="data.Weight" error.bind="error.Weight" format="0,000.0000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td if.bind="readOnly">
+            <au-numeric value.bind="Weight" error.bind="error.Weight" format="0,000.0000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="WeightTotal" error.bind="error.Weight" format="0,000.0000" read-only.bind="true" ></au-numeric>
+        </td>
+        <td show.bind="!readOnly">
+            <au-numeric value.bind="data.Length" error.bind="error.Length" format="0,000.0000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td if.bind="readOnly">
+            <au-numeric value.bind="Length" error.bind="error.Length" format="0,000.0000" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="LengthTotal" format="0,000.0000" read-only.bind="true"></au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

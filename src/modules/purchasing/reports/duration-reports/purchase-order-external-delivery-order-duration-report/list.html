@@ -1,0 +1,37 @@
+<template>
+        <h1 class="page-header">Laporan Durasi PO Eksternal - Surat Jalan </h1>
+        <form class="form-horizontal">
+
+            
+            <au-autocomplete  value.bind="filter.unit"  label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+            <au-dropdown label="Durasi" value.bind="filter.duration" items.bind="durationItems"></au-dropdown>
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+
+            <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button> 
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <br>
+        </br>
+
+        <au-table
+          view-model.ref="durationTable"
+          data.bind="loader"
+          columns.bind="columns"
+          sortable.bind="true"
+          page-size="25"
+          options.bind="tableOptions">
+          
+          <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+          </div>
+        </au-table>
+        <hr/>
+        </form>
+</template>

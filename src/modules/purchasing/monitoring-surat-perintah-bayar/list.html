@@ -1,0 +1,111 @@
+<template>
+
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Surat Perintah Bayar</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <au-autocomplete value.bind="unit" label="Unit" loader.bind="unitLoader" placeholder="nama unit" key="code">
+                </au-autocomplete>
+
+                <au-autocomplete value.bind="supplier" label="Nama Supplier" loader.bind="supplierLoader" placeholder="nama supplier" key="code">
+                </au-autocomplete>
+
+        
+
+                <au-datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)">
+                </au-datepicker>
+
+                <au-datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom">
+                </au-datepicker>
+
+
+                <label for="contact" class="col-sm-9 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="exportToXls()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                     <tr>
+                         <td >No</td>
+                        <td >Tgl SPB</td>
+                        <td >No SPB</td>
+                        <td >Nama Brg</td>
+                        <td >Satuan</td>
+                        <td >Jml</td>
+                        <td >Hrg Sat</td>
+                        <td >Jumlah Hrg</td>
+                        <td >Ppn</td>
+                        <td >Total</td>
+                        <td >Pph</td>
+                        <td >Tgl PR</td>
+                        <td >No PR</td>
+                        <td >Tgl BON</td>
+                        <td >No BON</td>
+                        <td >Tgl INV</td>
+                        <td >No INV</td>
+                        <td >JT</td>
+                        <td >Kode Supplier</td>
+                        <td >Supplier</td>
+                        <td >Unit</td>
+                        <td >Div</td>
+                        <td >ADM</td>
+               
+                        <td >Mata Uang</td>
+                        <td >Kategori</td>
+                       
+                    </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr repeat.for="PO of data">
+                     
+                        <td>${$index + 1}</td>
+                        <td>${PO.date  | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${PO.no}</td>
+                        <td>${PO.product}</td>
+                        <td>${PO.satuan}</td>
+                        <td>${PO.banyak}</td>
+                        <td>${PO.harga}</td>
+                        <td>${PO.banyak*PO.harga}</td>
+                        <td>${PO.useIncomeTax}</td>
+                           <td>${PO.tot}</td>
+                        <td>${PO.useVat}</td>
+                        <td>${PO.datepr  | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${PO.nopr}</td>
+                        <td>${PO.datenote | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${PO.nonote}</td>
+                        <td>${PO.invoceDate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${PO.invoceNo}</td>
+                        <td>${PO.dueDate | dateFormat:'DD-MM-YYYY'}</td>
+                        <td>${PO.codesupplier}</td>
+                        <td>${PO.supplier}</td>
+                        <td>${PO.namaUnit}</td>
+                        <td>${PO.divisi}</td>
+                        <td>${PO._createdBy}</td>
+                  
+                        <td>${PO.matauang}</td>
+                        <td>${PO.kategori}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

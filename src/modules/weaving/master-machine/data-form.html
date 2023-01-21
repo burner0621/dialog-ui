@@ -1,0 +1,181 @@
+<template>
+  <au-input-form title.bind="title"
+                 with.bind="context"
+                 options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Unit Weaving</p>
+            </div>
+            <div class="col-md-4">
+              <au-autocomplete value.bind="WeavingUnit"
+                               error.bind="error.WeavingUnitId"
+                               read-only.bind="readOnly"
+                               loader.bind="units"
+                               text="Name">
+              </au-autocomplete>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">No. Mesin</p>
+            </div>
+            <div class="col-md-2">
+              <au-textbox placeholder=" "
+                          value.bind="data.MachineNumberOne"
+                          error.bind="error.MachineNumber"
+                          read-only.bind="readOnly"></au-textbox>
+            </div>
+            <div class="col-md-1">
+              <p style="display: inline-block;vertical-align: middle;line-height: normal;font-size: x-large; padding-left: 15px;"
+                 show.bind="longMachineNumber">
+                /</p>
+            </div>
+            <div class="col-md-2">
+              <au-textbox placeholder=" "
+                          value.bind="data.MachineNumberTwo"
+                          error.bind="error.MachineNumberTwo"
+                          read-only.bind="readOnly"
+                          show.bind="longMachineNumber"></au-textbox>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Jenis Mesin</p>
+            </div>
+            <div class="col-md-3">
+              <au-autocomplete placeholder="Jenis Mesin"
+                               value.bind="MachineType"
+                               error.bind="error.MachineTypeId"
+                               query.bind="MachineUnitFilter"
+                               read-only.bind="readOnly"
+                               loader.one-time="machineTypes"
+                               text="TypeName">
+              </au-autocomplete>
+            </div>
+          </div>
+
+          <div show.bind="showHideKawaMotoSuckerMuller">
+            <div class="row">
+              <div class="col-md-2">
+                <p style="white-space: nowrap;">Cut Mark</p>
+              </div>
+              <div class="col-md-3">
+                <au-numeric value.bind="data.Cutmark"
+                            error.bind="error.Cutmark"
+                            read-only.bind="readOnly">
+                </au-numeric>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2">
+                <p style="white-space: nowrap;">Satuan Cut Mark</p>
+              </div>
+              <div class="col-md-3">
+                <au-dropdown value.bind="data.CutmarkUom"
+                             error.bind="error.CutmarkUom"
+                             read-only.bind="readOnly"
+                             items.bind="uoms">
+                </au-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">RPM Standar</p>
+            </div>
+            <div class="col-md-3">
+              <au-numeric value.bind="data.Speed"
+                          error.bind="error.Speed"
+                          read-only.bind="true"></au-numeric>
+            </div>
+          </div>
+
+          <!-- <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Satuan</p>
+            </div>
+            <div class="col-md-3">
+              <au-textbox placeholder="No. Mesin"
+                          value.bind="data.MachineUnit"
+                          error.bind="error.MachineUnit"
+                          read-only.bind="true">
+              </au-textbox>
+            </div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Lokasi</p>
+            </div>
+            <div class="col-md-3">
+              <au-dropdown value.bind="data.Location"
+                           error.bind="error.Location"
+                           read-only.bind="readOnly"
+                           items.bind="locations"></au-dropdown>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Proses</p>
+            </div>
+            <div class="col-md-3">
+              <au-dropdown value.bind="data.Process"
+                           error.bind="error.Process"
+                           read-only.bind="readOnly"
+                           items.bind="process"></au-dropdown>
+            </div>
+          </div>
+
+          <div class="row" show.bind="isWeavingUnitValid">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Area</p>
+            </div>
+            <div class="col-md-3">
+              <au-dropdown value.bind="data.Area"
+                           error.bind="error.Area"
+                           read-only.bind="readOnly"
+                           items.bind="areas">
+              </au-dropdown>
+            </div>
+          </div>
+
+          <!-- <div class="row"
+               show.bind="isWeaving2">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Area</p>
+            </div>
+            <div class="col-md-3">
+              <au-dropdown value.bind="data.Weaving2Area"
+                           error.bind="error.Area"
+                           read-only.bind="readOnly"
+                           items.bind="weaving2Areas">
+              </au-dropdown>
+            </div>
+          </div> -->
+
+          <div class="row">
+            <div class="col-md-2">
+              <p style="white-space: nowrap;">Blok</p>
+            </div>
+            <div class="col-md-3">
+              <au-dropdown value.bind="data.Block"
+                           error.bind="error.Block"
+                           read-only.bind="readOnly"
+                           items.bind="blocks">
+              </au-dropdown>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+</template>

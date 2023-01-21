@@ -1,0 +1,45 @@
+<template>
+    <tr>
+        <!-- Proses -->
+        <td>
+            <au-textbox value.bind="data.Step.Process" error.bind="error.StepProcess" read-only.bind="true"
+                options.bind="controlOptions"></au-textbox>
+        </td>
+
+        <!-- Machine -->
+        <td>
+            <au-autocomplete placeholder="Cari Mesin" read-only.bind="readOnly" value.bind="selectedMachine" text="Name"
+                error.bind="error.Machine" loader.one-time="machineLoader" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+
+        <!-- Chemical -->
+        <td>
+            <au-numeric value.bind="chemicalCost" options.bind="controlOptions" read-only.bind="true"
+                error.bind="error.Chemical"></au-numeric>
+            <button click.delegate="chemicalAdd()" class="btn btn-success pull-right">+</button>
+            <button class="btn btn-info pull-right" click.delegate="chemicalToggle()">i</button>
+        </td>
+
+        <!-- Utility -->
+        <td>
+            <au-numeric value.bind="data.Utility" error.bind="error.Utility" options.bind="controlOptions"
+                read-only.bind="true"></au-numeric>
+            <button class="btn btn-info pull-right" click.delegate="utilityToggle()">i</button>
+        </td>
+
+        <!-- Depretiation -->
+        <td>
+            <au-numeric value.bind="data.Depretiation" error.bind="error.Depretiation" options.bind="controlOptions"
+                read-only.bind="true"></au-numeric>
+            <button class="btn btn-info pull-right" click.delegate="depretiationToggle()">i</button>
+        </td>
+
+        <!-- Total -->
+        <td>
+            <au-numeric value.bind="data.Total" error.bind="error.Total" options.bind="controlOptions"
+                read-only.bind="true"></au-numeric>
+        </td>
+
+    </tr>
+</template>

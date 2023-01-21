@@ -1,0 +1,21 @@
+<template>
+    <tr>
+
+
+        <td class="col-sm-9">
+            <au-textbox value.bind="data.unit.code" read-only.bind="true" error.bind="error.AdjustmentDescription"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-3">
+            <au-numeric value.bind="quantityPercentage" read-only.bind="true" options.bind="controlOptions"
+                error.bind="error.quantityPercentage" format="0.00">
+            </au-numeric>
+        </td>
+        <td class="col-sm-3">
+            <au-numeric value.one-way="amountPercentage" read-only.bind="true" options.bind="controlOptions"
+                error.bind="error.amountPercentage" format="0.00">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

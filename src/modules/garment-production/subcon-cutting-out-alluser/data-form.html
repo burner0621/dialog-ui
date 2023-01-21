@@ -1,0 +1,102 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox
+            if.bind="data.CutOutNo"
+            value.bind="data.CutOutNo"
+            label="No Cutting Out"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="selectedUnitFrom"
+            error.bind="error.UnitFrom"
+            label="Unit Asal"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedCuttingIn"
+            error.bind="error.RONo"
+            label="RO"
+            loader.bind="cuttingInLoader"
+            query.bind="cuttingInFilter"
+            text.bind="ROView"
+            show.bind="selectedUnitFrom"
+            placeholder="Nomor RO"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            view-model.ref="selectedCuttingInViewModel">
+        </au-autocomplete>
+
+        <au-numeric
+            value.bind="data.PlanPOQuantity"
+            show.bind="selectedCuttingIn"
+            read-only.bind="true"
+            options.bind="controlOptions"
+            format="0"
+            label="Jumlah Plan PO">
+        </au-numeric>
+
+        <au-numeric
+            label="Sisa Jumlah Plan PO"
+            value.bind="data.PlanPORemainingQuantity"
+            options.bind="controlOptions"
+            show.bind="selectedCuttingIn"
+            format="0"
+            read-only.bind="true">
+        </au-numeric>
+
+        <au-textbox
+            value.bind="data.Article"
+            label="No Artikel"
+            read-only="true"
+            if.bind="data.Article"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Comodity"
+            error.bind="error.Comodity"
+            label="Komoditi"
+            text.bind="comodityView"
+            read-only.bind="true"
+            if.bind="data.Comodity"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Cutting Out"
+            value.bind="data.CuttingOutDate"
+            error.bind="error.CuttingOutDate"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-datepicker>
+        
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+            <p if.bind="error.TotalQty" class="help-block text-center">${error.TotalQty}</p>
+        </div>
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="itemsInfo.columns"
+            read-only.bind="readOnly"
+            if.bind="data.Items"
+            options.bind="itemOptions"
+            header-template="modules/garment-production/subcon-cutting-out/template/item-header"
+            item-template="modules/garment-production/subcon-cutting-out/template/item">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

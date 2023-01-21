@@ -1,0 +1,17 @@
+<template>
+  <au-input-form title="Pengisian Nama Chart Of Accounts" with.bind="context" options.bind="formOptions">
+
+    <div class="row">
+      <div class="col-md-12">
+        <au-collection columns.bind="coaColumns" items.bind="data"
+          item-template="modules/accounting/revise-empty-chart-of-accounts/template/coa"
+          view-model.ref="ChartOfAccounts">
+        </au-collection>
+      </div>
+    </div>
+    <div class="btn-group pull-right">
+      <button class="btn btn-success" click.delegate="save($event)"
+        if.one-way="data.length > 0">${formOptions.saveText}</button>
+    </div>
+  </au-input-form>
+</template>

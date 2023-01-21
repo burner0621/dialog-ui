@@ -1,0 +1,9 @@
+<template>
+  <require from="./data-form"></require>
+  <data-form data.bind="data" error.bind="error" title="Buat Verifikasi VB"></data-form>
+  <div class="btn-group pull-right">
+    <a click.delegate="list()" class='btn btn-default btn-sm'>Kembali</a>
+    <a click.delegate="Submit()" class='btn btn-danger btn-sm'>Not Verified</a>
+    <a click.delegate="Submit('VerifiedAlert')" class='btn btn-primary btn-sm'>Verified</a>
+</div>
+</template>

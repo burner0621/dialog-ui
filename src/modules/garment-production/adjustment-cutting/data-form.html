@@ -1,0 +1,134 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-textbox
+            if.bind="data.AdjustmentNo"
+            value.bind="data.AdjustmentNo"
+            label="No Adjustment"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="selectedUnit"
+            error.bind="error.Unit"
+            label="Unit Adjustment"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedCutting"
+            error.bind="error.CutInNo"
+            label="No Cutting In"
+            loader.bind="cuttingLoader"
+            text="CutInNo"
+            show.bind="selectedUnit"
+            placeholder="Nomor Cutting In"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            query.bind="Filter"
+            view-model.ref="selectedCuttingViewModel">
+        </au-autocomplete>
+        
+        <au-textbox
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            label="RO"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.CuttingType"
+            label="Tipe Cutting"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.Article"
+            label="No Artikel"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tanggal Adjustment Cutting"
+            value.bind="data.AdjustmentDate"
+            error.bind="error.AdjustmentDate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker> 
+
+        <au-numeric
+            value.bind="data.TotalQuantity"
+            label="Jumlah Total Awal"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.TotalActualQuantity"
+            error.bind="error.TotalActualQuantity"
+            label="Jumlah Total Aktual"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.TotalFC"
+            label="FC Total Awal"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="dataFC"
+            if.bind="!readOnly"
+            label="FC Total Aktual"
+            error.bind="error.TotalActualFC"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.TotalActualFC"
+            if.bind="readOnly"
+            label="FC Total Aktual"
+            error.bind="error.TotalActualFC"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-multiline
+            value.bind="data.AdjustmentDesc"
+            label="Keterangan Adjustment"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+            <p if.bind="error.Price" class="help-block text-center">${error.Price}</p>
+        </div>
+
+        <au-collection
+            items.bind="data.Items"
+            errors.bind="error.Items"
+            columns.bind="detailsColumns"
+            read-only.bind="readOnly"
+            options.bind="itemOptions"
+            item-template="modules/garment-production/adjustment-cutting/template/item"
+            if.bind="selectedCutting">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

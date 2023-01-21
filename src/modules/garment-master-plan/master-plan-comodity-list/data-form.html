@@ -1,0 +1,29 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            
+        </div>
+
+        <au-textbox   
+            label="Kode Komoditi"
+            value.bind="data.code"
+            error.bind="error.code"
+            read-only.bind="readOnly"
+            option.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox   
+            label="Nama Komoditi"
+            value.bind="data.name"
+            error.bind="error.name"
+            read-only.bind="readOnly"
+            option.bind="controlOptions">
+        </au-textbox>
+
+
+    <!--<template replaceable part="actions"></template>-->
+    </au-input-form>
+</template>

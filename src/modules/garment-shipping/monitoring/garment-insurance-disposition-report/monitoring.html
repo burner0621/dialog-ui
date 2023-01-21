@@ -1,0 +1,124 @@
+<template>
+ <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Monitoring Disposisi Pembayaran Polis Asuransi</h1>
+    <form class="form-horizontal">
+        
+        <au-dropdown 
+                label="Jenis Polis Asuransi" 
+                value.bind="patype"
+                items.bind="PAType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-datepicker label="Tanggal Payment Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Payment Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+
+        <button click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak</button>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td align="center" rowspan="2">No</td>
+                    <td align="center" rowspan="2">No Disposisi</td>
+                    <td align="center" rowspan="2">Tgl Payment</td>
+                    <td align="center" rowspan="2">Nama Bank</td>
+                    <td align="center" rowspan="2">Jenis Polis</td>
+                    <td align="center" rowspan="2">Rate</td>
+                    <td align="center" rowspan="2">Kode Asuransi</td>
+                    <td align="center" rowspan="2">Nama Asuransi</td>
+                    <td align="center" rowspan="2">No Polis</td>
+                    <td align="center" rowspan="2">Tgl Polis</td>
+                    <td align="center" rowspan="2">No Invoice</td>
+                    <td align="center" rowspan="2">Kode Buyer</td>
+                    <td align="center" rowspan="2">Nama Buyer</td>
+                    <td align="center" rowspan="2">Kurs USD</td>
+                    <td align="center" rowspan="2">Amount</td>
+                    <td align="center" rowspan="2">Premi</td>                            
+                    <td align="center" colspan="5">Amount / Konfeksi</td>
+                </tr>
+                    <tr>
+                        <td align="center">C 1 A</td>
+                        <td align="center">C 1 B</td>
+                        <td align="center">C 2 A</td>         
+                        <td align="center">C 2 B</td>         
+                        <td align="center">C 2 C</td>                                                    
+                    </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.dispositionNo}</td>
+                        <td>${data.paymentDate}</td>
+                        <td>${data.bankName}</td>
+                        <td>${data.policyType}</td>
+                        <td class="text-right"><strong>${data.rate}</strong></td>
+                        <td>${data.insuranceCode}</td>
+                        <td>${data.insuranceName}</td>
+                        <td>${data.policyNo}</td>
+                        <td>${data.policyDate}</td>
+                        <td>${data.invoiceNo}</td>
+                        <td>${data.buyerCode}</td>
+                        <td>${data.buyerName}</td>
+                        <td class="text-right"><strong>${data.currencyRate}</strong></td>
+                        <td class="text-right"><strong>${data.amount}</strong></td>
+                        <td class="text-right"><strong>${data.premiAmount}</strong></td>
+                        <td class="text-right"><strong>${data.amountC1A}</strong></td>
+                        <td class="text-right"><strong>${data.amountC1B}</strong></td>
+                        <td class="text-right"><strong>${data.amountC2A}</strong></td>
+                        <td class="text-right"><strong>${data.amountC2B}</strong></td>
+                        <td class="text-right"><strong>${data.amountC2C}</strong></td>
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td class="text-center">JENIS POLIS :</td>
+                        <td colspan="4"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">.</td>
+                        <td class="text-center" colspan="3"><strong>SUB TOTAL</strong></td>
+                        <td class="text-center">.</td>
+                        <td class="text-center">.</td>
+                        <td class="text-right"><strong>${buyer.subTotal}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal1}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal2}</strong></td>                        
+                        <td class="text-right"><strong>${buyer.subTotal3}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal4}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal5}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal6}</strong></td>
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-center" colspan="8"><strong>G R A N D . . T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>${TotAmt}</strong></td>
+                        <td class="text-right"><strong>${TotPrm}</strong></td>
+                        <td class="text-right"><strong>${Tot1A}</strong></td>
+                        <td class="text-right"><strong>${Tot1B}</strong></td>                        
+                        <td class="text-right"><strong>${Tot2A}</strong></td>
+                        <td class="text-right"><strong>${Tot2B}</strong></td>
+                        <td class="text-right"><strong>${Tot2C}</strong></td>   
+                    </tr>
+            </tbody>
+        </table>
+         
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

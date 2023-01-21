@@ -1,0 +1,47 @@
+<template replace-part="inspectionMaterialProductionOrders">
+    <tr>
+
+        <td show.bind="isTransit">
+            <au-dropdown value.bind="data.remark" items.bind="remarks" read-only.bind="readOnly"
+                error.bind="error.Remark" options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.grade" items.bind="remarksGrade" read-only.bind="readOnly"
+                error.bind="error.Grade" options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+        <td show.bind="!isAval">
+            <au-numeric value.bind="data.balance" format="0.00" read-only.bind="readOnly" error.bind="error.Balance"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td show.bind="isAval">
+            <au-numeric value.bind="totalBalanceAval" format="0.00" read-only.bind="true" error.bind="error.Balance"
+                options.bind="controlOptions">
+            </au-numeric>
+            <au-textbox show.bind="false" value.bind="totalBalance" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+            <button show.bind="isAval" class="btn btn-info pull-right" click.delegate="toggle()">i</button>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    <tr if.bind="error.AvalItem">
+        <td colspan="12">
+            <au-textbox show.bind="error.AvalItem" read-only.bind="true" value.bind="error.AvalItem"
+                style="color: red;"></au-textbox>
+        </td>
+
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="14">
+            <au-collection columns.bind="avalColumns" items.bind="data.avalItems" add.bind="addAvalItemCallback"
+                remove.bind="avalRemove" read-only.bind="readOnly" errors.bind="error.AvalItems"
+                item-template="modules/packing-sku-inventory/im-area-output/template/avalItem" show.bind="isAval">
+            </au-collection>
+
+        </td>
+    </tr>
+</template>

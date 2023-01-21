@@ -1,0 +1,103 @@
+<template>
+    <h1 class="page-header">Laporan Rekap BUK Sample</h1>
+    <form class="form-horizontal">
+        <au-dropdown 
+              label="Kategori" 
+              value.bind="KtgrItem"
+              items.bind="KategoriItem"
+              options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-autocomplete 
+            label="Unit" 
+            value.bind="selectedUnit"  
+            read-only.bind="true"
+            options.bind="controlOptions" 
+            loader.bind="unitLoader" 
+            text.bind="unitView" 
+            placeholder="Unit">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Awal" 
+            value.bind="dateFrom">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tanggal Akhir" 
+            value.bind="dateTo">
+        </au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="xls()">Export To Excel</button>
+          </div>
+        <br>
+    <div class="table-responsive">  
+        <table class="table table-bordered table-hover" border="1" id="doReport">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>Kode Barang</td>
+                    <td>Nama Barang</td>
+                    <td>No PO</td>
+                    <td>Keterangan Barang</td>
+                    <td>No R/O</td>
+                    <td>Artikel</td>
+                    <td>Kode Buyer</td>
+                    <td>Untuk RO</td>
+                    <td>Untuk Artikel</td>
+                    <!--<td>Jenis</td>-->
+                    <td>Tujuan</td>
+                    <td>No. Bukti</td>
+                    <td>Tanggal</td>
+                    <td>Jumlah</td>
+                    <td>Satuan</td>
+                    <td>Jumlah Harga</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="IN of data">
+                    <td>${$index + 1}</td>
+                    <td>${IN.ProductCode}</td>
+                    <td>${IN.ProductName}</td>
+                    <td>${IN.POSerialNumber}</td>
+                    <td>${IN.ProductRemark}</td>
+                    <td>${IN.RONo}</td>
+                    <td>${IN.Article }</td>
+                    <td>${IN.BuyerCode}</td>
+                    <td>${IN.RONoDO}</td>
+                    <td>${IN.ArticleDO}</td>
+                    <!--<td>${IN.UnitDOType}</td>-->
+                    <td>${IN.UnitDestination}</td>
+                    <td>${IN.UENNo}</td>
+                    <td>${IN.ExpenditureDate | dateFormat:'DD MMMM YYYY' }</td>
+                    <td>${IN.Quantity}</td>
+                    <td>${IN.UomUnit}</td>
+                    <td>${IN.Total}</td>
+                    <!--<td>${SJ['Satuan Barang']}</td>-->
+                </tr>
+                <tr class="active">
+                    <td class="text-center" colspan="13"><strong>T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                    <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                    <td></td>
+                    <td class="text-right"><strong>${AmountTotal2}</strong></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+ 
+
+</template>

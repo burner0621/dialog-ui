@@ -1,0 +1,105 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+      <style>
+          table>tbody>tr>td {
+              white-space: pre;
+          }
+      </style>
+  
+      <h1 class="page-header">Monitoring Sewing</h1>
+  
+      <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="unit" 
+            label="Unit" 
+            loader.bind="unitLoader"
+            placeholder="Cari Nama Unit" 
+            read-only.bind="readOnly" 
+            text.bind="unitView"
+            options.bind="controlOptions">
+        </au-autocomplete>
+  
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+  
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+  
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+    <br>
+  </br>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" border="1" id="myTable">
+          <thead align="center">
+              <tr>
+                  <td>NO RO JOB</td>
+                  <td>ARTICLE</td>
+                  <td>KODE BUYER</td>
+                  <td>QTY ORDER</td>
+                  <td>STYLE</td>
+                  <td>HARGA (M)</td>
+                  <td >Saldo Awal WIP Sewing</td>
+                  <td >Sewing In (WIP Sewing)</td>
+                  <td >Sewing Out (WIP Finishing)</td>
+                  <td >Sewing In Transfer</td>
+                  <td >Sewing Out Tranfer WIP Sewing</td>
+                  <td >Sewing Out Transfer WIP Finishing</td>
+                  <td >Retur ke Cutting</td>
+                  <td >Adjs Sewing</td>
+                  <td >Saldo Akhir WIP Sewing</td>
+                  <td >Nominal Saldo Akhir WIP Sewing</td>
+              </tr>
+          </thead>
+   
+          <tbody>
+              <require from="../../../lib/number-format-value-converter"></require>
+              <tr repeat.for="item of data">
+                  <td class="text-center">${item.roJob}</td>
+                  <td class="text-center">${item.article}</td>
+                  <td class="text-center">${item.buyerCode}</td>
+                  <td class="text-right">${item.qtyOrder}</td>
+                  <td class="text-center">${item.style}</td>
+                  <td class="text-right">${item.prices}</td>
+                  <td class="text-right">${item._beginingBalanceSewingQty}</td>
+                  <td class="text-right">${item._qtySewingIn}</td>
+                  <td class="text-right">${item._qtySewingOut}</td>
+                  <td class="text-right">${item._qtySewingInTransfer}</td>
+                  <td class="text-right">${item._wipSewingOut}</td> 
+                  <td class="text-right">${item._wipFinishingOut}</td> 
+                  <td class="text-right">${item._qtySewingRetur}</td>
+                  <td class="text-right">${item._qtySewingAdj}</td>
+                  <td class="text-right">${item._endBalanceSewingQty}</td>
+                  <td class="text-right">${item._endBalanceSewingPrice}</td>
+              </tr>
+              <tr class="active">
+                <td class="text-center" colspan="6"><strong>T O T A L </strong></td>
+                <td class="text-right"><strong>${sumBeginingBalanceSewingQty}</strong></td>        
+                <td class="text-right"><strong>${sumSewingIn}</strong></td>
+                <td class="text-right"><strong>${sumSewingOut}</strong></td>
+                <td class="text-right"><strong>${sumSewingInTransfer}</strong></td>
+                <td class="text-right"><strong>${sumWIPSewingOut}</strong></td>
+                <td class="text-right"><strong>${sumWIPFinishingOut}</strong></td>
+                <td class="text-right"><strong>${sumSewingRetur}</strong></td>
+                <td class="text-right"><strong>${sumSewingAdj}</strong></td>
+                <td class="text-right"><strong>${sumEndBalanceSewingQty}</strong></td>
+                <td class="text-right"><strong>${sumEndBalanceSewingPrice}</strong></td>
+                 
+            </tr>
+          </tbody>
+      </table>
+  </div>
+  <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+    Tidak ada data.
+  </div>
+  <hr/>
+    </au-input-form>
+    <div class="row"></div>
+  </template>

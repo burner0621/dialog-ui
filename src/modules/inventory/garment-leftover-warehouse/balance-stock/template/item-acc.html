@@ -1,0 +1,45 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedUnit" error.bind="error.Unit" loader.bind="unitLoader"
+                read-only.bind="readOnly" placeholder="Unit" text="Code">
+            </au-autocomplete>
+        </td>
+
+        <td>
+            <au-autocomplete value.bind="selectedPONo" error.bind="error.PONo" loader.bind="poLoader"
+                read-only.bind="readOnly" placeholder="PONo" text.bind="poView" query.bind="filter">
+            </au-autocomplete>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.Product.Code" error.bind="error.Product" read-only="true">
+            </au-textbox>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.Product.Name" error.bind="error.Product" read-only="true">
+            </au-textbox>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.ProductRemark" error.bind="error.Product" read-only="true">
+            </au-textbox>
+        </td>
+
+        <td>
+            <au-numeric value.bind="data.Quantity" error.bind="error.Quantity" read-only.bind="readOnly" format="0.00">
+            </au-numeric>
+        </td>
+
+        <td>
+            <au-autocomplete value.bind="selectedUom" error.bind="error.Uom" loader.bind="uomLoader"
+                read-only.bind="readOnly" placeholder="Satuan" text="Unit">
+            </au-autocomplete>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

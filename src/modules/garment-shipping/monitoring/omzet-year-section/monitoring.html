@@ -1,0 +1,46 @@
+<template>
+    <require from="lib/number-format-value-converter"></require>
+    <h1 class="page-header">Report Omzet Per Tahun Per Seksi</h1>
+    <form class="form-horizontal">
+        <au-dropdown label="Tahun" value.bind="selectedYear" read-only.bind="readOnly" items.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset</button>
+            </div>
+        </div>
+
+        <button class='btn btn-primary' click.delegate="xls()">Cetak</button>
+        <div class="table-responsive" if.bind="data.sections && data.sections.length > 0">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>BULAN</th>
+                        <th repeat.for="unit of data.sections">${unit}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="table of data.tables">
+                        <td>${table.month}</td>
+                        <td class="text-right" repeat.for="unit of data.sections">${table.items[unit] | numberFormat:'0,000.00'}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="info">
+                        <td class="text-center">T O T A L</td>
+                        <td class="text-right" repeat.for="unit of data.sections">${data.totals[unit] | numberFormat:'0,000.00'}</td>
+                    </tr>
+                    <tr class="info">
+                        <td class="text-center">AVERAGE</td>
+                        <td class="text-right" repeat.for="unit of data.sections">${data.averages[unit] | numberFormat:'0,000.00'}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <hr />
+    </form>
+</template>

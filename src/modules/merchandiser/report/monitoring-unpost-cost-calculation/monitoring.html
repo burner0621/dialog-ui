@@ -1,0 +1,119 @@
+<template>
+    <h1 class="page-header">Monitoring Unpost Cost Calculation</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="selectedSection"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            placeholder="Cari Seksi"
+            text="Code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedROGarment"
+            label="Nomor RO"
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO"
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedPreSC"
+            label="No Sales Contract"
+            loader.bind="preSalesContractLoader"
+            placeholder="Cari No Sales Contract"
+            text="SCNo"
+            query.bind="preSalesContractFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedUnit"
+            label="Unit"
+            loader.bind="unitLoader"
+            placeholder="Cari Unit"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedUser"
+            label="User"
+            loader.bind="userLoader"
+            placeholder="Cari User"
+            text="username"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th width="5%"><label>Seksi</label></th>
+                        <th width="7%"><label>No RO</label></th>
+                        <th width="14%"><label>Artikel</label></th>
+                        <th width="10%"><label>No Sales Contract</label></th>
+                        <th width="7%"><label>Unit</label></th>
+                        <th width="5%"><label>Kuantitas</label></th>
+                        <th width="7%"><label>Tanggal Unpost</label></th>
+                        <th width="35%"><label>Alasan Unpost</label></th>
+                        <th width="10%"><label>User yang Unpost</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="14">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <template repeat.for="reasonIndex of (data.UnpostReasons.length || 1)">
+                            <tr>
+                                <template if.bind="reasonIndex == 0">
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.Section" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.RONo" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.Article" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.PreSCNo" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.Unit" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="center">
+                                        <au-textbox value.bind="data.Quantity" read-only="true"></au-textbox>
+                                    </td>
+                                </template>
+                                <td align="center">
+                                    <au-datepicker value.bind="data.UnpostReasons[reasonIndex].Date" read-only="true"></au-datepicker>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.UnpostReasons[reasonIndex].Reason" read-only="true"></au-textbox>
+                                </td>
+                                <td>
+                                    <au-textbox value.bind="data.UnpostReasons[reasonIndex].Creator" read-only="true"></au-textbox>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <hr/>
+    </form>
+</template>

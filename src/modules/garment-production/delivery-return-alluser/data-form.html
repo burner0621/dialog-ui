@@ -1,0 +1,111 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <!-- <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div> -->
+
+        <au-textbox
+            label="No. Retur Proses"
+            value.bind="data.DRNo"
+            read-only="true"
+            if.bind="data.DRNo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown
+            label="Jenis Pengembalian"
+            value.bind="data.ReturnType"
+            error.bind="error.ReturnType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="returnTypes"
+            options.bind="controlOptions"
+            change.delegate="returnTypeChanged($event)">
+        </au-dropdown>
+
+        <au-autocomplete
+            value.bind="Unit"
+            error.bind="error.Unit"
+            label="Unit"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="UnitViewModel">
+        </au-autocomplete>
+        
+        <au-autocomplete
+            value.bind="Storages"
+            error.bind="error.Storage"
+            label="Gudang"
+            loader.bind="storageLoader"
+            text.bind="storageView"
+            placeholder="Gudang"
+            query.bind="filterByUnit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="StoragesViewModel">
+        </au-autocomplete>
+
+        <au-autocomplete
+            value.bind="selectedUnitDO"
+            error.bind="error.UnitDONo"
+            label="No Unit DO"
+            loader.bind="unitDOLoader"
+            text="UnitDONo"
+            placeholder="No Unit DO"
+            query.bind="filterDO"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions"
+            view-model.ref="selectedUnitDOViewModel">
+        </au-autocomplete>
+
+        <au-textbox
+            label="RO"
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            if.bind="data.RONo"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Artikel"
+            value.bind="data.Article"
+            error.bind="error.Article"
+            if.bind="data.Article"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker
+            label="Tanggal Pengembalian"
+            value.bind="data.ReturnDate"
+            error.bind="error.ReturnDate"
+            if.bind="data.ReturnDate"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-layout error.bind="error.Item" if.bind="error.Item"></au-layout>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsInfo.columns" 
+            options.bind="itemOptions"
+            if.bind="data.RONo"
+            read-only.bind="readOnly"
+            header-template="modules/garment-production/delivery-return/template/item-header"
+            item-template="modules/garment-production/delivery-return/template/item"
+            >
+        </au-collection>
+    </au-input-form>
+</template>

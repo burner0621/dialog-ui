@@ -1,0 +1,89 @@
+<template replace-part="packagingProductionOrders">
+    <tr>
+        <td>
+            <au-textbox value.bind="data.buyer" read-only.bind="true" error.bind="error.Buyer"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <!-- <td>
+            <au-autocomplete value.bind="selectedProductionOrder" error.bind="error.ProductionOrder"
+                loader.bind="productionOrderList" text="productionOrderNo" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-autocomplete>
+        </td> -->
+        <td>
+            <au-numeric value.bind="data.qtyOrder" format="0.00" read-only.bind="true" error.bind="error.QtyOrder"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+
+        <td>
+            <au-textbox value.bind="data.unit" read-only.bind="true" error.bind="error.Unit"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.construction" read-only.bind="true" error.bind="error.Construction"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.color" read-only.bind="true" error.bind="error.Color"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.motif" read-only.bind="true" error.bind="error.Motif"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.packagingType" items.bind="packType" read-only.bind="readOnly" error.bind="error.PackagingType"
+                options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-textbox value.bind="data.grade" read-only.bind="true" error.bind="error.Grade"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="inputPackagingQTY" format="0.00" read-only.bind="readOnly" error.bind="error.PackagingQty" change.delegate="inputPackagingQTYChanged"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.packagingUnit" items.bind="packUnit" read-only.bind="readOnly" error.bind="error.PackagingUnit"
+                options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-textbox value.bind="data.uomUnit" read-only.bind="true" error.bind="error.UomUnit"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.balanceRemains" format="0.00" read-only.bind="true" error.bind="error.BalanceRemains"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+                <au-numeric value.bind="saldoPerPackaging" format="0.00" read-only.bind="readOnly" error.bind="error.SaldoPerPackaging" change.delegate="saldoPerPackagingChanged"
+                    options.bind="controlOptions">
+                </au-numeric>
+            </td>
+        <td>
+            <au-numeric value.bind="data.qtyOut" format="0.00" read-only.bind="true" error.bind="error.QtyOut"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+                <au-textbox value.bind="data.keterangan" read-only.bind="readOnly" error.bind="error.Keterangan"
+                    options.bind="controlOptions">
+                </au-textbox>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+
+    </tr>
+</template>

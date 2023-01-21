@@ -1,0 +1,16 @@
+<template>
+    <form class="form-horizontal">
+        <fieldset>
+            <textbox                label="No. PR"              value.bind="data.no"                    error.bind="error.no"                       read-only="true"></textbox>
+            <datepicker             label="Tgl. PR"             value.bind="data.date"                  error.bind="error.date"                     read-only.bind="readOnly"></datepicker>
+            <datepicker             label="Tgl. Diminta Datang" value.bind="data.expectedDeliveryDate"  error.bind="error.expectedDeliveryDate"     read-only.bind="(readOnly)"></datepicker>
+            <budget-auto-suggest    label="Budget"              value.bind="data.budget"                error.bind="error.budget"                   read-only.bind="(readOnly)"   change.delegate="budgetChanged($event)"></budget-auto-suggest>
+            <unit-auto-suggest      label="Unit"                value.bind="data.unit"                  error.bind="error.unit"                     read-only.bind="(readOnly)"   change.delegate="unitChanged($event)"></unit-auto-suggest>
+            <category-auto-suggest  label="Kategori"            value.bind="data.category"              error.bind="error.category"                 read-only.bind="(readOnly)"   change.delegate="categoryChanged($event)"></category-auto-suggest>
+        </fieldset>
+        <hr />
+        <multiline  label="Keterangan"  value.bind="data.remark"    error.bind="error.remark"   read-only.bind="readOnly"></multiline>
+        <hr />
+        <purchase-request-item-collection     value.bind="data.items"     error.bind="error.items"    read-only.bind="readOnly" ></purchase-request-item-collection>
+    </form>
+</template>

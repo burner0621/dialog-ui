@@ -1,0 +1,34 @@
+<template>
+    <tr>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.SizeBreakdownIndex + 1" options.bind="controlOptions" read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-md-2">
+            <!-- <au-autocomplete placeholder="Cari Warna" value.bind="data.Color" error.bind="error.Color" options.bind="controlOptions"
+                loader.one-time="colorLoader" text="Name" read-only.bind="readOnly"></au-autocomplete> -->
+            <au-textbox
+                placeholder="Isi Warna"
+                value.bind="data.Color.Name"
+                error.bind="error.Color"
+                options.bind="controlOptions"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td class="col-md-${readOnly ? 9 : 8}">
+            <au-collection items.bind="data.RO_Garment_SizeBreakdown_Details" 
+                columns.bind="RO_Garment_SizeBreakdown_DetailsInfo.columns"
+                errors.bind="error.SizeBreakdownDetails"
+                add.bind="RO_Garment_SizeBreakdown_DetailsInfo.onAdd" 
+                remove.bind="RO_Garment_SizeBreakdown_DetailsInfo.onRemove" 
+                options.bind="RO_Garment_SizeBreakdown_DetailsInfo.options"
+                item-template="modules/merchandiser/ro-garment/template/ro-garment-sizebreakdown-detail" footer-template="modules/merchandiser/ro-garment/template/ro-garment-sizebreakdown-detail-footer"
+                read-only.bind="readOnly">
+            </au-collection>
+            <span show.bind="shown">${total}</span>
+        </td>
+        <td class="col-md-1" if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

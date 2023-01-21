@@ -1,0 +1,582 @@
+<template>
+
+  <style>
+    .tab {
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      border-bottom: 6px solid #ccc;
+    }
+
+    .tab:hover {
+      background-color: #ddd;
+    }
+
+    .tab.active {
+      border-color: #173250 !important;
+    }
+
+    .context-menu {
+      cursor: context-menu;
+    }
+
+  </style>
+  <template if.bind="accessCount > 1">
+    <div class="row">
+      <template repeat.for="role of roles">
+        <div if.bind="role.hasPermission"
+             class="col-sm-${accessCount === 3 ? 4 : 6} tab ${activeRole.key === role.key ? 'active' : ''} context-menu"
+             >
+          ${role.label}
+        </div>
+      </template>
+    </div>
+    <br>
+  </template>
+
+  <h1 class="page-header">Buat DO Penjualan</h1>
+  <!-- <require from="./data-form" bind="role"></require> -->
+
+  <au-input-form title.bind="title"
+                 with.bind="context">
+    <div class="row">
+      <div class="col-md-12"
+           style="padding:0">
+
+        <!-- DO template -->
+        <div class="col-md-10"
+             style="padding:0">
+          <au-textbox label="No. DO Penjualan"
+                      value.bind="data.DOSalesNo"
+                      error.bind="error.DOSalesNo"
+                      if.bind="readOnly || isEdit"
+                      read-only.bind="true">
+          </au-textbox>
+
+          <au-dropdown show.bind="data.DOSalesType == ''"
+                       label="Tipe DO Penjualan"
+                       value.bind="data.DOSalesType"
+                       items.bind="doSalesTypeOptions"
+                       if.bind="code"
+                       error.bind="error.DOSalesType"
+                       read-only.bind="readOnly || isEdit">
+          </au-dropdown>
+
+          <au-dropdown show.bind="data.DOSalesType == ''"
+                       label="Tipe DO Penjualan"
+                       value.bind="data.DOSalesType"
+                       items.bind="doSalesTypeOptions"
+                       if.bind="code1"
+                       error.bind="error.DOSalesType"
+                       read-only.bind="readOnly || isEdit">
+          </au-dropdown>
+
+          <au-dropdown show.bind="data.DOSalesType == ''"
+                       label="Tipe DO Penjualan"
+                       value.bind="data.DOSalesType"
+                       items.bind="doSalesDyeingTypeOptions"
+                       if.bind="code2"
+                       error.bind="error.DOSalesType"
+                       read-only.bind="readOnly || isEdit">
+          </au-dropdown>
+        </div>
+
+        <!-- Lokal -->
+        <div class="col-md-10"
+             style="padding:0"
+             if.bind="data.DOSalesType =='Lokal'">
+          <div class="row"
+               style="padding-left:14.8%">
+            <div class="col-md-6">
+              <au-dropdown if.bind="code"
+                           label="Seri DO Lokal"
+                           value.bind="data.Type"
+                           items.bind="doSalesSpinningLocalOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code1"
+                           label="Seri DO Lokal"
+                           value.bind="data.Type"
+                           items.bind="doSalesWeavingLocalOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code2"
+                           label="Seri DO Lokal"
+                           value.bind="data.Type"
+                           items.bind="doSalesDyeingLocalOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-datepicker label="Tanggal"
+                             value.bind="data.Date"
+                             error.bind="error.Date"
+                             read-only.bind="readOnly">
+              </au-datepicker>
+
+              <au-autocomplete if.bind="code" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="SalesContractSpinningLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-autocomplete if.bind="code1" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="SalesContractWeavingLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-autocomplete if.bind="code2" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="salesContractLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-textbox label="Buyer"
+                          value.bind="data.Buyer.Name"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Alamat"
+                          value.bind="data.Buyer.Address"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Dikirm Kepada"
+                          value.bind="data.DestinationBuyerName"
+                          error.bind="error.DestinationBuyerName"
+                          read-only.bind="readOnly"
+                          placeholder="Input Buyer Tujuan"
+                          keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-textbox label="Alamat Tujuan"
+                          value.bind="data.DestinationBuyerAddress"
+                          error.bind="error.DestinationBuyerAddress"
+                          read-only.bind="readOnly"
+                          placeholder="Input Alamat Tujuan"
+                          keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-textbox label="Nama Sales"
+                          value.bind="data.SalesName"
+                          error.bind="error.SalesName"
+                          read-only.bind="readOnly"
+                          placeholder="Input Nama Sales"
+                          keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+            </div>
+
+            <div class="col-md-6">
+              <au-textbox label="Kepala Gudang"
+                          value.bind="data.HeadOfStorage"
+                          error.bind="error.HeadOfStorage"
+                          read-only.bind="readOnly"
+                          placeholder="Input Kepala Gudang"
+                          keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-autocomplete label="Gudang"
+                               value.bind="data.Storage"
+                               read-only.bind="readOnly"
+                               error.bind="error.Storage"
+                               loader.one-time="storageLoader"
+                               text.bind="storageView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih Gudang"
+                               options.bind="controlOptions"
+                               if.bind="code">
+              </au-autocomplete>
+
+              <au-autocomplete label="Gudang"
+                               value.bind="data.Storage"
+                               read-only.bind="readOnly"
+                               error.bind="error.Storage"
+                               loader.one-time="storageLoader"
+                               text.bind="storageView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih Gudang"
+                               options.bind="controlOptions"
+                               if.bind="code1">
+              </au-autocomplete>
+
+              <au-dropdown if.bind="code"
+                           label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Packing">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code1"
+                           label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomWeavingOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Packing">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code2"
+                           label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomDyeingOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Berat">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code"
+                           show.bind="selectedSalesContract"
+                           label="Satuan Berat"
+                           value.bind="WeightUom"
+                           items.bind="weightUomOptions"
+                           error.bind="error.WeightUom"
+                           read-only.bind="readOnly  || isEdit"
+                           placeholder="Pilih Satuan Berat">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code2 || code1"
+                           show.bind="selectedSalesContract"
+                           label="Satuan Panjang"
+                           value.bind="LengthUom"
+                           items.bind="lengthUomOptions"
+                           error.bind="error.LengthUom"
+                           read-only.bind="readOnly  || isEdit"
+                           placeholder="Pilih Satuan Panjang">
+              </au-dropdown>
+
+              <div class="row">
+                <div class="col-sm-6"
+                     style="padding-left:20%">
+                  <au-numeric label="Disp"
+                              value.bind="disp"
+                              error.bind="error.Disp"
+                              read-only.bind="readOnly"
+                              placeholder="Input Disp"
+                              keypress.delegate="enterDelegate($event)"
+                              format="0,0">
+                  </au-numeric>
+                </div>
+                <div class="col-sm-6"
+                     style="padding-left:15%">
+                  <au-numeric label="Op/Fo"
+                              value.bind="op"
+                              error.bind="error.Op"
+                              read-only.bind="readOnly"
+                              placeholder="Input Op"
+                              keypress.delegate="enterDelegate($event)"
+                              format="0,0">
+                  </au-numeric>
+                </div>
+                <div class="col-sm-6"
+                     style="padding-left:20%">
+                  <au-numeric if.bind="code2" 
+                              label="Sc"
+                              value.bind="sc"
+                              error.bind="error.Sc"
+                              read-only.bind="readOnly"
+                              placeholder="Input Sc"
+                              keypress.delegate="enterDelegate($event)"
+                              format="0,0">
+                  </au-numeric>
+                </div>
+              </div>
+
+              <au-multiline label="Catatan"
+                            value.bind="data.Remark"
+                            error.bind="error.Remark"
+                            read-only.bind="readOnly"
+                            keypress.delegate="enterDelegate($event)"
+                            placeholder="Input Catatan">
+              </au-multiline>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ekspor -->
+        <div class="col-md-10"
+             style="padding:0"
+             if.bind="data.DOSalesType =='Ekspor'">
+          <div class="row"
+               style="padding-left:14.8%">
+
+            <div class="col-md-6">
+              <au-dropdown if.bind="code"
+                           label="Seri DO Ekspor"
+                           value.bind="data.Type"
+                           items.bind="doSalesSpinningExportOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code1"
+                           label="Seri DO Ekspor"
+                           value.bind="data.Type"
+                           items.bind="doSalesWeavingExportOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code2"
+                           label="Seri DO Ekspor"
+                           value.bind="data.Type"
+                           items.bind="doSalesDyeingExportOptions"
+                           error.bind="error.Type"
+                           read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-datepicker label="Tanggal"
+                             value.bind="data.Date"
+                             error.bind="error.Date"
+                             read-only.bind="readOnly">
+              </au-datepicker>
+
+              <au-textbox label="Dikerjakan Oleh"
+                          value.bind="data.DoneBy"
+                          error.bind="error.DoneBy"
+                          read-only.bind="readOnly"
+                          placeholder="Input Dikerjakan Oleh"
+                          keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-autocomplete if.bind="code" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="SalesContractSpinningLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-autocomplete if.bind="code1" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="SalesContractWeavingLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-autocomplete if.bind="code2" label="No. Sales Contract"
+                               value.bind="selectedSalesContract"
+                               read-only.bind="readOnly || isEdit"
+                               error.bind="error.SalesContract"
+                               loader.one-time="salesContractLoader"
+                               text.bind="salesContractNoView"
+                               keypress.delegate="enterDelegate($event)"
+                               placeholder=" Pilih No. Sales Contract">
+              </au-autocomplete>
+
+              <au-textbox label="Order Untuk"
+                          value.bind="selectedSalesContract.MaterialConstruction.Name"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Buyer"
+                          value.bind="selectedSalesContract.Buyer.Name"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Panjang Satuan"
+                          value.bind="selectedSalesContract.PieceLength"
+                          read-only.bind="true">
+              </au-textbox>
+            </div>
+
+            <div class="col-md-6">
+
+              <au-textbox label="Cap Komposisi Persen"
+                          value.bind="selectedSalesContract.Commodity.Name"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Jumlah Order"
+                          value.bind="selectedSalesContract.OrderQuantity"
+                          read-only.bind="true">
+              </au-textbox>
+
+              <au-dropdown label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Packing"
+                           if.bind="code">
+              </au-dropdown>
+
+              <au-dropdown label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomWeavingOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Packing"
+                           if.bind="code1">
+              </au-dropdown>
+
+              <au-dropdown label="Satuan Packing"
+                           value.bind="data.PackingUom"
+                           items.bind="packingUomDyeingExportOptions"
+                           error.bind="error.PackingUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Packing"
+                           if.bind="code2">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code || code1"
+                           show.bind="selectedSalesContract"
+                           label="Satuan Berat"
+                           value.bind="WeightUom"
+                           items.bind="weightUomOptions"
+                           error.bind="error.WeightUom"
+                           read-only.bind="readOnly  || isEdit"
+                           placeholder="Pilih Satuan Berat">
+              </au-dropdown>
+
+              <au-dropdown if.bind="code2"
+                           show.bind="selectedSalesContract"
+                           label="Satuan Panjang"
+                           value.bind="LengthUom"
+                           items.bind="lengthUomOptions"
+                           error.bind="error.LengthUom"
+                           read-only.bind="readOnly  || isEdit"
+                           placeholder="Pilih Satuan Panjang">
+              </au-dropdown>
+
+              <au-numeric label="Isi tiap Bale"
+                          value.bind="fillEachBale"
+                          error.bind="error.FillEachBale"
+                          read-only.bind="readOnly"
+                          placeholder="Input Isi tiap Bale"
+                          keypress.delegate="enterDelegate($event)"
+                          format="0,0">
+              </au-numeric>
+
+              <au-dropdown label="Satuan Bale"
+                           value.bind="data.BaleUom"
+                           items.bind="baleUomDyeingOptions"
+                           error.bind="error.BaleUom"
+                           read-only.bind="readOnly"
+                           placeholder="Pilih Satuan Bale"
+                           if.bind="code2">
+              </au-dropdown>
+
+              <au-multiline label="Catatan"
+                            value.bind="data.Remark"
+                            read-only.bind="readOnly"
+                            keypress.delegate="enterDelegate($event)"
+                            placeholder="Input Catatan">
+              </au-multiline>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <au-textbox show.bind="ItemsCollection"
+                error.bind="error.DetailItem"
+                read-only.bind="true"></au-textbox>
+
+    <au-collection if.bind="data.DOSalesType=='Lokal' && LengthUom && code2"
+                   columns.bind="doSalesLocalItemsInfo.columns"
+                   add.bind="doSalesLocalItemsInfo.onAdd"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   remove.bind="doSalesLocalItemsInfo.onRemove"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/local-item"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+
+    <au-collection if.bind="data.DOSalesType=='Lokal' && WeightUom && code"
+                   columns.bind="doSalesLocalSpinningItemsInfo.columns"
+                   add.bind="doSalesLocalSpinningItemsInfo.onAdd"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   remove.bind="doSalesLocalSpinningItemsInfo.onRemove"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/local-item-spinning"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+
+    <au-collection if.bind="data.DOSalesType=='Lokal' && LengthUom && code1"
+                   columns.bind="doSalesLocalWeavingItemsInfo.columns"
+                   add.bind="doSalesLocalWeavingItemsInfo.onAdd"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   remove.bind="doSalesLocalWeavingItemsInfo.onRemove"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/local-item-weaving"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+<!-- ============================================================ -->
+    <au-collection if.bind="data.DOSalesType=='Ekspor' && LengthUom && code2"
+                   columns.bind="doSalesExportItemsInfo.columns"
+                   add.bind="doSalesExportItemsInfo.onAdd"
+                   remove.bind="doSalesExportItemsInfo.onRemove"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/export-item"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+    
+    <au-collection if.bind="data.DOSalesType=='Ekspor' && WeightUom && code"
+                   columns.bind="doSalesExportItemsSpinningInfo.columns"
+                   add.bind="doSalesExportItemsSpinningInfo.onAdd"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/export-item-spinning"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+
+    <au-collection if.bind="data.DOSalesType=='Ekspor' && WeightUom && code1"
+                   columns.bind="doSalesExportItemsWeavingInfo.columns"
+                   add.bind="doSalesExportItemsWeavingInfo.onAdd"
+                   items.bind="data.DOSalesDetailItems"
+                   errors.one-way="error.DOSalesDetailItems"
+                   read-only.bind="readOnly"
+                   options.bind="detailOptions"
+                   item-template="modules/sales/do-sales/template/export-item-weaving"
+                   view-model.ref="ItemsCollection">
+    </au-collection>
+
+  </au-input-form>
+
+  <block>
+    <data-form data.bind="data"
+               error.bind="error"></data-form>
+    <hr />
+    <div class="btn-group pull-right">
+      <button class="btn btn-default"
+              click.delegate="back()">Kembali</button>
+      <button class="btn btn-success"
+              click.delegate="save()">Simpan</button>
+    </div>
+  </block>
+</template>

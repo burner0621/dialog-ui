@@ -1,0 +1,36 @@
+<template>
+    <tr>
+        <td class="col-sm-5">
+            <au-autocomplete
+                value.bind="selectedProduct"
+                error.bind="error.Product"
+                loader.bind="productLoader"
+                read-only.bind="readOnly"
+                placeholder="kode barang"
+                text.bind = "productView"
+                query.bind= "filter">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-5">
+            <au-numeric
+                value.bind="data.Quantity"
+                error.bind="error.Quantity"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="col-sm-5">
+            <au-autocomplete
+                value.bind="selectedUom"
+                error.bind="error.Uom"
+                loader.bind="uomLoader"
+                read-only.bind="readOnly"
+                placeholder="Satuan"
+                text.bind = "uomView">
+            </au-autocomplete>
+        </td>
+        <td if.bind="isCreate">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+     </tr>
+</template>
+

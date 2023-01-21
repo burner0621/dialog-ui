@@ -1,0 +1,34 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div class="col-md-12">
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2">
+                    <textbox label="Nama Shift" read-only="true"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <au-textbox placeholder="Nama Shift" value.bind="data.Name" error.bind="error.Name"
+                        read-only.bind="readOnly">
+                    </au-textbox>
+                </div>
+            </div>
+
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2" style="text-align:left;">
+                    <textbox label="Waktu Mulai" read-only="true" style="display: inline-block"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <input value.bind="data.StartTime" type="time" error.bind="error.StartTime" read-only.bind="readOnly">
+                </div>
+            </div>
+
+            <div class="row" style="white-space: nowrap;">
+                <div class="col-md-2" style="text-align:left;">
+                    <textbox label="Waktu Selesai" read-only="true" style="display: inline-block"></textbox>
+                </div>
+                <div class="col-md-2">
+                    <input value.bind="data.EndTime" type="time" error.bind="error.EndTime" read-only.bind="readOnly">
+                </div>
+            </div>
+        </div>
+    </au-input-form>
+</template>

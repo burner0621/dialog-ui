@@ -1,0 +1,155 @@
+<template>
+  <h1 class="page-header">Daftar Laporan Size Pickup</h1>
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      
+      <au-dropdown label="Periode"
+       value.bind="Period" 
+       items.bind="periods" 
+       error.bind="error.Period"
+       read-only.bind="readOnly" 
+       options.bind="controlOptions"
+      ></au-dropdown>
+    
+    </div>
+  </div>
+
+  <div class="row" show.bind="ShowHideByDatePeriod">
+    
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-datepicker label="Tanggal Produksi"
+       value.bind="DatePeriod" 
+       error.bind="error.DatePeriod"
+       read-only.bind="readOnly"
+       options.bind="startPeriodOptions"
+      ></au-datepicker>
+    </div>
+  
+  </div>
+
+  <div class="row" show.bind="ShowHideByDateRangePeriod">
+    
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-datepicker label="Rekap"
+       value.bind="StartDatePeriod"
+       error.bind="error.StartDatePeriod"
+       read-only.bind="readOnly"
+       options.bind="startPeriodOptions"
+      ></au-datepicker>
+    </div>
+
+    <div class="col-md-1" 
+     style="white-space: nowrap; padding-top: 20px;">
+      <p>s.d</p>
+    </div>
+
+    <div class="col-md-4" style="white-space: nowrap;">
+      
+      <au-datepicker value.bind="EndDatePeriod"
+       error.bind="error.EndDatePeriod" 
+       read-only.bind="readOnly"
+       options.bind="endPeriodOptions"
+      ></au-datepicker>
+    
+    </div>
+  </div>
+
+  <div class="row" show.bind="ShowHideMonthlyPeriod">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-dropdown label="Bulan"
+       value.bind="MonthlyPeriod" 
+       error.bind="error.MonthlyPeriod" 
+       read-only.bind="readOnly"
+       items.bind="months" 
+       options.bind="controlOptions">
+      </au-dropdown>
+    </div>
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-dropdown label="Tahun"
+       value.bind="Year" 
+       error.bind="error.Year" 
+       read-only.bind="readOnly"
+       items.bind="years" 
+       options.bind="controlOptions">
+      </au-dropdown>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-autocomplete label="Shift"
+       value.bind="Shift" 
+       error.bind="error.Period" 
+       read-only.bind="readOnly"
+       loader.bind="shifts" 
+       text="Name" 
+       options.bind="controlOptions"
+      ></au-autocomplete>
+      <!-- <au-dropdown label="Shift"
+       value.bind="selectedShift" 
+       error.bind="error.Period" 
+       read-only.bind="readOnly"
+       items.bind="shifts" 
+       options.bind="controlOptions">
+      </au-dropdown> -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-autocomplete label="Unit Weaving"
+       value.bind="WeavingUnit" 
+       error.bind="error.WeavingUnit"
+       read-only.bind="readOnly" 
+       loader.bind="units" 
+       text="Name"
+       options.bind="controlOptions"
+      ></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" style="white-space: nowrap;">
+      <au-dropdown label="SPU"
+       value.bind="SPU" 
+       error.bind="error.SPU"
+       read-only.bind="readOnly" 
+       items.bind="pickups"
+       options.bind="controlOptions"
+      ></au-dropdown>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+
+      <button class="btn btn-primary"
+       click.delegate="exportToExcel()"
+       style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+        Print Laporan
+      </button>
+
+      <button class="btn btn-success" 
+       click.delegate="searchDailyOperations()"
+       style="margin-bottom: 8px; white-space: nowrap; width: 56px; border: 1px solid #777777;">
+        Cari
+      </button>
+
+      <button class="btn btn-success" 
+       click.delegate="reset()"
+       style="margin-bottom: 8px; white-space: nowrap; width: 96px; border: 1px solid #777777;">
+        Atur Ulang
+      </button>
+
+    </div>
+  
+  </div>
+  
+  <au-table style="white-space: nowrap; margin-top: 26px;" 
+   data.bind="loader" 
+   columns.bind="columns"
+   sortable.bind="true" view-model.ref="sizePickupsTable" 
+   page-size="25" options.bind="tableOptions"
+   context.bind="context"
+  ></au-table>
+</template>

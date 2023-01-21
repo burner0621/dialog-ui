@@ -1,0 +1,50 @@
+<template>
+  <tr>
+    <td>
+      <div class="col-sm-11">
+        <au-autocomplete value.bind="selectedPurchaseOrder"
+                         error.bind="error.purchaseOrder"
+                         loader.bind="purchaseOrderLoader"
+                         text="no"
+                         placeholder="cari nomor purchase order"
+                         read-only.bind="options.readOnly"
+                         options.bind="controlOptions"
+                         query.bind="filter">
+        </au-autocomplete>
+      </div>
+      <!-- <div class="col-sm-1">
+              
+          </div> -->
+    </td>
+    <td>
+      <div class="col-sm-11">
+        <au-textbox value.bind="data.PurchaseOrderExternal ? data.PurchaseOrderExternal.unit.name : ''"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+      </div>
+    </td>
+    <td>
+      <div class="col-sm-13">
+        <button class="btn btn-info pull-left"
+                if.bind="data.PurchaseOrderExternal && data.PurchaseOrderExternal.items"
+                click.delegate="toggle()">i</button>
+        <button class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)"
+                if.bind="!options.readOnly">-</button>
+      </div>
+    </td>
+  </tr>
+  <tr show.bind="isShowing">
+    <td colspan="2">
+      <au-collection items.bind="data.PurchaseOrderExternal.items"
+                     columns.bind="itemsColumns"
+                     options.bind="contextOptions"
+                     read-only.bind="options.readOnly"
+                     header-template="modules/purchasing/vb-with-po-request/template/vb-with-po-request-item-header"
+                     item-template="modules/purchasing/vb-with-po-request/template/new-vb-with-po-request-int-item">
+      </au-collection>
+    </td>
+  </tr>
+  <!-- Total Harga PO : ${getTotalPaid} ${selectedCurrency.Code} -->
+</template>

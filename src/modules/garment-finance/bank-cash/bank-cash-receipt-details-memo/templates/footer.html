@@ -1,0 +1,27 @@
+<template>
+    <tr>
+      <td colspan="5" class="text-right" style="padding-right:10%">
+        Total
+      </td>
+      <td width="15%" colspan="1">
+        <au-numeric 
+            value.bind="amountSum" 
+            error.bind="item.error" 
+            read-only.bind="true" 
+            options.bind="controlOption">
+        </au-numeric>
+      </td>
+      
+      <td width="15%" colspan="1">
+        <au-numeric 
+            value.bind="idrSum" 
+            error.bind="item.error" 
+            read-only.bind="true" 
+            options.bind="controlOption">
+        </au-numeric>
+      </td>
+      <td colspan="2" class="text-right" style="padding-right:10%">
+      </td>
+    </tr>
+    </template>
+    

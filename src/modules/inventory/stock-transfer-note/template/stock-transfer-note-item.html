@@ -1,0 +1,34 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="summary" 
+                error.bind="error.SummaryId"
+                loader.one-time="inventorySummaryLoader"
+                read-only.bind="readOnly"
+                text="productName"
+                query.bind="options.filter">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.Summary.quantity"
+                read-only.bind="true" />
+        </td>
+        <td class="col-sm-2">
+            <au-textbox
+                value.bind="data.Summary.uom"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.TransferedQuantity"
+                error.bind="error.TransferedQuantity"
+                read-only.bind="readOnly" />
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+        </td>
+    </tr>
+</template>

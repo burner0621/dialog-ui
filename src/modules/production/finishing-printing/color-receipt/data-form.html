@@ -1,0 +1,49 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+
+        <au-textbox label="Kode Warna" error.bind="error.ColorCode" value.bind="data.ColorCode" read-only.bind="true"
+            show.bind="isEdit" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Nama Warna" error.bind="error.ColorName" value.bind="data.ColorName"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown options.bind="controlOptions" label="Jenis" value.bind="type" error.bind="error.Type"
+            read-only.bind="readOnly" items.bind="types"></au-dropdown>
+
+        <au-dropdown options.bind="controlOptions" label="Kain" value.bind="data.Cloth" error.bind="error.Cloth"
+            read-only.bind="readOnly" items.bind="clothes" show.bind="isRegular"></au-dropdown>
+
+        <au-textbox label="Teknisi" error.bind="error.Technician" value.bind="data.Technician.Name"
+            read-only.bind="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-checkbox label="Ganti Teknisi?" value.bind="data.ChangeTechnician" error.bind="error.ChangeTechnician"
+            read-only.bind="readOnly" show.bind="!isEdit" options.bind="controlOptions">
+        </au-checkbox>
+
+        <au-textbox show.bind="data.ChangeTechnician" label="Teknisi Baru" error.bind="error.NewTechnician"
+            value.bind="data.NewTechnician" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-collection columns.bind="itemColumns" items.bind="data.ColorReceiptItems"
+            errors.one-way="error.ColorReceiptItems" add.bind="addItemCallback" remove.bind="onremove"
+            read-only.bind="readOnly" item-template="modules/production/finishing-printing/color-receipt/template/item">
+        </au-collection>
+        <au-textbox 
+            value.bind="totalDetail" read-only.bind="true" show.bind="false" options.bind="controlOptions">
+        </au-textbox>
+        <au-collection columns.bind="dyeStuffColumns" items.bind="data.DyeStuffReactives"
+            errors.one-way="error.DyeStuffReactives" show.bind="showDyeStuff" read-only.bind="true"
+            item-template="modules/production/finishing-printing/color-receipt/template/dyestuff">
+        </au-collection>
+
+    </au-input-form>
+</template>

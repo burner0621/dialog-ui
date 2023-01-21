@@ -1,0 +1,106 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-autocomplete placeholder="pilih akun"
+                             value.bind="data.UnitPaymentOrder"
+                             error.bind="error.UnitPaymentOrder"
+                             loader.one-time="spbLoader"
+                             text="No"
+                             read-only.bind="readOnly"
+                             query.bind="filter"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.UnitPaymentOrder.Date"
+                           read-only.bind="true"
+                           options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-numeric value.bind="data.UnitPaymentOrder.Amount"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="text-center">
+            <div class="row">
+            <au-checkbox value.bind="data.UnitPaymentOrder.IsPayVat"
+                         read-only.bind="true"
+                         options.bind="controlOptions">
+            </au-checkbox>
+            </div>
+            <div class="row"
+                if.bind="data.UnitPaymentOrder.IsPayVat">
+                <au-textbox value.bind="data.UnitPaymentOrder.VatTax.Rate"
+                       read-only.bind="true">
+                </au-textbox>
+            </div>
+
+        </td>
+        <td class="text-center">
+            <div class="row">
+                <au-checkbox value.bind="data.UnitPaymentOrder.IsPayTax"
+                             read-only.bind="true"
+                             options.bind="controlOptions">
+                </au-checkbox>
+            </div>
+            <div class="row"
+                 if.bind="data.UnitPaymentOrder.IsPayTax">
+                <au-textbox value.bind="data.UnitPaymentOrder.IncomeTax.Name"
+                            read-only.bind="true">
+                </au-textbox>
+            </div>
+            <div class="row"
+                 if.bind="data.UnitPaymentOrder.IsPayTax">
+                <div class="col-6">
+                    <au-textbox value.bind="'Rate: '"
+                                read-only.bind="true">
+                    </au-textbox>
+                </div>
+                <div class="col-6">
+                    <au-numeric value.bind="data.UnitPaymentOrder.IncomeTax.Rate"
+                                read-only.bind="true"
+                                format="0,0.00"
+                                options.bind="controlOptions">
+                    </au-numeric>
+                </div>
+            </div>
+            <div class="row"
+                 if.bind="data.UnitPaymentOrder.IsPayTax">
+                <div class="col-6">
+                    <au-textbox value.bind="'Ditanggung oleh: '"
+                                read-only.bind="true">
+                    </au-textbox>
+                </div>
+                <div class="col-6">
+                    <au-textbox value.bind="data.UnitPaymentOrder.IncomeTaxBy"
+                                read-only.bind="true">
+                    </au-textbox>
+                </div>
+            </div>
+        </td>
+        <td>
+            <au-numeric value.bind="total"
+                        read-only.bind="true"
+                        format="0,0.00"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1"
+            if.bind="!readOnly">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+    <!-- <tr>
+        <au-collection items.bind="data.UnitPaymentOrder.Items"
+                       columns.bind="columns"
+                       read-only.bind="true"
+                       item-template="modules/purchasing/vb-realization-with-po-document/templates/detail">
+        </au-collection>
+    </tr> -->
+</template>

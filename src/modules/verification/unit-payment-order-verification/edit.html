@@ -1,0 +1,17 @@
+<template>
+    <style>
+        multiline {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Ubah Rincian Verifikasi Surat Perintah Bayar</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" read-only.bind="true" error.bind="error"></data-form>
+        <div class="btn-group pull-right">
+            <a click.delegate="cancel()" class='btn btn-default btn-sm'>Kembali</a>
+            <a show.bind="dataExpedition.Position !=6" click.delegate="Submit()" class='btn btn-danger btn-sm'>Not Verified</a>
+            <a click.delegate="Submit('VerifiedAlert')" class='btn btn-primary btn-sm'>Verified</a>
+        </div>
+    </block>
+</template>

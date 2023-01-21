@@ -1,0 +1,46 @@
+<template>
+  <tr>
+    <!-- <td show.bind="!readOnly">
+      <au-checkbox value.bind="data.Select" read-only.bind="readOnly">
+      </au-checkbox>
+    </td> -->
+    <td style="white-space: nowrap;">
+      <au-textbox value.bind="data.Code" 
+        error.bind="error.YarnCode" 
+        read-only.bind="true"
+      ></au-textbox>
+    </td>
+
+    <td style="white-space: nowrap;">
+      <au-autocomplete value.bind="Yarn"
+       error.bind="error.YarnName" 
+       read-only.bind="readOnly"
+       placeholder="Benang Lusi" 
+       loader.bind="yarnsWarp" 
+       text="Name"
+      ></au-autocomplete>
+    </td>
+
+    <td style="white-space: nowrap;">
+      <au-numeric value.bind="data.Quantity" 
+       error.bind="error.WarpQuantity" 
+       format.bind="formatData"
+       read-only.bind="readOnly"
+      ></au-numeric>
+    </td>
+
+    <td style="white-space: nowrap;">
+      <au-textbox value.bind="data.Information" 
+       error.bind="error.Information" 
+       read-only.bind="readOnly" 
+       placeholder="Keterangan"
+      ></au-textbox>
+    </td>
+    
+    <td class="col-sm-1" if.bind="!readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(warpData, $event)">
+        -
+      </button>
+    </td>
+  </tr>
+</template>

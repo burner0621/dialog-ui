@@ -1,0 +1,10 @@
+<template>
+  <div class="col-md-9">
+    <au-input-form title.bind="title" with.bind="context">
+      <au-numeric label="Range Awal" value.bind="data.InitialRange" error.bind="error.InitialRange" options.bind="customOptions"
+        read-only.bind="readOnly"></au-numeric>
+      <au-numeric label="Range Akhir" value.bind="data.FinalRange" error.bind="error.FinalRange" options.bind="customOptions" read-only.bind="readOnly"></au-numeric>
+      <au-numeric label="Efisiensi" value.bind="data.Value" error.bind="error.Value" options.bind="customOptions" read-only.bind="readOnly"></au-numeric>
+    </au-input-form>
+  </div>
+</template>

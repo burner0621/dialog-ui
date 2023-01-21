@@ -1,0 +1,88 @@
+<template>
+ <h1 class="page-header">Laporan Penyerahan Barang QC ke Gudang</h1>
+     <form class="form-horizontal">
+        <!--<kanban-auto-suggest            label="Nomor Order/Kereta"        value.bind="kanban"    ></kanban-auto-suggest>
+        <machine-auto-suggest           label="Mesin"	                  value.bind="machine"   ></machine-auto-suggest>
+        -->
+        <datepicker label="Tanggal Awal" value.bind="dateFrom" ></datepicker>
+        <datepicker label="Tanggal Akhir" value.bind="dateTo" ></datepicker> 
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+               <button click.delegate="searching()" class='btn btn-success'>Cari</button> 
+               <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div> 
+        <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+<br>
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <tr>
+                <td rowspan="2">Tanggal</td>
+                <td colspan="3">Solid</td>
+                <td colspan="2">Printing</td>
+                <td rowspan="2">Jumlah</td>
+                
+               
+                <!--<th>Kategori UOM</th>-->
+            </tr>
+            <tr>
+                <td>Ulangan</td>
+                <td>White</td>
+                <td>Dyeing</td>
+                <td>Ulangan</td>
+                <td>Printing</td>
+                <!--<th>Kategori UOM</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data">
+                <td class="text-center">${item.Date  | dateFormat:'DD-MM-YYYY'}</td>
+                <td class="text-right">${item.UlanganSolid}</td>
+                <td class="text-right">${item.White}</td>
+                <td class="text-right">${item.Dyeing}</td>
+                <td class="text-right">${item.UlanganPrinting}</td>
+                <td class="text-right">${item.Printing}</td>
+                <td class="text-right">${item.Jumlah}</td>
+
+  
+            </tr>
+            <tr >
+                <td class="text-center"><b>Total</b></td>
+                <td class="text-right"><b>${ulanganSolidtotals}</b></td>
+                <td class="text-right"><b>${whitetotals}</b></td>
+                <td class="text-right"><b>${dyeingtotals}</b></td>
+                <td class="text-right"><b>${ulanganPrintingtotals}</b></td>
+                <td class="text-right"><b>${printingtotals}</b></td>
+                <td class="text-right"><b>${jumlahtotals}</b></td>
+            </tr>
+            <tr >
+                <td class="text-center"><b>Avg</b></td>
+                <td class="text-right"><b>${ntotulanganSolidtgl}</b></td>
+                <td class="text-right"><b>${ntotwhitetgl}</b></td>
+                <td class="text-right"><b>${ntotdyeingtgl}</b></td>
+                <td class="text-right"><b>${ntotulanganPrintingtgl}</b></td>
+                <td class="text-right"><b>${ntotprintingtgl}</b></td>
+                <td class="text-right"><b>${ntotjumlahtgl}</b></td>
+            </tr>
+            <tr >
+                <td class="text-center"><b>Day</b></td>
+                <td class="text-right"><b>${ulanganSolidbaris}</b></td>
+                <td class="text-right"><b>${whitebaris}</b></td>
+                <td class="text-right"><b>${dyeingbaris}</b></td>
+                <td class="text-right"><b>${ulanganPrintingbaris}</b></td>
+                <td class="text-right"><b>${printingbaris}</b></td>
+                <td class="text-right"><b>${jumlahbaris}</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <hr/>
+    </form>
+    
+</template>

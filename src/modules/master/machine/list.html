@@ -1,0 +1,70 @@
+<template>
+
+  <h1 class="page-header">Mesin</h1>
+  <au-table 
+  data.bind="loader" 
+  columns.bind="columns" 
+  sortable.bind="true" 
+  page-size="25" 
+  context.bind="context" 
+  context-click.delegate="contextCallback($event)">
+    <div slot="toolbar" class="btn-group">
+      <button class="btn btn-success" click.delegate="create()">Buat</button>
+
+    <!--<h1 class="page-header">Mesin</h1>
+    <br>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="input-group">
+                <input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" click.delegate="loadPage()"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-default" click.delegate="activate()"> Tampilkan Semua </button>    
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="pull-right">
+                <button class="btn btn-primary" click.delegate="create()">Buat</button>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Unit</th> 
+                <th>Step / Proses</th> 
+                <th>Process</th> 
+                <th>Manufacture</th> 
+                <th>Tahun</th> 
+                <th>Kondisi</th> 
+                <th>Jenis Mesin</th> 
+                <th>Kapasitas Bulanan</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="item of data" click.delegate="view(item)">
+                <td>${item.name}</td>
+                <td>${item.unit.name}</td>
+                <td><au-textbox repeat.for="step of item.steps" value=${step.step.process} read-only="true"></au-textbox></td>
+                <td>${item.process}</td>
+                <td>${item.manufacture}</td>
+                <td>${item.year}</td>
+                <td>${item.condition}</td>
+                <td>${item.machineType.name}</td>
+                <td>${item.monthlyCapacity}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Data mesin tidak ada.-->
+
+    </div>
+  </au-table>
+</template>
+
+
+
+

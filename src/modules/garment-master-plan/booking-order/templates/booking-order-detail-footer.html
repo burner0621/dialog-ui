@@ -1,0 +1,20 @@
+<template>
+<tr>
+  <td colspan="1" class="text-right" style="padding-right:10%">
+    Total
+  </td>
+  <!--<td class="text-left">
+    <require from="../../../../lib/number-format-value-converter"></require>
+    ${itemSum | numberFormat:"0,000"}
+  </td>-->
+
+  <td width="15%" colspan="4">
+    <numeric 
+    value.bind="itemSum" 
+    error.bind="item.error" 
+    read-only.bind="true" 
+    options.bind="controlOption">
+    </numeric>
+  </td>
+</tr>
+</template>

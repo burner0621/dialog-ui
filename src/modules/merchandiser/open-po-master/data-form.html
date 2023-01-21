@@ -1,0 +1,123 @@
+<template>
+  <au-input-form 
+        title.bind="title" 
+        with.bind="context"
+        options.bind="formOptions">
+
+        <au-autocomplete
+            label="Nomor PR" 
+            placeholder="Nomor PR"
+            value.bind="selectedPRNo" 
+            loader.bind="PRMasterLoader"
+            text="PRNo"
+            query.bind="prMasterFilter"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Nomor RO" 
+            value.bind="data.RONo"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="Jenis PR"
+            value.bind="data.PRType"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            label="No Sales Contract"
+            value.bind="data.SCNo"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Buyer" 
+            value.bind="buyer"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Unit" 
+            value.bind="unit"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+            label="Artikel" 
+            value.bind="data.Article"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl. PR" 
+            value.bind="data.Date" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tgl. Shipment" 
+            value.bind="data.ShipmentDate" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox  error.bind="error.ItemsCount" read-only="true"></au-textbox>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th show.bind="!readOnly">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked.bind="checkedAll"
+                                    change.delegate="changeCheckedAll()"
+                                    disabled.bind="readOnly" />
+                            </label>
+                        </th>
+                        <template repeat.for="column of itemsColumns">
+                            <th><label>${column.header}</label></th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!data.Items || data.Items.length < 1">
+                        <td colspan="${itemsColumns.length + 1}">
+                            <div class="alert alert-info">No data.</div>
+                        </td>
+                    </tr>
+                    <!--with-template-->
+                    <tr
+                        if.bind="data.Items && data.Items.length > 0"
+                        repeat.for="item of data.Items"
+                        as-element="compose"
+                        view="modules/merchandiser/open-po-master/template/item.html"
+                        view-model="modules/merchandiser/open-po-master/template/item"
+                        model.bind="{ data: item, error: error.Items[$index], context: { columns: itemsColumns, options: itemsOptions, items: data.Items }, headerContext: context }"
+                        containerless>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </au-input-form>
+</template>

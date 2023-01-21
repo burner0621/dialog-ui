@@ -1,0 +1,29 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox value.bind="data.Product.Code" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Product.Name" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Product.Remark" error.bind="error.Product.Remark" read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.DesignColor" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.Quantity" error.bind="error.Quantity" read-only.bind="readOnly"
+				format="0">
+			</au-numeric>
+		</td>
+		<td>
+			<au-autocomplete value.bind="data.Uom" read-only.bind="readOnly || (isEdit && data.Id)" loader.bind = "uomLoader" text.bind="uomView" options.bind="controlOption">
+			</au-autocomplete>
+		</td>
+	</tr>
+</template>

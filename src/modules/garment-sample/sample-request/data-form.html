@@ -1,0 +1,165 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div class="alert alert-info" role="alert" if.bind="alertInfo" innerhtml.bind="alertInfo"></div>
+    <div class="alert alert-danger" role="alert" if.bind="alertDanger" innerhtml.bind="alertDanger"></div>
+
+    <button slot="actions" class="btn btn-primary" click.delegate="unpostCallback($event)"
+      if.one-way="hasUnpost">Unpost</button>
+    <div class="row">
+      <div class="col-sm-6">
+
+        <au-autocomplete value.bind="data.Section" error.bind="error.Section" label="Seksi" loader.bind="sectionLoader"
+          text="Code" placeholder="cari seksi" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox error.bind="error.RONoSample" value.bind="data.RONoSample" label="Nomor RO Sample"
+          read-only.bind="true" if.bind="data.RONoSample" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox error.bind="error.SampleRequestNo" value.bind="data.SampleRequestNo" label="Nomor Surat Sample"
+          read-only.bind="true" if.bind="data.SampleRequestNo" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown label="Kategori Sample" value.bind="data.SampleCategory" error.bind="error.SampleCategory"
+          read-only.bind="readOnly || isEdit" items.bind="SampleCategoryOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown label="Tipe Sample" value.bind="data.SampleTo" error.bind="error.SampleTo"
+          read-only.bind="readOnly" items.bind="SampleToOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete value.bind="SelectedROCC" error.bind="error.RONoCC" label="No RO CC" loader.bind="roNoCCLoader"
+          text.bind="roView" placeholder="Cari RO CC" read-only.bind="readOnly"
+          if.bind="data.SampleCategory=='Commercial Sample'" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tgl Pembuatan Surat Sample" value.bind="data.Date" error.bind="error.Date"
+          read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete value.bind="data.Buyer" error.bind="error.Buyer" label="Buyer" loader.bind="buyerLoader"
+          text.bind="buyerView" placeholder="Cari Buyer" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+      </div>
+      <div class="col-sm-6">
+
+        <au-textbox error.bind="error.SampleType" value.bind="data.SampleType" label="Jenis Sample"
+          read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete value.bind="data.Comodity" error.bind="error.Comodity" label="Komoditi"
+          loader.bind="comodityLoader" text.bind="comodityView" placeholder="Cari Komoditi" read-only.bind="readOnly"
+          options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox error.bind="error.Packing" value.bind="data.Packing" label="Packing" read-only.bind="readOnly"
+          options.bind="controlOptions2">
+        </au-textbox>
+
+        <au-datepicker label="Tgl Kirim" value.bind="data.SentDate" error.bind="error.SentDate"
+          read-only.bind="readOnly" options.bind="controlOptions2">
+        </au-datepicker>
+
+        <au-textbox error.bind="error.POBuyer" value.bind="data.POBuyer" label="PO Buyer" read-only.bind="readOnly"
+          options.bind="controlOptions2">
+        </au-textbox>
+
+        <au-textbox error.bind="error.Attached" value.bind="data.Attached" label="Terlampir" read-only.bind="readOnly"
+          options.bind="controlOptions2">
+        </au-textbox>
+
+        <au-multiline error.bind="error.Remark" value.bind="data.Remark" label="Keterangan" read-only.bind="readOnly"
+          options.bind="controlOptions2">
+        </au-multiline>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Detail Barang</h4>
+        <div class="form-group has-error">
+          <p if.bind="error.SampleProductsCount" class="help-block text-center">${error.SampleProductsCount}</p>
+        </div>
+        <au-collection items.bind="data.SampleProducts" errors.bind="error.SampleProducts" columns.bind="productColumns"
+          read-only.bind="readOnly" remove.bind="removeItems" add.bind="addItems" options.bind="itemOptions"
+          item-template="modules/garment-sample/sample-request/template/item-product">
+        </au-collection>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Kelengkapan Sample</h4>
+        <div class="form-group has-error">
+          <p if.bind="error.SampleSpecificationsCount" class="help-block text-center">${error.SampleSpecificationsCount}
+          </p>
+        </div>
+        <au-collection items.bind="data.SampleSpecifications" errors.bind="error.SampleSpecifications"
+          columns.bind="specColumns" read-only.bind="readOnly" remove.bind="removeSpecs" add.bind="addSpecs"
+          options.bind="itemOptions" item-template="modules/garment-sample/sample-request/template/item-specification">
+        </au-collection>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>File Dokumen</h4>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <th class="col-md-11">File</th>
+            <th if.bind="!readOnly" class="col-md-1">
+              <button click.delegate="onAddDocument()" class="btn btn-success pull-right">+</button>
+            </th>
+          </thead>
+          <tbody>
+            <tr if.bind="!data.DocumentsFileName || data.DocumentsFileName.length < 1">
+              <td colspan="2">
+                Tidak ada file
+              </td>
+            </tr>
+            <tr if.bind="data.DocumentsFileName" repeat.for="doc of data.DocumentsFileName">
+              <td if.bind="readOnly">
+                <button class="btn btn-primary justify-content-center"
+                  click.delegate="downloadDocument($index)">${doc}</button>
+              </td>
+              <td if.bind="!readOnly">
+                <input if.bind="!documentsPathTemp[$index]" type="file" id="documentInput${$index}"
+                  value.bind="documentUpload" change.delegate="documentInputChanged($index)"
+                  accept=".pdf, .xls, .xlsx, .doc, .docx">
+                <button if.bind="documentsPathTemp[$index]" class="btn btn-primary justify-content-center"
+                  click.delegate="downloadDocument($index)">${doc}</button>
+                <span class="text-danger" if.bind="error.DocumentsFile[$index]">${error.DocumentsFile[$index]}</span>
+              </td>
+              <td if.bind="!readOnly">
+                <button class="btn btn-danger pull-right" click.delegate="onRemoveDocument($index)">-</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h4>File Gambar</h4>
+        <input type="file" id="imageInput" value.bind="imageUpload" accept="image/*" style="display: none;">
+        <button type="button" if.bind="!readOnly" onclick="document.getElementById('imageInput').click()">Add
+          Image</button>
+        <br>
+        <br>
+        <template repeat.for="imageSrc of imagesSrc">
+          <div style="display: inline-block; height: 250px; width: auto; margin-right:20px;">
+            <img src.bind="imageSrc" class="center-block" height="200px">
+            <br>
+            <au-textbox class="center-block" value.bind="data.ImagesName[$index]" read-only.bind="readOnly">
+            </au-textbox>
+            <br>
+            <button type="button" class="btn btn-danger center-block" if.bind="!readOnly"
+              click.delegate="removeImage($index)">Remove</button>
+          </div>
+        </template>
+        <au-textbox error.bind="error.ImageFile" read-only.bind="true"></au-textbox>
+      </div>
+    </div>
+  </au-input-form>
+  <div class="row"></div>
+</template>

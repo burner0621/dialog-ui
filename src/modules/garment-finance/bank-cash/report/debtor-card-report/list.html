@@ -1,0 +1,35 @@
+<template>
+    <require from="../../../../../lib/number-format-value-converter"></require>
+  
+    <h1 class="page-header">Report Kartu Debitur</h1>
+  
+    <form class="form-horizontal">
+       
+      <au-dropdown value.bind="month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths" key="value"
+        text="text">
+      </au-dropdown>
+      <au-dropdown value.bind="year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value"
+        text="text">
+      </au-dropdown>
+      <au-autocomplete  label="Buyer" value.bind="buyer" placeholder="Buyer" text.bind="buyerView" 
+        loader.bind="buyerLoader" options.bind="controlOptions">
+      </au-autocomplete>
+  
+      <div class="form-group">
+        <label for="contact" class="col-sm-5 control-label"></label>
+        <div class="col-sm-3">
+          <button click.delegate="search()" class="btn btn-success">Cari</button>
+          <button click.delegate="reset()" class="btn btn-success">Reset</button>
+        </div>
+      </div>
+    </form>
+  
+    <div class="btn-group pull-left">
+      <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+    </div>
+    <table ref="table" class="table table-bordered table-hover" border="1" id="myTable" ></table>
+
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+        Tidak ada data.
+    </div>
+  </template>

@@ -1,0 +1,244 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox 
+            label="No" 
+            value.bind="data.DispositionNo" 
+            error.bind="error.DispositionNo" 
+            read-only.bind="true"
+            if.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="selectedDivision" 
+            error.bind="error.Division"
+            read-only.bind="(readOnly || isEdit)"
+            label="Divisi" 
+            loader.bind="divisionLoader"
+            text.bind = "divisionView"
+            placeholder="cari divisi" 
+            key="code" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedCategory" 
+            error.bind="error.Category"
+            read-only.bind="(readOnly || isEdit)"
+            label="Kategori" 
+            loader.bind="categoryLoader"
+            text.bind = "categoryView"
+            placeholder="cari kategori" 
+            key="code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedSupplier" 
+            error.bind="error.Supplier"
+            label="Supplier" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="cari supplier" 
+            key="code" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="selectedCurrency" 
+            error.bind="error.Currency"
+            label="Mata Uang" 
+            loader.bind="currencyLoader"
+            text.bind = "currencyView"
+            placeholder="cari mata uang" 
+            key="code" 
+            read-only.bind="(readOnly || isEdit)"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-multiline
+            value.bind="data.Bank"
+            error.bind="error.Bank"
+            placeholder="bank"
+            label="Bank Tujuan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            value.bind="data.ConfirmationOrderNo"
+            error.bind="error.ConfirmationOrderNo"
+            placeholder="no order confirmation"
+            label="No Order Confirmation" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <!--<au-textbox
+            value.bind="data.InvoiceNo"
+            error.bind="error.InvoiceNo"
+            label="No Invoice" 
+            placeholder="no invoice"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>-->
+
+        <au-textbox
+            value.bind="data.PaymentMethod"
+            error.bind="error.PaymentMethod"
+            label="Term Pembayaran" 
+            placeholder="term pembayaran"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tanggal Jatuh Tempo" 
+            value.bind="data.PaymentDueDate" 
+            error.bind="error.PaymentDueDate" 
+            read-only.bind="(readOnly)"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        
+        <au-multiline 
+            label="Perhitungan" 
+            value.bind="data.Calculation"
+            placeholder="perhitungan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+                
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            value.bind="data.ProformaNo"
+            error.bind="error.ProformaNo"
+            label="No Proforma / Invoice" 
+            placeholder="no proforma"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <!--<au-textbox
+            value.bind="data.Investation"
+            error.bind="error.Investation"
+            label="Investasi" 
+            placeholder="investasi"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>-->
+        <au-dropdown
+            label="PPH Ditanggung oleh"
+            value.bind="data.IncomeTaxBy"
+            error.bind="error.IncomeTaxBy"
+            read-only.bind="readOnly"
+            items.bind="IncomeTaxByOptions"
+            change.delegate="IncomeTaxByChanged($event)"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-numeric
+            value.bind="dppVal"
+            label="DPP"
+            read-only.bind="true"
+            if.bind="!readOnly"
+            format = "0,0.0000"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="vatVal"
+            label="PPN"
+            read-only.bind="true"
+            if.bind="!readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="incomeTaxVal"
+            label="PPH"
+            read-only.bind="true"
+            if.bind="!readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.DPP"
+            label="DPP"
+            read-only.bind="true"
+            if.bind="readOnly"
+            format = "0,0.0000"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.VatValue"
+            label="PPN"
+            read-only.bind="true"
+            if.bind="readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.IncomeTaxValue"
+            label="PPH"
+            read-only.bind="true"
+            if.bind="readOnly"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.Amount"
+            label="Amount"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric
+            value.bind="data.PaymentCorrection"
+            label="Koreksi Pembayaran"
+            read-only.bind="readOnly"
+            format = "0,0.00"
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+        
+		
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsColumns" 
+            add.bind="addItems" 
+            remove.bind="removeItems"
+            options.one-way="filter"
+            read-only.bind="readOnly"
+            change.delegate="itemsChanged($event)"
+            if.bind="selectedSupplier && selectedCurrency && selectedDivision && selectedCategory"
+            item-template="modules/purchasing/purchasing-disposition/template/item"
+            >
+        </au-collection>
+  </au-input-form>
+</template>

@@ -1,0 +1,71 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox value.one-way="data.RONo"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.one-way="data.IPONo"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.one-way="data.ProductName"
+						read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.one-way="data.UnitName"
+						read-only="true">
+			</au-textbox>
+		</td>
+		
+		<td>
+			<au-numeric value.bind="data.QTYOrder"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox value.bind="data.QTYUnit"
+						read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.QTYRemains"
+						read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.PricePerQTY"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.PriceTotal"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.QTYPaid"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.PaidPrice"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.PercentageOverQTY"
+						read-only.bind="true"
+						format="0.00">
+			</au-numeric>
+		</td>
+	</tr>
+</template>

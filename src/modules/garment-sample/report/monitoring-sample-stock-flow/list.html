@@ -1,0 +1,232 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <style>
+        table>tbody>tr>td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Flow Persediaan</h1>
+
+    <form class="form-horizontal">
+      <!-- <au-autocomplete 
+            value.bind="unit" 
+            label="Unit" 
+            loader.bind="unitLoader"
+            placeholder="Cari Nama Unit" 
+            read-only.bind="false" 
+            text.bind="unitView"
+            options.bind="controlOptions">
+      </au-autocomplete> -->
+
+      <au-autocomplete label="Unit" value.bind="selectedUnit"  read-only.bind="true"
+    options.bind="controlOptions" loader.bind="unitLoader" text.bind="unitView" placeholder="Unit">
+    </au-autocomplete>
+      
+      <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind="controlOptions"></au-datepicker>
+      <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind="controlOptions"></au-datepicker>
+
+  <au-textbox 
+  label="No RO"
+  value.bind="ro"
+  read-only.bind="readOnly"
+  options.bind="controlOptions"
+></au-textbox>
+      <div class="form-group">
+          <label for="contact" class="col-sm-6 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+
+      <div class="btn-group pull-left">
+          <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+      </div>
+  </form>
+  <br>
+</br>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+            <tr>
+                <td rowspan="3">RO</td>
+                <td rowspan="3">ARTIKEL</td>
+                <td rowspan="3">KOMODITI</td>
+                <td rowspan="3">JUMLAH ORDER</td>
+                <td colspan="6">CUTTING</td>
+                <!-- <td colspan="6">LOADING</td> -->
+                <td colspan="5">SEWING</td>
+                <td colspan="5">FINISHING</td>
+                <td colspan="9">BARANG JADI</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Saldo Awal WIP Cutting</td>
+                <td rowspan="2">Cutting In (WIP Cutting)</td>
+                <td rowspan="2">Cutting Out/HP </td>
+                <!-- <td rowspan="2">Cutting Out Transfer</td>
+                <td rowspan="2">Cutting Out Subkon</td> -->
+                <td rowspan="2">Aval Komponen dari Cutting</td>
+                <td rowspan="2">Aval Komponen dari Sewing</td>
+                <td rowspan="2">Saldo Akhir WIP Cutting</td>
+
+                <!-- <td rowspan="2">Saldo Awal Loading</td>
+                <td rowspan="2">Loading In</td>
+                <td rowspan="2">Loading In Transfer</td>
+                <td rowspan="2">Loading Out (WIP Sewing)</td>
+                <td rowspan="2">Adjs Loading</td>
+                <td rowspan="2">Saldo Akhir Loading</td> -->
+
+                <td rowspan="2">Saldo Awal WIP Sewing</td>
+                <td rowspan="2">Sewing In (WIP Sewing)</td>
+                <td rowspan="2">Sewing Out (WIP Finishing)</td>
+                <!-- <td rowspan="2">Sewing In Transfer</td>
+                <td rowspan="2">Sewing Out Tranfer WIP Sewing</td>
+                <td rowspan="2">Sewing Out Transfer WIP Finishing</td> -->
+                <td rowspan="2">Retur ke Cutting</td>
+                <!-- <td rowspan="2">Adjs Sewing</td> -->
+                <td rowspan="2">Saldo Akhir WIP Sewing</td>
+
+                <td rowspan="2">Saldo Awal WIP Finishing</td>
+                <td rowspan="2">Finishing In (WIP Finishing)</td>
+                <!-- <td rowspan="2">Saldo Awal WIP Subkon</td>
+                <td rowspan="2">Subkon In</td>
+                <td rowspan="2">Subkon Out</td>
+                <td rowspan="2">Saldo Akhir WIP Subkon</td> -->
+                <td rowspan="2">Finishing Out (WIP BJ)</td>
+                <!-- <td rowspan="2">Finishing In Transfer</td>
+                <td rowspan="2">Adjs Finishing</td> -->
+                <td rowspan="2">Retur ke Sewing</td>
+                <td rowspan="2">Saldo Akhir WIP Finishing</td>
+                 
+                
+                <td rowspan="2">Saldo Awal Barang jadi</td>                       
+                <td rowspan="2">Barang Jadi In/ (WIP BJ)</td>
+                <!-- <td rowspan="2">Barang Jadi In Transfer</td>
+                <td rowspan="2">Penerimaan Lain-lain (Retur)</td> -->
+                <td rowspan="2">Pengiriman Export</td>
+                <td rowspan="2">Pengiriman Gudang Sisa</td>
+                <td rowspan="2">Pengiriman Arsip Sample</td>
+                <td rowspan="2">Pengiriman Arsip Md</td>
+                <td rowspan="2">Pengiriman Lokal</td>
+                <td rowspan="2">Pengiriman Export NCS</td>
+                <td rowspan="2">Saldo Akhir Barang Jadi</td>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <require from="../../../../lib/number-format-value-converter"></require>
+            <tr repeat.for="item of data">
+                <td class="text-center">${item.Ro}</td>
+                <td class="text-center">${item.Article}</td>
+                <td class="text-center">${item.Comodity}</td>
+                <td class="text-right">${item.QtyOrder}</td>
+                <td class="text-center">${item._BeginingBalanceCuttingQty}</td>
+                <td class="text-right">${item._QtyCuttingIn}</td>
+                <td class="text-right">${item._QtyCuttingOut}</td>
+                <!-- <td class="text-right">${item._QtyCuttingTransfer}</td>
+                <td class="text-right">${item._QtyCuttingsubkon}</td> -->
+                <td class="text-right">${item._AvalCutting}</td>
+                <td class="text-right">${item._AvalSewing}</td>
+                <td class="text-right">${item._EndBalancCuttingeQty}</td>
+                <!-- <td class="text-center">${item._BeginingBalanceLoadingQty}</td>
+                <td class="text-right">${item._QtyLoadingIn}</td>
+                <td class="text-right">${item._QtyLoadingInTransfer}</td>
+                <td class="text-right">${item._QtyLoading}</td>
+                <td class="text-right">${item._QtyLoadingAdjs}</td>
+                <td class="text-right">${item._EndBalanceLoadingQty}</td>-->
+                <td class="text-center">${item._BeginingBalanceSewingQty}</td> 
+                <td class="text-right">${item._QtySewingIn}</td>
+                <td class="text-right">${item._QtySewingOut}</td>
+                <!-- <td class="text-right">${item._QtySewingInTransfer}</td>
+                <td class="text-right">${item._WipSewingOut}</td>
+                <td class="text-right">${item._WipFinishingOut}</td> -->
+                <td class="text-right">${item._QtySewingRetur}</td>
+                <!-- <td class="text-right">${item._QtySewingAdj}</td> -->
+                <td class="text-right">${item._EndBalanceSewingQty}</td>
+                <td class="text-center">${item._BeginingBalanceFinishingQty}</td>
+                <td class="text-right">${item._FinishingInQty}</td>
+                <!-- <td class="text-right">${item._BeginingBalanceSubconQty}</td>
+                <td class="text-right">${item._SubconInQty}</td>
+                <td class="text-right">${item._SubconOutQty}</td>
+                <td class="text-right">${item._EndBalanceSubconQty}</td> -->
+                <td class="text-right">${item._FinishingOutQty}</td>
+                <!-- <td class="text-right">${item._FinishingInTransferQty}</td>
+                <td class="text-right">${item._FinishingAdjQty}</td> -->
+                <td class="text-right">${item._FinishingReturQty}</td>
+                <td class="text-right">${item._EndBalanceFinishingQty}</td>
+                <td class="text-right">${item._BeginingBalanceExpenditureGood}</td>
+                <td class="text-right">${item._FinishingInExpenditure}</td>
+                
+                <!-- <td class="text-right">${item._ExpenditureGoodInTransfer}</td>
+                <td class="text-right">${item._ExpenditureGoodRetur}</td> -->
+                <td class="text-right">${item._ExportQty}</td>
+                <td class="text-right">${item._OtherQty}</td>
+                <td class="text-right">${item._SampleQty}</td>
+                <td class="text-right">${item._MDQty}</td>
+                <td class="text-right">${item._LocalQty}</td>
+                <td class="text-right">${item._NCSQty}</td>
+                <!-- <td class="text-right">${item._ExpenditureGoodAdj}</td> -->
+                <td class="text-right">${item._EndBalanceExpenditureGood}</td>
+            </tr>
+            <tr class="active">
+                <td class="text-center" colspan="4"><strong>T O T A L </strong></td>
+                    
+                <td class="text-right"><strong>${BeginingBalanceCuttingQtyTotal}</strong></td>
+                <td class="text-right"><strong>${QtyCuttingInTotal}</strong></td>
+                <td class="text-right"><strong>${QtyCuttingOutTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${QtyCuttingTransferTotal}</strong></td>
+                <td class="text-right"><strong>${QtyCuttingsubkonTotal}</strong></td> -->
+                <td class="text-right"><strong>${AvalCuttingTotal}</strong></td>
+                <td class="text-right"><strong>${AvalSewingTotal}</strong></td>
+                <td class="text-right"><strong>${EndBalancCuttingeQtyTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${BeginingBalanceLoadingQtyotal}</strong></td>
+                <td class="text-right"><strong>${QtyLoadingInTotal}</strong></td>
+                <td class="text-right"><strong>${QtyLoadingInTransferTotal}</strong></td>
+                <td class="text-right"><strong>${QtyLoadingTotal}</strong></td>
+                <td class="text-right"><strong>${QtyLoadingAdjsTotal}</strong></td>
+                <td class="text-right"><strong>${EndBalanceLoadingQtyTotal}</strong></td> -->
+                <td class="text-right"><strong>${BeginingBalanceSewingQtyTotal}</strong></td>
+                <td class="text-right"><strong>${QtySewingInTotal}</strong></td>
+                <td class="text-right"><strong>${QtySewingOutTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${QtySewingInTransferTotal}</strong></td>
+                <td class="text-right"><strong>${WipSewingOutTotal}</strong></td>
+                <td class="text-right"><strong>${WipFinishingOutTotal}</strong></td> -->
+              
+                <td class="text-right"><strong>${QtySewingReturTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${QtySewingAdjTotal}</strong></td> -->
+                <td class="text-right"><strong>${EndBalanceSewingQtyTotal}</strong></td>
+                <td class="text-center"><strong>${BeginingBalanceFinishingQtyTotal}</strong></td>
+                <td class="text-right"><strong>${FinishingInQtyTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${BeginingBalanceSubconQtyTotal}</strong></td>
+                <td class="text-right"><strong>${SubconInQtyTotal}</strong></td>
+                <td class="text-right"><strong>${SubconOutQtyTotal}</strong></td>
+                <td class="text-right"><strong>${EndBalanceSubconQtyTotal}</strong></td> -->
+                <td class="text-right"><strong>${FinishingOutQtyTotal}</strong></td>
+                <!-- <td class="text-right"><strong>${FinishingInTransferQtyTotal}</strong></td>
+                <td class="text-right"><strong>${FinishingAdjQtyTotal}</strong></td> -->
+                <td class="text-right"><strong>${FinishingReturQtyTotal}</strong></td>
+                <td class="text-right"><strong>${EndBalanceFinishingQtyTotal}</strong></td>
+                <td class="text-right"><strong>${BeginingBalanceExpenditureGoodTotal}</strong></td>
+                <td class="text-right"><strong>${FinishingInExpenditureTotal}</strong></td>
+                
+                <!-- <td class="text-right"><strong>${ExpenditureGoodInTransferTotal}</strong></td>
+                <td class="text-right"><strong>${ExpenditureGoodReturTotal}</strong></td> -->
+                <td class="text-right"><strong>${ExportQtyTotal}</strong></td>
+                <td class="text-right"><strong>${OtherQtyTotal}</strong></td>
+                <td class="text-right"><strong>${SampleQtyTotal}</strong></td>
+                <td class="text-right"><strong>${MDTotal}</strong></td>
+                <td class="text-right"><strong>${LocalTotal}</strong></td>
+                <td class="text-right"><strong>${NCSTotal}</strong></td>
+                <td class="text-right"><strong>${EndBalanceExpenditureGoodTotal}</strong></td>
+              </tr>
+        </tbody>
+    </table>
+</div>
+<div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+  Tidak ada data.
+</div>
+<hr/>
+  </au-input-form>
+  <div class="row"></div>
+</template>

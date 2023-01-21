@@ -1,0 +1,70 @@
+<template>
+  <tr>
+    <td>
+      <div class="col-sm-11">
+        <au-autocomplete value.bind="data.PurchaseOrderExternal"
+                         error.bind="error.PurchaseOrderExternal"
+                         loader.bind="purchaseOrderLoader"
+                         text.bind="purchaseOrderView"
+                         placeholder="cari nomor purchase order"
+                         key="prNo"
+                         read-only.bind="options.readOnly"
+                         options.bind="controlOptions"
+                         query.bind="filter">
+        </au-autocomplete>
+      </div>
+      <!-- <div class="col-sm-1">
+                
+            </div> -->
+    </td>
+    <!-- <td>
+      <div class="col-sm-11">
+        <au-autocomplete value.bind="data.PurchaseOrderExternal.unit.name"
+                         error.bind="error.Unitname"
+                         key="Unit"
+                         read-only.bind="true"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+      </div>
+    </td>
+    <td>
+      <div class="col-sm-11">
+        <au-textbox value.bind="data.PurchaseOrderExternal.incomeTax.name"
+                    error.bind="error.Unitname"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+      </div>
+    </td>
+    <td>
+      <div class="col-sm-11">
+        <au-textbox value.bind="data.PurchaseOrderExternal.incomeTaxBy"
+                    error.bind="error.Unitname"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+      </div>
+    </td> -->
+    <td>
+      <div class="col-sm-13">
+        <button class="btn btn-info pull-left"
+                if.bind="data.PurchaseOrderExternal.Items"
+                click.delegate="toggle()">i</button>
+        <button class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)"
+                if.bind="!options.readOnly">-</button>
+      </div>
+    </td>
+  </tr>
+  <tr if.bind="isShowing">
+    <td>
+      <au-collection items.bind="data.PurchaseOrderExternal.Items"
+                     columns.bind="itemsColumns"
+                     options.bind="context.context.options"
+                     read-only.bind="options.readOnly"
+                     item-template="modules/purchasing/vb-with-po-request/template/vb-with-po-request-int-item">
+      </au-collection>
+    </td>
+  </tr>
+  <!-- Total Harga PO : ${getTotalPaid} ${selectedCurrency.Code} -->
+</template>

@@ -1,0 +1,71 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-autocomplete 
+                value.bind="selectedPurchaseDisposition"
+                error.bind="error.purchaseDisposition"
+                loader.bind="purchasingDispositionLoader"
+                text.bind="purchasingDispositionView"
+                key="no"
+                query.bind="filter">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.dispositionDate"
+                read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker 
+                value.bind="data.paymentDueDate" 
+                read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.supplier.name"
+                read-only="true">
+            </au-textbox>
+        </td>
+         <td>
+            <au-textbox
+                value.bind="data.incomeTaxValue | numberFormat: '0,000.0000'"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.vatValue | numberFormat: '0,000.0000'"
+                read-only="true">
+            </au-textbox>
+        </td>
+        <td>
+                <au-textbox
+                    value.bind="data.payToSupplier | numberFormat: '0,000.0000'"
+                    read-only="true">
+                </au-textbox>
+            </td>
+            <td>
+                <au-textbox
+                    value.bind="data.currency.code"
+                    read-only="true">
+                </au-textbox>
+            </td>
+            <td class="col-sm-1">
+                <button class="btn btn-info" click.delegate="toggle()">i</button> 
+                <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+            </td>
+        </tr>
+        <tr show.bind="isShowing">
+            <td colspan="11">
+                <au-collection
+                    items.bind="data.items" 
+                    columns.bind="columns"
+                    item-template="modules/expedition/purchasing-disposition-expedition/templates/detail">
+                </au-collection>
+            </td>  
+        </tr>
+    </template>
+

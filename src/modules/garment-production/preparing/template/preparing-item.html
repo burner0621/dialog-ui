@@ -1,0 +1,56 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.Product.Code"
+                error.bind="error.UENItemId"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.Quantity" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='center' if.bind="isView">
+            <au-textbox 
+                value.bind="data.RemainingQuantity" 
+                read-only.bind="true"
+               >
+            </au-textbox>
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.Uom.Unit" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.BasicPrice"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.Currency"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.FabricType"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+     </tr>
+</template>
+

@@ -1,0 +1,54 @@
+<template>
+     
+    <div class="display-wrapper">
+        <h1 class="page-header">Output Hasil Produksi Spinning</h1>
+        <br>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="input-group">
+					<input type="text" class="form-control" name="keyword" value.bind="info.keyword" placeholder="cari" />
+					<span class="input-group-btn">
+                        <button class="btn btn-default" click.delegate="loadPage()"><i class="fa fa-search"></i></button>
+                        <button class="btn btn-default" click.delegate="activate()"> Tampilkan Semua </button>    
+                    </span>
+				</div>
+            </div> 
+            <div class="col-sm-4">
+                <div class="pull-right">
+                    <button class="btn btn-primary" click.delegate="create()">Buat</button>
+                </div>
+            </div>
+        </div> 
+        <div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr> 
+                        <th style="text-align:center">Spinning</th>
+                        <th style="text-align:center">Tanggal</th>
+                        <th style="text-align:center">Shift</th>
+                        <th style="text-align:center">Mesin</th>
+                        <th style="text-align:center">Nama Operator</th>
+                        <th style="text-align:center">Benang</th>
+                        <th></th>
+                    </tr>
+                </thead>
+               <tbody>
+                    <tr repeat.for="item of data"> 
+                        <td>${item.unit.name}</td>
+                        <td style="text-align:center">${item.date | dateFormat:'D MMM YYYY'}</td>
+                        <td style="text-align:center">${item.shift}</td>
+                        <td style="text-align:center">${item.machine.name}</td>
+                        <td style="text-align:center">${item._createdBy}</td>
+                        <td style="text-align:center">${item.product.name}</td>
+                        <td><button class="btn btn-default" click.delegate="view(item)">Rincian</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Data Output Hasil Produksi Tidak Ditemukan.
+        </div>
+        <pagination if.bind="info" info.bind="info" change.delegate="changePage($event)"></pagination>
+        <hr/>
+    </div>
+</template>

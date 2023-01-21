@@ -1,0 +1,129 @@
+<template>
+    <tr>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="selectedCategory"
+                error.bind="error.Category"
+                loader.bind="categoryLoader"
+                read-only.bind="readOnly || isEdit"
+                placeholder="Kategori"
+                text="Name"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox 
+                value.bind="product"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-autocomplete
+                value.bind="selectedComposition"
+                error.bind="error.Composition"
+                loader.bind="compositionLoader"
+                read-only.bind="readOnly || selectedCategory.Name !== 'FABRIC' || isEdit"
+                placeholder="Komposisi"
+                text="Composition"
+                options.bind="controlOptions"
+                view-model.ref="compositionViewModel">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="selectedConst"
+                error.bind="error.Const"
+                loader.bind="constLoader"
+                read-only.bind="readOnly || !data.Composition || isEdit"
+                placeholder="Konstruksi"
+                text="Const"
+                options.bind="controlOptions"
+                view-model.ref="constViewModel">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="selectedYarn"
+                error.bind="error.Yarn"
+                loader.bind="yarnLoader"
+                read-only.bind="readOnly || !data.Const || isEdit"
+                placeholder="Yarn"
+                text="Yarn"
+                options.bind="controlOptions"
+                view-model.ref="yarnViewModel">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="selectedWidth"
+                error.bind="error.Width"
+                loader.bind="widthLoader"
+                read-only.bind="readOnly || !data.Yarn || isEdit"
+                placeholder="Width"
+                text="Width"
+                options.bind="controlOptions"
+                view-model.ref="widthViewModel">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox 
+                value.bind="data.ProductRemark" 
+                read-only.bind="readOnly"
+                placeholder="Keterangan" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric 
+                value.bind="data.Quantity"
+                error.bind="error.Quantity"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="uom" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric 
+                value.bind="data.BudgetPrice" 
+                error.bind="error.BudgetPrice"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete
+                value.bind="data.PriceUom"
+                error.bind="error.PriceUom"
+                loader.bind="priceUomLoader"
+                read-only.bind="readOnly"
+                placeholder="Satuan Harga"
+                text="Unit"
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric 
+                value.bind="data.PriceConversion" 
+                error.bind="error.PriceConversion"
+                read-only.bind="readOnly"
+                format="0,000.00000"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="total" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+     </tr>
+</template>
+

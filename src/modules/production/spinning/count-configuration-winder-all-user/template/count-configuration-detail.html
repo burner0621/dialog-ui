@@ -1,0 +1,14 @@
+<template replace-part="CottonComposition">
+    <tr>
+        <td>
+            <au-autocomplete value.bind="product" error.bind="error.product" loader.one-time="productLoader" text="Name"
+                placeholder="cari kapas" key="Id" read-only.bind="true" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Composition" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+       
+    </tr>
+</template>

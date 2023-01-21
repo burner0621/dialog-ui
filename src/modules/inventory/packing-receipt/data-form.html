@@ -1,0 +1,41 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-danger" click.delegate="context.update()" if.one-way="context.isVoid">Void</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+        </div>
+
+        <fieldset>
+            <au-autocomplete value.bind="Packing" error.bind="error.PackingId" label="Kode Packing" loader.bind="packingLoader"
+                placeholder="Cari Packing" query.bind="packingFilter" read-only.bind="packingReadOnly" key="Code" text="Code">
+            </au-autocomplete>
+
+            <au-autocomplete 
+                value.bind="data.Storage" 
+                error.bind="error.Storage"
+                label="Gudang" 
+                loader.one-time="storageLoader"
+                text.bind = "storageView"
+                placeholder="Cari penyimpanan" 
+                key="Id" 
+                read-only.bind="packingReadOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-textbox label="Nomor Order" value.bind="data.Packing.ProductionOrderNo" read-only.bind="true"></au-textbox>
+            <au-textbox label="Jenis Order" value.bind="data.Packing.OrderTypeName" read-only.bind="true"></au-textbox>
+            <au-textbox label="Warna Diminta" value.bind="data.Packing.ColorName" read-only.bind="true"></au-textbox>
+            <au-textbox label="Jenis Warna" value.bind="data.Packing.ColorType" read-only.bind="true" if.bind="isSolid"></au-textbox>
+            <au-textbox label="Konstruksi" value.bind="data.Packing.Construction" read-only.bind="true"></au-textbox>
+            <au-textbox label="Lebar Finish" value.bind="data.Packing.MaterialWidthFinish" read-only.bind="true"></au-textbox>
+            <au-textbox label="Satuan" value.bind="data.Packing.PackingUom" read-only.bind="true"></au-textbox>
+        </fieldset>
+
+        <au-collection items.bind="data.Items" show.bind="data.PackingId" columns.bind="itemsColumns" read-only.bind="packingReadOnly" item-template="modules/inventory/packing-receipt/template/packing-item"
+            errors.bind="error.Items">
+        </au-collection>
+
+    </au-input-form>
+</template>

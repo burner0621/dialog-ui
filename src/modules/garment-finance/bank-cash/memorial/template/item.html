@@ -1,0 +1,39 @@
+<template>
+	<tr>
+		<td>
+			<au-autocomplete
+                value.bind="coa"
+                loader.one-time="chartOfAccountLoader" 
+                error.bind="error.COA"
+                text.bind="chartOfAccountView" 
+                read-only.bind="readOnly || (isEdit && data.Id)"
+                options.bind="controlOptions" 
+                placeholder="Pilih No Account">
+            </au-autocomplete>
+		</td>
+		<td>
+			<au-textbox 
+                value.bind="data.COA.Name" 
+                error.bind="error.COA"
+                read-only.bind="true">
+			</au-autocomplete>
+		</td>
+		<td>
+			<au-numeric 
+                value.bind="data.Debit" 
+                error.bind="error.Debit"
+                read-only.bind="readOnly || data.Credit>0">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric 
+                value.bind="data.Credit" 
+                error.bind="error.Credit"
+                read-only.bind="readOnly || data.Debit>0">
+			</au-numeric>
+		</td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)" >-</button>
+        </td>
+	</tr>
+</template>

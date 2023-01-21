@@ -1,0 +1,67 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.purchaseOrder.purchaseRequest.no" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-autocomplete 
+                value.bind="data.product" 
+                loader.bind="productLoader" 
+                text.bind="productView"
+                key="code" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.purchaseOrderQuantity" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.purchaseOrderUom.unit" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <div class= "form-group has-warning" show.bind="isWarning">
+                <au-numeric 
+                    value.bind="deliveredQuantity" 
+                    error.bind="error.deliveredQuantity" 
+                    read-only.bind="options.readOnly" 
+                    options.bind="controlOptions">
+                </au-numeric>
+                <span class="help-block">Jumlah diterima lebih besar dari jumlah dipesan</span>
+            </div> 
+            <div  show.bind="!isWarning">
+                <au-numeric 
+                    value.bind="deliveredQuantity" 
+                    error.bind="error.deliveredQuantity" 
+                    read-only.bind="options.readOnly"
+                    options.bind="controlOptions">
+                </au-numeric>
+            </div>
+        </td>
+        <td>
+            <au-multiline 
+                value.bind="data.remark" 
+                error.bind="error.remark" 
+                read-only.bind="options.readOnly" 
+                placeholder="tambah catatan"
+                options.bind="controlOptions">
+            </au-multiline>
+        </td>
+        
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>
+    </tr>
+</template>

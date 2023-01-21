@@ -1,0 +1,32 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedProductionOrder" error.bind="error.ProductionOrder"
+                loader.bind="productionOrderList" text="productionOrderNo" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+
+            <au-textbox error.bind="error.Item" read-only.bind="true"></au-textbox>
+
+            <au-collection columns.bind="itemColumns" items.bind="data.PackagingList"
+                errors.one-way="error.PackagingList" read-only.bind="readOnly" options.bind="itemOptions"
+                header-template="modules/packing-sku-inventory/dyeing-printing-out-packaging/template/item-header"
+                item-template="modules/packing-sku-inventory/dyeing-printing-out-packaging/template/item"
+                footer-template="modules/packing-sku-inventory/dyeing-printing-out-packaging/template/item-footer"
+                remove.bind="removeItems" copy.bind="removeItems">
+            </au-collection>
+
+            <!-- <au-collection columns.bind="itemColumns" items.bind="data.PackagingList" options.bind="itemOptions"
+                add.bind="addSPPDetailCallback" remove.bind="sppRemove" read-only.bind="readOnly"
+                errors.bind="error.PackagingList"
+                item-template="modules/packing-sku-inventory/dyeing-printing-out-packaging/template/item">
+            </au-collection> -->
+        </td>
+
+        <!-- <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td> -->
+    </tr>
+</template>

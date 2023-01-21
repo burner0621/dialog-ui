@@ -1,0 +1,17 @@
+<template>
+    <au-input-form title="Copy Cost Calculation Export Garment">
+        <au-autocomplete
+            value.bind="costCalculation"
+            label="Nomor RO"
+            loader.bind="costCalculationLoader"
+            query.bind="costCalculationFilter"
+            text="RO_Number"
+            placeholder="Nomor RO"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div>
+            <span class="col-sm-1"></span>
+            <button type="button" class="btn btn-primary" click.delegate="copy()">Copy</button>
+        </div>
+    </au-input-form>
+</template>

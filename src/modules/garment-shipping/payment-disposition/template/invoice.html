@@ -1,0 +1,70 @@
+<template>
+    <tr>
+        <td >
+            <au-autocomplete 
+                placeholder="Invoice" 
+                value.bind="selectedInvoice"
+                error.bind="error.invoice" 
+                loader.bind="invoiceLoader" 
+                query.bind="filter"
+                text="invoiceNo"
+                read-only.bind="readOnly || data.id" >
+            </au-autocomplete>
+        </td>
+        <td >
+            <au-numeric 
+                value.bind="data.quantity"
+                error.bind="error.quantity" 
+                read-only.bind="true" >
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric 
+                value.bind="data.amount"
+                error.bind="error.amount" 
+                read-only.bind="true" >
+            </au-numeric>
+        </td>
+        <td  if.bind="isFreightCharged">
+            <au-numeric 
+                value.bind="data.volume"
+                error.bind="error.volume" 
+                read-only.bind="readOnly"
+                if.bind="isFreightCharged" >
+            </au-numeric>
+        </td>
+        <td  if.bind="isFreightCharged">
+            <au-numeric 
+                value.bind="data.grossWeight"
+                error.bind="error.grossWeight" 
+                read-only.bind="readOnly" 
+                if.bind="isFreightCharged">
+            </au-numeric>
+        </td>
+        <td  if.bind="isFreightCharged">
+            <au-numeric 
+                value.bind="data.chargeableWeight"
+                error.bind="error.chargeableWeight" 
+                read-only.bind="readOnly"
+                if.bind="isFreightCharged" >
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric 
+                value.bind="data.totalCarton"
+                error.bind="error.totalCarton" 
+                read-only.bind="readOnly" >
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric 
+                value.bind="data.cbm"
+                read-only.bind="true" >
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

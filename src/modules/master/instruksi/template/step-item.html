@@ -1,0 +1,35 @@
+<template>
+  <tr>
+    <td align="center" click.delegate="onItemClicked(step, $event)" ref="tdNumber">${$index + 1}</td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdStep">
+      <au-autocomplete value.bind="temp" error.bind="error.step" loader.bind="stepLoader" placeholder="search step" key="Process"
+        text="Process" read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+      </au-autocomplete>
+      </br>
+      <au-textbox value.bind="stepIndicatorInfo" read-only.bind="true" options.bind="controlOptions"></au-textbox>
+    </td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdProcessArea">
+      <au-dropdown
+          value.bind="context.data.ProcessArea"
+          items.bind="areaOptions"
+          error.bind="error.ProcessArea"
+          options.bind="controlOptions"
+          read-only.bind="(readOnly || isEdit)">
+      </au-dropdown>
+    </td>
+    <td click.delegate="onItemClicked(step, $event)" ref="tdButton" if.bind="!options.readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(temp)">-</button>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>
+      <au-collection items.bind="step.StepIndicators" columns.bind="stepIndicatorColumns" if.bind="isStepSelected" read-only.bind="readOnly"
+        item-template="modules/master/instruksi/template/step-indicator-item">
+      </au-collection>
+      <td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+</template>

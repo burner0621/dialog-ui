@@ -1,0 +1,44 @@
+<template>
+    <tr>
+        <td class="col-sm-8">
+            <div class="col-sm-12">
+                <au-autocomplete 
+                    value.bind="materialRequestNote"
+                    error.bind="error.MaterialRequestNote"
+                    loader.one-time="materialRequestNoteLoader"
+                    read-only.bind="readOnly"
+                    text="Code"
+                    query.bind="options.filter">
+                </au-autocomplete>
+            </div>
+        </td>
+        <td class="col-sm-3">
+            <div class="col-sm-${readOnly ? 11 : 12}">
+                <au-textbox 
+                    value.bind="materialRequestCreatedDateUtc"
+                    read-only.bind="true">
+                </au-textbox>
+            </div>
+            <div class="col-sm-1" if.bind="readOnly" style="padding-right: 0px;">
+                <button class="btn btn-info pull-right" click.delegate="toggle()">i</button> 
+            </div>
+        </td>
+        <td class="col-sm-1" if.bind="!readOnly">
+            <button class="btn btn-info" click.delegate="toggle()">i</button> 
+            <button class="btn btn-danger" click.delegate="onremove(data)" if.bind="!readOnly">-</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="3">
+            <au-collection
+                items.bind="data.MaterialDistributionNoteDetails" 
+                errors.bind="error.MaterialDistributionNoteDetails"
+                columns.bind="columns"
+                read-only.bind="readOnly"
+                remove.bind="onRemove"
+                options.bind="options"
+                item-template="modules/inventory/finishing-printing/material-distribution-note/template/material-distribution-note-detail">
+            </au-collection>
+        </td>  
+    </tr>
+</template>

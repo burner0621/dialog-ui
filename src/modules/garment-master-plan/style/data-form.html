@@ -1,0 +1,38 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox   
+            label="Kode Style"
+            value.bind="data.code"
+            error.bind="error.code"
+            read-only.bind="readOnly"
+            option.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox   
+            label="Nama Style"
+            value.bind="data.name"
+            error.bind="error.name"
+            read-only.bind="readOnly"
+            option.bind="controlOptions">
+        </au-textbox>
+
+        <au-multiline
+            label="Keterangan"
+            value.bind="data.description"
+            error.bind="error.description"
+            read-only.bind="readOnly"
+            option.bind="controlOptions">
+        </au-multiline>
+
+    <!--<template replaceable part="actions"></template>-->
+    </au-input-form>
+</template>

@@ -1,0 +1,18 @@
+<template>
+    <tr>
+        <td colspan="3"
+            class="text-right">
+            <au-textbox value.bind="'Total'"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td colspan="1"
+            class="text-right">
+            <au-numeric value.bind="getTotal"
+                        format="0,0.0000"
+                        read-only.bind="true"
+                        options.bind="controlOption">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

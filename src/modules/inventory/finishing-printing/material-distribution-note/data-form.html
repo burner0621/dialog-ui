@@ -1,0 +1,58 @@
+<template>
+    <style>
+        table .btn-success {
+            float: none !important;
+        }
+
+        .col-sm-12 {
+            margin-top: 0px !important;
+        }
+    </style>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <au-textbox
+            label="No"
+            value.bind="data.No"
+            error.bind="error.No"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            if.bind="readOnly">
+        </au-textbox>
+
+        <au-autocomplete 
+            value.bind="unit" 
+            error.bind="error.Unit"
+            query.bind="unitQuery"
+            label="Unit" 
+            loader.one-time="unitLoader"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"                
+            text="Name">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Tipe Bon"
+            value.bind="type"
+            error.bind="error.Type"
+            read-only.bind="readOnly"
+            options.bind="controlOptions"
+            items.bind="types">
+        </au-dropdown>
+
+        <au-textbox
+            show.bind="error.MaterialDistributionNoteItemCollection"
+            error.bind="error.MaterialDistributionNoteItemCollection"
+            read-only="true">
+        </au-textbox>
+            
+        <au-collection
+            items.bind="data.MaterialDistributionNoteItems" 
+            errors.bind="error.MaterialDistributionNoteItems"
+            columns.bind="mdnInfo.columns"
+            add.bind="mdnInfo.onAdd"
+            read-only.bind="readOnly"
+            show.bind="data.Unit && data.Type"
+            options.bind="mdnInfo.options"
+            item-template="modules/inventory/finishing-printing/material-distribution-note/template/material-distribution-note-item">
+        </au-collection>
+    </au-input-form>
+</template>

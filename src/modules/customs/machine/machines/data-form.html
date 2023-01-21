@@ -1,0 +1,70 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)"
+        if.one-way="context.hasCancel">Kembali</button>
+      <!-- <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button> -->
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <!-- <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button> -->
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <au-autocomplete value.bind="brand" error.bind="error.MachineBrand" label="Brand" loader.bind="brandLoader"
+          text.bind="brandView" placeholder="Pilih Brand" read-only.bind="(readOnly || isEdit)"
+          options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Jumlah" value.bind="data.MachineQuantity" error.bind="error.MachineQuantity"
+          read-only.bind="isEdit" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Satuan" value.bind="data.UnitQuantity" error.bind="error.UnitQuantity"
+          read-only.bind="isEdit" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown label="Supplier" value.bind="Supp" error.bind="error.SupplierType"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions" items.bind="SupItems">
+        </au-dropdown>
+
+        <au-textbox 
+          label="Tipe" value.bind="data.MachineType" error.bind="error.MachineType" read-only.bind="(readOnly || isEdit)"
+           options.bind="controlOptions">
+        </au-textbox>
+
+
+        <au-autocomplete value.bind="category" error.bind="error.MachineCategory" label="Kategori"
+          loader.bind="categoryLoader" text.bind="categoryView" placeholder="Pilih Kategory"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+        </au-autocomplete>
+      </div>
+
+      <div class="col-md-6">
+        <au-textbox label="Tahun Beli" value.bind="data.PurchaseYear" error.bind="error.PurchaseYear"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+        </au-textbox>
+        <au-textbox label="Nomor BC" value.bind="data.BCNumber" error.bind="error.BCNumber"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox 
+        label="Serial Number" value.bind="data.IDNumber" error.bind="error.IDNumber" read-only.bind="(readOnly || isEdit)"
+         options.bind="controlOptions">
+      </au-textbox>
+
+        <au-dropdown label="Klasisifikasi" value.bind="Klass" error.bind="error.Classification"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions" items.bind="KlasItems">
+        </au-dropdown>
+
+
+        <au-textbox label="No BC Keluar" value.bind="data.BCOutNumber" error.bind="error.BCOutNumber"
+          read-only.bind="(readOnly || isEdit)" options.bind="controlOptions">
+        </au-textbox>
+
+      </div>
+
+  </au-input-form>
+  <!-- </div>
+  </div> -->
+</template>

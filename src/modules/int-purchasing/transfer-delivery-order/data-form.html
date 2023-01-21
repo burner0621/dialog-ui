@@ -1,0 +1,73 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <button slot="actions" class="btn btn-success" click.delegate="context.unpost($event)" if.one-way="context.hasUnpost">Unpost</button>
+
+        <au-textbox 
+            label="Nomor DO" 
+            if.bind="data.DONo"
+            value.bind="data.DONo" 
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="division"
+            error.bind="error.Division"
+            label="Divisi Pemesan"
+            loader.bind="divisionLoader"
+            text.bind="divisionView"
+            placeholder="Divisi Pemesan"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tgl. DO" 
+            value.bind="data.DODate" 
+            error.bind="error.DODate" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="supplier" 
+            error.bind="error.Supplier"
+            label="Unit Pengirim" 
+            loader.bind="supplierLoader"
+            text.bind = "supplierView"
+            placeholder="cari supplier" 
+            read-only.bind="readOnly|| isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+       
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            placeholder="tambah keterangan" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox
+            show.bind="error.TransferDeliveryOrderItemsCount"
+            error.bind="error.TransferDeliveryOrderItemsCount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection
+            items.bind="data.items"
+            errors.bind="error.items"
+            columns.bind="itemsInfo"
+            options.bind="externalTransferOrderItemsOptions"
+            add.bind="addItems"
+            read-only.bind="readOnly || !division"
+            item-template="modules/int-purchasing/transfer-delivery-order/template/delivery-order-item">
+        </au-collection>
+
+    </au-input-form>
+    <div class="row"></div>
+</template>

@@ -1,0 +1,116 @@
+<template replace-part="packingItem">
+  <tr>
+      <td show.bind="!readOnly">
+          <au-checkbox
+            value.bind="data.IsSave"
+            disabled.bind="readOnly"
+          >
+          </au-checkbox>
+        </td>
+    <!-- <td>
+          <au-numeric
+            value.bind="data.productionOrder.orderQuantity"
+            format="0.00"
+            read-only.bind="true"
+            error.bind="error.QtyOrder"
+            options.bind="controlOptions"
+          >
+          </au-numeric>
+        </td> -->
+    <!-- <td>
+      <au-textbox
+        value.bind="data.Construction"
+        read-only.bind="true"
+        error.bind="error.Construction"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td> -->
+    <td>
+      <au-textbox
+        value.bind="data.Grade"
+        read-only.bind="true"
+        error.bind="error.Grade"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td>
+    <!-- <td>
+      <au-textbox
+        value.bind="data.Piece"
+        read-only.bind="true"
+        error.bind="error.Piece"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td> -->
+
+    <td>
+      <au-textbox
+        value.bind="data.YarnOrigin"
+        read-only.bind="true"
+        error.bind="error.YarnOrigin"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td>
+
+    <td>
+      <au-numeric
+       value.bind="data.Quantity"
+        format="0.00"
+        read-only.bind="readOnly || isEdit"
+        error.bind="error.Quantity"
+        options.bind="controlOptions"
+      >
+      </au-numeric>
+    </td>
+
+    <td>
+      <au-numeric
+       value.bind="data.QuantityPiece"
+        format="0.00"
+        read-only.bind="readOnly || isEdit"
+        error.bind="error.QuantityPiece"
+        options.bind="controlOptions"
+      >
+      </au-numeric>
+    </td>
+    <td>
+      <au-textbox
+        value.bind="data.UomUnit"
+        read-only.bind="true"
+        error.bind="error.UomUnit"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox
+        value.bind="data.ProductRemark"
+        read-only.bind="true"
+        error.bind="error.ProductRemark"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td>
+    <!-- <td>
+      <au-textbox
+        value.bind="data.Barcode"
+        read-only.bind="true"
+        error.bind="error.Barcode"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td> -->
+    <!-- <td>
+      <au-textbox
+        value.bind="data.ProductionOrderDate"
+        read-only.bind="true"
+        error.bind="error.ProductionOrderDate"
+        options.bind="controlOptions"
+      >
+      </au-textbox>
+    </td> -->
+  </tr>
+</template>

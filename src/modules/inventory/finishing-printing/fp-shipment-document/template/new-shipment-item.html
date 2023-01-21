@@ -1,0 +1,26 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox
+                value.bind="data.PackingReceiptCode"
+                error.bind="error.PackingReceiptId"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox error.bind="error.PackingReceiptItem" read-only.bind="true"></au-textbox>
+
+            <au-collection 
+                columns.bind="packingReceiptItemsColumns"
+                items.bind="data.PackingReceiptItems"
+                errors.one-way="error.PackingReceiptItems"
+                read-only.bind="readOnly"
+                remove.bind="removeItems"
+                item-template="modules/inventory/finishing-printing/fp-shipment-document/template/packing-receipt-item">
+            </au-collection>
+        </td>
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly" class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

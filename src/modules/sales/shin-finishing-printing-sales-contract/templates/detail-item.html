@@ -1,0 +1,25 @@
+<template>
+  <tr>
+    <td>
+      <au-textbox value.bind="data.Color" error.bind="error.Color" read-only.bind="options.readOnly"
+        options.bind="controlOption"></au-textbox>
+    </td>
+    <td if.bind="isPrinting">
+      <numeric value.bind="data.ScreenCost" error.bind="error.ScreenCost" read-only.bind="true"
+        options.bind="controlOption"></numeric>
+    </td>
+    <td>
+      <numeric value.bind="data.Price" error.bind="error.Price" read-only.bind="options.readOnly"
+        options.bind="controlOption"></numeric>
+    </td>
+    <td>
+      <au-textbox value.one-way="data.Currency.Code" read-only.bind="true" options.bind="controlOption"></au-textbox>
+    </td>
+    <td show.bind="data.isUseIncomeTax">
+      <checkbox show.bind="data.isUseIncomeTax" value.bind="data.UseIncomeTax" read-only.bind="readOnly"></checkbox>
+    </td>
+    <td if.bind="!options.readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+    </td>
+  </tr>
+</template>

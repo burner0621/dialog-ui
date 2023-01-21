@@ -1,0 +1,37 @@
+<template>
+	<tr>
+		<td>
+			<au-autocomplete value.bind="selectedNote" error.bind="error.InvoiceNo"
+				loader.bind="localSalesNoteLoader" text.bind="localSalesNoteView"
+				placeholder="Cari No Nota" read-only.bind="readOnly || (isEdit && data.Id)">
+			</au-autocomplete>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Buyer.Code" error.bind="error.BuyerCode" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Buyer.Name" error.bind="error.BuyerName" read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox value.bind="data.Currency.Code" error.bind="error.CurrencyCode"
+				read-only.bind="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric value.bind="data.Currency.Rate" error.bind="error.Rate" read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric value.bind="data.Amount" error.bind="error.Amount" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td if.bind="readOnly"></td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+		<td if.bind="!readOnly"></td>
+
+	</tr>
+</template>

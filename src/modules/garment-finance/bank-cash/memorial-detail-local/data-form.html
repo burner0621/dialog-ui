@@ -1,0 +1,56 @@
+<template>
+	<div class="row">
+		<div class="col-md-12">
+			<au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+				<div>
+
+					<au-autocomplete value.bind="selectedMemorial" loader.one-time="memorialLoader"
+						error.bind="error.Memorial" text="MemorialNo" label="No Memorial"
+						query.bind="filter" read-only.bind="readOnly || isEdit"
+						options.bind="controlOptions" placeholder="Pilih nomor memorial">
+					</au-autocomplete>
+
+					<au-datepicker label="Tanggal Memorial" value.bind="data.MemorialDate"
+						read-only.bind="true" options.bind="controlOptions"
+						error.bind="error.MemorialDate">
+					</au-datepicker>
+
+					<au-numeric label="Amount" value.bind="credit" read-only.bind="true"
+						options.bind="controlOptions" error.bind="error.Amount"></au-numeric>
+
+					<au-numeric label="Amount (IDR)" value.bind="data.Amount" read-only.bind="true"
+						options.bind="controlOptions"></au-numeric>
+
+					<div class="form-group has-error">
+						<p if.bind="error.ItemsCount" class="help-block text-center">
+							${error.ItemsCount}
+						</p>
+					</div>
+
+					<au-collection items.bind="data.Items" errors.bind="error.Items"
+						columns.bind="itemsColumns" read-only.bind="readOnly"
+						add.bind="addItems" remove.bind="removeItems" options.bind="Options"
+						title="Detail Nota Penjualan Lokal"
+						item-template="modules/garment-finance/bank-cash/memorial-detail-local/template/item"
+						footer-template="modules/garment-finance/bank-cash/memorial-detail-local/template/footer">
+					</au-collection>
+
+					<div class="form-group has-error">
+						<p if.bind="error.ItemsCount" class="help-block text-center">
+							${error.OtherItemsCount}
+						</p>
+					</div>
+
+					<au-collection items.bind="data.OtherItems" errors.bind="error.OtherItems"
+						columns.bind="otherItemsColumns" read-only.bind="readOnly"
+						add.bind="addOtherItems" remove.bind="removeOtherItems"
+						title="Detail Lain Lain" options.bind="Options"
+						item-template="modules/garment-finance/bank-cash/memorial-detail-local/template/other-item"
+						footer-template="modules/garment-finance/bank-cash/memorial-detail-local/template/other-footer">
+					</au-collection>
+
+				</div>
+			</au-input-form>
+		</div>
+	</div>
+</template>

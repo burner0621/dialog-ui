@@ -1,0 +1,116 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date"
+                                read-only.bind="readOnly">
+                            </au-datepicker>
+
+                            <au-autocomplete placeholder="Pilih No. Sales Contract" value.bind="data.SalesContract"
+                                error.bind="error.SalesContract" loader.one-time="SalesContractSpinningLoader"
+                                text="SalesContractNo" label="No Sales Contract" read-only.bind="readOnly || isEdit"
+                                options.bind="controlOptions">
+                            </au-autocomplete>
+
+                            <au-dropdown label="Unit" value.bind="data.Unit" error.bind="error.Unit"
+                                read-only.bind="readOnly || isEdit" placeholder="masukkan Kepada" items.bind="ListUnit">
+                            </au-dropdown>
+
+                            <au-dropdown label="Perihal" value.bind="data.Subject" error.bind="error.Subject"
+                                read-only.bind="readOnly || isEdit" placeholder="masukkan Perhial"
+                                items.bind="ListSubject"></au-dropdown>
+
+                            <au-textbox if.bind="data.Subject == 'Lainnya'" label="Lainnya"
+                                value.bind="data.OtherSubject" error.bind="error.OtherSubject" read-only.bind="readOnly"
+                                placeholder="Input Perihal Lainnya">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.Buyer.Name" label="Buyer" read-only.bind="true">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.Buyer.Type" label="Tipe Buyer"
+                                read-only.bind="true">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.Comodity.Name" label="Jenis dan Nomor Benang"
+                                read-only.bind="true">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.OrderQuantity" label="Jumlah"
+                                read-only.bind="true">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.UomUnit" label="Satuan" read-only.bind="true">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.SalesContract.ComodityDescription" label="Blended"
+                                read-only.bind="true">
+                            </au-textbox>
+
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="row">
+
+                                <div class="col-sm-2" style="padding-left:12%">
+                                    <au-label>Barang Siap Kirim</au-label>
+                                </div>
+
+                                <div class="col-sm-5" style="padding-left:9%">
+                                    <au-dropdown label="Bulan" value.bind="data.Month" error.bind="error.Month"
+                                        read-only.bind="readOnly || isEdit" placeholder="masukkan Kepada"
+                                        items.bind="ListMonth">
+                                    </au-dropdown>
+                                </div>
+
+                                <div class="col-sm-5" style="padding-left:5%">
+                                    <au-dropdown label="Tahun" value.bind="data.Year" error.bind="error.Year"
+                                        read-only.bind="readOnly || isEdit" placeholder="masukkan Kepada"
+                                        items.bind="ListYear">
+                                    </au-dropdown>
+                                </div>
+
+                            </div>
+
+                            <au-textbox label="Ball Mark" value.bind="data.BallMark" error.bind="error.BallMark"
+                                read-only.bind="readOnly" placeholder="Input Ball Mark">
+                            </au-textbox>
+
+                            <au-textbox label="Sample" value.bind="data.Sample" error.bind="error.Sample"
+                                read-only.bind="readOnly" placeholder="Input Sample">
+                            </au-textbox>
+
+                            <au-multiline label="Catatan" value.bind="data.Remark" error.bind="error.Remark"
+                                read-only.bind="readOnly" keypress.delegate="enterDelegate($event)"
+                                placeholder="Input Keterangan">
+                            </au-multiline>
+
+                            <au-textbox label="Penjualan Benang" value.bind="data.YarnSales"
+                                error.bind="error.YarnSales" read-only.bind="readOnly"
+                                placeholder="Input Penjualan Benang">
+                            </au-textbox>
+
+                            <au-textbox value.bind="data.DeliveredTo" read-only.bind="true">
+                            </au-textbox>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </au-input-form>
+</template>

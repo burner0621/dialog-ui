@@ -1,0 +1,99 @@
+<template>
+    <h1 class="page-header">Total Pembelian per Supplier</h1>
+    <form class="form-horizontal">
+        <!--<au-autocomplete  value.bind="unit" error.bind="error.unit" label="Unit"  loader.bind="unitLoader"></au-autocomplete>-->
+        <au-autocomplete  value.bind="unit" label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+                
+        <au-dropdown 
+                label="Jenis Supplier" 
+                value.bind="JenisSpl"
+                items.bind="SupplierType"
+                options.bind="controlOptions" >
+        </au-dropdown>
+
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentImport"  
+                options.bind="controlOptions"
+                if.bind="jnsSpl">
+        </au-dropdown>
+        
+        <au-dropdown
+                label="Term Pembayaran"
+                value.bind="payMtd"
+                items.bind="termPaymentLocal"  
+                options.bind="controlOptions"
+                if.bind="!jnsSpl">
+        </au-dropdown>
+        
+        <au-dropdown 
+                label="Kategori" 
+                value.bind="KtgrItem"
+                items.bind="KategoriItem"
+                options.bind="controlOptions" >
+        </au-dropdown>
+        
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">Nomor</th>
+                    <th class="text-center">Supplier</th>
+                    <th class="text-center">Unit</th>
+                    <th class="text-center">Kategori</th>
+                    <th class="text-center">Metode Bayar</th>
+                    <th class="text-center">Jumlah</th>
+                    <th class="text-center">Satuan</th>
+                    <th class="text-center">Jumlah Konversi</th>
+                    <th class="text-center">Satuan Kecil</th> 
+                    <th class="text-center">Nominal [Rp]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="supplier of suppliers">
+                    <tr repeat.for="data of supplier.data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${data.supplierName}</td>
+                        <td>${data.unitName}</td>
+                        <td>${data.categoryName}</td>
+                        <td>${data.paymentMethod}</td>
+                        <td>${data.quantity}</td>
+                        <td>${data.uomUnit}</td>
+                        <td>${data.smallQty}</td>
+                        <td>${data.smallUom}</td> 
+                        <td class="text-right"><strong>${data.Amount}</strong></td>
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td colspan="6"><strong>${supplier.supplier}</strong></td>
+                        <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${supplier.subTotal}</strong></td>
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="9"><strong>T O T A L  P E M B E L I A N . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${AmtTotal}</strong></td>
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

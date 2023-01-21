@@ -1,0 +1,134 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+  <div class="row justify-content-around" style="padding:10">
+
+    <div class="col-md-4" style="padding:10">
+      
+      <au-textbox 
+        label="Nama Akun"
+        value.bind="data.AccountName"
+        error.bind="error.AccountName"
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-textbox 
+        label="Nomor Akun"
+        value.bind="data.AccountNumber"
+        error.bind="error.AccountNumber"
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-textbox 
+        label="Kode Bank"
+        value.bind="data.BankCode"
+        error.bind="error.BankCode"
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-textbox 
+        label="Nama Bank"
+        value.bind="data.BankName"
+        error.bind="error.BankName"
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-multiline 
+        label="Alamat Bank"
+        value.bind="data.BankAddress"
+        error.bind="error.BankAddress"
+        read-only.bind="(readOnly)"
+        options.bind="(customAddressOptions)"
+      ></au-multiline>
+    
+      <au-autocomplete 
+        label="Kode Mata Uang" 
+        placeholder="Cari Mata Uang" 
+        value.bind="data.Currency" 
+        error.bind="error.Currency" 
+        text.bind="currencyView" 
+        loader.one-time="currencyLoader"  
+        read-only.bind="(readOnly || isEdit)"
+        keypress.delegate="enterDelegate($event)"
+        options.bind="(customOptions)" 
+      ></au-autocomplete>
+
+      <au-textbox 
+        label="Kode Tukar" 
+        value.bind="data.SwiftCode" 
+        error.bind="error.SwiftCode" 
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+    </div>
+
+    <div class="col-md-4" style="padding:10">
+
+      <au-dropdown 
+        label="Nama Divisi"
+        value.bind="data.Division.Name"
+        error.bind="error.Division.Name"
+        read-only.bind="(readOnly)"
+        items.bind="divisionOptions"
+        keypress.delegate="enterDelegate($event)"
+        options.bind="(customOptions)"
+      ></au-dropdown>
+
+      <au-textbox
+        label="Fax" 
+        value.bind="data.Fax" 
+        error.bind="error.Fax" 
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-textbox 
+        label="Phone" 
+        value.bind="data.Phone" 
+        error.bind="error.Phone" 
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+
+      <au-textbox 
+        label="COA"
+        value.bind="data.AccountCOA"
+        error.bind="error.AccountCOA" 
+        read-only.bind="(readOnly)"
+        options.bind="(customOptions)"
+      ></au-textbox>
+      
+    </div>
+  </div>
+
+  <div class="row justify-content-around">
+      <div class="col-md-4" >
+        <au-textbox label="Simbol Mata Uang&emsp;:"
+          value.bind="data.Currency.Code" 
+          read-only.bind="true"
+          options.bind="(custom2Options)"
+        ></au-textbox>
+      </div>
+      
+      <div class="col-md-4">
+        <au-textbox label="Rate Mata Uang&emsp;:"
+         value.bind="data.Currency.Rate"
+         read-only.bind="true"
+         options.bind="(custom2Options)"
+        ></au-textbox>
+      </div>
+  
+      <div class="col-md-4">
+        <au-textbox label="Keterangan Mata Uang&emsp;:"
+         value.bind="data.Currency.Description"
+         read-only.bind="true"
+         options.bind="(custom2Options)"
+        ></au-textbox>
+      </div>
+  </div>
+
+</template>

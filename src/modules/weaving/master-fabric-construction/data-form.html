@@ -1,0 +1,172 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions" replaceable part="actions">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-2" style="white-space: nowrap;">
+          <textbox label="No. Konstruksi"
+           read-only.bind="readOnlyAll"
+          ></textbox>
+        </div>
+
+        <div class="col-md-10">
+          <au-textbox placeholder="No. Konstruksi"
+           value.bind="ConstructionNumber" 
+           error.bind="error.ConstructionNumber"
+           read-only.bind="readOnlyAll"
+          ></au-textbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2" style="white-space: nowrap;">
+          <textbox label="Konstruksi"
+           read-only="true"
+          ></textbox>
+        </div>
+
+        <div class="col-md-9">
+          <div class="col-md-2" style="padding-left: 0px; padding-right: 0px;">
+            <au-textbox placeholder="Jenis Material"
+              value.bind="MaterialType"
+              error.bind="error.MaterialType"
+              read-only.bind="readOnly"
+            ></au-textbox>
+          </div>
+
+          <div class="col-md-2" style="padding-right: 0px; padding-left: 4px;">
+            <au-textbox placeholder="Jenis Anyaman"
+             value.bind="data.WovenType"
+             error.bind="error.WovenType"
+             read-only.bind="readOnly"
+            ></au-textbox>
+          </div>
+
+          <div class="col-md-2" style="padding-right: 0px; padding-left: 4px;">
+            <au-numeric value.bind="data.AmountOfWarp" 
+              error.bind="error.AmountOfWarp"
+              format.bind = "formatData" 
+              read-only.bind="readOnly"
+            ></au-numeric>
+          </div>
+          
+          <div class="col-md-2" style="padding-right: 0px; padding-left: 4px;">
+            <au-numeric value.bind="data.AmountOfWeft" 
+              error.bind="error.AmountOfWeft"
+              format.bind = "formatData" 
+              read-only.bind="readOnly"
+            ></au-numeric>
+          </div>
+
+          <div class="col-md-2" style="padding-right: 0px; padding-left: 4px;">
+            <au-numeric value.bind="data.Width" 
+              error.bind="error.Width"
+              format.bind = "formatData"  
+              read-only.bind="readOnly"
+            ></au-numeric>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2" style="white-space: nowrap;">
+          <textbox label="Jenis Lusi dan Pakan"
+           read-only="true"
+          ></textbox>
+        </div>
+
+        <div class="col-md-2" style="padding-right: 4px;">
+          <au-textbox placeholder="Jenis Lusi" 
+           value.bind="WarpType" 
+           error.bind="error.WarpType"
+           read-only.bind="readOnlyAll"
+          ></au-textbox>
+        </div>
+
+        <div class="col-md-2" style="padding-left: 0px;">
+          <au-textbox placeholder="Jenis Pakan"
+           value.bind="WeftType" 
+           error.bind="error.WeftType"
+           read-only.bind="readOnlyAll"
+          ></au-textbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2" style="white-space: nowrap;">
+          <textbox label="Reed Space" 
+           read-only.bind="readOnlyAll"
+          ></textbox>
+        </div>
+
+        <div class="col-md-2">
+          <au-numeric value.bind="data.ReedSpace" 
+           error.bind="error.ReedSpace"
+           format.bind = "formatData" 
+           read-only.bind="readOnly">
+          </au-numeric>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2" style="white-space: nowrap;">
+          <textbox label="Jumlah Helai Benang" read-only.bind="readOnlyAll"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-numeric value.bind="data.YarnStrandsAmount" 
+           error.bind="error.YarnStrandsAmount"
+           format.bind = "formatData"  
+           read-only.bind="readOnly"
+          ></au-numeric>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-offset-9 col-md-1" style="white-space: nowrap;">
+          <textbox label="Total Benang"
+           read-only="true"
+          ></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Total Benang"
+           value.bind="TotalYarn" 
+           error.bind="error.TotalYarn"
+           read-only.bind="readOnlyAll"
+          ></au-textbox>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-6">
+            <au-collection items.bind="ConstructionWarpsDetail" 
+             errors.bind="error.ConstructionWarpsDetail"
+             columns.bind="warpColumns"
+             add.bind="addConstructionWarpsDetail" 
+             options.bind="ConstructionWarpsDetailOptions" 
+             remove.bind="onremove" 
+             read-only.bind="readOnly"
+             item-template="modules/weaving/master-fabric-construction/templates/items-warp"
+            ></au-collection>
+          </div>
+          <div class="col-md-6">
+            <au-collection items.bind="ConstructionWeftsDetail" 
+             errors.bind="error.ConstructionWeftsDetail" 
+             columns.bind="weftColumns"
+             add.bind="addConstructionWeftsDetail" 
+             options.bind="ConstructionWeftsDetailOptions" 
+             remove.bind="onremove" 
+             read-only.bind="readOnly"
+             item-template="modules/weaving/master-fabric-construction/templates/items-weft"
+            ></au-collection>
+          </div>
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+</template>

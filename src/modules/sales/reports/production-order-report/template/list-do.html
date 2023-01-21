@@ -1,0 +1,25 @@
+<template>
+    <tr>
+        <td align="center">${$index + 1}</td>
+        <td>
+            <au-textbox value.bind="data.orderNo" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.color" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.machine" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.step" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.area" read-only="true"></au-textbox>
+        </td>
+        <td class="text-right">
+            <require from="../../../../../lib/number-format-value-converter"></require>
+            <p>${data.orderQuantity | numberFormat:"0,000"}</p>
+        </td>
+
+    </tr>
+</template>

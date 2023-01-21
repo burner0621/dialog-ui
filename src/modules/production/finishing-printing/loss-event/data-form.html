@@ -1,0 +1,17 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <!-- <au-autocomplete value.bind="processType" label="Jenis Proses" read-only.bind="readOnly"
+            error.bind="error.ProcessType" loader.bind="processTypeLoader" text="Name" options.bind="controlOptions">
+        </au-autocomplete> -->
+
+        <au-dropdown value.bind="data.ProcessArea" items.bind="areaOptions" label="Area" read-only.bind="readOnly"
+            error.bind="error.ProcessArea" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox value.bind="data.Losses" label="Losses" read-only.bind="readOnly" error.bind="error.Losses"
+            options.bind="controlOptions">
+        </au-textbox>
+
+    </au-input-form>
+</template>

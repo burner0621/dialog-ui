@@ -1,0 +1,32 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete value.bind="selectedProductionOrder"
+                             error.bind="error.ProductionOrder"
+                             loader.one-time="productionOrderLoader"
+                             placeholder="Cari Production Order"
+                             read-only.bind="readOnly"
+                             query.bind="sppFilter"
+                             text="OrderNo"
+                             options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-textbox error.bind="error.Item"
+                        read-only.bind="true"></au-textbox>
+
+            <au-collection columns.bind="newItemColumns"
+                           items.bind="data.Items"
+                           errors.one-way="error.Items"
+                           read-only.bind="readOnly"
+                           item-template="modules/inventory/finishing-printing/fp-shipment-document/template/new-shipment-item"
+                           remove.bind="removeItems">
+            </au-collection>
+        </td>
+
+        <td if.bind="!options.readOnly">
+            <button if.bind="!options.readOnly"
+                    class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

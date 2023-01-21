@@ -1,0 +1,36 @@
+<template>
+    <h3>Detail Surat Perintah Produksi : ${orderNo}</h3>
+    <hr/>
+    <form class="form-horizontal">
+        <div class="row" style="margin-bottom:10px; margin-left:10px; margin-right:10px;">
+            <div class="col-md-6">
+                <div class="row" if.bind="productionOrders.length>0">
+                    <h4>1. List Surat Perintah Produksi</h4>
+                    <div style="max-height: 650px; margin-bottom:10px; overflow-y: scroll">
+                        <au-collection columns.one-way="listSPPColumns" items.bind="productionOrders" read-only.bind="true" footer-template="modules/sales/reports/production-order-report/template/list-spp-footer"
+                            item-template="modules/sales/reports/production-order-report/template/list-spp">
+                        </au-collection>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div style="max-height: 325px; margin-bottom:10px; overflow-y: scroll" if.bind="dailyOperations.length>0">
+                    <h4>2. List Produksi</h4>
+                    <au-collection columns.one-way="listDOColumns" items.bind="dailyOperations" read-only.bind="true" item-template="modules/sales/reports/production-order-report/template/list-do">
+                    </au-collection>
+                </div>
+                <div style="max-height: 325x; margin-bottom:10px; overflow-y: scroll" if.bind="qualityControls.length>0">
+                    <h4>3. List Pemeriksaan Kain</h4>
+                    <au-collection columns.one-way="listQCColumns" items.bind="qualityControls" read-only.bind="true" footer-template="modules/sales/reports/production-order-report/template/list-qc-footer"
+                        item-template="modules/sales/reports/production-order-report/template/list-qc">
+                    </au-collection>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row pull-right" style="margin-bottom:10px; margin-left:10px; margin-right:10px;">
+            <a click.delegate="list()" class='btn btn-default'>Kembali</a>
+        </div>
+    </form>
+</template>

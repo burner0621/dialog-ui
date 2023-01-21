@@ -1,0 +1,37 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.MeasurementIndex + 1" options.bind="controlOptions" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.length"
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.width"
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.height"
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td >
+            <au-numeric
+                value.bind="data.cartonsQuantity"
+                read-only="true">
+            </au-numeric>
+        </td>
+        <td >
+            <div class="form-group">
+                <p class="form-control-static text-right">${cmb}</p>
+            </div>
+        </td>
+    </tr>
+    
+</template>

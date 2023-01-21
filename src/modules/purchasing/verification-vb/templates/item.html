@@ -1,0 +1,29 @@
+<template>
+    <tr>
+        <td>
+            <au-datepicker value.bind="data.Date || data.DateSPB" error.bind="error.DateDetail"
+                read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Remark || data.SupplierName" error.bind="error.Remark" placeholder="Keterangan"
+                read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Amount || data.PriceTotalSPB" read-only.bind="true"
+                format="0,0.000" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td style="text-align:center;">
+            <au-checkbox value.bind="data.isGetPPn" error.bind="error.isGetPPn"
+                read-only.bind="true" options.bind="controlOptions">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-numeric value.bind="Total || data.PriceTotalSPB" read-only.bind="true"
+                format="0,0.000" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,67 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <!-- <au-dropdown label="Jenis Proses" value.bind="processType" error.bind="error.ProcessType"
+            read-only.bind="readOnly" items.bind="typeOptions" options.bind="controlOptions">
+        </au-dropdown> -->
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete show.bind="unit" label="Lot" value.bind="lot" error.bind="error.LotId" loader.bind="lotLoader"
+            placeholder="Cari nomor Lot" key="Id" text="LotNo" query.bind="lotFilter" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete show.bind="unit" label="Nama Benang" value.bind="materialType"
+            error.bind="error.MaterialTypeId" loader.bind="materialTypeLoader" placeholder="Cari nama benang" key="Id"
+            text="Name" read-only.bind="true" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete show.bind="unit" label="Count" value.bind="countConfiguration"
+            error.bind="error.CountConfigurationId" loader.bind="countConfigurationLoader" placeholder="Cari count"
+            key="Id" text.bind="countView" read-only.bind="true" options.bind="controlOptions">
+        </au-autocomplete>
+
+
+
+        <!-- <au-autocomplete label="Nama Benang" value.bind="materialType" error.bind="error.MaterialTypeId"
+            loader.bind="materialTypeLoader" placeholder="Cari nama benang" key="Id" text="Name"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Lot" value.bind="lot" error.bind="error.LotId" loader.bind="lotLoader"
+            placeholder="Cari nomor Lot" key="Id" text="LotNo" query.bind="lotFilter" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete> -->
+
+        <au-dropdown label="Shift" value.bind="shift" error.bind="error.Shift" read-only.bind="readOnly"
+            items.bind="shiftList" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox label="Group" value.bind="group" error.bind="error.Group" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+
+
+        <au-textbox error.bind="error.Item" show.bind="error.Item" read-only.bind="true">
+        </au-textbox>
+
+        <au-collection show.bind="isItem" view-model.ref="machineCollections" items.bind="data.Items"
+            errors.bind="error.Items" columns.bind="itemsColumnsHeader" remove.bind="items.onRemove"
+            read-only.bind="readOnly" options.bind="detailOptions"
+            item-template="modules/production/spinning/machine-output-monitoring-drawingbreaker/templates/item">
+        </au-collection>
+
+        <au-textbox error.bind="error.Differences" show.bind="error.Differences" read-only.bind="true">
+        </au-textbox>
+
+        <div show.bind="isItem">Total Hasil Produksi : ${grandTotal | numberFormat: '0,0.0000'} Ball</div>
+    </au-input-form>
+</template>

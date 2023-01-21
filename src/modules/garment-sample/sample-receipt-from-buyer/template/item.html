@@ -1,0 +1,52 @@
+<template>
+    <tr>
+        <td class="bg-primary">
+            <au-autocomplete value.bind="selectedInvoice" error.bind="error.invoiceNo" loader.bind="invoiceLoader" text.bind="invoiceView"
+            placeholder="cari invoice" read-only.bind="readOnly || isEdit">
+        </au-autocomplete>
+        </td>
+        
+        <td class="bg-primary">
+            <au-textbox value.bind="data.buyer" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-autocomplete value.bind="selectedRo" error.bind="error.roNo" loader.bind="roLoader"  text.bind="roView"
+            query.bind="roFilter"
+                placeholder="cari ro" read-only.bind="readOnly || isEdit">
+            </au-autocomplete>
+        </td>
+        <td class="bg-primary">
+            <au-textbox value.bind="data.Article" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-textbox value.bind="data.Description" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-dropdown value.bind="selectedStyle" error.bind="error.style" text.bind="styleView"
+            items.bind="style"
+                placeholder="cari style" read-only.bind="readOnly || isEdit">
+            </au-dropdown>
+        </td>
+       
+        <td class="bg-primary">
+            <au-textbox value.bind="data.Colour" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td class="bg-primary">
+            <au-dropdown value.bind="selectedSize" error.bind="error.size"  
+            items.bind="sizes"
+                placeholder="cari size" read-only.bind="readOnly || isEdit">
+            </au-dropdown>
+        </td>
+        <td class="bg-primary">
+            <au-numeric value.bind="data.ReceiptQuantity" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+        
+</template>

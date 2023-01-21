@@ -1,0 +1,27 @@
+<template>
+    <tr>
+        <td class="col-sm-9">
+            <!-- <au-textbox value.bind="data.description" error.bind="error.description" read-only.bind="readOnly"
+                placeholder="Description">
+            </au-textbox> -->
+            <au-multiline value.bind="data.description" error.bind="error.description" read-only.bind="readOnly"
+                placeholder="Description">
+            </au-multiline>
+        </td>
+
+        <!-- <td class="col-sm-3">
+            <au-autocomplete value.bind="data.currency" error.bind="error.currency" loader.bind="currencyLoader"
+                read-only.bind="readOnly" placeholder="Currency" text="code">
+            </au-autocomplete>
+        </td> -->
+
+        <td class="col-sm-3">
+            <au-numeric value.bind="data.amount" error.bind="error.amount" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

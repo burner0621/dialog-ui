@@ -1,0 +1,83 @@
+<template>
+    <au-input-form 
+      title.bind="title" 
+      with.bind="context">
+
+      <div slot="actions" class="btn-group">
+        <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+         <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+        <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+     </div>
+    <fieldset>
+           <au-autocomplete 
+              value.bind="transferRequest" 
+              error.bind="error.TRNo"
+              label="No. TR"
+              loader.bind="transferRequestPostedLoader"
+              placeholder="cari transfer request" 
+              key="trNo"
+              text="trNo"
+              show.bind="!data.Id"
+              read-only.bind="prReadOnly"
+              options.bind="controlOptions">
+          </au-autocomplete>
+
+          <au-textbox 
+              value.bind="data.transferRequest.TRNo" 
+              error.bind="error.TRno"
+              label="No. TR"
+              show.bind="data.Id"
+              read-only.bind="prReadOnly"
+              options.bind="controlOptions">
+          </au-textbox>
+
+          <au-datepicker 
+              label="Tgl. TR" 
+              value.bind="data.transferRequest.TRDate" 
+             
+              read-only.bind="true"
+              options.bind="controlOptions">
+          </au-datepicker>
+
+          <au-datepicker 
+              label="Tgl. Diminta Datang" 
+              value.bind="data.transferRequest.RequestedArrivalDate"
+              
+              read-only.bind="true"
+              options.bind="controlOptions">
+          </au-datepicker>
+
+          <au-autocomplete 
+              value.bind="data.transferRequest.UnitName" 
+              label="Unit" 
+             
+              read-only.bind="true"
+              options.bind="controlOptions">
+          </au-autocomplete>
+
+          <au-autocomplete 
+              value.bind="data.transferRequest.CategoryName"
+              label="Kategori" 
+             
+              read-only.bind="true"
+              options.bind="controlOptions">
+          </au-autocomplete>
+
+          <au-multiline 
+              value.bind="data.transferRequest.Remarks"
+              label="Keterangan" 
+             
+              read-only.bind="true"
+              options.bind="controlOptions">
+          </au-multiline>
+
+      </fieldset>
+      <au-collection 
+          items.bind="data.InternalTransferOrderDetails" 
+          columns.bind="itemsColumns" 
+          read-only.bind="readOnly" 
+          item-template="modules/int-purchasing/internal-transfer-order/template/internal-transfer-order-detail">
+      </au-collection>
+
+</au-input-form>
+</template>

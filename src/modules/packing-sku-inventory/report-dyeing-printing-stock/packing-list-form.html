@@ -1,0 +1,16 @@
+<template>
+    <ai-dialog style="width:700px;">
+        <!-- <ai-dialog-header>
+            <h4>Daftar Chemical</h4>
+        </ai-dialog-header> -->
+        <ai-dialog-body>
+            <au-table view-model.ref="packingTable" data.bind="loader" columns.bind="columns" context.bind="context"
+                options.bind="packingOptions">
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Close</button>
+
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

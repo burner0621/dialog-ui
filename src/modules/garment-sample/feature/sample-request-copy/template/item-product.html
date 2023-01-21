@@ -1,0 +1,60 @@
+<template>
+	<tr>
+
+        <td class="col-sm-3 bg-primary">
+			<au-textbox 
+                error.bind="error.Style" 
+                value.bind="data.Style" 
+				read-only.bind="readOnly"
+                placeholder="Style"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+        <td class="col-sm-3 bg-primary">
+			<au-textbox 
+                error.bind="error.Color" 
+                value.bind="data.Color" 
+				read-only.bind="readOnly"
+                placeholder="Color"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+		<td class="col-sm-1 bg-primary">
+			<au-autocomplete 
+                value.bind="data.Size" 
+                error.bind="error.Size"
+				loader.bind="sizeLoader" 
+                text="Size" 
+                placeholder="Size"
+				read-only.bind="readOnly" 
+                options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+
+        <td class="col-sm-5 bg-primary">
+			<au-textbox 
+                error.bind="error.SizeDescription" 
+                value.bind="data.SizeDescription" 
+				read-only.bind="readOnly"
+                placeholder="SizeDescription"
+                options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+		<td class="col-sm-3 bg-primary">
+			<au-numeric 
+                error.bind="error.Quantity" 
+                value.bind="data.Quantity" 
+                format="0"
+				read-only.bind="readOnly"
+                options.bind="controlOptions">
+			</au-numeric>
+		</td>
+
+		<td if.bind="!readOnly" class="col-sm-1">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+	</tr>
+</template>

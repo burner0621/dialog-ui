@@ -1,0 +1,35 @@
+<template>
+  	<div class="row">
+		<div class="col-md-6">
+      	<au-input-form
+        	title.bind="title"
+        	with.bind="context"
+        	options.bind="formOptions">
+
+			<au-autocomplete 
+				value.bind="data.ProcessType" 
+				error.bind="error.ProcessType"
+				label="Jenis Proses"  
+				loader.bind="processTypeLoader"
+        text.bind = "processTypeView"
+				placeholder="search process type" 
+				key=""
+				read-only.bind="(readOnly || isEdit)"
+        options.bind="controlOptions">
+			</au-autocomplete>
+			
+			<au-collection 
+				items.bind="data.Areas" 
+				errors.bind="error.Areas" 
+				columns.bind="itemsColumns" 
+				add.bind="addItems" 
+				remove.bind="removeItems"
+				read-only.bind="readOnly"
+				item-template="modules/master/fp-duration-estimation/template/fp-duration-estimation-area"
+				footer-template="modules/master/fp-duration-estimation/template/footer-fp-duration-estimation-area">
+			</au-collection>
+		
+      </au-input-form>
+    </div>
+  </div>
+</template>

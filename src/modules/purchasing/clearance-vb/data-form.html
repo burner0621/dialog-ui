@@ -1,0 +1,71 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <!-- <au-textbox if.bind="vbRequestDocument.DocumentNo"
+                    label="Pemohon VB"
+                    value.bind="vbRequestDocument.DocumentNo"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox> -->
+
+        <au-datepicker value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly || isEdit"
+            label="Tanggal Realisasi" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown if.bind="!isEdit" label="Tipe VB" items.bind="typeOptions" value.bind="data.Type"
+            error.bind="error.Type" read-only.bind="readOnly" placeholder="pilih jenis vb"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete if.bind="isWithVB || isEdit" value.bind="vbRequestDocument"
+            error.bind="error.VBRequestDocument" label="No VB" loader.one-time="vbRequestDocumentLoader"
+            text="DocumentNo" read-only.bind="readOnly || (isEdit && isWithVB)" placeholder="pilih nomor vb"
+            options.bind="controlOptions" query.bind="filter">
+        </au-autocomplete>
+
+        <au-datepicker if.bind="isWithVB || vbRequestDocument" label="Tanggal VB" value.bind="vbRequestDocument.Date"
+            read-only.bind="true" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker if.bind="isWithVB || vbRequestDocument" label="Estimasi Tanggal Realisasi"
+            value.bind="vbRequestDocument.RealizationEstimationDate" read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox if.bind="isWithVB || vbRequestDocument" label="Pemohon VB" value.bind="vbRequestDocument.CreatedBy"
+            read-only.bind="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox if.bind="isWithVB && vbRequestDocument" label="Unit Pemohon"
+            value.bind="vbRequestDocument.SuppliantUnitName" read-only.bind="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox if.bind="isWithVB && vbRequestDocument" label="Mata Uang"
+            value.bind="vbRequestDocument.CurrencyCode" read-only.bind="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric if.bind="isWithVB && vbRequestDocument" label="Jumlah Uang" value.bind="vbRequestDocument.Amount"
+            read-only.bind="true" format="0,0.00" options.bind="controlOptions">
+        </au-numeric>
+
+        <au-autocomplete if.bind="!isWithVB && data.Type != ''" value.bind="data.SuppliantUnit"
+            error.bind="error.SuppliantUnit" label="Unit Pemohon" loader.bind="unitLoader" text.bind="unitView"
+            read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete if.bind="!isWithVB && data.Type != ''" label="Mata Uang" value.bind="data.Currency"
+            error.bind="error.Currency" loader.one-time="currencyLoader" text="Code" read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-collection view-model.ref="ItemCollection" if.bind="(!isWithVB || vbRequestDocument) && data.Type != ''"
+            items.bind="data.Items" errors.bind="error.Items" columns.bind="columns" add.bind="addItems"
+            remove.bind="onremove" read-only.bind="readOnly" options.bind="itemsOptions"
+            item-template="modules/purchasing/vb-realization-with-po-document/templates/item">
+        </au-collection>
+
+        <!-- footer-template="modules/purchasing/vb-realization-with-po-document/templates/item-footer" -->
+
+
+    </au-input-form>
+</template>

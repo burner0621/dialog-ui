@@ -1,0 +1,29 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+
+        <au-datepicker value.bind="data.LockDate"
+                       error.bind="error.LockDate"
+                       read-only.bind="readOnly"
+                       label="Tanggal Penguncian"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown label="Buku"
+                     value.bind="data.Type"
+                     error.bind="error.Type"
+                     read-only.bind="readOnly"
+                     items.bind="typeOptions"
+                     options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-multiline value.bind="data.Description"
+                      error.bind="error.Description"
+                      read-only.bind="readOnly"
+                      label="Deskripsi"
+                      options.bind="controlOptions">
+        </au-multiline>
+
+    </au-input-form>
+</template>

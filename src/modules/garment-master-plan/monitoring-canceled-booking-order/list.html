@@ -1,0 +1,57 @@
+
+<template>
+  
+    <h1 class="page-header">Monitoring Canceled Booking Order</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="no" 
+            label="Kode Booking" 
+            loader.bind="bookingOrderLoader"
+            text.bind = "bookingOrderView"
+            placeholder="Cari No Booking Order"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete 
+            value.bind="buyerCode" 
+            label="Buyer" 
+            loader.bind="buyerLoader"
+            text.bind = "buyerView"
+            placeholder="Cari Buyer"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-dropdown label="Status Cancel" 
+            value.bind="statusCancel"
+            items.bind="cancelStateOption" 
+            read-only.bind="readOnly" 
+            change.delegate="cancelStateChanged($event)">
+        </au-dropdown>        
+        <au-datepicker label="Tanggal Awal Booking Order" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir Booking Order" value.bind="dateTo"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+         <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+
+       <br>
+    </br>
+
+    <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+        Tidak ada data.
+    </div>
+    <pagination if.bind="args.total>args.size" info.bind="args" change.delegate="changePage($event)" id="pager"></pagination>
+    <hr/>
+    </form>
+</au-input-form> 
+</template>

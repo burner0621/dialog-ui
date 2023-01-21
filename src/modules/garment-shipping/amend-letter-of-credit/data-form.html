@@ -1,0 +1,55 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        
+        <au-autocomplete 
+            label="Document Credit No" 
+            placeholder="Pilih document credit no" 
+            value.bind="selectedLC"
+            error.bind="error.documentCreditNo" 
+            loader.bind="lcLoader" 
+            text.bind="lcView" 
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="No Amend" 
+            value.bind="data.amendNumber" 
+            error.bind="error.amendNumber" 
+            read-only="true" 
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tgl Amend" 
+            value.bind="data.date" 
+            error.bind="error.date" 
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox 
+            label="Description" 
+            value.bind="data.description" 
+            error.bind="error.description" 
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric 
+            label="Amount" 
+            value.bind="data.amount" 
+            error.bind="error.amount" 
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-numeric>
+
+        <au-collection 
+            columns.bind="itemsColumns" 
+            items.bind="data.DataItems" 
+            errors.bind="error.Items"
+            read-only.bind="true">
+        </au-collection>
+
+    </au-input-form>
+</template>

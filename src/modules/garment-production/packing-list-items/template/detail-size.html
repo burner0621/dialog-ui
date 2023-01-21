@@ -1,0 +1,26 @@
+<template>
+    <tr>
+        <td >
+            <au-autocomplete
+                value.bind="data.size"
+                error.bind="error.Size"
+                loader.bind="sizeLoader"
+                read-only.bind="readOnly"
+                placeholder="Size"
+                text.bind="sizeView">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.quantity"
+                error.bind="error.Quantity"
+                format="0"
+                read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly" class="bg-light">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

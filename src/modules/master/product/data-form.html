@@ -1,0 +1,63 @@
+<template>
+  <div class="row">
+      <div class="col-md-6">
+        <au-input-form 
+          title.bind="title" 
+          with.bind="context"
+          options.bind="formOptions"> 
+
+          <au-textbox
+            label="Kode"
+            value.bind="data.Code"
+            error.bind="error.Code"
+            read-only.bind="(readOnly || isEdit)"
+          ></au-textbox>
+
+          <au-textbox
+            label="Nama"
+            value.bind="data.Name"
+            error.bind="error.Name"
+            read-only.bind="readOnly"
+          ></au-textbox>
+
+          <au-autocomplete
+            label="Satuan"
+            value.bind="data.UOM"
+            error.bind="error.uom"
+            read-only.bind="readOnly"
+          ></au-autocomplete>
+
+          <au-autocomplete
+            label="Mata Uang"
+            value.bind="data.Currency.Code"
+            error.bind="error.Currency"
+            read-only.bind="readOnly"
+          ></au-autocomplete>
+
+          <au-numeric
+            label="Harga"
+            value.bind="data.Price"
+            error.bind="error.Price"
+            read-only.bind="readOnly"
+          ></au-numeric>
+
+          <au-multiline
+            label="Tags"
+            value.bind="data.Tags"
+            error.bind="error.Tags"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <au-multiline
+            label="Keterangan"
+            value.bind="data.Description"
+            error.bind="error.Description"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <template replaceable part="actions"></template>
+
+        </au-input-form>
+      </div>
+  </div>
+</template>

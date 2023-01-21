@@ -1,0 +1,65 @@
+<template >
+    <tr>
+        <td>
+            <au-textbox
+                value.bind="data.Product.Code"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.DesignColor"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Quantity"
+                error.bind = "error.Quantity"
+                read-only.bind="true">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.CuttingInQuantity"
+                error.bind = "error.CuttingInQuantity"
+                read-only.bind="true"
+                format="0">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.FC"
+                error.bind = "error.FC"
+                read-only.bind="true">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.ActualQuantity"
+                error.bind = "error.ActualQuantity"
+                read-only.bind="readOnly">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Remaining"
+                error.bind = "error.Remaining"
+                read-only.bind="true">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="dataFC"
+                if.bind="!readOnly"
+                read-only.bind="true">
+            </au-numeric>
+
+            <au-numeric 
+                value.bind="data.ActualFC"
+                if.bind="readOnly"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

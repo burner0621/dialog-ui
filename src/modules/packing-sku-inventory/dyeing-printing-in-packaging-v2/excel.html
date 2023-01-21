@@ -1,0 +1,15 @@
+<template>
+    <h1 class="page-header">Download Penerimaan Packing</h1>
+    <form class="form-horizontal">
+        <au-datepicker options.bind="controlOptions" label="Tanggal Awal" value.bind="filter.dateFrom">
+        </au-datepicker>
+        <au-datepicker options.bind="controlOptions" label="Tanggal Akhir" value.bind="filter.dateTo">
+        </au-datepicker>
+
+
+        <div class="btn-group col-md-offset-5">
+            <button class="btn btn-success" click.delegate="excel()">Download</button>
+            <button class="btn btn-default" click.delegate="list()">Kembali</button>
+        </div>
+    </form>
+</template>

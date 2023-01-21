@@ -1,0 +1,30 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-autocomplete label="Spinning" value.bind="unit" error.bind="error.UnitId" loader.bind="unitLoader" placeholder="Cari unit spinning"
+        key="name" text="name" read-only.bind="readOnly" query.bind="spinningFilter" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown label="Shift" value.bind="data.Shift" error.bind="error.Shift" read-only.bind="readOnly" items.bind="shift"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Mesin" value.bind="machine" error.bind="error.MachineId" read-only.bind="readOnly" show.bind="unit._id"
+            loader.one-time="machineLoader"  options.bind="controlOptions" placeholder="Cari mesin" text="name" query.bind="filter"></au-autocomplete>
+
+        <au-autocomplete value.bind="yarn" label="Benang" error.bind="error.YarnId" loader.one-time="yarnLoader" text="Name" placeholder="cari benang"
+            key="Name" read-only.bind="readOnly"  show.bind="machine" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Lot" value.bind="lot" read-only.bind="true" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-collection items.bind="data.Input" errors.bind="error.Input" add.bind="inputInfo.onAdd" remove.bind="inputInfo.onRemove"
+            columns.bind="inputInfo.columns" read-only.bind="readOnly" item-template="modules/production/spinning/spinning-input/template/input-item">
+        </au-collection>
+
+    </au-input-form>
+</template>

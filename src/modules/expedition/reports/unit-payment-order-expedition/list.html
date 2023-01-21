@@ -1,0 +1,76 @@
+<template>
+    <h1 class="page-header">Laporan Ekspedisi Surat Perintah Bayar</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="unitPaymentOrder"
+            loader.one-time="unitPaymentOrderLoader"
+            text="no"
+            label="No Surat Perintah Bayar"
+            options.bind="controlOptions"
+            placeholder="Masukkan No SPB"
+            select.bind="selectUPO">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier"
+            loader.one-time="supplierLoader"
+            label="Supplier"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier"
+            select.bind="selectSupplier">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="division"
+            loader.one-time="divisionLoader"
+            label="Divisi"
+            text="code"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Divisi"
+            text.bind = "divisionView"
+            select.bind="selectDivision">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="status"
+            label="Posisi"
+            options.bind="controlOptions"
+            items.bind="itemsStatus"
+            key="value"
+            text="text">
+        </au-dropdown>
+
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <au-table
+        view-model.ref="tableList"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable="true"
+        page-size="25"
+        options.bind="tableOptions">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-primary" click.delegate="xls()">Cetak</button>
+        </div>
+    </au-table>
+</template>

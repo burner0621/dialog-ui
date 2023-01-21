@@ -1,0 +1,22 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <form class="form-horizontal">
+        <div class="col-sm-5">
+            <au-dropdown 
+                label="Jenis Proses" 
+                value.bind="type" 
+                read-only.bind="readOnly" 
+                items.bind="typeOptions" 
+                options.bind="controlOptions">
+            </au-dropdown>
+        </div>
+            
+
+            <div class="btn-group">
+                <button class='btn btn-primary' click.delegate="exportExcel()">Excel</button>
+            </div>
+
+    </au-input-form>
+
+</template>

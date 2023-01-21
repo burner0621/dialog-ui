@@ -1,0 +1,65 @@
+<template>
+    <tr>
+        <td>
+            <au-datepicker value.bind="data.policyDate" error.bind="error.policyDate" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.policyNo" error.bind="error.policyNo" read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td>
+            <au-autocomplete value.bind="selectedInvoice" error.bind="error.invoice" loader.bind="invoiceLoader"
+                read-only.bind="readOnly || data.id" placeholder="invoice" text="invoiceNo">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.buyerAgent.name" error.bind="error.buyerAgent" show.bind="data.invoiceNo"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.amount" error.bind="error.amount" read-only.bind="readOnly"
+                if.bind="type=='Kargo'">
+            </au-numeric>
+            <au-numeric value.bind="data.amount" error.bind="error.amount" read-only.bind="true"
+                if.bind="type!='Kargo'">
+            </au-numeric>
+        </td>
+        <td if.bind="type=='Kargo'">
+            <au-numeric value.bind="data.currencyRate" error.bind="error.currencyRate" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+
+        <td>
+            <au-numeric value.bind="amountIDR" read-only.bind="true" if.bind="type=='Kargo'">
+            </au-numeric>
+            <au-numeric value.bind="premi" read-only.bind="true" if.bind="type!='Kargo'">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="amount2A" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="amount2B" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="amount2C" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="amount1A" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="amount1B" read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

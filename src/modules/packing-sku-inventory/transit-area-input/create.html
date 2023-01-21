@@ -1,0 +1,13 @@
+<template>
+    <h1 class="page-header">Buat Penerimaan Transit Dyeing/Printing</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" error.bind="error"></data-form>
+        <hr />
+        <div class="btn-group pull-right">
+            <button class="btn btn-danger" click.delegate="reject()">Tolak</button>
+            <button class="btn btn-default" click.delegate="back()">Kembali</button>
+            <button class="btn btn-success" click.delegate="save()">Simpan</button>
+        </div>
+    </block>
+</template>

@@ -1,0 +1,161 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+
+    <div slot="actions" class="btn-group">
+      <button class="btn btn-default" click.delegate="context.cancel($event)"
+        if.one-way="context.hasCancel">Kembali</button>
+      <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit"
+        show.bind="data.Approve_Status==false">Ubah</button>
+      <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+      <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete"
+        show.bind="data.Approve_Status==false">Hapus</button>
+
+    </div>
+
+    <au-textbox value.bind="data.VBNo" if.bind="data.VBNo" label="No VB" read-only.bind="true"
+      options.bind="controlOptions">
+    </au-textbox>
+
+    <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly || isEdit"
+      options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-datepicker label="Estimasi Tanggal Realisasi" value.bind="data.DateEstimate" error.bind="error.DateEstimate"
+      read-only.bind="readOnly" options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-autocomplete value.bind="selectedUnit" error.bind="error.VBCode" label="Unit Pemohon"
+      loader.one-time="unitLoader" text.bind="unitView" read-only.bind="readOnly || isEdit"
+      options.bind="controlOptions" placeholder="Cari Unit Pemohon">
+    </au-autocomplete>
+
+    <au-autocomplete label="Mata Uang" placeholder="pilih mata uang" value.bind="selectedCurrency"
+      error.bind="error.Currency" loader.one-time="currencyLoader" text="Code" read-only.bind="readOnly"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-numeric label="Jumlah Uang" value.bind="data.Amount" error.bind="error.Amount" read-only.bind="readOnly"
+      format="0,0.00" options.bind="controlOptions">
+    </au-numeric>
+
+    <au-multiline label="Kegunaan" value.bind="data.Usage" error.bind="error.Usage" placeholder="Kegunaan"
+      read-only.bind="readOnly" options.bind="controlOptions">
+    </au-multiline>
+
+    <au-textbox error.bind="error.UnitLoadCheck" show.bind="error.UnitLoadCheck" read-only.bind="true">
+    </au-textbox>
+
+    <div class="row">
+      <div class="col-sm-5" style="padding-left:3.5%">
+        <au-textbox label="Beban Unit :" read-only.bind="true">
+        </au-textbox>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-2">
+        <au-checkbox label="Spinning 1" value.bind="data.Spinning1" error.bind="error.Spinning1"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Weaving 1" value.bind="data.Weaving1" error.bind="error.Weaving1" read-only.bind="readOnly"
+          options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Printing" value.bind="data.Printing" error.bind="error.Printing" read-only.bind="readOnly"
+          options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Konfeksi 2A" value.bind="data.Konfeksi2A" error.bind="error.Konfeksi2A"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+
+      <div class="col-sm-2">
+        <au-checkbox label="Umum" value.bind="data.Umum" error.bind="error.Umum" read-only.bind="readOnly"
+          options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-2">
+        <au-checkbox label="Spinning 2" value.bind="data.Spinning2" error.bind="error.Spinning2"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Weaving 2" value.bind="data.Weaving2" error.bind="error.Weaving2" read-only.bind="readOnly"
+          options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Konfeksi 1A" value.bind="data.Konfeksi1A" error.bind="error.Konfeksi1A"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Konfeksi 2B" value.bind="data.Konfeksi2B" error.bind="error.Konfeksi2B"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label.bind="getOthersValue" value.bind="data.Others" error.bind="error.Others"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+
+        <div show.bind="isShowing">
+          <au-textbox value.bind="data.DetailOthers" error.bind="error.DetailOthers" read-only.bind="readOnly"
+            placeholder="Beban Unit Lain" options.bind="controlOptionsDetail">
+          </au-textbox>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-2">
+        <au-checkbox label="Spinning 3" value.bind="data.Spinning3" error.bind="error.Spinning3"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Finishing" value.bind="data.Finishing" error.bind="error.Finishing"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Konfeksi 1B" value.bind="data.Konfeksi1B" error.bind="error.Konfeksi1B"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+      <div class="col-sm-2">
+        <au-checkbox label="Konfeksi 2C" value.bind="data.Konfeksi2C" error.bind="error.Konfeksi2C"
+          read-only.bind="readOnly" options.bind="controlOptionsLabel">
+        </au-checkbox>
+      </div>
+
+    </div>
+
+  </au-input-form>
+</template>

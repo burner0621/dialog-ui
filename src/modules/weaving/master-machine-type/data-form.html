@@ -1,0 +1,42 @@
+<template
+  ><au-input-form
+    title.bind="title"
+    with.bind="context"
+    options.bind="formOptions"
+  >
+    <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <au-textbox
+              label="Nama Tipe Mesin"
+              placeholder="Nama Tipe Mesin"
+              value.bind="data.TypeName"
+              error.bind="error.TypeName"
+              read-only.bind="readOnly"
+            ></au-textbox>
+          </div>
+
+          <div class="row">
+            <au-numeric
+              label="Kecepatan(RPM)"
+              value.bind="data.Speed"
+              error.bind="error.Speed"
+              read-only.bind="readOnly"
+            ></au-textbox>
+          </div>
+
+          <div class="row">
+            <au-autocomplete label="Unit Mesin"
+              placeholder="Unit Mesin" 
+              value.bind="selectedUnit" 
+              error.bind="error.MachineUnit"
+              read-only.bind="readOnly"
+              loader.bind="units" 
+              text="Name"
+              Options.bind ="customOptions"
+            ></au-autocomplete>
+          </div>
+        </div>
+    </div>
+  </au-input-form>
+</template>

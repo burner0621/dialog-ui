@@ -1,0 +1,228 @@
+<template>
+  <h1 class="page-header">Mutasi Bank Harian</h1>
+
+  <form class="form-horizontal">
+      <au-autocomplete value.bind="info.bank"
+                       error.bind="error.bank"
+                       label="Bank"
+                       loader.bind="bankLoader"
+                       text.bind="bankView"
+                       placeholder="cari bank"
+                       read-only.bind="readOnly"
+                       options.bind="controlOptions">
+      </au-autocomplete>
+
+      <au-textbox label="No. Rekening"
+                  value.bind="info.bank && info.bank.AccountNumber ? info.bank.AccountNumber : ''"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-textbox>
+
+      <au-textbox label="Currency"
+                  value.bind="info.bank && info.bank.Currency && info.bank.Currency.Code ? info.bank.Currency.Code : ''"
+                  read-only.bind="true"
+                  options.bind="controlOptions">
+      </au-textbox>
+
+      <au-dropdown
+          label="Bulan"
+          value.bind="info.month"
+          error.bind="error.month"
+          read-only.bind="readOnly"
+          items.bind="monthList"
+          options.bind="controlOptions">
+      </au-dropdown>
+
+      <au-dropdown
+          label="Tahun"
+          value.bind="info.year"
+          error.bind="error.year"
+          read-only.bind="readOnly"
+          items.bind="yearList"
+          options.bind="controlOptions">
+      </au-dropdown>
+
+      <!-- <au-datepicker value.bind="info.dateFrom"
+                     label="Tanggal Awal"
+                     options.bind="controlOptions"
+                     error.bind="error.dateFrom">
+      </au-datepicker>
+      <au-datepicker value.bind="info.dateTo"
+                     label="Tanggal Akhir"
+                     options.bind="controlOptions"
+                     error.bind="error.dateTo">
+      </au-datepicker> -->
+
+      <div class="form-group">
+          <label for="contact"
+                 class="col-sm-5 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="search()"
+                      class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()"
+                      class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+  </form>
+
+  <div class="row">
+      <div class="col-md-12">
+            <div style="margin-bottom: 1%"
+                   slot="toolbar"
+                   class="btn-group">
+                  <button class='btn btn-primary'
+                          click.delegate="excel()">Cetak Excel</button>
+                  <button class='btn btn-primary'
+                          click.delegate="pdf()">Cetak PDF</button>
+            </div>
+        <div>
+          <!--Table-->
+          <table class="table table-bordered"
+          show.bind="isValas"
+          if.bind="isValas">
+              <!--Table head-->
+              <thead>
+                  <tr style="background-color: white; color: black">
+                      <td style="border-right: none"
+                          class="text-right"
+                          colspan="9">Saldo Awal: </td>
+                      <td style="border-left: none"
+                          class="text-right"
+                          colspan="2">${currency} ${initialBalance}</td>
+                  </tr>
+                  <tr>
+                      <th rowspan="2">Tanggal</th>
+                      <th rowspan="2">Keterangan</th>
+                      <th rowspan="2">Nomor Referensi</th>
+                      <th rowspan="2">Jenis Referensi</th>
+                      <th rowspan="2">Currency</th>
+                      <th colspan="2">DEBIT</th>
+                      <th colspan="2">KREDIT</th>
+                      <th colspan="2">SALDO</th>
+                  </tr>
+                  <tr>
+                      <th>
+                          Original Amount
+                      </th>
+                      <th>
+                          Equivalent
+                      </th>
+                      <th>
+                          Original Amount
+                      </th>
+                      <th>
+                          Equivalent
+                      </th>
+                      <th>
+                          Original Amount
+                      </th>
+                      <th>
+                          Equivalent
+                      </th>
+                  </tr>
+              </thead>
+              <!--Table head-->
+              <!--Table body-->
+              <tbody>
+                  <tr show.bind="isEmpty">
+                      <td colspan="11">
+                          <div class="alert alert-info">Tidak ada data</div>
+                      </td>
+                  </tr>
+                  <tr repeat.for="datum of data">
+                      <td repeat.for="key of datum | keys"
+                          style="white-space: pre;"
+                          class="${key.toString().toLowerCase() == 'dailytotaltitle' || 
+                          key.toString().toLowerCase() == 'debit' ||
+                          key.toString().toLowerCase() == 'kredit' ||
+                          key.toString().toLowerCase() == 'afternominal' ? 'text-right' : ''}"
+                          colspan="${key.toString().toLowerCase() == 'dailytotaltitle' ? 4 : 1 }">${datum[key]}</td>
+                      <!-- <td>${datum['Date']}</td>
+                      <td>${datum.Remark}</td>
+                      <td>${datum.ReferenceNo}</td>
+                      <td>${datum.ReferenceType}</td>
+                      <td>${datum.AccountBankCurrencyCode}</td>
+                      <td>${datum.Debit}</td>
+                      <td>${datum.Kredit}</td>
+                      <td>${datum.AfterNominal}</td> -->
+                  </tr>
+                  <tr style="background-color: white; color: black">
+                      <td style="border-right: none"
+                          class="text-right"
+                          colspan="9">Saldo Akhir: </td>
+                      <td style="border-left: none"
+                          class="text-right"
+                          colspan="2">${currency} ${closingBalance}</td>
+                  </tr>
+              </tbody>
+              <!--Table body-->
+          </table>
+        </div>
+
+        <div>
+          <!--Table-->
+      <table class="table table-bordered"
+      show.bind="!isValas"
+      if.bind="!isValas">
+        <!--Table head-->
+        <thead>
+          <tr style="background-color: white; color: black">
+            <td style="border-right: none" class="text-right" colspan="6">
+              Saldo Awal:
+            </td>
+            <td style="border-left: none" class="text-right" colspan="2">
+              ${currency} ${initialBalance}
+            </td>
+          </tr>
+          <tr>
+            <th>Tanggal</th>
+            <th>Keterangan</th>
+            <th>Nomor Referensi</th>
+            <th>Jenis Referensi</th>
+            <th>Currency</th>
+            <th>Debit</th>
+            <th>Kredit</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+        <!--Table body-->
+        <tbody>
+          <tr show.bind="isEmpty">
+            <td colspan="8">
+              <div class="alert alert-info">Tidak ada data</div>
+            </td>
+          </tr>
+          <tr repeat.for="datum of data">
+            <td
+              repeat.for="key of datum | keys"
+              style="white-space: pre"
+              class="${key.toString().toLowerCase() == 'dailytotaltitle' ||
+              key.toString().toLowerCase() == 'debit' ||
+              key.toString().toLowerCase() == 'kredit' ||
+              key.toString().toLowerCase() == 'afternominal' ? 'text-right' : ''}"
+              colspan="${key.toString().toLowerCase() == 'dailytotaltitle' ? 4 : 1}">${datum[key]}</td>
+            <!-- <td>${datum['Date']}</td>
+                        <td>${datum.Remark}</td>
+                        <td>${datum.ReferenceNo}</td>
+                        <td>${datum.ReferenceType}</td>
+                        <td>${datum.AccountBankCurrencyCode}</td>
+                        <td>${datum.Debit}</td>
+                        <td>${datum.Kredit}</td>
+                        <td>${datum.AfterNominal}</td> -->
+          </tr>
+          <tr style="background-color: white; color: black">
+            <td style="border-right: none" class="text-right" colspan="6">
+              Saldo Akhir:
+            </td>
+            <td style="border-left: none" class="text-right" colspan="2">
+              ${currency} ${closingBalance}
+            </td>
+          </tr>
+        </tbody>
+        <!--Table body-->
+      </table>
+    </div>
+      </div>
+  </div>
+</template>

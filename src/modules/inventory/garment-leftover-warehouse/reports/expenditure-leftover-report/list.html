@@ -1,0 +1,28 @@
+<template>
+    <h1 class="page-header">Report Pengeluaran Gudang Sisa - Fabric dan Accessories</h1>
+    <form class="form-horizontal">
+        
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom"></au-datepicker>
+
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo"></au-datepicker>
+
+        <au-dropdown label="Jenis Penerimaan" items.bind="receiptTypeOptions" value.bind="receiptType"></au-dropdown>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <au-table view-model.ref="movementTable" data.bind="loader" columns.bind="columns" sortable.bind="true"
+            page-size="25" options.bind="tableOptions">
+
+            <div slot="toolbar" class="btn-group">
+                <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+            </div>
+        </au-table>
+        <hr />
+    </form>
+</template>

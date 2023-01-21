@@ -1,0 +1,77 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form
+        with.bind="context"
+        title.bind="title"
+        options.bind="formOptions"
+      >
+        <au-textbox
+          label="Kode"
+          value.bind="data.code"
+          error.bind="error.code"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          label="Nama"
+          value.bind="data.name"
+          error.bind="error.name"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          if.bind="isPermitted"
+          label="COA Pembelian"
+          value.bind="data.PurchasingCOA"
+          error.bind="error.PurchasingCOA"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          if.bind="isPermitted"
+          label="COA Persediaan"
+          value.bind="data.StockCOA"
+          error.bind="error.StockCOA"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          if.bind="isPermitted"
+          label="COA Utang Lokal"
+          value.bind="data.LocalDebtCOA"
+          error.bind="error.LocalDebtCOA"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          if.bind="isPermitted"
+          label="COA Utang Import"
+          value.bind="data.ImportDebtCOA"
+          error.bind="error.ImportDebtCOA"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-textbox
+          if.bind="isPermitted"
+          label="COA Alternatif"
+          value.bind="data.AlternateCOA"
+          error.bind="error.AlternateCOA"
+          read-only.bind="readOnly"
+        ></au-textbox>
+
+        <au-autocomplete
+          value.bind="accountingCategory.Name"
+          loader.bind="accountingCategoryLoader"
+          label="Kategori Pembukuan"
+          placeholder="cari kategori pembukuan"
+          read-only.bind="readOnly"
+          change.delegate="accountingCategoryChanged($event)"
+        >
+        </au-autocomplete>
+
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+</template>

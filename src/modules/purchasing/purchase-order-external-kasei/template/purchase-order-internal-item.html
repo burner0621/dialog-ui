@@ -1,0 +1,100 @@
+
+                <template >
+                    <tr>
+                    <td>
+                        <au-autocomplete 
+                            value.bind="data.product" 
+                            error.bind="error.product"
+                            loader.bind="productLoader"
+                            text.bind="productView"
+                            key="code"
+                            read-only.bind="true"
+                            options.bind="controlOptions">
+                        </au-autocomplete>
+                    </td>
+                    <td>
+                        <au-numeric 
+                            value.bind="data.defaultQuantity" 
+                            read-only.bind="true" 
+                            format = "0,0.00"
+                            options.bind="controlOptions">
+                        </au-numeric>
+                    </td>
+                    <td>
+                        <au-textbox 
+                            value.bind="data.defaultUom.unit" 
+                            read-only.bind="true" 
+                            options.bind="controlOptions">
+                        </au-textbox>                    
+                    </td>
+                    <td>
+                        <au-numeric 
+                            value.bind="data.dealQuantity" 
+                            error.bind="error.dealQuantity"
+                            read-only.bind="options.readOnly" 
+                            format = "0,0.00"
+                            options.bind="controlOptions">
+                        </au-numeric>
+                    </td>
+                    <td>
+                        <au-autocomplete 
+                            value.bind="selectedDealUom" 
+                            error.bind="error.dealUom"
+                            change.delegate="selectedDealUomChanged($event)"
+                            loader.bind="uomLoader"
+                            text.bind="uomView"
+                            placeholder="cari satuan" 
+                            key="unit"
+                            read-only.bind="options.readOnly"
+                            options.bind="controlOptions">
+                        </au-autocomplete>                   
+                    </td>
+                    <td>
+                        <au-numeric 
+                            value.bind="data.conversion" 
+                            error.bind="error.conversion"
+                            read-only.bind="options.readOnly" 
+                            change.delegate="conversionChanged($event)"
+                            options.bind="controlOptions">
+                        </au-numeric>
+                    </td>
+                    <td if.bind = "hasView">
+                        <au-numeric 
+                            value.bind="data.priceBeforeTax" 
+                            error.bind="error.price2"
+                            read-only.bind="options.readOnly" 
+                            change.delegate="priceBeforeTaxChanged($event)"
+                            format = "0,0.0000"
+                            options.bind="controlOptions">
+                        </au-numeric>
+                    </td>
+                    <td if.bind = "!hasView" align="right">
+                        <au-textbox 
+                            value.bind="data.priceBeforeTax" 
+                            error.bind="error.price"
+                            if.bind = "!hasView"
+                            read-only.bind="options.readOnly" 
+                            change.delegate="priceBeforeTaxChanged($event)"
+                            options.bind="controlOptions">
+                        </au-textbox>
+                    </td>
+                    <td if.bind="context.context.options.useVat" align="center">
+                        <au-checkbox 
+                            value.bind="data.includePpn" 
+                            error.bind="error.includePpn" 
+                            read-only.bind="readOnly"
+                            change.delegate="useIncomeTaxChanged($event)"
+                            options.bind="controlOptions">
+                        </au-checkbox>
+                    </td>
+                    <td>
+                        <au-textbox 
+                            value.bind="data.productRemark" 
+                            error.bind="error.productRemark"
+                            read-only.bind="options.readOnly" 
+                            placeholder="tambah keterangan" 
+                            options.bind="controlOptions">
+                        </au-textbox>
+                    </td>
+                    </tr>
+                </template>

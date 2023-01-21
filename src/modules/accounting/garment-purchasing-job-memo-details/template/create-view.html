@@ -1,0 +1,34 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <fieldset>
+            <au-autocomplete 
+                value.bind="memo"
+                error.bind="error.MemoNo" 
+                label="Nomor Memo" 
+                loader.bind="memoGarmentPurchasingLoader"
+                placeholder="Cari Nomor Memo" 
+                read-only.bind="readOnly"
+                key="MemoNo" 
+                text="MemoNo">
+            </au-autocomplete>
+
+            <au-textbox label="Tanggal Memo" value.bind="getMemoDate" read-only.bind="true"></au-textbox>
+            <au-textbox label="Jenis Buku" value.bind="memo.AccountingBook.Type" read-only.bind="true"></au-textbox>
+            <au-textbox label="Mata Uang" value.bind="memo.Currency.Code" read-only.bind="true"></au-textbox>
+            <au-textbox label="Rate" value.bind="memo.Currency.Rate " read-only.bind="true"></au-textbox>
+
+            <au-multiline label="Keterangan" placeholder="Masukkan keterangan" value.bind="data.remarks" read-only.bind="readOnly"></au-multiline>
+        </fieldset>
+
+        <au-collection 
+            items.bind="data.MemoDetailGarmentPurchasingDispositions" 
+            errors.bind="error.MemoDetailGarmentPurchasingDispositions" 
+            columns.bind="itemsColumns" 
+            add.bind="addItems" 
+            remove.bind="removeItems"
+            read-only.bind="readOnly"
+            footer-template="modules/accounting/garment-purchasing-job-memo-details/template/memo-detail-purchased-footer"
+            item-template="modules/accounting/garment-purchasing-job-memo-details/template/memo-disposition">
+        </au-collection>
+    </au-input-form>
+</template>

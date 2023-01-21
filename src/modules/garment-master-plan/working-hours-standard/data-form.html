@@ -1,0 +1,56 @@
+<template>
+  <div class="row">
+      <div class="col-md-6">
+          <au-input-form 
+            title.bind="title" 
+            with.bind="context"
+            options.bind="formOptions"> 
+
+            <au-numeric 
+              label="Awal (Jam)"
+              value.bind="data.start"
+              error.bind="error.start"
+              read-only.bind="readOnly"
+            ></au-numeric>
+
+          <au-numeric 
+            label="Akhir (Jam)"
+            value.bind="data.end"
+            error.bind="error.end"
+            read-only.bind="readOnly"
+          ></au-numeric>
+
+          <au-multiline
+            label="Keterangan"
+            value.bind="data.remark"
+            error.bind="error.remark"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <!--<au-color 
+            label="Warna"
+            value.bind="data.color" 
+            error.bind="error.color"
+            change.delegate="changeColor($event)"
+            read-only.bind="readOnly">
+          </au-color>-->
+          <div class="form-group">
+                <label style="padding-left:12%" class="col-sm-2" if.bind="error.color" style="color:#dd4b39">Warna</label>
+                <label style="padding-left:12%" class="col-sm-2" if.bind="!error.color" >Warna</label>
+                <div class="col-md-6" style="padding-left:12%">
+                  <input type="color" 
+                  id="color" 
+                  name="color" 
+                  value.bind="data.color" 
+                  error.bind="error.color"
+                  change.delegate="changeColor($event)" /><br>
+                  <span style="color:#dd4b39">${error.color}</span>
+                </div> 
+            </div>
+
+          <template replaceable part="actions"></template>
+
+        </au-input-form>
+      </div>
+  </div>
+</template>

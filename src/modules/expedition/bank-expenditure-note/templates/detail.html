@@ -1,0 +1,34 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.UnitName"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.ProductName"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Quantity"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.Uom"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                value.bind="data.Price"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

@@ -1,0 +1,45 @@
+<template replace-part="item">
+  <tr>
+    <td>
+      <au-textbox value.bind="data.SalesInvoice.SalesInvoiceNo" error.bind="error.SalesInvoiceNo" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.Tempo" error.bind="error.Tempo" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <!-- TotalPayment = total yang ditangguhkan -->
+    <td>
+      <au-numeric value.bind="data.TotalPayment" error.bind="error.TotalPayment" read-only.bind="true">
+      </au-numeric>
+    </td>
+    <!-- NotPaid = belum terbayar -->
+    <td>
+      <au-numeric value.bind="getNotPaid" read-only.bind="true">
+      </au-numeric>
+    </td>
+    <!-- Nominal = total yang dibayarkan saat ini -->
+    <td>
+      <au-numeric value.bind="Nominal" error.bind="error.Nominal" read-only.bind="readOnly">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="getPaid" read-only.bind="true">
+      </au-numeric>
+    </td>
+    <!-- IsPaidOff = status lunas/tidak -->
+    <td>
+      <au-checkbox show.bind="Nominal" value.bind="data.IsPaidOff" read-only.bind="readOnly">
+      </au-checkbox>
+    </td>
+    <td>
+      <au-textbox value.bind="data.MemoNo" error.bind="error.MemoNo" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <!-- AmountMemo = pengurangan pembayaran yang berasal dari memo -->
+    <td>
+      <au-numeric value.bind="data.AmountMemo" error.bind="error.AmountMemo" read-only.bind="true">
+      </au-numeric>
+    </td>
+  </tr>
+</template>

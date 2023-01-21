@@ -1,0 +1,25 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.description" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.countryFrom" error.bind="error.CountryFrom" read-only.bind="readOnly"
+                items.bind="countries" options.bind="controlOptions">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-numeric value.bind="data.percentage" error.bind="error.Percentage" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.value" error.bind="error.Value" read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

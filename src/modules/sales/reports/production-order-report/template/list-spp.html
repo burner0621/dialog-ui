@@ -1,0 +1,52 @@
+<template>
+    <tr>
+        <td align="center">${$index + 1}</td>
+        <td>
+            <au-textbox value.bind="data.orderNo" read-only="true"></au-textbox>
+        </td>
+        <td class="text-right">
+            <require from="../../../../../lib/number-format-value-converter"></require>
+            <p>${data.orderQuantity | numberFormat:"0,000"}</p>
+        </td>
+        <td>
+            <div class="col-sm-6">
+                <au-textbox class="col-sm-10 pull-left" value.bind="data.uom" read-only.bind="true"></au-textbox>
+            </div>
+            <div class="col-sm-6">
+                <button class="col-sm-2 btn btn-info pull-right" click.delegate="toggle()">i</button>
+            </div>
+        </td>
+
+    </tr>
+    <tr show.bind="isShowing">
+        <td></td>
+        <td colspan="3">
+            <au-collection columns.one-way="detailSPPColumns" items.bind="data.details" read-only.bind="readOnly">
+                <template replace-part="thead">
+                    <thead>
+                        <tr>
+                            <th>${detailSPPColumns[0]}</th>
+                            <th>${detailSPPColumns[1]}</th>
+                            <th>${detailSPPColumns[2]}</th>
+                            <th>${detailSPPColumns[3]}</th>
+                        </tr>
+                    </thead>
+                </template>
+                <template replace-part="item">
+                    <td>
+                        <au-textbox value.bind="data.colorTemplate" read-only="true"></au-textbox>
+                    </td>
+                    <td>
+                        <au-textbox value.bind="data.colorRequest" read-only.bind="true"></au-textbox>
+                    </td>
+                    <td class="text-right">
+                        <p>${data.quantity | numberFormat:"0,000"}</p>
+                    </td>
+                    <td>
+                        <au-textbox value.bind="data.uomDetail" read-only.bind="true"></au-textbox>
+                    </td>
+                </template>
+            </au-collection>
+        </td>
+    </tr>
+</template>

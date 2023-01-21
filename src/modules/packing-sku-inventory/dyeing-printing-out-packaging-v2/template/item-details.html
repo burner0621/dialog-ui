@@ -1,0 +1,28 @@
+<template replace-part="packagingProductionOrdersDetails">
+    <tr>
+        <td>
+            <au-textbox value.bind="packagingProductionOrdersDetails.packagingCode" error.bind="error.ProductionOrder"
+                 read-only.bind="false" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+                <au-dropdown value.bind="packagingProductionOrdersDetails.packagingType" items.bind="packType" read-only.bind="readOnly" error.bind="error.PackagingType"
+                    options.bind="controlOptions">
+                </au-dropdown>
+            </td>
+            <td>
+                    <au-numeric value.bind="packagingProductionOrdersDetails.packagingQTY" read-only.bind="readOnly" error.bind="error.PackagingQty"
+                        options.bind="controlOptions">
+                    </au-numeric>
+                </td>
+                <td>
+                    <au-dropdown value.bind="packagingProductionOrdersDetails.packagingUnit" items.bind="packUnit" read-only.bind="readOnly" error.bind="error.PackagingUnit"
+                        options.bind="controlOptions">
+                    </au-dropdown>
+                </td>
+                <td>
+        <td if.bind="!options.readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

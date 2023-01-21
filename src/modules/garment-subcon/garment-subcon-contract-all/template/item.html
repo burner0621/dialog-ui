@@ -1,0 +1,50 @@
+<template>
+	<tr>
+		<td class="col-sm-5 bg-primary">
+			<au-autocomplete 
+                value.bind="data.Product" 
+                error.bind="error.Product"
+				loader.bind="productLoader" 
+                text.bind="productView" 
+                placeholder="Product"
+				read-only.bind="readOnly || (isEdit && data.Id)" 
+                options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+
+		<td class="col-sm-3 bg-primary">
+			<au-numeric 
+                error.bind="error.Quantity" 
+                value.bind="data.Quantity" 
+                format="0.00"
+				read-only.bind="readOnly"
+                options.bind="controlOptions">
+			</au-numeric>
+		</td>
+
+		<td class="col-sm-3 bg-primary">
+			<au-autocomplete 
+                value.bind="data.Uom" 
+                error.bind="error.Uom" 
+                loader.bind="uomLoader"
+				text="Unit" 
+                placeholder="Satuan" 
+                read-only.bind="readOnly || (isEdit && data.Id)"
+                options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+
+		<td class="col-sm-3 bg-primary">
+			<au-numeric 
+                error.bind="error.CIFItem" 
+                value.bind="data.CIFItem" 
+                format="0.00"
+				read-only.bind="readOnly"
+                options.bind="controlOptions">
+			</au-numeric>
+		</td>
+		<td if.bind="!readOnly" class="col-sm-1">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+	</tr>
+</template>

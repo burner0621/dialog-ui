@@ -1,0 +1,44 @@
+<template>
+    <h1 class="page-header">Monitoring Penerimaan Gudang Weaving</h1>
+    <form class="form-horizontal">
+    
+        <au-dropdown 
+        label="Dari" 
+        value.bind="from" 
+        items.bind="fromList" 
+        options.bind="controlOptions">
+        </au-dropdown>
+
+    <au-datepicker
+    value.bind="dateFrom"
+    label="Tanggal Awal"
+    options.bind="controlOptions"
+    error.bind="error.date">
+</au-datepicker>
+
+<au-datepicker
+    value.bind="dateTo"
+    label="Tanggal Akhir"
+    options.bind="controlOptions"
+    error.bind="error.date">
+</au-datepicker>
+
+    <div class="btn-group col-md-offset-5">
+        <button class="btn btn-success" click.delegate="search()">Cari</button>
+        <button class="btn btn-default" click.delegate="reset()">Reset</button>
+    </div>
+
+    <au-table 
+    view-model.ref="Table"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable.bind="true"
+        page-size="25"
+        options.bind="tableOptions">
+
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="excel()">Cetak Excel</button>
+            </div>
+    </au-table>
+</form>
+</template>

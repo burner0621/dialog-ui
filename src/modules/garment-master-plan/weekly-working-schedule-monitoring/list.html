@@ -1,0 +1,52 @@
+
+<template>
+  
+    <h1 class="page-header">Monitoring Jadwal Pengerjaan Per Week</h1>
+    <form class="form-horizontal">
+
+        <au-autocomplete 
+            value.bind="year" 
+            label="Year" 
+            loader.bind="yearLoader"
+            text.bind = "yearView"
+            placeholder="Tahun" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+    
+        <au-autocomplete 
+            value.bind="week" 
+            label="Week" 
+            loader.bind="weekLoader"
+            text.bind = "weekView"
+            placeholder="Week" 
+            query.bind="filterWeek"
+            show.bind="year"
+            options.bind="controlOptions">
+        </au-autocomplete>
+            
+       
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+         <div class="btn-group pull-left">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+
+       <br>
+    </br>
+
+    <table ref="table" class="table table-bordered table-hover" border="1" id="myTable" ></table>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="args.total>args.size" info.bind="args" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</au-input-form> 
+</template>

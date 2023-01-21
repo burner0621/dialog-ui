@@ -1,0 +1,95 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>Deal</ai-dialog-header>
+
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-textbox value.bind="data.Name" label="Judul" placeholder="Judul" error.bind="error.Name"></au-textbox>
+                
+                <au-dropdown
+                    label="Stage"
+                    value.bind="data.Stage"
+                    error.bind="error.Stage"
+                    items.bind="stageData"
+                    read-only.bind="isEdit"
+                    text="name">
+                </au-dropdown>
+
+                <!-- <au-autocomplete 
+                    value.bind="data.product" 
+                    error.bind="error.product"
+                    label="Barang"
+                    loader.one-time="productLoader"
+                    placeholder="Cari barang"
+                    text="name">
+                </au-autocomplete> -->
+                
+                <!-- <div class="form-group ${error.quantity ? 'has-error' : ''}">
+                    <label class="col-sm-3 text-right au-layout control-label">Jumlah</label>
+                    <div class="col-sm-9">
+                        <input ref="qtyNumeric" type="text" value.bind="data.quantity | numberFormat: '0,000'" class="form-control text-right" onfocus="this.select()">
+                        <span class="help-block" if.bind="error.quantity">${error.quantity}</span>
+                    </div>
+                </div> -->
+
+                <au-numeric label="Jumlah" value.bind="data.Quantity" format="0,000" error.bind="error.Quantity"></au-numeric>
+
+                <!-- <au-textbox value.bind="data.product.uom.unit" label="Satuan" read-only="true" if.bind="data.product"></au-textbox> -->
+                <au-autocomplete 
+                    value.bind="data.Uom" 
+                    error.bind="error.Uom"
+                    label="Satuan"
+                    loader.one-time="uomLoader"
+                    placeholder="Cari satuan"
+                    text="Unit">
+                </au-autocomplete>
+
+                <!-- <div class="form-group ${error.amount ? 'has-error' : ''}">
+                    <label class="col-sm-3 text-right au-layout control-label">Total Harga</label>
+                    <div class="col-sm-9">
+                        <input ref="numeric" type="text" value.bind="data.amount | numberFormat: '0,000'" class="form-control text-right" onfocus="this.select()">
+                        <span class="help-block" if.bind="error.amount">${error.amount}</span>
+                    </div>
+                </div> -->
+                <au-numeric label="Total Harga" value.bind="data.Amount" format="0,000.00" error.bind="error.Amount"></au-numeric>
+                
+                <au-textbox value.bind="data.Currency" label="Mata Uang" read-only="true"></au-textbox>
+                
+                <au-autocomplete 
+                    value.bind="data.Company" 
+                    error.bind="error.Company"
+                    label="Perusahaan" 
+                    loader.one-time="companyLoader"
+                    placeholder="Cari perusahaan" 
+                    text="Name">
+                </au-autocomplete>
+
+                <au-autocomplete 
+                    value.bind="data.Contact" 
+                    error.bind="error.Contact"
+                    label="Kontak" 
+                    loader.one-time="contactLoader"
+                    placeholder="Cari kontak" 
+                    text="Name">
+                </au-autocomplete>
+
+                <au-datepicker value.bind="data.CloseDate" label="Tanggal Tutup" placeholder="Tanggal tutup" error.bind="error.CloseDate"></au-datepicker>
+
+                <au-multiline value.bind="data.Description" label="Deskripsi" placeholder="Deskripsi" error.bind="error.Description"></au-multiline>
+                
+                <au-dropdown
+                    label="Alasan"
+                    value.bind="data.Reason"
+                    error.bind="error.Reason"
+                    items.bind="reasons">
+                </au-dropdown>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.delegate="controller.cancel()">Kembali</button>
+            <button click.delegate="save()">Simpan</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

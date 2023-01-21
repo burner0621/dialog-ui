@@ -1,0 +1,31 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox placeholder="Input No SOP" value.bind="data.NoSOP" error.bind="error.NoSOP"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox placeholder="Jenis dan No Benang" value.bind="data.ThreadNumber" error.bind="error.ThreadNumber"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Packing" error.bind="error.Packing" format="0,0" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="Weight" error.bind="error.Weight" format="0,0.00" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.ConvertionValue" error.bind="error.ConvertionValue" format="0,0.00"
+                read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1" if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

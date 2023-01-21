@@ -1,0 +1,68 @@
+<template>
+    <h1 class="page-header">LAPORAN REKAP SUBKON KONTRAK</h1>
+    <!-- <h1 if.bind ="KtgrItem == 'BAHAN BAKU'" class="page-header">LAPORAN STOCK BAHAN BAKU</h1>
+    <h1 if.bind ="KtgrItem == 'BAHAN EMBALANCE'" class="page-header">LAPORAN STOCK BAHAN EMBALANCE</h1>
+    <h1 if.bind ="KtgrItem == 'BAHAN PENDUKUNG'" class="page-header">LAPORAN STOCK BAHAN PENDUKUNG</h1> -->
+    <!-- read-only.bind="readOnly || data.IsUsed || data.Id" -->
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="SupplierCode" error.bind="error.SupplierCode" label="Supplier / Penerima Subkon" loader.bind="supplierLoader" text.bind="supplierView" placeholder="Cari Supplier" read-only.bind="readOnly" options.bind="controlOptions"> </au-autocomplete>
+        
+        <au-dropdown label="Jenis Kontrak" value.bind="ContractTypeItem" items.bind="ContractTypeItems" options.bind="controlOptions" > </au-dropdown>
+        <au-datepicker label="Tanggal Awal Kontrak" value.bind="dateFrom" options.bind="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir Kontrak" value.bind="dateTo" options.bind="controlOptions"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+    
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td align="center" rowspan="2">No</td>
+                        <td align="center" rowspan="2">No/Tanggal Kontrak</td>
+                        <td align="center" rowspan="2">Jenis Kontrak</td>
+                        <td align="center" rowspan="2">Penerima Subkon</td>
+                        <td align="center" rowspan="2">Buyer</td>
+                        <td align="center" rowspan="2">Tanggal Persetujuan</td>
+                        <td align="center" rowspan="2">Quantity</td>
+                        <td align="center" rowspan="2">Satuan</td>
+                        <td align="center" rowspan="2">Jenis Pekerjaan</td>
+                        <td align="center" rowspan="2">Jenis Barang Jadi</td>
+                        <td align="center" rowspan="2">Tanggal Jatuh Tempo</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td>${item.ContractNo}</td>
+                        <td>${item.ContractType}</td>
+                        <td>${item.SupplierName}</td>
+                        <td>${item.BuyerName}</td>
+                        <td>${item.AgreementDate | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.Quantity}</td>
+                        <td>${item.UomUnit}</td>
+                        <td>${item.JobType}</td>
+                        <td>${item.FinishedGoodType}</td>
+                        <td>${item.DueDate | dateFormat:'DD MMMM YYYY'}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="info.total>info.size"  info.bind="info" change.delegate="changePage($event)"></pagination>
+        <hr/>
+    </form>
+
+    
+</template>

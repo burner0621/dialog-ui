@@ -1,0 +1,54 @@
+<template>
+    <tr>
+        <td  class="col-sm-2">
+            <au-textbox 
+                value.bind="data.PO_SerialNumber"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td  class="col-sm-3">
+            <au-textbox 
+                value.bind="product"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td  class="col-sm-1">
+            <au-textbox 
+                value.bind="category"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox 
+                value.bind="quantity"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox 
+                value.bind="uom" 
+                read-only.bind="true" 
+                options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric 
+                value.bind="data.BudgetPrice" 
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-multiline 
+                value.bind="data.ProductRemark" 
+                read-only.bind="options.readOnly" 
+                options.bind="controlOptions">
+            </au-multiline>
+        </td>
+     </tr>
+</template>
+

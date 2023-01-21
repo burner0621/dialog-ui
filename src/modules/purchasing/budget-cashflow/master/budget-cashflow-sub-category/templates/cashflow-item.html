@@ -1,0 +1,17 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete placeholder="pilih kategori"
+                             value.bind="data.Category"
+                             text="name"
+                             error.bind="error.CategoryId"
+                             loader.one-time="categoryLoader">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data, $event)">-
+            </button>
+        </td>
+    </tr>
+</template>

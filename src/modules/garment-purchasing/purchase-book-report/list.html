@@ -1,0 +1,136 @@
+<template>
+  <h1 class="page-header">Laporan Buku Pembelian Bahan Baku, Embalace, Umum</h1>
+  <form class="form-horizontal">
+      <!-- <delivery-order-auto-suggest label="No. Surat Jalan" value.bind="no"></delivery-order-auto-suggest> -->
+
+          <!--<au-textbox
+          value.bind="internNote" 
+              label="Nomor Nota Intern" 
+              options.bind="controlOptions"
+              placeholder="Cari Nomor Nota Intern"></au-textbox>-->
+<au-dropdown 
+              label="Jenis Supplier" 
+              value.bind="suppliertype"
+              items.bind="SupplierItem"
+              options.bind="controlOptions" >
+      </au-dropdown>
+          <au-autocomplete 
+              value.bind="supplier" 
+              label="Supplier" 
+              loader.bind="supplierLoader"
+              placeholder="Cari Supplier" 
+              read-only.bind="readOnly" 
+              key="_id" 
+              text="name"
+              query.bind="suppQuery"
+              options.bind="controlOptions">
+          </au-autocomplete>
+          <au-dropdown 
+              label="Kategori" 
+              value.bind="KtgrItem"
+              items.bind="KategoriItem"
+              options.bind="controlOptions" >
+      </au-dropdown>
+      
+      
+      <!-- <supplier-auto-suggest label="Supplier" value.bind="supplierId"></supplier-auto-suggest> -->
+      <au-datepicker
+          value.bind="dateFrom"
+          label="Dari Tgl"
+          options.bind="controlOptions"
+          error.bind="error.date">
+      </au-datepicker>
+      
+      <au-datepicker
+          value.bind="dateTo"
+          label="Sampai Tgl"
+          options.bind="controlOptions"
+          error.bind="error.date">
+      </au-datepicker>
+
+      <!-- <datepicker label="Tanggal Awal" value.bind="dateFrom" change.delegate="dateFromChanged($event)"></datepicker>
+      <datepicker label="Tanggal Akhir" value.bind="dateTo" min.bind="dateFrom"></datepicker> -->
+      <div class="form-group">
+          <label for="contact" class="col-sm-5 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+       <div >
+          <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+      </div>
+      <div class="table-responsive">
+          <table class="table table-bordered table-hover" border="1" id="doReport">
+              <thead align="center">
+                  <tr>
+                      <td rowspan="2">NO</td>
+                      <td rowspan="2">SUPPLIER</td>
+                      <td rowspan="2">NOMOR NOTA</td>
+                      <td rowspan="2">NOMOR BON KECIL</td>
+                      <td rowspan="2">NOMOR SURAT JALAN</td>
+                      <td rowspan="2">NOMOR INVOICE</td>
+                      <td rowspan="2">NOTA INTERN</td>
+                      <td rowspan="2">TIPE</td>
+                      <td colspan="2">TANGGAL</td>
+                      <td colspan="4">PEMBELIAN</td>
+                      <td rowspan="2">TOTAL(IDR)</td>
+                  </tr>
+                  <tr>
+                      <!--//>-->
+                      <td>NOTA</td>
+                      <td>J.T</td>
+                      <td>DPP</td>
+                      <td>JENIS VATAS</td>
+                      <td>RATE</td>
+                      <td>PPN</td>
+                      
+                  </tr>
+              </thead>
+              <tbody>
+                 <template repeat.for="category of categories">
+                      <tr repeat.for="data of category.data">
+                          <td class="text-center"> ${$index + 1}</td>
+                          <td>${data.supplierName}</td>
+                          <td>${data.billNo}</td>
+                          <td>${data.paymentBill}</td>
+                          <td>${data.dono}</td>
+                          <td>${data.invoiceNo}</td>
+                          <td>${data.Inno}</td>
+                          <td>${data.ktgori}</td>
+                          <td>${data.indate | dateFormat:'DD MMMM YYYY'}</td>
+                          <td>${data.pymentduedate}</td>
+                          <td class="text-right">${data.dpp}</td>
+                          <td>${data.currencycode}</td>
+                          <td class="text-right">${data.currencyrate}</td>
+                          <td class="text-right">${data.ppn}</td>
+                          <td class="text-right"><strong>${data.total}</strong></td>
+                      </tr>
+                      <tr class="active">
+                          <td class="text-center" colspan="8"><strong>${category.supplier}</strong></td>
+                          <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                          <td class="text-right"><strong>${category.subtotalDPP}</strong></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-right"><strong>${category.subtotalPPN}</strong></td>
+                          <td class="text-right"><strong>${category.subtotal}</strong></td>
+                      </tr>
+                      </template>
+                      <tr class="active">
+                      <td class="text-center" colspan="9"><strong>T O T A L  P E M B E L I A N . . . . . . . . . . . . . . .</strong></td>
+                      <td></td>
+                      <td class="text-right"><strong>${totalDPP}</strong></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-right"><strong>${totalPPN}</strong></td>
+                      <td class="text-right"><strong>${jmltotal}</strong></td>
+                      </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+          Tidak ada data ditemukan.
+      </div>
+  </form>
+</template> 

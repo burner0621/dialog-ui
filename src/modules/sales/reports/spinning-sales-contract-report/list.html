@@ -1,0 +1,101 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <style>
+            table > tbody > tr > td {
+                white-space: pre;
+            }
+        </style>
+
+        <h1 class="page-header">Laporan Sales Contract - Spinning </h1>
+        <form class="form-horizontal">
+
+            <au-autocomplete value.bind="filter.salesContractNo" label="Nomor Sales Contract" change.delegate="spinningSalesContractLoaderChanged($event)"
+                loader.bind="spinningSalesContractLoaderLoader" placeholder="cari nomor sales kontrak " key="SalesContractNo"
+                text="SalesContractNo">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="filter.buyer" label="Buyer" change.delegate="buyersChanged($event)" loader.bind="buyersLoader"
+                placeholder="cari buyer " key="Code" text.bind = "buyerView" read-only.bind="(readOnly || isEdit)">
+            </au-autocomplete>
+
+            <au-autocomplete value.bind="filter.comodity" label="Komoditas" change.delegate="comodityChanged($event)" loader.bind="comodityLoader"
+                placeholder="cari comodity " key="Code" text="Name" read-only.bind="(readOnly || isEdit)">
+            </au-autocomplete>
+
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+
+            <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+        <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <!--thead before search-->
+                <!--thead after search-->
+                <thead align="center">
+                    <tr>
+                        <td rowspan="3">No</td>
+                        <td rowspan="3">Nomor Sales Kontrak</td>
+                        <td rowspan="3">Tanggal Sales Kontrak</td>
+                        <td rowspan="3">Buyer</td>
+                        <td rowspan="3">Jenis Buyer</td>
+                        <td rowspan="3">Nomor Disposisi</td>
+                        <td rowspan="3">Komoditas</td>
+                        <td rowspan="3">Jumlah Order</td>
+                        <td rowspan="3">Satuan</td>
+                        <td rowspan="3">Toleransi (%)</td>
+                        <td rowspan="3">Kualitas</td>
+                        <td rowspan="3">Harga</td>
+                        <td rowspan="3">Mata Uang</td>
+                        <td rowspan="3">Syarat Pembayaran</td>
+                        <td rowspan="3">Pembayaran ke Rekening</td>
+                        <td rowspan="3">Jadwal Pengiriman</td>
+                        <td rowspan="3">Agen</td>
+                        <td rowspan="3">Komisi</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center">${$index + 1}</td>
+                        <td>${item.salesContractNo}</td>
+                        <td>${item.CreatedUtc | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.buyerName}</td>
+                        <td>${item.buyerType}</td>
+                        <td>${item.dispositionNo}</td>
+                        <td>${item.comodityName}</td>
+                        <td>${item.orderQuantity.toLocaleString()}</td>
+                        <td>${item.uomUnit}</td>
+                        <td>${item.shippingQuantityTolerance}</td>
+                        <td>${item.qualityName}</td>
+                        <td>${item.price.toLocaleString()}</td>
+                        <td>${item.accountCurrencyCode}</td>
+                        <td>${item.termOfPaymentName}</td>
+                        <td>${item.paymentTo}</td>
+                        <td>${item.deliverySchedule | dateFormat:'DD MMMM YYYY'}</td>
+                        <td>${item.agentName}</td>
+                        <td>${item.comission}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+        </form>
+    </au-input-form>
+</template>

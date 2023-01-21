@@ -1,0 +1,36 @@
+<template>
+    <tr>
+        <td style="background-color:#a7a0a0">
+            <au-textbox value.bind="data.Product.Code" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-textbox value.bind="data.Product.Name" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-textbox value.bind="data.Product.Remark" read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-textbox value.bind="data.DesignColor" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-textbox 
+                value.bind="data.Quantity"
+                error.bind = "error.Quantity"
+                read-only.bind="readOnly">
+            </au-textbox>                    
+        </td>
+        <td style="background-color:#a7a0a0">
+            <au-textbox value.bind="data.Uom.Unit" read-only.bind="true">
+            </au-textbox>
+        </td>
+    </tr>
+    <tr if.bind="error.SizesCount">
+        <div class="form-group has-error" if.bind="error.SizesCount">
+            <p if.bind="error.SizesCount" class="help-block text-center">${error.SizesCount}</p>
+        </div>
+    </tr>
+</template>

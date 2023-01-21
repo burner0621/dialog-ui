@@ -1,0 +1,22 @@
+<template>
+        <h1 class="page-header">Penerimaan RO</h1>
+        <au-input-form options.bind="options">
+            <au-autocomplete label="Seksi" placeholder="Cari Seksi" value.bind="section" error.bind="error.section"
+                loader.one-time="sectionLoader" options.bind="length" text="Code" >
+            </au-autocomplete>
+            <au-textbox if.bind="error.MaterialsCount" error.bind="error.MaterialsCount" read-only="true"></au-textbox>
+            <div class="row">
+                <div class="col-md-12" if.bind="section">
+                    <au-collection 
+                        items.bind="data.CostCalculationGarment" 
+                        columns.bind="columns" 
+                        errors.bind="error.Materials"
+                        read-only="true"
+                        options.bind="itemOptions"
+                        header-template="modules/merchandiser/ro-acceptance/template/item-header"
+                        item-template="modules/merchandiser/ro-acceptance/template/item">
+                    </au-collection>
+                </div>
+            </div>
+        </au-input-form>
+    </template>

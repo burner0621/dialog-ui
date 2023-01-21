@@ -1,0 +1,39 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox 
+                value.bind="data.ScrapClassificationName"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='right'>
+            <au-textbox 
+                value.bind="data.RemainingQuantity" 
+                read-only.bind="true"
+                format="0,000.00">
+            </au-textbox>  
+        </td>
+        <td align='right'>
+            <au-numeric 
+                value.bind="data.Quantity" 
+                error.bind="error.Quantity"
+                read-only.bind="readOnly"
+                format="0,000.00">
+            </au-numeric>  
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.UomUnit" 
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td align='center'>
+            <au-textbox 
+                value.bind="data.Description"
+                read-only.bind="readOnly">
+            </au-textbox>
+        </td>
+        
+     </tr>
+</template>
+

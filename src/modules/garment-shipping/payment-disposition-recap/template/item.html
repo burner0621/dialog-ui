@@ -1,0 +1,114 @@
+<template>
+    <tr style="background-color:#14c0eb;">
+        <td class="col-sm-1">
+            <au-autocomplete placeholder="Pilih No Disposisi" value.bind="selectedPaymentDisposition"
+                error.bind="error.paymentDisposition" loader.bind="paymentDispositionsLoader" text="dispositionNo"
+                query.bind="dispositionFilter" read-only.bind="readOnly || data.id" options.bind="controlOptions">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <au-datepicker value.bind="data.paymentDisposition.invoiceDate" error.bind="error.invoiceDate" read-only="true">
+            </au-datepicker>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox value.bind="data.paymentDisposition.invoiceNumber" eror.bind="error.invoiceNumber" read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="data.paymentDisposition.amount" error.bind="error.amount" read-only="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="data.service" error.bind="error.service" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="data.othersPayment" read-only.bind="readOnly" change.delegate="itemChanged($event)">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="data.truckingPayment" error.bind="error.truckingPayment" read-only.bind="readOnly" change.delegate="itemChanged($event)">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="vatService" error.bind="error.vatService" read-only="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="amountService" error.bind="error.amountService" read-only="true" change.delegate="itemChanged($event)">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="data.paymentDisposition.incomeTaxValue" read-only.bind="readOnly" change.delegate="itemChanged($event)">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="paidDisposition" read-only="true">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+        <td>
+            <button class="btn btn-default pull-right" if.bind="selectedPaymentDisposition" click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+
+    <tr style="background-color:#C2B5B2;" show.bind="isShowing">
+        <td class="col-sm-6" colspan="12">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="5">Persentase Per Unit</th>
+                        <th colspan="5">Amount Per Unit</th>
+                    </tr>
+                    <tr>
+                        <th repeat.for="unit of units">${unit}</th>
+                        <th repeat.for="unit of units">${unit}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <!-- <td repeat.for="unit of units">
+                            <au-numeric value.bind="data.paymentDisposition.percentage[unit]" read-only="true">
+                            </au-numeric>
+                        </td>
+                        <td repeat.for="unit of units">
+                            <au-numeric value.bind="data.paymentDisposition.amountPerUnit[unit]" read-only="true">
+                            </au-numeric>
+                        </td> -->
+                        <td repeat.for="unit of units">${data.paymentDisposition.percentage[unit]}</td>
+                        <td repeat.for="unit of units">${data.paymentDisposition.amountPerUnit[unit]}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </td>
+    </tr>
+
+    <tr style="background-color:#C2B5B2;" show.bind="isShowing">
+        <td class="col-sm-6" colspan="12">
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Invoice</th>
+                        <th rowspan="2">Buyer</th>
+                        <th rowspan="2">Volume</th>
+                        <th rowspan="2">Unit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="invoiceDetail of data.paymentDisposition.invoiceDetails">
+                        <td>${invoiceDetail.invoiceNo}</td>
+                        <td>${invoiceDetail.invoice.buyerAgent.name}</td>
+                        <td>${invoiceDetail.packingList.totalCBM}</td>
+                        <td>${invoiceDetail.invoice.unit}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </td>
+    </tr>
+</template>

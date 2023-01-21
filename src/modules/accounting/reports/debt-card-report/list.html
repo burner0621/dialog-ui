@@ -1,0 +1,96 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <style>
+      table>tbody>tr>td {
+        white-space: pre;
+      }
+    </style>
+    <h1 class="page-header">Laporan Kartu Hutang</h1>
+    <form class="form-horizontal">
+
+      <au-autocomplete value.bind="supplier" label="Supplier" loader.bind="supplierLoader" error.bind="error.supplier" placeholder="Cari Supplier"
+        read-only.bind="readOnly" key="_id" text.bind="supplierView" options.bind="controlOptions">
+      </au-autocomplete>
+
+
+      <au-dropdown value.bind="info.month" label="Bulan" options.bind="controlOptions" items.bind="itemMonths"
+        key="value" text="text">
+      </au-dropdown>
+
+      <au-dropdown label="Tipe Pembayaran" value.bind="pymntMethod" items.bind="itempaymentMethod" options.bind="controlOptions">
+      </au-dropdown>
+
+      <au-dropdown value.bind="info.year" label="Tahun" options.bind="controlOptions" items.bind="itemYears" key="value"
+        text="text">
+      </au-dropdown>
+
+      <au-autocomplete value.bind="currency" label="Mata Uang" loader.bind="currencyLoader"
+        placeholder="cari Mata Uang" key="code" error.bind="error.currency" text.bind="currencyView" 
+        read-only.bind="readOnly" options.bind="controlOptions">
+      </au-autocomplete>
+
+      <div class="form-group">
+        <label for="contact" class="col-sm-6 control-label"></label>
+        <div class="col-sm-3">
+          <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+          <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+        </div>
+      </div>
+
+      <div class="btn-group pull-left">
+        <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+      </div>
+    </form>
+
+    <br>
+    </br>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" border="1" id="myTable">
+        <thead align="center">
+          <tr>
+            <td align="center" colspan="6">Debit</td>
+            <td align="center" colspan="5">Kredit</td>
+            <td align="center" colspan="3">Saldo Akhir</td>
+          </tr>
+          <tr>
+            <td>No. Nota</td>
+            <td>Tgl. Nota</td>
+            <td>Total</td>
+            <td>Mata Uang</td>
+            <td>Total(IDR)</td>
+            <td>Keterangan</td>
+            <td>No. Nota</td>
+            <td>Tgl. Nota</td>
+            <td>Total</td>
+            <td>Mata Uang</td>
+            <td>Total(IDR)</td>
+            <td>Total</td>
+            <td>Mata Uang</td>
+            <td>Total(IDR)</td>
+          </tr>
+        </thead>
+        <tbody>
+           <tr repeat.for="debt of data">
+            <td >${debt.NoDebit}</td>
+            <td >${debt.DateDebit}</td>
+            <td >${debt.TotalDebit}</td>
+            <td >${debt.CurrencyCodeDebit}</td>
+            <td >${debt.TotalIDRDebit}</td>
+            <td>${debt.Remark}</td>
+            <td>${debt.NoKredit}</td>
+            <td>${debt.DateKredit}</td>
+            <td>${debt.TotalKredit}</td>
+            <td>${debt.CurrencyCodeKredit}</td>
+            <td>${debt.TotalIDRKredit}</td>
+            <td>${debt.TotalEndingBalance}</td>
+            <td>${debt.CurrencyCodeEndingBalance}</td>
+            <td>${debt.TotalIDREndingBalance}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr />
+    </form>
+  </au-input-form>
+</template>

@@ -1,0 +1,94 @@
+<template>
+    <h1 class="page-header">Laporan Bukti Pengeluaran Bank PPH</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="pphBankExpenditureNote"
+            loader.one-time="pphBankExpenditureNoteLoader"
+            text="No"
+            label="No Bukti Pengeluaran Bank"
+            options.bind="controlOptions"
+            placeholder="Masukkan No Bukti Pengeluaran Bank">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="unitPaymentOrder"
+            loader.one-time="unitPaymentOrderLoader"
+            text="UnitPaymentOrderNo"
+            label="No SPB"
+            options.bind="controlOptions"
+            placeholder="Masukkan No SPB">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="expedition"
+            loader.one-time="purchasingDocumentExpeditionLoader"
+            text="InvoiceNo"
+            label="No Invoice"
+            options.bind="controlOptions"
+            placeholder="Masukkan No Invoice">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier"
+            loader.one-time="supplierLoader"
+            label="Supplier"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier"
+            select.bind="selectSupplier">
+        </au-autocomplete>
+
+        <!--
+        <au-autocomplete 
+            value.bind="division"
+            loader.one-time="divisionLoader"
+            label="Divisi"
+            text="name"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Divisi"
+            select.bind="selectDivision">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="paymentMethod"
+            label="Cara Pembayaran"
+            options.bind="controlOptions"
+            items.bind="paymentMethodItems">
+        </au-dropdown>
+        -->
+
+        <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal"
+            error.bind="error.dateFrom"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir"
+            error.bind="error.dateTo"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+    <div id="pph-bank-table">
+        <au-table
+            view-model.ref="tableList"
+            data.bind="loader"
+            columns.bind="columns"
+            page-size="25"
+            options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+    </div>
+</template>

@@ -1,0 +1,107 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td if.bind="!readOnly">
+            <au-checkbox 
+                value.bind="data.Select"
+                read-only.bind="readOnly">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.GarmentDeliveryOrderNo"
+                        read-only.bind="true"
+                        error.bind="error.GarmentDeliveryOrderNo"
+                        options.bind="controlOptions">
+            </au-textbox>
+            <!--<au-autocomplete 
+                value.bind="dataDebt" 
+                error.bind="error.GarmentDeliveryOrderNo"
+                loader.bind="garmenDebtLoader"
+                placeholder="Cari Surat Jalan" 
+                key="GarmentDeliveryOrderNo"
+                text="GarmentDeliveryOrderNo"
+                read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-autocomplete>-->
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.InternalNoteNo"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.BillsNo"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.PaymentBills"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.SupplierCode"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.RemarksDetail"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+            <!--<au-textbox 
+                value.bind="data.RemarksDetail" 
+                error.bind="error.RemarksDetail"
+                read-only.bind="readOnly"
+                placeholder="Tambah keterangan" 
+                options.bind="controlOptions">
+            </au-textbox>-->
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.CurrencyCode"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.PaymentRate"
+                        error.bind="error.PaymentRate"
+                        read-only.bind="readOnly"
+                        format="0,0"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td style="text-align:center;">
+            <au-textbox value.bind="data.PurchasingRate"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td style="text-align:center;">
+            <au-numeric value.bind="data.PurchaseAmount"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.MemoAmount"
+                        error.bind="error.MemoAmount"
+                        read-only.bind="readOnly"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td style="text-align:center;">
+            <au-numeric value.bind="data.MemoAmount * data.PaymentRate || 0"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

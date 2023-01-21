@@ -1,0 +1,44 @@
+<template>
+  <h1 class="page-header">Aval Komponen</h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+
+        <au-datepicker label="Tanggal Awal Laporan" value.bind="dateFrom" error.bind="error.dateFrom"
+          options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker label="Tanggal Akhir Laporan" value.bind="dateTo" error.bind="error.dateTo"
+          options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+              <button click.delegate="search()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-danger'>Reset</button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </form>
+
+
+
+  <div id="mutation-table">
+    <au-table 
+    view-model.ref="tableList" 
+    data.bind="loader" 
+    columns.bind="columns" 
+    sortable="true" 
+    options.bind="tableOptions"
+    page-size="25"
+    context.bind="context" 
+    context-click.delegate="contextClickCallback($event)"
+    selectable.bind="true">
+
+    </au-table>
+  </div>
+</template>

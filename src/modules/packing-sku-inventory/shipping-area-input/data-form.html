@@ -1,0 +1,57 @@
+<template>
+
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+    <au-dropdown label="Area" value.bind="data.area" error.bind="error.Area" read-only.bind="readOnly"
+      items.bind="areas" show.bind="false"></au-dropdown>
+
+    <au-datepicker options.bind="controlOptions" value.bind="data.date" error.bind="error.Date"
+      read-only.bind="readOnly || isEdit" label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions" label="Shift" value.bind="data.shift" error.bind="error.Shift"
+      read-only.bind="readOnly || isEdit" items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Group" value.bind="data.group" error.bind="error.Group"
+      read-only.bind="readOnly || isEdit" items.bind="groups"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions" label="Penerimaan" value.bind="shippingType"
+      error.bind="error.ShippingType" read-only.bind="readOnly || isEdit" items.bind="shippingTypes"></au-dropdown>
+      
+
+    <au-autocomplete  options.bind="controlOptions" value.bind="selectedFilterDO"
+      label="Filter Nomor DO" show.bind="!readOnly && !isEdit" read-only.bind="readOnly" loader.bind="filterDOLoader"
+      text.bind="doTextFormatter">
+    </au-autocomplete>
+
+    <div if.bind="!isRetur">
+      <au-textbox show.bind="error.ShippingProductionOrder" read-only.bind="true"
+        value.bind="error.ShippingProductionOrder" style="color: red;"></au-textbox>
+      <au-collection view-model.ref="ItemCollections" columns.bind="itemColumns" items.bind="data.displayShippingProductionOrders" options.bind="detailOptions"
+        errors.one-way="error.ShippingProductionOrders" read-only.bind="readOnly" if.bind="!isEdit"
+        header-template="modules/packing-sku-inventory/shipping-area-input/template/item-header"
+        item-template="modules/packing-sku-inventory/shipping-area-input/template/item">
+      </au-collection>
+
+      <au-collection view-model.ref="ItemCollections" columns.bind="itemColumns" items.bind="data.displayShippingProductionOrders" options.bind="returDetailOptions"
+        errors.one-way="error.ShippingProductionOrders" read-only.bind="readOnly" if.bind="isEdit"
+        remove.bind="onremove" header-template="modules/packing-sku-inventory/shipping-area-input/template/item-header"
+        item-template="modules/packing-sku-inventory/shipping-area-input/template/item">
+      </au-collection>
+    </div>
+
+    <div if.bind="isRetur">
+      <au-textbox show.bind="error.ShippingProductionOrder" read-only.bind="true"
+        value.bind="error.ShippingProductionOrder" style="color: red;"></au-textbox>
+      <au-collection columns.bind="returItemColumns" items.bind="data.shippingProductionOrders"
+        options.bind="detailOptions" errors.one-way="error.ShippingProductionOrders" read-only.bind="readOnly"
+        add.bind="addItemCallback" remove.bind="onremove"
+        item-template="modules/packing-sku-inventory/shipping-area-input/template/item">
+      </au-collection>
+    </div>
+
+    <template replaceable part="actions"></template>
+  </au-input-form>
+
+
+</template>

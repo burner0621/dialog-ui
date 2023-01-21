@@ -1,0 +1,157 @@
+<template>
+
+    <style>
+        table>tbody>tr>td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Monitoring Pembelian</h1>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+
+                <au-textbox value.bind="purchaseOrder" label="Nomor PR" placeholder="nomor pr" read-only.bind="true">
+                </au-textbox>
+
+                <label for="contact" class="col-sm-9 control-label"></label>
+
+            </div>
+        </div>
+        <div>
+            <a click.delegate="exportToXls()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="3">NO</td>
+                        <td colspan="2">PURCHASE REQUEST</td>
+                        <td rowspan="3">KATEGORI</td>
+                        <td rowspan="3">BUDGET</td>
+                        <td rowspan="3">NAMA BARANG</td>
+                        <td rowspan="3">KODE BARANG</td>
+                        <td rowspan="3">JUMLAH</td>
+                        <td rowspan="3">SATUAN</td>
+                        <td colspan="2">HARGA</td>
+                        <td colspan="2">SUPPLIER</td>
+                        <td rowspan="3">TANGGAL TERIMA PO INTERN</td>
+                        <td colspan="4">PO EXTERN</td>
+                        <td colspan="3">SURAT JALAN</td>
+                        <td colspan="4">BON PENERIMAAN</td>
+                        <td rowspan="3">TEMPO PEMBAYARAN</td>
+                        <td colspan="2">INVOICE</td>
+                        <td colspan="4">NOTA INTERN (SPB)</td>
+                        <td colspan="3">PPN</td>
+                        <td colspan="3">PPH</td>
+                        <td colspan="4">CATATAN KOREKSI</td>
+                        <td rowspan="3">KETERANGAN</td>
+                        <td rowspan="3">STATUS</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td rowspan="2">SATUAN</td>
+                        <td rowspan="2">TOTAL</td>
+                        <td rowspan="2">KODE</td>
+                        <td rowspan="2">NAMA</td>
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">DIMINTA DATANG (PR)</td>
+                        <td rowspan="2">TARGET DATANG</td>
+                        <td rowspan="2">NOMOR</td>
+
+                        <td rowspan="2">TANGGAL DATANG BARANG</td>
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td colspan="2">JUMLAH</td>
+
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td rowspan="2">NILAI</td>
+                        <td rowspan="2">JATUH TEMPO</td>
+
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td rowspan="2">NILAI</td>
+
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td rowspan="2">NILAI</td>
+                        <td rowspan="2">TANGGAL</td>
+                        <td rowspan="2">NOMOR</td>
+                        <td rowspan="2">NILAI</td>
+
+                        <td rowspan="2">KET.</td>
+                    </tr>
+                    <tr>
+                        <td>QTY</td>
+                        <td>SAT</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="PO of data" class="${PO.Position == 6 ?'danger': PO.Position == 4 || PO.Position == 5 || PO.Position == 7 || PO.Position == 8 ?'success':'primary'}">
+                        <td>${PO['No']}</td>
+                        <td>${PO['Tanggal Purchase Request']}</td>
+                        <td>${PO['No Purchase Request']}</td>
+                        <td>${PO['Kategori']}</td>
+                        <td>${PO['Budget']}</td>
+                        <td>${PO['Nama Barang']}</td>
+                        <td>${PO['Kode Barang']}</td>
+                        <td align="right">${(PO['Jumlah Barang']).toLocaleString()}</td>
+                        <td>${PO['Satuan Barang']}</td>
+                        <td align="right">${(PO['Harga Barang']).toLocaleString()}</td>
+                        <td align="right">${(PO['Harga Total']).toLocaleString()}</td>
+                        <td>${PO['Kode Supplier']}</td>
+                        <td>${PO['Nama Supplier']}</td>
+                        <td>${PO['Tanggal Terima PO Internal']}</td>
+                        <td>${PO['Tanggal Terima PO Eksternal']}</td>
+                        <td>${PO['Tanggal Diminta Datang PR']}</td>
+                        <td>${PO['Tanggal Target Datang']}</td>
+                        <td>${PO['No PO Eksternal']}</td>
+                        <td>${PO['Tanggal Surat Jalan']}</td>
+                        <td>${PO['Tanggal Datang Barang']}</td>
+                        <td>${PO['No Surat Jalan']}</td>
+                        <td>${PO['Tanggal Bon Terima Unit']}</td>
+                        <td>${PO['No Bon Terima Unit']}</td>
+                        <td>${PO['Jumlah Diminta']}</td>
+                        <td>${PO['Satuan Diminta']}</td>
+                        <td>${PO['Tempo Pembayaran']}</td>
+                        <td>${PO['Tanggal Invoice']}</td>
+                        <td>${PO['No Invoice']}</td>
+                        <td>${PO['Tanggal Nota Intern']}</td>
+                        <td>${PO['No Nota Intern']}</td>
+                        <td>${PO['Nilai Nota Intern'].toLocaleString()}</td>
+                        <td>${PO['Tanggal Jatuh Tempo']}</td>
+                        <td>${PO['Tanggal PPN']}</td>
+                        <td>${PO['No PPN']}</td>
+                        <td>${PO['Nilai PPN'].toLocaleString()}</td>
+                        <td>${PO['Tanggal PPH']}</td>
+                        <td>${PO['No PPH']}</td>
+                        <td>${PO['Nilai PPH'].toLocaleString()}</td>
+                        <td>${PO['Tanggal Koreksi']}</td>
+                        <td>${PO['No Koreksi']}</td>
+                        <td>${PO['Nilai Koreksi']}</td>
+                        <td>${PO['Ket. Koreksi']}</td>
+                        <td>${PO['Keterangan']}</td>
+                        <td>${PO['Status']}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <div>
+            * Baris warna merah : telah di kirim ke bagian Pembelian (not verified)
+            <br> * Baris warna hijau : telah di kirim ke bagian Kasir atau Accounting (verified)
+        </div>
+        <hr/>
+    </form>
+</template>

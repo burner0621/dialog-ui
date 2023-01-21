@@ -1,0 +1,79 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <div class="row">
+      <div class="col-md-12" style="padding:0">
+
+        <!-- DO template -->
+        <div class="col-md-10" style="padding:0">
+          <div class="row" style="padding-left:14.8%">
+            <div class="col-md-6">
+              <au-textbox label="No. DO Stock" value.bind="data.DOStockNo" error.bind="error.DOStockNo"
+                if.bind="readOnly || isEdit" read-only.bind="true">
+              </au-textbox>
+
+              <au-dropdown label="Seri DO" value.bind="type" items.bind="doStockOptions" error.bind="error.Type"
+                read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly">
+              </au-datepicker>
+
+              <au-autocomplete label="Buyer" value.bind="buyer" read-only.bind="readOnly" error.bind="error.Buyer"
+                loader.one-time="buyerLoader" text="Name" keypress.delegate="enterDelegate($event)">
+              </au-autocomplete>
+
+              <au-textbox label="Alamat" value.bind="data.Buyer.Address" read-only.bind="true">
+              </au-textbox>
+
+              <au-textbox label="Dikirm Kepada" value.bind="data.DestinationBuyerName"
+                error.bind="error.DestinationBuyerName" read-only.bind="readOnly"
+                keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-textbox label="Alamat Tujuan" value.bind="data.DestinationBuyerAddress"
+                error.bind="error.DestinationBuyerAddress" read-only.bind="readOnly"
+                keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-textbox label="Nama Sales" value.bind="data.SalesName" error.bind="error.SalesName"
+                read-only.bind="readOnly" keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+            </div>
+
+            <div class="col-md-6">
+              <au-textbox label="Kepala Gudang" value.bind="data.HeadOfStorage" error.bind="error.HeadOfStorage"
+                read-only.bind="readOnly" keypress.delegate="enterDelegate($event)">
+              </au-textbox>
+
+              <au-dropdown label="Satuan Packing" value.bind="packingUom" items.bind="packingUomOptions"
+                error.bind="error.PackingUom" read-only.bind="readOnly">
+              </au-dropdown>
+
+              <au-dropdown label="Satuan Panjang" value.bind="lengthUom" items.bind="lengthUomOptions"
+                error.bind="error.LengthUom" read-only.bind="readOnly || isEdit">
+              </au-dropdown>
+
+              <au-numeric label="Disp" value.bind="disp" error.bind="error.Disp" read-only.bind="readOnly"
+                keypress.delegate="enterDelegate($event)" format="0">
+              </au-numeric>
+
+              <au-multiline label="Catatan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"
+                keypress.delegate="enterDelegate($event)">
+              </au-multiline>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <au-textbox show.bind="error.DOStockItem" error.bind="error.DOStockItem" style="color: red;" read-only.bind="true">
+    </au-textbox>
+
+    <au-collection columns.bind="columns" items.bind="data.DOStockItems" errors.one-way="error.DOStockItems"
+      read-only.bind="readOnly" add.bind="addItemCallback" options.bind="detailOptions" remove.bind="onremove"
+      item-template="modules/sales/do-stock/template/item">
+    </au-collection>
+
+  </au-input-form>
+</template>

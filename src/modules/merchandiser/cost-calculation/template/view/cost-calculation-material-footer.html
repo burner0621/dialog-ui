@@ -1,0 +1,12 @@
+<template>
+    <tr>
+        <td colspan="11" class="text-right" style="padding-right:10%">
+            Total Material
+        </td>
+        <td class="text-right">
+            <require from="../../../../../lib/number-format-value-converter"></require>
+            ${totalMaterial | numberFormat:"0,000.00"}
+        </td>
+        
+    </tr>
+</template>

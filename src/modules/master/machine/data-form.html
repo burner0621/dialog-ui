@@ -1,0 +1,64 @@
+<template>
+  <div class="row">
+    <div class="col-md-6">
+      <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox label="Nama" value.bind="data.Name" error.bind="error.Name" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-autocomplete value.bind="data.Unit" error.bind="error.Unit" label="Unit"
+          change.delegate="unitChanged($event)" loader.bind="unitLoader" placeholder="search unit" key="code"
+          template="modules/master/machine/template/unit" read-only.bind="(readOnly || isEdit)">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="data.MachineType" error.bind="error.MachineType" label="Jenis Mesin"
+          change.delegate="machineTypeChanged($event)" loader.bind="machineTypeLoader" placeholder="search machine type"
+          key="Code" text="Name" read-only.bind="(readOnly || isEdit)">
+        </au-autocomplete>
+
+        <au-textbox label="Proses" value.bind="data.Process" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-textbox label="Manufaktur" value.bind="data.Manufacture" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-numeric label="Tahun" value.bind="data.Year" format="0" read-only.bind="(readOnly || isEdit)">
+        </au-numeric>
+
+        <au-textbox label="Kondisi" value.bind="data.Condition" read-only.bind="(readOnly || isEdit)">
+        </au-textbox>
+
+        <au-numeric label="Kapasitas Bulanan" value.bind="data.MonthlyCapacity" format="0" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-numeric label="Elektrik" value.bind="data.Electric" format="0,000.00" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-numeric label="Steam" value.bind="data.Steam" format="0,000.00" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-numeric label="Water" value.bind="data.Water" format="0,000.00" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-numeric label="Solar" value.bind="data.Solar" format="0,000.00" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-numeric label="LPG" value.bind="data.LPG" format="0,000.00" read-only.bind="(readOnly)">
+        </au-numeric>
+
+        <au-collection items.bind="data.Steps" errors.bind="error.Steps" read-only.bind="readOnly"
+          columns.bind="stepColumns" title="Step" item-template="modules/master/machine/template/step"
+          add.bind="addStep" remove.bind="removeStep">
+        </au-collection>
+        <div if.bind="error.MachineSteps.toString()">
+          <span style="color:red">-Step / Proses harus diisi dan tidak boleh sama.</span>
+        </div>
+
+        <au-collection items.bind="data.MachineEvents" columns.bind="machineEventColumns" add.bind="addMachineEvent"
+          remove.bind="removeMachineEvent" title="Event Mesin" read-only.bind="readOnly"
+          item-template="modules/master/machine/template/machine-event-item">
+        </au-collection>
+      </au-input-form>
+    </div>
+  </div>
+</template>

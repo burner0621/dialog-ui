@@ -1,0 +1,16 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header>Rincian</ai-dialog-header>
+
+        <ai-dialog-body>
+            <div class="table-responsive">
+                <au-table view-model.ref="table" data.bind="data" columns.bind="columns" options.bind="tableOptions">
+                </au-table>
+            </div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button click.delegate="controller.cancel()">Kembali</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

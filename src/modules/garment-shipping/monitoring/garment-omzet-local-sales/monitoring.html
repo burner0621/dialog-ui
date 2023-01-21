@@ -1,0 +1,89 @@
+<template>
+    <h1 class="page-header">Monitoring Omzet Penjualan Lokal Garment</h1>
+    <form class="form-horizontal">
+        <au-datepicker label="Tanggal Nota Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Nota Akhir" value.bind="dateTo"></au-datepicker>
+  
+       <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Kode Buyer</th>
+                    <th class="text-center">Nama Buyer</th>
+                    <th class="text-center">No Nota</th>
+                    <th class="text-center">Tanggal Nota</th>
+                    <th class="text-center">Jenis Nota</th>
+                    <th class="text-center">No Disposisi</th>
+                    <th class="text-center">No BC</th>
+                    <th class="text-center">Tempo</th>
+                    <th class="text-center">Kena PPN</th>
+                    <th class="text-center">Kode Barang</th>
+                    <th class="text-center">Nama Barang</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Satuan</th>  
+                    <th class="text-center">D P P</th>
+                    <th class="text-center">P P N</th>
+                    <th class="text-center">T O T A L</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="buyer of buyers">
+                    <tr repeat.for="data of buyer.data">
+                        <td class="text-center"> ${$index + 1}</td>                        
+                        <td>${data.buyerCode}</td>
+                        <td>${data.buyerName}</td>
+                        <td>${data.lsNo}</td>
+                        <td>${data.lsDate}</td>
+                        <td>${data.transactionName}</td>      
+                        <td>${data.dispoNo}</td>      
+                        <td>${data.bcNo}</td>  
+                        <td>${data.tempo}</td>  
+                        <td>${data.useVat}</td>
+                        <td>${data.productCode}</td>
+                        <td>${data.productName}</td>
+                        <td class="text-right"><strong>${data.quantity}</strong></td>
+                        <td>${data.uomUnit}</td>
+                        <td class="text-right"><strong>${data.dpp}</strong></td>
+                        <td class="text-right"><strong>${data.ppn}</strong></td>
+                        <td class="text-right"><strong>${data.total}</strong></td>
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center">.</td>
+                        <td class="text-center" colspan="2"><strong>NOMOR NOTA :</strong></td>
+                        <td class="text-center" colspan="2"><strong>${buyer.buyer}</strong></td>
+                        <td class="text-center" colspan="7"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal3}</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal1}</strong></td>
+                        <td class="text-right"><strong>${buyer.subTotal2}</strong></td>                        
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="12"><strong>G R A N D . . . T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${TotQty}</strong></td>
+                        <td class="text-right"><strong>.</strong></td>
+                        <td class="text-right"><strong>${TotDPP}</strong></td>
+                        <td class="text-right"><strong>${TotPPN}</strong></td>
+                        <td class="text-right"><strong>${TotAmt}</strong></td>                        
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+</template>

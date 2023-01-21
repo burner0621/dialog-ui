@@ -1,0 +1,53 @@
+<template>
+  <tr>
+    <td>
+      <!-- <au-textbox placeholder="Input No SPP" value.bind="data.noSPP" error.bind="error.NoSPP" read-only.bind="readOnly">
+      </au-textbox> -->
+      <au-autocomplete placeholder="No SOP" query.bind="filter" options.bind="controlOptions" value.bind="selectedNoSop"
+        read-only.bind="readOnly || isEdit" error.bind="error.NoSOP" loader.bind="doSalesLoader"
+        text.bind="doTextFormatter" key="NoSOP">
+      </au-autocomplete>
+    </td>
+    <td>
+      <au-textbox placeholder="Input Nama Barang" value.bind="data.materialName" error.bind="error.MaterialName"
+        read-only.bind="readOnly">
+      </au-textbox>
+    </td>
+    <td>
+      <au-textbox placeholder="Input Lot" value.bind="data.inputLot" error.bind="error.InputLot"
+        read-only.bind="readOnly">
+      </au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="data.weightBruto" error.bind="error.WeightBruto" read-only.bind="readOnly"
+        format="0,0.00">
+      </au-numeric>
+    </td>
+    <td>
+      <!-- <au-numeric value.bind="data.weightDOS" error.bind="error.WeightDOS" read-only.bind="readOnly" format="0,0.00">
+      </au-numeric> -->
+      <au-textbox placeholder="Input Dos" value.bind="data.weightDOS" error.bind="error.WeightDOS"
+        read-only.bind="readOnly">
+      </au-textbox>
+    </td>
+    <td>
+      <!-- <au-numeric value.bind="data.weightCone" error.bind="error.WeightCone" read-only.bind="readOnly" format="0,0.00">
+      </au-numeric> -->
+      <au-textbox placeholder="Input Cone" value.bind="data.weightCone" error.bind="error.WeightCone"
+        read-only.bind="readOnly">
+      </au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="data.weightBale" error.bind="error.WeightBale" read-only.bind="readOnly" format="0,0.00">
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric value.bind="getTotal" read-only.bind="true" format="0.00000">
+      </au-numeric>
+    </td>
+    <td class="col-sm-1" if.bind="!readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-
+      </button>
+    </td>
+  </tr>
+</template>

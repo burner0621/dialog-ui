@@ -1,0 +1,26 @@
+<template>
+  <tr click.delegate="contextOptions.reprocessSome ? cartClicked() : null" ref="trCart">
+    <td if.bind="contextOptions.isReprocess">
+      <au-textbox value.bind="cart.reprocess" read-only="true" options.bind="controlOptions"></au-textbox>
+    </td>
+    <td style="text-align:center;" class="col-sm-2">
+      <au-textbox value.bind="cart.CartNumber" error.bind="error.CartNumber"
+        read-only.bind="options.readOnly || (contextOptions.isReprocess && !isLanjutProses)"
+        options.bind="controlOptions"></au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="cart.Qty" error.bind="error.Qty" read-only.bind="options.readOnly"
+        options.bind="controlOptions"></au-numeric>
+    </td>
+    <td>
+      <au-textbox value.bind="cart.Uom.Unit" error.bind="error.Uom" read-only.bind="true" options.bind="controlOptions">
+      </au-textbox>
+    </td>
+    <td>
+      <au-numeric value.bind="cart.Pcs" error.bind="error.Pcs" read-only.bind="options.readOnly"
+        options.bind="controlOptions" format="0"></au-numeric>
+    </td>
+    <td if.bind="!options.readOnly && !contextOptions.isReprocess"><button class="btn btn-danger pull-right"
+        click.delegate="onremove(machineEvent, $event)">-</button></td>
+  </tr>
+</template>

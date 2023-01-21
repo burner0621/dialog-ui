@@ -1,0 +1,66 @@
+<template>
+	<tr>
+		<td>
+			<au-textbox
+				value.one-way="data.ePONo"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.pRNo"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="product"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.quantity"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-textbox
+				value.one-way="data.uom.unit"
+				read-only="true">
+			</au-textbox>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.pricePerDealUnitBefore"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.priceTotalBefore"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="data.priceTotalAfter"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td>
+			<au-numeric
+				value.bind="correctionAmount"
+				read-only.bind="true"
+				format = "0,0.00">
+			</au-numeric>
+		</td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>
+	</tr>
+</template>

@@ -1,0 +1,41 @@
+<template>
+    <h1 class="page-header">Kartu Stok</h1>
+    <form class="form-horizontal">
+        <au-autocomplete 
+          value.bind="selectedStorage"
+          label="Storage" 
+          loader.bind="storageLoader" 
+          placeholder="Cari Storage"
+          text.bind="storageView"
+          ref="acStorage">
+        </au-autocomplete>
+
+        <au-autocomplete 
+          value.bind="selectedProduct"
+          label="Nama Barang" 
+          loader.bind="productLoader" 
+          placeholder="Cari Nama Barang"
+          text.bind="productView"
+          ref="acProduct">
+        </au-autocomplete>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+              <button click.delegate="search()" class='btn btn-success'>Cari</button> 
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <au-table data.bind="loader"
+                    columns.bind="columns"
+                    sortable.bind="true"
+                    page-size="25"
+                    options.bind="tableOptions"
+                    view-model.ref="summaryTable">
+            <div slot="toolbar" class="btn-group">
+                <button class='btn btn-primary' click.delegate="ExportToExcel()">Excel</button>
+            </div>
+        </au-table>
+    </form>
+</template>

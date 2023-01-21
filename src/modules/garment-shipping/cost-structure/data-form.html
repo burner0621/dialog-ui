@@ -1,0 +1,130 @@
+<template>
+    <au-input-form title.bind="title" title.bind="title" with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"
+                if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"
+                if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-warning" click.delegate="context.update($event)"
+                if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)"
+                if.one-way="context.hasDelete">Hapus</button>
+        </div>
+        <div class="col-md-12">
+
+            <au-autocomplete label="InvoiceNo" value.bind="packinglists" error.bind="error.InvoiceNo"
+                read-only.bind="readOnly || isEdit" loader.bind="invoiceLoader" text.bind="invoiceView"
+                placeholder="Cari Invoice" options.bind="controlOptions" view-model.ref="invoiceViewModel"
+                query.bind="filter">
+            </au-autocomplete>
+
+            <au-datepicker label="TGL" value.bind="data.date" error.bind="error.Date" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-autocomplete value.bind="selectedComodity" error.bind="error.ComodityName" label="Nama Barang"
+                loader.one-time="comodityLoader" text.bind="comodityView" placeholder="Pilih Comodity" key="code"
+                read-only.bind="readOnly" options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-textbox label="Kode HS" value.bind="data.hsCode" error.bind="error.HsCode" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-textbox>
+
+            <au-dropdown label="Destination" value.bind="data.destination" error.bind="error.Destination"
+                read-only.bind="readOnly" items.bind="countries" options.bind="controlOptions">
+            </au-dropdown>
+
+            <!-- <au-autocomplete label="Jenis Fabric" value.bind="fabricType" error.bind="error.FabricType"
+                read-only.bind="readOnly " items.bind="fabricTypeOptions" text.bind="fabricTypeView"
+                placeholder="Cari Jenis Fabric" options.bind="controlOptions" view-model.ref="fabricTypeViewModel">
+            </au-autocomplete> -->
+
+            <au-dropdown label="Jenis Fabric" value.bind="data.fabricType" error.bind="error.FabricType"
+                read-only.bind="readOnly" items.bind="fabricTypeOptions" options.bind="controlOptions">
+            </au-dropdown>
+
+            <au-numeric label="Amount" value.bind="data.amount" error.bind="error.Amount"
+                read-only.bind="readOnly" options.bind="controlOptions">
+            </au-numeric>
+
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="A. Bahan / Komponen Yang Di Impor Atau Yang Tidak Diketahui Asalnya"
+                    view-model.ref="itemsCollection" items.bind="data.items[0].details" errors.bind="error.Items"
+                    columns.bind="itemAColumns.columns" remove.bind="itemAColumns.onRemove" options.bind="options"
+                    read-only.bind="readOnly" if.bind="fabricType" responsive.bind="true"
+                    change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-a"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-a-footer">
+                </au-collection>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="B. Bahan / Komponen Yang Berasal Dari ASEAN" view-model.ref="itemsCollection"
+                    items.bind="data.items[1].details" errors.bind="error.Items" columns.bind="itemBColumns.columns"
+                    add.bind="itemBColumns.onAdd" remove.bind="itemBColumns.onRemove" options.bind="options"
+                    read-only.bind="readOnly" if.bind="fabricType" responsive.bind="true"
+                    change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-b"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-b-footer">
+                </au-collection>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="C. Bahan / Komponen Yang Berasal Dari Indonesia" view-model.ref="itemsCollection"
+                    items.bind="data.items[2].details" errors.bind="error.Items" columns.bind="itemCColumns.columns"
+                    remove.bind="itemCColumns.onRemove" options.bind="options" read-only.bind="readOnly"
+                    if.bind="fabricType" responsive.bind="true" change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-c"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-c-footer">
+                </au-collection>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="D. Biaya Produksi Langsung" view-model.ref="itemsCollection"
+                    items.bind="data.items[3].details" errors.bind="error.Items" columns.bind="itemDColumns.columns"
+                    remove.bind="itemDColumns.onRemove" options.bind="options" read-only.bind="readOnly"
+                    if.bind="fabricType" responsive.bind="true" change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-d"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-d-footer">
+                </au-collection>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="E. Keuntungan" view-model.ref="itemsCollection" items.bind="data.items[4].details"
+                    errors.bind="error.Items" columns.bind="itemEColumns.columns" remove.bind="itemEColumns.onRemove"
+                    options.bind="options" read-only.bind="readOnly" if.bind="fabricType" responsive.bind="true"
+                    change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-e"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-e-footer">
+                </au-collection>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group has-error">
+                    <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+                </div>
+                <au-collection title="F. Biaya Pengangkutan Barang Sampai Ke Kapal" view-model.ref="itemsCollection"
+                    items.bind="data.items[5].details" errors.bind="error.Items" columns.bind="itemFColumns.columns"
+                    remove.bind="itemFColumns.onRemove" options.bind="options" read-only.bind="readOnly"
+                    if.bind="fabricType" responsive.bind="true" change.delegate="itemChanged($event)"
+                    item-template="modules/garment-shipping/cost-structure/template/item-f"
+                    footer-template="modules/garment-shipping/cost-structure/template/item-f-footer">
+                </au-collection>
+            </div>
+        </div> -->
+    </au-input-form>
+</template>

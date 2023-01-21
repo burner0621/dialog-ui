@@ -1,0 +1,26 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header><h4>Biaya Depresiasi</h4></ai-dialog-header>
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-numeric label="Depresiasi Gedung" value.bind="data.StructureDepretiation" format="0,000.00" read-only.bind="true">
+                </au-numeric>
+        
+                <au-numeric label="Depresiasi Mesin" value.bind="data.MachineDepretiation" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+        
+                <au-numeric label="Biaya Bunga" value.bind="data.InterestCost" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+        
+                <au-numeric label="Selisi Kurs" value.bind="data.CurrencyDiff" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Close</button>
+            
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

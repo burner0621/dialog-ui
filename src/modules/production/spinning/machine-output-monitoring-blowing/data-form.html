@@ -1,0 +1,99 @@
+<template>
+    <style>
+        .collection .panel-body {
+            padding: 0px;
+        }
+
+        #blowingDetails {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-datepicker label="Tanggal" value.bind="data.Date" error.bind="error.Date" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete show.bind="unit" label="Lot" value.bind="lot" error.bind="error.LotId" loader.bind="lotLoader"
+            placeholder="Cari nomor Lot" key="Id" text="LotNo" query.bind="lotFilter" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete show.bind="unit" label="Nama Benang" value.bind="materialType"
+            error.bind="error.MaterialTypeId" loader.bind="materialTypeLoader" placeholder="Cari nama benang" key="Id"
+            text="Name" read-only.bind="true" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete show.bind="unit" label="Count" value.bind="countConfiguration"
+            error.bind="error.CountConfigurationId" loader.bind="countConfigurationLoader" placeholder="Cari count"
+            key="Id" text.bind="countView" read-only.bind="true" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Shift" value.bind="shift" error.bind="error.Shift" read-only.bind="readOnly"
+            items.bind="shiftList" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox label="Group" value.bind="group" error.bind="error.Group" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete label="No Mesin" value.bind="machineSpinning" error.bind="error.Items"
+            loader.bind="machineSpinningLoader" placeholder="Cari nomor mesin" key="Id" text="No"
+            query.bind="machineSpinningFilter" read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Merk Mesin" value.bind="machineName" error.bind="error.MachineName" read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox error.bind="error.Item" show.bind="error.Item" read-only.bind="true">
+        </au-textbox>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="blowingDetails" class="col-md-3">
+
+                    <au-collection items.bind="details1" errors.bind="error.Items" columns.bind="itemsColumnsHeader"
+                        read-only.bind="readOnly" options.bind="detailOptions"
+                        item-template="modules/production/spinning/machine-output-monitoring-blowing/templates/detail">
+                    </au-collection>
+                </div>
+                <div id="blowingDetails" class="col-md-3">
+                    <au-collection items.bind="details2" errors.bind="error.Items" columns.bind="itemsColumnsHeader"
+                        read-only.bind="readOnly" options.bind="detailOptions"
+                        item-template="modules/production/spinning/machine-output-monitoring-blowing/templates/detail">
+                    </au-collection>
+                </div>
+                <div id="blowingDetails" class="col-md-3">
+                    <au-collection items.bind="details3" errors.bind="error.Items" columns.bind="itemsColumnsHeader"
+                        read-only.bind="readOnly" options.bind="detailOptions"
+                        item-template="modules/production/spinning/machine-output-monitoring-blowing/templates/detail">
+                    </au-collection>
+                </div>
+                <div id="blowingDetails" class="col-md-3">
+                    <au-collection items.bind="details4" errors.bind="error.Items" columns.bind="itemsColumnsHeader"
+                        read-only.bind="readOnly" options.bind="detailOptions"
+                        item-template="modules/production/spinning/machine-output-monitoring-blowing/templates/detail">
+                    </au-collection>
+                </div>
+            </div>
+        </div>
+
+        <au-textbox error.bind="error.Differences" show.bind="error.Differences" read-only.bind="true">
+        </au-textbox>
+
+        <div>Total Output (Bruto) : ${grandTotal | numberFormat: '0,0.0000'} ${uomUnitDisplay}</div>
+        <div>Total Output (Nett): ${grandTotalNett | numberFormat: '0,0.0000'} ${uomUnitDisplay}</div>
+        <div>Total Output (Bruto) : ${grandTotalBale | numberFormat: '0,0.0000'} BALE</div>
+        <div>Total Output (Nett) : ${grandTotalBaleNett | numberFormat: '0,0.0000'} BALE</div>
+        <div>Eff (Bruto): ${grandEff | numberFormat: '0,0.0000'} %</div>
+        <div>Eff (Nett): ${grandEffNett | numberFormat: '0,0.0000'} %</div>
+    </au-input-form>
+</template>

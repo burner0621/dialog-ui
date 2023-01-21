@@ -1,0 +1,32 @@
+<template>
+    <!-- <ai-dialog style="width:500px;"> -->
+    <ai-dialog>
+        <ai-dialog-header>
+            PR Master
+        </ai-dialog-header>
+
+        <ai-dialog-body>
+            <!-- <form class="form-horizontal">
+            </form> -->
+            <div style="width:750px;">
+                <au-table
+                    data.bind="loader"
+                    columns.bind="columns"
+                    options.bind="options"
+                    page-size="25" 
+                    sortable.bind="true"
+                    selections.bind="selectedData">
+                </au-table>
+            </div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <div class="btn-group">
+                <button class="btn btn-danger" click.trigger="controller.cancel()">Batal</button>
+                <button class="btn btn-primary" click.delegate="select()">Pilih</button>
+            </div>
+        </ai-dialog-footer>
+
+    </ai-dialog>
+
+</template>

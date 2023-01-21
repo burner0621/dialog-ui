@@ -1,0 +1,110 @@
+<template>
+    <h1 if.bind ="KtgrItem == ''" class="page-header">LAPORAN STOCK GUDANG</h1>
+    <h1 if.bind ="KtgrItem == 'BAHAN BAKU'" class="page-header">LAPORAN STOCK BAHAN BAKU</h1>
+    <h1 if.bind ="KtgrItem == 'BAHAN EMBALANCE'" class="page-header">LAPORAN STOCK BAHAN EMBALANCE</h1>
+    <h1 if.bind ="KtgrItem == 'BAHAN PENDUKUNG'" class="page-header">LAPORAN STOCK BAHAN PENDUKUNG</h1>
+    <form class="form-horizontal">
+        <au-dropdown 
+              label="Unit" 
+              value.bind="UnitItem"
+              items.bind="UnitItems"
+              options.bind="controlOptions" >
+      </au-dropdown>
+        <au-dropdown 
+              label="Kategori" 
+              value.bind="KtgrItem"
+              items.bind="KategoriItems"
+              options.bind="controlOptions" >
+      </au-dropdown>
+        <au-datepicker label="Tanggal Awal" value.bind="dateFrom" options.bind="controlOptions"></au-datepicker>
+        <au-datepicker label="Tanggal Akhir" value.bind="dateTo" options.bind="controlOptions"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+    
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="poReport">
+                <thead align="center">
+                    <tr>
+                        <td align="center" rowspan="2">NO</td>
+                        <td align="center" rowspan="2">KODE</td>
+                        <td align="center" rowspan="2">No R/O</td>
+                        <td align="center" rowspan="2">PLAN PO</td>
+                        <td align="center" rowspan="2">ARTIKEL</td>
+                        <!-- <td align="center" rowspan="2">NAMA BARANG</td> -->
+                        <td align="center" rowspan="2">KETERANGAN BARANG</td>
+                        <td align="center" rowspan="2">BUYER</td>
+                        <td align="center" colspan="2">SALDO AWAL</td>
+                        <td align="center" colspan="3">PENERIMAAN</td>
+                        <td align="center" colspan="2">PENGELUARAN</td>
+                        <td align="center" colspan="2">SALDO AKHIR</td>
+                        <td align="center" rowspan="2">ASAL</td>
+                    </tr>
+
+                    <tr>
+                        <td align="center">JUMLAH</td>
+                        <td align="center">SATUAN</td>
+                        <td align="center">JUMLAH</td>
+                        <td align="center">KOREKSI</td>
+                        <td align="center">SATUAN</td>
+                        <td align="center">JUMLAH</td>
+                        <td align="center">SATUAN</td>
+                        <td align="center">JUMLAH</td>
+                        <td align="center">SATUAN</td>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td>${$index + 1}</td>
+                        <td>${item.ProductCode}</td>
+                        <td>${item.RO}</td>
+                        <td>${item.PlanPo}</td>
+                        <td>${item.NoArticle}</td>
+                        <!-- <td>${item.ProductName}</td> -->
+                        <td>${item.ProductRemark}</td>
+                        <td>${item.Buyer}</td>
+                        <td>${item.BeginningBalanceQty}</td>
+                        <td>${item.BeginningBalanceUom}</td>
+                        <td>${item.ReceiptQty}</td>
+                        <td>${item.ReceiptCorrectionQty}</td>
+                        <td>${item.ReceiptUom}</td>
+                        <td>${item.ExpendQty}</td>
+                        <td>${item.ExpandUom}</td>
+                        <td align="right">${item.EndingBalanceQty}</td>
+                        <td align="right">${item.EndingUom}</td>
+                        <td align="right">${item.PaymentMethod}</td>
+                    </tr>
+                    <!-- <tr class="active">
+                        <td class="text-center" colspan="8"><strong>T O T A L  . . . . . . . . . . . . . . .</strong></td>
+                        <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                        <td></td>
+                        <td class="text-right"><strong>${AmountTotal2}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal3}</strong></td>
+                        <td></td>
+                        <td class="text-right"><strong>${AmountTotal4}</strong></td>
+                        <td></td>
+                        <td class="text-right"><strong>${AmountTotal5}</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="info.total>info.size"  info.bind="info" change.delegate="changePage($event)"></pagination>
+        <hr/>
+    </form>
+
+    
+</template>

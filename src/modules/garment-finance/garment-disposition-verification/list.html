@@ -1,0 +1,28 @@
+<template>
+    <h1 class="page-header">Verifikasi Disposisi</h1>
+    <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              context.bind="context"
+              context-click.delegate="contextClickCallback($event)"
+              sortable.bind="true"
+              page-size="25">
+        <div slot="toolbar"
+             class="btn-group">
+            <button class="btn btn-success"
+                    click.delegate="create()">Buat</button>
+        </div>
+    </au-table>
+
+    <!-- <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              sortable.bind="true"
+              page-size="25"
+        <div slot="toolbar"
+             class="btn-group">
+            <button class="btn btn-success"
+                    click.delegate="create()">Buat</button>
+        </div>
+    </au-table> -->
+</template>

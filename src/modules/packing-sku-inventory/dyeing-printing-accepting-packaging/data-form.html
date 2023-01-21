@@ -1,0 +1,23 @@
+<template>
+
+  <div class="row">
+    <div class="col-md-12">
+      <au-input-form class="text-center" title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-datepicker class="col-md-offset-4" label="Tanggal" value.bind="data.date" error.bind="error.Date" read-only.bind="readOnly" options.bind="readOnly"></au-datepicker>
+
+        <au-dropdown class="col-md-offset-4" label="Shift" value.bind="shiftValue" error.bind="error.shift" read-only.bind="readOnly"
+          items.bind="shiftData" ></au-dropdown>
+        
+        <au-autocomplete class="col-md-offset-4" value.bind="selectedNoBon" label="No. Bon" read-only.bind="readOnlyNoBon"
+          error.bind="error.NoBon" loader.bind="NoBonLoader" text="noBon" >
+        </au-autocomplete>
+
+        <au-table view-model.ref="tableSpp" data.bind="dataSpp" columns.bind="columnsSpp" context.bind="context" options.bind="tableOptions">
+        
+        <template replaceable part="actions"></template>
+      </au-input-form>
+    </div>
+  </div>
+
+</template>

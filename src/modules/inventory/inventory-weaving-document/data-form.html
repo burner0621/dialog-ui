@@ -1,0 +1,16 @@
+<template> 
+  <form class="form-horizontal">
+      <datepicker             label="Tanggal Kirim"           value.bind="data.date"              error.bind="error.dateFrom"               read-only.bind="readOnly"></datepicker>
+      <!-- <dropdown               label="Sumber Penyimpanan"      value.bind="data.source"         items.bind="sources"></dropdown>
+      <dropdown               label="Tujuan Penyimpanan"      value.bind="data.destination"    items.bind="destinations"></dropdown> -->
+
+      <au-dropdown label="Dari" value.bind="data.from" items.bind="fromList" options.bind="auInputOptions"></au-dropdown>
+      <div class="form-group ${error.file?'has-error':''}">
+          <label for="dataFile" class="col-sm-4 control-label">File Path</label>
+          <div class="col-sm-5">
+              <input type="file" id="fileCsv" name="fileUpload">
+              <span class="help-block">${error.file}</span>
+          </div>
+      </div>
+  </form> 
+</template>

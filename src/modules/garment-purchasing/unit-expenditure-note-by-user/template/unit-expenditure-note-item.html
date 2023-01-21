@@ -1,0 +1,61 @@
+<template >
+    <tr>
+        <td>
+            <au-checkbox 
+                value.bind="data.IsSave"
+                disabled.bind="readOnly || isExternal"
+                change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.BuyerCode" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ProductCode" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ProductName" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.ProductRemark"
+                read-only.bind="true" >
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.DesignColor"
+                read-only.bind="true" >
+            </au-textbox>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Quantity"
+                read-only.bind="options.readOnly || isExternal"
+                error.bind="error.Quantity">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox 
+                value.bind="data.UomUnit"
+                read-only.bind="true" >
+            </au-textbox>                    
+        </td>
+        <td>
+            <au-dropdown 
+                value.bind="data.FabricType" 
+                read-only.bind="true">
+            </au-dropdown>
+        </td>
+        <td if.bind="ExpenditureType == 'SISA'">
+            <au-dropdown 
+                value.bind="data.ItemStatus" 
+                items.bind="itemStatusOptions"
+                read-only.bind="readOnly">
+            </au-dropdown>
+        </td>
+    </tr>
+</template>

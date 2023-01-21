@@ -1,0 +1,92 @@
+<template>
+    <tr>
+        <td>
+            <au-numeric value.bind="data.DesignSpeed" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Output" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.TotalTime" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.AvailableTime" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.AvailableLoadingTime" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.LoadingTime" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.OperatingTime" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.ValueOperatingTime" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.IdleTime" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.AssetUtilization" format="0.00" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.OEEMMP" format="0.00" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-primary pull-right" click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="8">
+            <au-collection columns.bind="legalLossesColumns" items.bind="legalLossesData" options.bind="detailOptions"
+                item-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/legalLossesItem"
+                header-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/legalLossesHeader"
+                footer-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/legalLossesFooter">
+            </au-collection>
+        </td >
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="8">
+            <au-collection columns.bind="unUtilisedCapacityColumns" items.bind="unUtilisedCapacityData" options.bind="detailOptions"
+                item-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/unUtilisedCapacityLossesItem"
+                header-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/unUtilisedCapacityLossesHeader"
+                footer-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/unUtilisedCapacityLossesFooter">
+            </au-collection>
+        </td >
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="8">
+            <au-collection columns.bind="processDrivenColumns" items.bind="processDrivenData" options.bind="detailOptions"
+                item-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/processDrivenLossesItem"
+                header-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/processDrivenLossesHeader"
+                footer-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/processDrivenLossesFooter">
+            </au-collection>
+        </td >
+    </tr>
+    <tr if.bind="isShowing">
+        <td colspan="8">
+            <au-collection columns.bind="manufacturingPerformanceColumns" items.bind="manufacturingPerformanceData" options.bind="detailOptions"
+                item-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/manufacturingPerformanceLossesItem"
+                header-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/manufacturingPerformanceLossesHeader"
+                footer-template="modules/production/finishing-printing/reports/daily-monitoring-event-report/template/manufacturingPerformanceLossesFooter">
+            </au-collection>
+        </td >
+    </tr>
+</template>

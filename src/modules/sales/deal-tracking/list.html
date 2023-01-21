@@ -1,0 +1,19 @@
+<template>
+    <require from="./styles/list-style.css"></require>
+    <div id="dragula">
+        <h1 class="page-header">Deal Tracking</h1>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="btn-box box" click.delegate="create()">
+                    Buat Board <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="col-sm-3" repeat.for="d of data">
+                <div class="box" click.delegate="list(d.Id)">
+                    ${d.Title}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

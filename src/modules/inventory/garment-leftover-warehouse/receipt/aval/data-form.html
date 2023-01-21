@@ -1,0 +1,121 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <au-textbox 
+            label="No Bon Penerimaan" 
+            value.bind="data.AvalReceiptNo" 
+            read-only="true"
+            options.bind="controlOptions" 
+            if.bind="readOnly || isEdit">
+        </au-textbox>
+
+        <au-autocomplete 
+            label="Unit Asal" 
+            placeholder="Pilih Unit" 
+            value.bind="selectedUnitFrom"
+            error.bind="error.UnitFrom" 
+            loader.bind="unitLoader" 
+            text.bind="unitView"
+            read-only.bind="readOnly || isEdit" 
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown
+            label="Tipe Aval"
+            value.bind="selectedType"
+            error.bind="error.AvalType"
+            read-only.bind="readOnly || isEdit"
+            items.bind="avalTypes"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-datepicker 
+            label="Tgl Penerimaan Gudang" 
+            value.bind="data.ReceiptDate" 
+            error.bind="error.ReceiptDate"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-multiline 
+            label="Keterangan" 
+            placeholder="Masukkan Keterangan" 
+            value.bind="data.Remark"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-multiline>
+        <div class="form-group has-error">
+            <p if.bind="error.ItemsCount" class="help-block text-center">${error.ItemsCount}</p>
+        </div>
+        <au-collection 
+                items.bind="data.ROList" 
+                errors.bind="error.Items" 
+                columns.bind="itemsColumns"
+                read-only.bind="readOnly || isEdit" 
+                add.bind="addItems" 
+                remove.bind="removeItems"
+                options.bind="Options"
+                if.bind="data.UnitFrom && isFabric"
+                item-template="modules/inventory/garment-leftover-warehouse/receipt/aval/template/ro-fabric">
+        </au-collection>
+
+        
+        <au-collection 
+                items.bind="data.Items" 
+                errors.bind="error.Items" 
+                columns.bind="accItemsColumns"
+                read-only.bind="readOnly || isEdit" 
+                add.bind="addItemsAcc" 
+                remove.bind="removeItems"
+                options.bind="Options"
+                if.bind="isAccessories"
+                item-template="modules/inventory/garment-leftover-warehouse/receipt/aval/template/accessories-item">
+        </au-collection>
+
+        <au-collection 
+                items.bind="data.Items" 
+                errors.bind="error.Items" 
+                columns.bind="componentItemsColumns"
+                read-only.bind="readOnly || isEdit" 
+                add.bind="addItemsComponent" 
+                remove.bind="removeItems"
+                options.bind="Options"
+                if.bind="data.UnitFrom &&isComponent"
+                item-template="modules/inventory/garment-leftover-warehouse/receipt/aval/template/component-item">
+        </au-collection>
+
+        <au-numeric 
+            label="TOTAL AVAL FABRIC (MTR)" 
+            value.one-way="totalQuantity" 
+            read-only.bind="true"
+            options.bind="footerOptions"
+            if.bind="isFabric">
+        </au-numeric>
+        <au-numeric 
+            label="TOTAL AVAL FABRIC (KG)" 
+            value.bind="data.TotalAval" 
+            error.bind="error.TotalAval"
+            read-only.bind="readOnly"
+            options.bind="footerOptions"
+            show.bind="isFabric">
+        </au-numeric>
+
+        <au-numeric 
+            label="TOTAL AVAL KOMPONEN (PCS)" 
+            read-only.bind="true"
+            value.one-way="totalQuantity" 
+            options.bind="footerOptions"
+            if.bind="isComponent">
+        </au-numeric>
+        <au-numeric 
+            label="TOTAL AVAL KOMPONEN (KG)" 
+            value.bind="data.TotalAval" 
+            error.bind="error.TotalAval"
+            read-only.bind="readOnly"
+            options.bind="footerOptions"
+            show.bind="isComponent">
+        </au-numeric>
+
+        
+    </au-input-form>
+</template>

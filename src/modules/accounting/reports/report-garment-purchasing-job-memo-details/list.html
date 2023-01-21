@@ -1,0 +1,112 @@
+<template>
+    <h1 class="page-header">Laporan Rincian Memo Pembelian Job Garment</h1>
+
+    <form class="form-horizontal">
+        <au-dropdown 
+          label="Bulan" 
+          value.bind="selectedMonth" 
+          error.bind="error.Month" 
+          read-only.bind="readOnly"
+          items.bind="itemMonths" 
+          key="value"
+          text="text"
+          options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown 
+          label="Tahun" 
+          value.bind="selectedYear" 
+          error.bind="error.Year" 
+          read-only.bind="readOnly"
+          items.bind="itemYears" 
+          options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete 
+            value.bind="accountingBook"
+            label="Jenis Buku" 
+            loader.bind="accountingLoader"
+            placeholder="Cari Jenis Buku" 
+            read-only.bind="false"
+            text.bind = "accountingBookView"
+            options.bind="controlOptions" >
+        </au-autocomplete>
+
+        <au-checkbox 
+            label="Valas?" 
+            show.bind="isShowValas" 
+            value.bind="isValas" 
+            change.delegate="onClickValas($event)" 
+            options.bind="controlOptions">
+        </au-checkbox>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="reset()" class='btn btn-primary'>Reset</button>
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th>Nomor Memo</th>
+                        <th>Tanggal</th>
+                        <th>No. Nota Intern</th>
+                        <th>No. BP Besar</th>
+                        <th>No. BP Kecil</th>
+                        <th>No. Surat Jalan</th>
+                        <th>Supplier</th>
+                        <th>Kurs</th>
+                        <th>Jumlah</th>
+                        <th>Jumlah dalam Rupiah</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr show.bind="isEmpty">
+                        <td colspan="10">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of data.result">
+                        <td>
+                            ${datum.MemoNo}
+                        </td>
+                        <td>${datum.MemoDate}</td>
+
+                        <td>${datum.InternalNoteNo}</td>
+                        <td>${datum.BillsNo}</td>
+                        <td>${datum.PaymentBills}</td>
+                        <td>${datum.GarmentDeliveryOrderNo}</td>
+                        <td>${datum.RemarksDetail}</td>
+                        <td>${datum.CurrencyCode}</td>
+                        <td style="text-align: right;">${datum.MemoAmount}</td>
+                        <td style="text-align: right;">${datum.MemoIdrAmount}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="9">TOTAL </td>
+                        <td style="text-align: right;">${totalIdrAmount}</td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+                <div style="margin-bottom: 1%; margin-right: 5px;" slot="toolbar" class="btn-group">
+                    <button class='btn btn-success' click.delegate="pdf()">PDF</button>
+                </div>
+                <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="excel()">Excel</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+
+</template>

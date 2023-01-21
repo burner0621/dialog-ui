@@ -1,0 +1,35 @@
+<template>
+    <tr>
+        <td class="col-sm-6">
+            <au-autocomplete 
+                placeholder="Invoice" 
+                value.bind="selectedInvoice"
+                error.bind="error.Invoice" 
+                loader.bind="invoiceLoader" 
+                query.bind="filter"
+                text="invoiceNo"
+                read-only.bind="readOnly || data.Id" >
+            </au-autocomplete>
+        </td>
+        
+        <td class="col-sm-6">
+            <au-numeric 
+                value.bind="data.Amount"
+                error.bind="error.Amount"
+                read-only.bind="true" >
+            </au-numeric>
+        </td>
+        
+        <td class="col-sm-6">
+            <au-numeric 
+                value.bind="data.IDRAmount"
+                error.bind="error.IDRAmount"
+                read-only.bind="true" >
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+    
+</template>

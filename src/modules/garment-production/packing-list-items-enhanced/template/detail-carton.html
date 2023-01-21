@@ -1,0 +1,75 @@
+<template>
+	<tr>
+		<td style="text-align: center important; min-width: 80px; display: block;">
+			<au-numeric value.bind="data.index" error.bind="error.index" read-only.bind="readOnly"
+				format="0">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="carton1" error.bind="error.Carton1" format="0"
+				read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="carton2" error.bind="error.Carton2" format="0"
+				read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-textbox value.bind="data.style" error.bind="error.Style" read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+		<td style="min-width: 80px;">
+			<au-textbox value.bind="data.colour" error.bind="error.Colour" read-only.bind="readOnly">
+			</au-textbox>
+		</td>
+		<td repeat.for="size of data.sizes" if.bind="data.sizes.length > 0" style="min-width: 80px;">
+			<au-numeric value.bind="size.quantity" error.bind="error.Quantity" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="data.cartonQuantity" error.bind="error.CartonQuantity" format="0"
+				read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="quantityPCS" error.bind="error.QuantityPCS" format="0"
+				read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="totalQuantity" error.bind="error.TotalQuantity" format="0"
+				read-only.bind="true">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="grossWeight" error.bind="error.GrossWeight" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="netWeight" error.bind="error.NetWeight" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="netNetWeight" error.bind="error.NetNetWeight" read-only.bind="readOnly">
+			</au-numeric>
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="length" read-only.bind="readOnly">
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="width" read-only.bind="readOnly">
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="height" read-only.bind="readOnly">
+		</td>
+		<td style="min-width: 80px;">
+			<au-numeric value.bind="cmb" format="0.000" read-only.bind="true">
+		</td>
+
+		<td if.bind="!readOnly" class="bg-light">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+	</tr>
+</template>

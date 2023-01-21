@@ -1,0 +1,37 @@
+<template>
+    <tr>
+        <require from="../../../../lib/number-format-value-converter"></require>
+        <td>
+            <au-datepicker value.bind="data.Date" read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-multiline if.bind="vbType == 2" value.bind="data.Remark" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-multiline>
+            <au-multiline if.bind="vbType == 1" value.bind="data.UnitPaymentOrderNo" read-only.bind="true"
+                options.bind="controlOptions">
+            </au-multiline>
+        </td>
+        <td>
+            <au-numeric value.bind="data.Amount" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="vatAmount" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="incomeTaxAmount" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.IncomeTaxBy" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="total" read-only.bind="true" options.bind="controlOptions">
+            </au-numeric>
+        </td>
+    </tr>
+</template>

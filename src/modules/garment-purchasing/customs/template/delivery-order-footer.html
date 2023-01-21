@@ -1,0 +1,20 @@
+<template>
+<tr>
+  <td colspan.bind="colspan" class="text-right" style="padding-right:10%">
+    Total harga surat jalan yang dipilih
+  </td>
+  <td class="text-left">
+    <require from="../../../../lib/number-format-value-converter"></require>
+    ${itemSum | numberFormat:"0,000.00"}
+  </td>
+</tr>
+<tr>
+  <td colspan.bind="colspan" class="text-right" style="padding-right:10%">
+    Total jumlah surat jalan yang dipilih
+  </td>
+  <td class="text-left">
+    <require from="../../../../lib/number-format-value-converter"></require>
+    ${itemQuantity | numberFormat:"0,000.00"}
+  </td>
+</tr>
+</template>

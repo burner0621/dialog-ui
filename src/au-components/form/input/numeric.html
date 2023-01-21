@@ -1,0 +1,19 @@
+<template>
+  <require from="./_input"></require>
+  <require from="../../../lib/number-format-value-converter"></require>
+  <require from="./custom-attributes/dynamic-attribute-custom-attribute"></require>
+  <require from="./custom-attributes/select-on-focus-custom-attribute"></require>
+
+  <au-input view-model.ref="input" type="text" value.bind="value" options.bind="options" read-only.bind="readOnly" error.bind="error"
+    label.bind="label" placeholder.bind="placeholder" input-options.one-way="inputOptions">
+    <template replace-part="input">
+
+      <!--inside this template, all bindable properties of au-input can be accessed-->
+      <input ref="element" type.bind="type" value.bind="value | numberFormat:format & updateTrigger:'blur'" placeholder.bind="placeholder"
+        class="form-control" if.bind="!readOnly" focus.trigger="onFocus($event)" blur.trigger="onBlur($event)" dynamic-attribute="options.bind: inputOptions"
+        select-on-focus.one-way="select" />
+
+      <p class="form-control-static text-right" if.bind="readOnly">${value | numberFormat:format}</p>
+    </template>
+    <au-input>
+</template>

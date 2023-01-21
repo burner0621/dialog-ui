@@ -1,0 +1,148 @@
+<template>
+    <h1 class="page-header">Laporan Kesiapan RO</h1>
+    <form class="form-horizontal">
+        <au-autocomplete
+            value.bind="selectedSection"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            placeholder="Cari Seksi"
+            text="Code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <!--<au-autocomplete
+            value.bind="selectedROGarment"
+            label="Nomor RO"
+            loader.bind="costCalculationGarmentLoader"
+            placeholder="Cari Nomor RO"
+            text="RO_Number"
+            query.bind="costCalculationFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="selectedBuyer"
+            label="Buyer"
+            loader.bind="garmentBuyerLoader"
+            placeholder="Cari Buyer"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>-->
+        <au-datepicker
+            value.bind="selectedDateStart"
+            label="Tgl Shipment Awal"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <au-datepicker
+            value.bind="selectedDateEnd"
+            label="Tgl Shipment Akhir"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <!--<au-dropdown
+            value.bind="selectedStatus"
+            label="Status"
+            items.bind="statusList"
+            options.bind="controlOptions">
+        </au-dropdown>-->
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><label>No</label></th>
+                        <th><label>No RO</label></th>
+                        <th><label>Tanggal Penerimaan RO</label></th>
+                        <th><label>Tanggal Shipment</label></th>
+                        <th><label>+/-<br/>Terima - Shipment</label></th>
+                        <th><label>Lead Time</label></th>
+                        <th><label>Kode Buyer</label></th>
+                        <th><label>Nama Buyer</label></th>
+                        <th><label>Artikel</label></th>
+                        <th><label>Quantity</label></th>
+                        <th><label>Satuan</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="11">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="i of tableData.length">
+                        <tr>
+                            <td align="center">
+                                <au-textbox value.bind="i+1" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].RONo" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].ApprovedSampleDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-datepicker value.bind="tableData[i].DeliveryDate" read-only="true"></au-datepicker>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].DateDiff" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].LeadTime" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].BuyerCode" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Buyer" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Article" read-only="true"></au-textbox>
+                            </td>
+                            
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Quantity" read-only="true"></au-textbox>
+                            </td>
+                            <td align="center">
+                                <au-textbox value.bind="tableData[i].Uom" read-only="true"></au-textbox>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <template if.bind="tableData.length > 0">
+            <au-textbox label="KESIAPAN RO DENGAN LEAD TIME 30 HARI" read-only="true"></au-textbox>
+            <au-textbox label="Status OK" value="Selisih Tgl Penerimaan RO dengan Tgl Shipment >= 30 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status OK" value="${dataOk35.total}/${tot35} X 100% = ${dataOk35.percent} %" read-only="true"></au-textbox>
+            <au-textbox label="Status NOT OK" value="Selisih Tgl Penerimaan RO dengan Tgl Shipment < 30 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status NOT OK" value="${dataNotOk35.total}/${tot35} X 100% = ${dataNotOk35.percent} %" read-only="true"></au-textbox>
+        </template>
+
+        <template if.bind="tableData.length > 0">
+            <au-textbox label="KESIAPAN RO DENGAN LEAD TIME 20 HARI" read-only="true"></au-textbox>
+            <au-textbox label="Status OK" value="Selisih Tgl Tgl Penerimaan RO dengan Tgl Shipment >= 20 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status OK" value="${dataOk25.total}/${tot25} X 100% = ${dataOk25.percent} %" read-only="true"></au-textbox>
+            <au-textbox label="Status NOT OK" value="Selisih Tgl Tgl Penerimaan RO dengan Tgl Shipment < 20 hari" read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status NOT OK" value="${dataNotOk25.total}/${tot25} X 100% = ${dataNotOk25.percent} %" read-only="true"></au-textbox>
+        </template>
+        
+        <template if.bind="tableData.length > 0">
+            <au-textbox label="AKUMULASI KESIAPAN RO" read-only="true"></au-textbox>
+            <au-textbox label="Status OK" value="  =  " read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status OK" value="${dataOk.total}/${tot} X 100% = ${dataOk.percent} %" read-only="true"></au-textbox>
+            <au-textbox label="Status NOT OK" value="  =  " read-only="true"></au-textbox>
+            <au-textbox label="Persentase Status NOT OK" value="${dataNotOk.total}/${tot} X 100% = ${dataNotOk.percent} %" read-only="true"></au-textbox>
+        </template>
+
+        <hr/>
+    </form>
+</template>

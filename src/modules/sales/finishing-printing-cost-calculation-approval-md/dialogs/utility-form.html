@@ -1,0 +1,28 @@
+<template>
+    <ai-dialog style="width:500px;">
+        <ai-dialog-header><h4>Biaya Utility</h4></ai-dialog-header>
+        <ai-dialog-body>
+            <form class="form-horizontal">
+                <au-numeric label="Elektrik" value.bind="data.Electric" format="0,000.00" read-only.bind="true">
+                </au-numeric>
+        
+                <au-numeric label="Steam" value.bind="data.Steam" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+        
+                <au-numeric label="Water" value.bind="data.Water" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+        
+                <au-numeric label="Solar" value.bind="data.Solar" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+        
+                <au-numeric label="LPG" value.bind="data.LPG" format="0,000.00" read-only.bind="(true)">
+                </au-numeric>
+            </form>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <button class="btn btn-default" click.delegate="dialogController.cancel()">Close</button>
+            
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

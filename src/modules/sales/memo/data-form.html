@@ -1,0 +1,92 @@
+<template>
+    <au-input-form title.bind="title"
+                   with.bind="context"
+                   options.bind="formOptions">
+
+        <au-textbox value.bind="data.DocumentNo"
+                    if.bind="data.DocumentNo"
+                    label="No Memo"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete placeholder="pilih no faktur penjualan"
+                         value.bind="data.SalesInvoice"
+                         error.bind="error.SalesInvoice"
+                         loader.one-time="salesInvoiceLoader"
+                         text="SalesInvoiceNo"
+                         label="No Faktur Penjualan"
+                         read-only.bind="readOnly || isEdit"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Jenis Memo"
+                     value.bind="data.MemoType"
+                     error.bind="error.MemoType"
+                     read-only.bind="readOnly || isEdit"
+                     placeholder="masukkan jenis memo"
+                     items.bind="memoTypes"
+                     options.bind="controlOptions"></au-dropdown>
+
+        <au-datepicker value.bind="data.Date"
+                       error.bind="error.Date"
+                       read-only.bind="readOnly"
+                       label="Tanggal"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <!-- <au-autocomplete placeholder="pilih buyer"
+                         value.bind="data.Buyer"
+                         error.bind="error.Buyer"
+                         loader.one-time="buyerLoader"
+                         text="Name"
+                         label="Buyer"
+                         read-only.bind="readOnly || isEdit"
+                         options.bind="controlOptions"></au-autocomplete> -->
+
+        <au-textbox if.bind="data.SalesInvoice && data.SalesInvoice.Buyer && data.SalesInvoice.Buyer.Id"
+                    value.bind="data.SalesInvoice.Buyer.Name"
+                    label="Buyer"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox if.bind="data.SalesInvoice && data.SalesInvoice.Buyer && data.SalesInvoice.Buyer.Id"
+                    value.bind="data.SalesInvoice.Buyer.Code"
+                    label="Kode Buyer"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete placeholder="pilih unit"
+                         value.bind="data.Unit"
+                         error.bind="error.Unit"
+                         loader.one-time="unitLoader"
+                         text="Name"
+                         label="Unit"
+                         read-only.bind="readOnly"
+                         options.bind="controlOptions"></au-autocomplete>
+
+        <au-multiline placeholder="isi keterangan"
+                      label="Keterangan"
+                      value.bind="data.Remark"
+                      error.bind="error.Remark"
+                      read-only.bind="readOnly"
+                      options.bind="controlOptions"></au-multiline>
+
+        <au-textbox error.bind="error.Item"
+                    show.bind="error.Item"
+                    read-only.bind="true">
+        </au-textbox>
+
+        <au-collection items.bind="data.Items"
+                       errors.bind="error.Items"
+                       columns.bind="columns"
+                       add.bind="addItems"
+                       remove.bind="onremove"
+                       read-only.bind="readOnly"
+                       item-template="modules/sales/memo/templates/item">
+        </au-collection>
+
+    </au-input-form>
+</template>

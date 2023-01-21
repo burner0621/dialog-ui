@@ -1,0 +1,41 @@
+
+<template>
+  
+  <h1 class="page-header">Report Master Plan</h1>
+  <form class="form-horizontal">
+      <au-autocomplete 
+      value.bind="year" 
+      label="Year" 
+      loader.bind="yearLoader"
+      text.bind = "yearView"
+      placeholder="Tahun" 
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete 
+      value.bind="unit" 
+      label="Unit" 
+      loader.bind="unitLoader"
+      text.bind = "unitView"
+      placeholder="Unit" 
+      query.bind="filterUnit"
+      options.bind="controlOptions">
+    </au-autocomplete>
+
+      <div class="form-group">
+          <label for="contact" class="col-sm-6 control-label"></label>
+          <div class="col-sm-3">
+              <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+              <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+          </div>
+      </div>
+       <div class="btn-group pull-left">
+          <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+      </div>
+  </form>
+
+     <br>
+  </br>
+
+  <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+</template>

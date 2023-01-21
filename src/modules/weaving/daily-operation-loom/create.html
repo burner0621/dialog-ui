@@ -1,0 +1,346 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title="Create: Operasional Mesin Harian Loom"
+                 options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row"
+           style="white-space: nowrap">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="No. Order Produksi"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-autocomplete placeholder="No. Order Produksi"
+                           value.bind="OrderDocument"
+                           error.bind="error.OrderDocumentId"
+                           read-only.bind="readOnly"
+                           loader.bind="orders"
+                           text="OrderNumber">
+          </au-autocomplete>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="No. Konstruksi"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="No. Konstruksi"
+                      value.bind="ConstructionNumber"
+                      error.bind="error.ConstructionNumber"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Asal Lusi"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Asal Lusi"
+                      value.bind="WarpOriginOne"
+                      error.bind="error.WarpOriginOne"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Unit Weaving"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Unit Weaving"
+                      value.bind="WeavingUnit"
+                      error.bind="error.WeavingUnit"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Asal Pakan"
+                   read-only="true"
+                   style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Asal Pakan"
+                      value.bind="WeftOriginOne"
+                      error.bind="error.WeftOriginOne"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row"
+           style="white-space: nowrap;">
+        <div class="col-md-2"
+             style="text-align:left;">
+          <textbox label="Jumlah Beam Diproses"
+                   read-only="true"></textbox>
+        </div>
+        <div class="col-md-2">
+          <au-textbox placeholder="Jumlah Beam Diproses"
+                      value.bind="BeamProcessed"
+                      error.bind="error.BeamProcessed"
+                      read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+      <div class="row"
+           style="white-space:nowrap">
+        <button class="btn btn-primary"
+                click.delegate="showBeamMenu()"
+                style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+          Tambah Beam
+        </button></div>
+
+      <!-- Update Start Phase Section -->
+      <div class="row"
+           id="addBeamMenu"
+           show.bind="showHideAddBeam">
+        <div class="col-md-12"
+             style="border-style: double; border-color: black; border-width: 4px; border-radius: 5px;margin-bottom: 16px; padding-left: 24px;">
+
+          <!-- Asal Beam -->
+          <div class="row"
+               style="margin-top: 16px; white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Asal Beam"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-dropdown value.bind="BeamOrigin"
+                           error.bind="error.BeamOrigin"
+                           items.bind="beamOrigins">
+              </au-dropdown>
+            </div>
+          </div>
+
+          <!-- No Mesin Tying -->
+          <div class="row"
+               style="white-space: nowrap;"
+               show.bind="isTying">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="No. Mesin Tying"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-autocomplete placeholder="No. Mesin Tying"
+                               value.bind="TyingMachineDocument"
+                               error.bind="error.TyingMachineNumberId"
+                               read-only.bind="readOnly"
+                               loader.one-time="machines"
+                               text="MachineNumber">
+              </au-autocomplete>
+            </div>
+          </div>
+
+          <!-- Operator Tying dan Grup Tying -->
+          <div class="row"
+               style="white-space: nowrap;"
+               show.bind="isTying">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Operator Tying"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-autocomplete placeholder="Operator Tying"
+                               value.bind="TyingOperatorDocument"
+                               error.bind="error.TyingOperatorId"
+                               read-only.bind="readOnly"
+                               loader.bind="operators"
+                               text="Username"></au-autocomplete>
+            </div>
+            <div class="col-md-2 col-md-offset-1"
+                 style="text-align:left;">
+              <textbox label="Grup Tying"
+                       read-only="true"
+                       style="display: inline-block"></textbox>
+            </div>
+            <div class="col-md-3">
+              <au-textbox placeholder="Grup Tying"
+                          value.bind="TyingOperatorDocument.Group"
+                          error.bind="error.TyingOperator"
+                          read-only.bind="true"></au-textbox>
+            </div>
+          </div>
+
+          <!-- No Mesin Loom -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="No. Mesin Loom"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-autocomplete placeholder="No. Mesin Loom"
+                               value.bind="LoomMachineDocument"
+                               error.bind="error.LoomMachineNumberId"
+                               read-only.bind="readOnly"
+                               loader.bind="machines"
+                               text="MachineNumber"></au-autocomplete>
+            </div>
+          </div>
+
+          <!-- Operator Loom dan Grup Loom -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Operator Loom"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-autocomplete placeholder="Operator Loom"
+                               value.bind="LoomOperatorDocument"
+                               error.bind="error.LoomOperatorId"
+                               read-only.bind="readOnly"
+                               loader.bind="operators"
+                               text="Username"></au-autocomplete>
+            </div>
+            <div class="col-md-2 col-md-offset-1"
+                 style="text-align:left;">
+              <textbox label="Grup Loom"
+                       read-only="true"
+                       style="display: inline-block"></textbox>
+            </div>
+            <div class="col-md-3">
+              <au-textbox placeholder="Grup Loom"
+                          value.bind="LoomOperatorDocument.Group"
+                          error.bind="error.LoomOperator"
+                          read-only.bind="true"></au-textbox>
+            </div>
+          </div>
+
+          <!-- Tanggal Preparation & No. Beam -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Tanggal Pasang"
+                       read-only="true"
+                       style="display: inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-datepicker value.bind="PreparationDate"
+                             error.bind="error.PreparationDate">
+              </au-datepicker>
+            </div>
+            <div class="col-md-2 col-md-offset-1"
+                 style="text-align:left;">
+              <textbox label="No. Beam"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-autocomplete placeholder="No. Beam"
+                               value.bind="BeamDocument"
+                               error.bind="error.LoomBeamId"
+                               read-only.bind="readOnly"
+                               loader.bind="beams"
+                               text="Number"></au-autocomplete>
+            </div>
+          </div>
+
+          <!-- Waktu dan Shift Preparation -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Waktu Pasang"
+                       read-only="true"
+                       style="display: inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-timepicker value.bind="PreparationTime"
+                             error.bind="error.PreparationTime"
+                             read-only.bind="readOnly">
+            </div>
+            <div class="col-md-2 col-md-offset-1"
+                 style="text-align:left;">
+              <textbox label="Shift"
+                       read-only="true"
+                       style="display: inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-textbox placeholder="Shift"
+                          value.bind="PreparationShift.Name"
+                          error.bind="error.PreparationShift"
+                          read-only.bind="true">
+              </au-textbox>
+            </div>
+          </div>
+
+          <!-- Proses -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-2"
+                 style="text-align:left;">
+              <textbox label="Proses"
+                       read-only="true"
+                       style="display:inline-block"></textbox>
+            </div>
+            <div class="col-md-2">
+              <au-dropdown value.bind="Process"
+                           error.bind="error.Process"
+                           items.bind="process">
+              </au-dropdown>
+            </div>
+          </div>
+
+          <!-- Save Button for Update Start Phase -->
+          <div class="row"
+               style="white-space: nowrap;">
+            <div class="col-md-12">
+              <button class="btn btn-default"
+                      click.delegate="addBeam()"
+                      style="float: right; background-color: #01C8A2; color:white; white-space: nowrap;
+                  width: 96px; border: 1px solid #777777;">
+                Tambah
+              </button>
+            </div>
+          </div>
+
+          <div class="row"
+               style="white-space: nowrap; padding-right: 8px;">
+            <au-textbox error.bind="error.LoomBeamsUsed"
+                        read-only="true"></au-textbox>
+            <au-collection items.bind="LoomBeamsUsed"
+                           errors.bind="error.LoomBeamsUsed"
+                           columns.bind="columns"
+                           remove.bind="onremove"
+                           read-only.bind="readOnly"
+                           options.bind="loomBeamsUsedTableOptions"
+                           item-template="modules/weaving/daily-operation-loom/templates/loom-items">
+            </au-collection>
+          </div>
+        </div>
+      </div>
+    </div>
+  </au-input-form>
+</template>

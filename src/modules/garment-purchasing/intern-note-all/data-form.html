@@ -1,0 +1,50 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox label="No. Nota Intern" value.bind="data.inNo" error.bind="error.no" read-only.bind="true" if.bind="readOnly || isEdit"
+            options.bind="auInputOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tgl. Nota Intern" value.bind="data.inDate" error.bind="error.date" read-only.bind="true" if.bind="(readOnly || isEdit)"
+            options.bind="auInputOptions">
+        </au-datepicker>
+
+        <au-autocomplete value.bind="currency" error.bind="error.currency" label="Mata Uang" loader.bind="currencyLoader" text.bind="currencyView"
+            placeholder="cari mata uang" read-only.bind="readOnly || isEdit" options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="supplier" view-model.ref="ItemsCollection" error.bind="error.supplier" label="Supplier" loader.bind="supplierLoader"
+            text.bind="supplierView" read-only.bind="readOnly || isEdit" placeholder="cari supplier" show.bind="data.currency" options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-multiline label="Keterangan" value.bind="data.remark" error.bind="error.remark" read-only.bind="readOnly" placeholder="tambah keterangan"
+            options.bind="auInputOptions">
+        </au-multiline>
+
+        <au-textbox 
+                    label="Admin Pembelian" 
+                    value.bind="data.CreatedBy" 
+                    error.bind="error.CreatedBy" 
+                    read-only.bind="true"
+                    if.bind="(readOnly || isEdit)"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            show.bind="error.itemscount"
+            error.bind="error.itemscount"
+            read-only="true">
+        </au-textbox>
+
+        <au-collection items.bind="data.items" show.bind="data.supplier.Id" options.bind="options" columns.bind="invoiceNoteItem.columns"
+            errors.bind="error.items" read-only.bind="readOnly" add.bind="invoiceNoteItem.onAdd" view-model.ref="ItemsCollection"
+            item-template="modules/garment-purchasing/intern-note/template/intern-note-item">
+        </au-collection>
+    </au-input-form>
+</template>

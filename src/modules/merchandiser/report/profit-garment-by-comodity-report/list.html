@@ -1,0 +1,69 @@
+<template>
+    <h1 class="page-header">Display Profit Garment Per Komoditi</h1>
+    <form class="form-horizontal">
+          
+        <au-datepicker label="Tanggal Shipment Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Shipment Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+        </div>
+        <br>
+            <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <th class="text-center">No</th>
+                    <th class="text-center">Komoditi</th>
+                    <th class="text-center">Nama Komoditi</th>
+                    <th class="text-center">Quantity</th>
+                    <th class="text-center">Satuan</th>
+                    <th class="text-center">Amount USD</th>   
+                    <th class="text-center">Profit USD</th>   
+                    <th class="text-center">Profit IDR</th>   
+                    <th class="text-center">Profit FOB</th>   
+                 </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="UOMX of BdgtUOMs">
+                    <tr repeat.for="item of UOMX.data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${item.ComodityCode}</td>
+                        <td>${item.ComodityName}</td>
+                        <td class="text-right">${item.Quantity}</td>
+                        <td>${item.UOMUnit}</td>                        
+                        <td class="text-right">${item.Amount}</td>      
+                        <td class="text-right">${item.ProfitUSD}</td>      
+                        <td class="text-right">${item.ProfitIDR}</td>      
+                        <td class="text-right">${item.ProfitFOB}</td>                              
+                    </tr>
+                    <tr class="active">
+                        <td class="text-center" colspan="3"><strong>${UOMX.UoM}</strong></td>
+                        <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                        <td class="text-right"><strong>${UOMX.subTotal}</strong></td>                     
+                        <td class="text-right"><strong>${UOMX.subTotal1}</strong></td>                     
+                        <td class="text-right"><strong>${UOMX.subTotal2}</strong></td>                     
+                        <td class="text-right"><strong>${UOMX.subTotal3}</strong></td>                                             
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="5"><strong>T O T A L . . . . . . :</strong></td>
+                        <td class="text-right"><strong>${AmountTotal}</strong></td> 
+                        <td class="text-right"><strong>${AmountTotal1}</strong></td> 
+                        <td class="text-right"><strong>${AmountTotal2}</strong></td> 
+                        <td class="text-right"><strong>${AmountTotal3}</strong></td> 
+                    </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

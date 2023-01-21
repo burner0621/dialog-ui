@@ -1,0 +1,78 @@
+<template>
+    <tr>
+        <td if.bind="!readOnly">
+            <au-checkbox value.bind="data.Select"
+                         read-only.bind="readOnly"
+                         change.delegate="onCheckInternalNotes($event)">
+            </au-checkbox>
+            <div show.bind="false">${checkedInvoices}</div>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InternalNote.DocumentNo"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.InternalNote.Date"
+                           read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-datepicker value.bind="data.InternalNote.DueDate"
+                           read-only.bind="true">
+            </au-datepicker>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InternalNote.Supplier.Name"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.VATAmount"
+                        format="0,000.0000"
+                        read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.IncomeTaxAmount"
+                        read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="data.InternalNote.TotalAmount"
+                        format="0,000.0000"
+                        read-only.bind="true">
+            </au-numeric>
+        </td>
+        <td>
+            <au-textbox value.bind="data.InternalNote.Currency.Code"
+                        read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.OutstandingAmount"
+                        format="0,000.0000"
+                        read-only.bind="true">
+            </au-numeric>
+            <div show.bind="false">${outstanding}</div>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-info"
+                    click.delegate="toggle()">i</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="12">
+            <!-- <au-collection items.bind="data.Items"
+                           columns.bind="columns"
+                           item-template="modules/garment-finance/dpp-vat-bank-expenditure-note/templates/detail">
+            </au-collection> -->
+
+            <au-collection items.bind="data.InternalNote.Items"
+                           read-only.bind="readOnly"
+                           columns.bind="collection.columns"
+                           item-template="modules/garment-finance/dpp-vat-bank-expenditure-note/templates/detail">
+            </au-collection>
+        </td>
+    </tr>
+</template>

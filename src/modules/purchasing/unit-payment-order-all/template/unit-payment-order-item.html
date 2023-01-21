@@ -1,0 +1,33 @@
+<template>
+    <tr>
+        <td >
+            <div class="col-sm-11">
+                <au-autocomplete 
+                    value.bind="selectedUnitReceiptNote"
+                    error.bind="error.unitReceiptNote"
+                    loader.bind="unitReceiptNoteLoader"
+                    text.bind="unitReceiptNoteView"
+                    placeholder="cari nomor bon terima unit" 
+                    key="no"
+                    query.bind="filter"
+                    read-only.bind="options.readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+            </div>
+
+            <div class="col-sm-1">
+                <button class="btn btn-danger pull-left" click.delegate="onremove(data, $event)" if.bind="!options.readOnly">-</button>            
+                <button class="btn btn-info pull-right" if.bind= "data.unitReceiptNote.items" click.delegate="toggle()">i</button>
+            </div>
+            
+            <div class="col-sm-11" if.bind="isShowing">
+                <au-collection 
+                    items.bind="data.unitReceiptNote.items" 
+                    columns.bind="itemsColumns" 
+                    read-only.bind="options.readOnly"
+                    item-template="modules/purchasing/unit-payment-order-all/template/unit-receipt-note-item">
+                </au-collection>
+            </div>
+        </td>
+    </tr>
+</template>

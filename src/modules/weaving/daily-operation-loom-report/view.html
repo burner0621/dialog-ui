@@ -1,0 +1,87 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+
+  </style>
+  <au-input-form title="Update: Operasional Mesin Harian Loom" options.bind="formOptions">
+    <div class="col-md-12">
+      <div class="row" style="white-space: nowrap">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Order Produksi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="No. Order Produksi" value.bind="data.OrderProductionNumber"
+            error.bind="error.OrderProductionNumber" read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Status Operasi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Status Operasi" value.bind="data.OperationStatus" error.bind="error.OperationStatus"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="No. Konstruksi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="No. Konstruksi" value.bind="data.FabricConstructionNumber"
+            error.bind="error.FabricConstructionNumber" read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Asal Lusi" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Asal Lusi" value.bind="data.WarpOrigin" error.bind="error.WarpOrigin"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Unit Weaving" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Unit Weaving" value.bind="data.WeavingUnitName" error.bind="error.WeavingUnitName"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+        <div class="col-md-2" style="text-align:left;">
+          <textbox label="Asal Pakan" read-only="true" style="display: inline-block"></textbox>
+        </div>
+        <div class="col-md-3">
+          <au-textbox placeholder="Asal Pakan" value.bind="data.WeftOrigin" error.bind="error.WeftOrigin"
+            read-only.bind="true">
+          </au-textbox>
+        </div>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <h1 style="font-size: 16px; font-weight: 600;">Produk Beam Operasional Mesin Harian Loom</h1>
+      </div>
+      <div class="row" style="white-space: nowrap; overflow: auto;">
+        <au-collection items.bind="BeamProducts" errors.bind="error.BeamProducts" columns.bind="beamProductsColumns"
+          read-only.bind="true" item-template="modules/weaving/daily-operation-loom/templates/beam-product-items">
+        </au-collection>
+      </div>
+
+      <div class="row" style="white-space: nowrap;">
+        <h1 style="font-size: 16px; font-weight: 600;">History Operasional Mesin Harian Loom</h1>
+      </div>
+      <div class="row" style="white-space: nowrap; overflow: auto;">
+        <au-collection items.bind="Histories" errors.bind="error.Histories" columns.bind="historiesColumns"
+          read-only.bind="true" item-template="modules/weaving/daily-operation-loom/templates/history-items">
+        </au-collection>
+      </div>
+
+    </div>
+  </au-input-form>
+</template>

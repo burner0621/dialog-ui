@@ -1,0 +1,85 @@
+<template>
+  <require from="../../../../lib/number-format-value-converter"></require>
+
+  <h1 class="page-header">LAPORAN EKSPEDISI DISPOSISI PEMBAYARAN</h1>
+
+  <form class="form-horizontal">
+    <au-autocomplete placeholder="pilih nomor disposisi"
+                     value.bind="info.dispositionNote"
+                     loader.bind="dispositionLoader"
+                     options.bind="controlOptions"
+                     label="No. Diposisi"
+                     text="DocumentNo">
+    </au-autocomplete>
+
+    <au-autocomplete 
+                value.bind="info.purchaseOrderExternal" 
+                error.bind="error.purchaseOrderExternal"
+                label="Nomor PO Eksternal" 
+                loader.bind="poEksLoader"
+                text.bind="poEksLoaderView"
+                placeholder="Nomor PO Eksternal" 
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-autocomplete value.bind="info.supplier"
+                     error.bind="error.supplier"
+                     label="Supplier"
+                     loader.bind="supplierLoader"
+                     text.bind="supplierView"
+                     placeholder="Input Supplier"
+                     read-only.bind="readOnly"
+                     options.bind="controlOptions">
+    </au-autocomplete>
+
+    <au-dropdown value.bind="info.position"
+                 label="Posisi"
+                 options.bind="controlOptions"
+                 items.bind="positionOptions"
+                 key="Value"
+                 text="Label">
+    </au-dropdown>
+
+    <au-autocomplete placeholder="pilih nama"
+                     value.bind="info.account"
+                     loader.bind="accountLoader"
+                     options.bind="controlOptions"
+                     label="Nama Staff Pembelian"
+                     text="username">
+    </au-autocomplete>
+
+    <au-datepicker value.bind="info.startDate"
+                   label="Tanggal Awal"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <au-datepicker value.bind="info.endDate"
+                   label="Tanggal Akhir"
+                   options.bind="controlOptions">
+    </au-datepicker>
+
+    <div class="form-group">
+      <label for="contact"
+             class="col-sm-5 control-label"></label>
+      <div class="col-sm-3">
+        <button click.delegate="search()"
+                class="btn btn-success">Cari</button>
+        <button click.delegate="reset()"
+                class="btn btn-success">Reset</button>
+        <button class="btn btn-primary"
+                click.delegate="excel()">Excel</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="credit-balance-table">
+    <au-table view-model.ref="tableList"
+              data.bind="loader"
+              columns.bind="columns"
+              sortable="true"
+              page-size="25"
+              options.bind="tableOptions">
+    </au-table>
+  </div>
+</template>

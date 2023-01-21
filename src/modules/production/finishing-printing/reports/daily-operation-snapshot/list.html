@@ -1,0 +1,42 @@
+<template>
+    <style>
+        #dailyReport td {
+            white-space: pre;
+        }
+    </style>
+    <h1 class="page-header">Laporan Daily Operation</h1>
+    <form class="form-horizontal">
+       
+        <au-dropdown
+            label="Bulan"
+            value.bind="month"
+            error.bind="error.month"
+            items.bind="monthList"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-dropdown
+            label="Tahun"
+            value.bind="year"
+            error.bind="error.year"
+            items.bind="yearList"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <!-- <datepicker label="Tanggal" value.bind="searchDate"></datepicker> -->
+        <!-- <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div> -->
+        <div class="btn-group">
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+        </div>
+    </form>
+    <br>
+    
+    </form>
+
+</template>

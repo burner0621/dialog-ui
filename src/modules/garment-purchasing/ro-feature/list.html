@@ -1,0 +1,78 @@
+<template>
+
+    <style>
+        table > tbody > tr > td {
+            white-space: pre;
+        }
+    </style>
+
+    <h1 class="page-header">Fitur Pencarian RO</h1>
+    <form class="form-horizontal">
+            <au-textbox
+            value.bind="roNo" 
+            label="No. RO"
+            placeholder="Masukkan RO" 
+            options.bind="controlOptions">
+            </au-textbox>
+
+        
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-3 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1">
+                <thead>
+                    <tr>
+                        <td><label>No</label></td>
+                        <td><label>Kode Barang</label></td>
+                        <td><label>Nama Barang</label></td>
+                        <td><label>Unit</label></td>
+                        <td><label>No PO</label></td>
+                        <td><label>No Artikel</label></td>
+                        <td><label>Jumlah Terima</label></td>
+                        <td><label>Jumlah Keluar</label></td>
+                        <td><label>Satuan</label></td>
+                        <td><label>Detail Penerimaan</label></td>
+                        <td><label>Detail Pengeluaran</label></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template repeat.for="IN of data">
+                        <tr>
+                            <td style="text-align: center;">${$index + 1}</td>
+                            <td style="text-align: center;">${IN.KodeBarang}</td>
+                            <td style="text-align: center;">${IN.NamaBarang}</td>
+                            <td style="text-align: center;">${IN.Unitcode}</td>
+                            <td style="text-align: center;">${IN.PO}</td>
+                            <td style="text-align: center;">${IN.Article}</td>
+                            <td style="text-align: center;">${IN.QtyTerima}</td>
+                            <td style="text-align: center;">${IN.QtyKeluar}</td>
+                            <td style="text-align: center;">${IN.UomMasuk}</td>
+                            <td style="width:10%;text-align: center; vertical-align: middle;">
+                                <button type="button" class="btn btn-info pull-left" click.delegate="toggleMasuk($index)">
+                                Detail
+                                </button>
+                            </td>
+                            <td style="width:10%;text-align: center; vertical-align: middle;">
+                                <button type="button" class="btn btn-info pull-left" click.delegate="toggleKeluar($index)">
+                                Detail
+                                </button>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.lengtd== 0">
+            Tidak ada data ditemukan.
+        </div>
+    </form>
+
+
+</template>
+

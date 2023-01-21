@@ -1,0 +1,52 @@
+<template>
+    <tr>
+        <td>
+            <au-textbox value.bind="data.ProductCode" error.bind="error.ProductCode" read-only.bind="readOnly"
+                placeholder="Input Kode">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox value.bind="data.ProductName" error.bind="error.ProductName" read-only.bind="readOnly"
+                placeholder="Input Nama">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="data.QuantityPacking" error.bind="error.QuantityPacking" read-only.bind="readOnly"
+                format="0,0">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown value.bind="data.PackingUom" items.bind="packingUomOptions" error.bind="error.PackingUom"
+                read-only.bind="readOnly">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-numeric value.bind="QuantityItem" error.bind="error.QuantityItem" read-only.bind="readOnly"
+                format="0,0">
+            </au-numeric>
+        </td>
+        <td>
+            <au-dropdown value.bind="ItemUom" items.bind="itemUomOptions" error.bind="error.ItemUom"
+                read-only.bind="readOnly">
+            </au-dropdown>
+        </td>
+        <td>
+            <au-textbox value.bind="ConvertValue" read-only.bind="true">
+            </au-textbox>
+            <au-textbox value.bind="ConvertUnit" read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric value.bind="Price" error.bind="error.Price" read-only.bind="readOnly" format="0,0.00">
+            </au-numeric>
+        </td>
+        <td>
+            <au-numeric value.bind="getAmount" error.bind="error.Amount" read-only.bind="true" format="0,0.00">
+            </au-numeric>
+        </td>
+        <td if.bind="!readOnly">
+            <button if.bind="!readOnly" class="btn btn-danger pull-right"
+                click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

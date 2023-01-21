@@ -1,0 +1,29 @@
+<template>
+    <h1 class="page-header">Laporan Kwitansi</h1>
+
+    <form class="form-horizontal">
+        <au-datepicker value.bind="info.dateFrom" label="Tanggal Awal Periode Kwitansi" options.bind="controlOptions"
+            error.bind="error.dateFrom">
+        </au-datepicker>
+
+        <au-datepicker value.bind="info.dateTo" label="Tanggal Akhir Periode Kwitansi" options.bind="controlOptions"
+            error.bind="error.dateTo">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="sales-receipt-table">
+        <au-table view-model.ref="tableList" data.bind="loader" columns.bind="columns" options.bind="tableOptions">
+            <div slot="toolbar" class="btn-group">
+                <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+            </div>
+        </au-table>
+    </div>
+</template>

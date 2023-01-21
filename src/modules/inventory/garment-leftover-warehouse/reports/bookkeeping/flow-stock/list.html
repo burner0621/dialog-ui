@@ -1,0 +1,113 @@
+<template>
+    <h1 class="page-header">Laporan Flow Persediaan Gudang Sisa</h1>
+
+    <form class="form-horizontal">
+        <au-dropdown label="Kategori" value.bind="category" items.bind="categoryItems" options.bind="controlOptions">
+        </au-dropdown>
+        <au-datepicker value.bind="dateFrom" label="Tanggal Awal" options.bind="controlOptions" error.bind="error.date">
+        </au-datepicker>
+
+        <au-datepicker value.bind="dateTo" label="Tanggal Akhir" options.bind="controlOptions" error.bind="error.date">
+        </au-datepicker>
+        <au-autocomplete value.bind="unit" label="Unit" loader.bind="unitLoader" placeholder="Cari Nama Unit"
+            read-only.bind="readOnly" text.bind="unitView" options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+
+        <div>
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+
+        <!--<table ref="table" class="table table-bordered table-hover" border="1" id="doReport">
+            <thead align="center">
+                <tr>
+                    <td rowspan="2">ASAL</td>
+                    <td rowspan="2">NAMA BARANG</td>
+                    <td rowspan="2">KODE BARANG</td>
+                    <td rowspan="2">SATUAN</td>
+                    <td colspan="2"> SALDO AWAL</td>
+                    <td colspan="2">TERIMA</td>
+                    <td colspan="2">U / UNIT </td>
+                    <td colspan="2">U / SAMPLE</td>
+                    <td colspan="2">U / JUAL LOKAL</td>
+                    <td colspan="2">U / LAIN-LAIN</td>
+                    <td colspan="2">SALDO AKHIR</td>
+
+                </tr>
+                <tr>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+                    <td rowspan="2">Qty</td>
+                    <td rowspan="2">Harga</td>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="fixed text-center"
+                        style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.UnitName}</td>
+                    <td class="text-center">${item.ProductName}</td>
+                    <td class="text-center">${item.ProductCode}</td>
+                    <td class="text-right">${item.UomUnit}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.BeginingBalanceQuantity}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.BeginingBalancePrice}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.QuantityReceipt}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.PriceReceipt}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.QuantityUnitExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.PriceUnitExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.QuantitySampleExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.PriceSampleExpend}</td>
+
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.QuantityLocalExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.PriceLocalExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.QuantityOtherExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.PriceOtherExpend}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.EndBalanceQuantity}</td>
+                    <td class="text-right" style="font-weight: ${item.UnitName.includes('TOTAL') ? 'bold' : '' }">
+                        ${item.EndBalancePrice}</td>
+
+
+                </tr>
+            </tbody>
+        </table>-->
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager">
+        </pagination>
+        <hr />
+    </form>
+
+</template>

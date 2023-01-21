@@ -1,0 +1,51 @@
+<template>
+    <tr>
+        <td  class="col-sm-3">
+            <au-autocomplete 
+                    value.bind="data.product" 
+                    error.bind="error.product"
+                    change.delegate="productChanged($event)"
+                    loader.bind="productLoader"
+                    placeholder="cari barang" 
+                    text.bind = "productView"
+                    key="name"
+                    read-only.bind="options.readOnly"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+                <au-numeric 
+                    value.bind="data.quantity" 
+                    error.bind="error.quantity"
+                    read-only.bind="options.readOnly" 
+                    options.bind="controlOptions">
+                </au-numeric>
+        </td>
+        <td class="col-sm-2">
+                <au-textbox 
+                    value.bind="data.product.uom.unit" 
+                    read-only.bind="true" 
+                    options.bind="controlOptions">
+                </au-textbox>
+        </td>
+        <td class="col-sm-2">
+                <au-dropdown
+                    value.bind="data.grade"
+                    items.bind="gradeOptions"
+                    read-only.bind="readOnly"
+                    options.bind="controlOptions">
+                </au-dropdown>
+        </td>
+        <td class="col-sm-2">
+                <au-textbox 
+                    value.bind="data.productRemark" 
+                    error.bind="error.productRemark"
+                    read-only.bind="options.readOnly" 
+                    placeholder="tambah keterangan" 
+                    options.bind="controlOptions">
+                </au-textbox>
+        </td>
+        <td class="col-sm-2" if.bind="!options.readOnly"><button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button></td>
+    </tr>
+</template>
+

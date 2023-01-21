@@ -1,0 +1,120 @@
+<template>
+    <h1 class="page-header">Buku Penjualan Lokal Garment</h1>
+    <form class="form-horizontal">
+        
+        <au-datepicker label="Tanggal Nota Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Nota Akhir" value.bind="dateTo"></au-datepicker>
+        
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+          </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td rowspan="2" align="center">NO</td>
+                    <td rowspan="2">TGL NOTA</td>
+                    <td rowspan="2">TGL SP</td>                
+                    <td rowspan="2">NO. NOTA</td>
+                    <td rowspan="2">NAMA BUYER</td>
+                    <td rowspan="2">KODE BUYER</td>
+                    <td rowspan="2">PENJUALAN + PPN</td>
+                    <td rowspan="2">PENJUALAN</td>
+                    <td rowspan="2">PPN</td>
+                   
+                    <td colspan="2">BARANG JADI</td>
+                    <td colspan="2">AVAL & LAIN-LAIN</td>
+                    <td colspan="2">JASA</td>
+                    <td colspan="2">SAMPLE BARANG JADI</td>
+                    <td colspan="2">SAMPLE MATERIAL</td>
+                </tr>
+                <tr>
+                    <td>QTY</td>
+                    <td>IDR</td>
+                    <td>QTY</td>
+                    <td>IDR</td>
+                    <td>QTY</td>
+                    <td>IDR</td>
+                    <td>QTY</td>
+                    <td>IDR</td>
+                    <td>QTY</td>
+                    <td>IDR</td>                    
+                </tr>
+            </thead>
+            <tbody>
+                <template repeat.for="supplier of suppliers">
+                    <tr repeat.for="data of supplier.data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${data.lsDate}</td>
+                        <td>${data.clDate}</td>                        
+                        <td>${data.lsNo}</td>
+                        <td>${data.buyerName}</td>
+                        <td>${data.buyerCode}</td>
+                       
+                        <td class="text-right"><strong>${data.netAmt}</strong></td>
+                        <td class="text-right"><strong>${data.slsAmt}</strong></td>
+                        <td class="text-right"><strong>${data.ppnAmt}</strong></td>
+                       
+                        <td class="text-right"><strong>${data.qty1}</strong></td>
+                        <td class="text-right"><strong>${data.amt1}</strong></td>
+                        <td class="text-right"><strong>${data.qty2}</strong></td>
+                        <td class="text-right"><strong>${data.amt2}</strong></td>                        
+                        <td class="text-right"><strong>${data.qty3}</strong></td>                        
+                        <td class="text-right"><strong>${data.amt3}</strong></td>
+                        <td class="text-right"><strong>${data.qty4}</strong></td>
+                        <td class="text-right"><strong>${data.amt4}</strong></td>
+                        <td class="text-right"><strong>${data.qty5}</strong></td>                        
+                        <td class="text-right"><strong>${data.amt5}</strong></td>                        
+
+                    </tr>
+                    <tr class="active">
+                       <td class="text-center" colspan="2"><strong>SUB TOTAL</strong></td>
+                       <td class="text-center" colspan="3"><strong>${supplier.supplier}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal1}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal2}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal3}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal4}</strong></td>                    
+                       <td class="text-right"><strong>${supplier.subTotal5}</strong></td>                        
+                       <td class="text-right"><strong>${supplier.subTotal6}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal7}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal8}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal9}</strong></td>                    
+                       <td class="text-right"><strong>${supplier.subTotal10}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal11}</strong></td>
+                       <td class="text-right"><strong>${supplier.subTotal12}</strong></td>                    
+                       <td class="text-right"><strong>${supplier.subTotal13}</strong></td>                    
+                    </tr>
+                </template>
+                    <tr class="active">
+                        <td class="text-center" colspan="6"><strong>TOTAL PENJUALAN - RETUR - POTONGAN</strong></td>
+                        <td class="text-right"><strong>${AmountTotal1}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal2}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal3}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal4}</strong></td>                        
+                        <td class="text-right"><strong>${AmountTotal5}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal6}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal7}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal8}</strong></td>                        
+                        <td class="text-right"><strong>${AmountTotal9}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal10}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal11}</strong></td>
+                        <td class="text-right"><strong>${AmountTotal12}</strong></td>                        
+                        <td class="text-right"><strong>${AmountTotal13}</strong></td>                        
+                    </tr>
+            </tbody>
+
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

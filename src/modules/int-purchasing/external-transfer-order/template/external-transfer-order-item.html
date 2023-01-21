@@ -1,0 +1,35 @@
+<template>
+    <!-- <tr>
+        <td colspan="2">Nomor Transfer Request</td>
+    </tr> -->
+    <tr>
+        <td class="col-sm-11">
+            <au-autocomplete 
+                value.bind="selectedInternalTransferOrder"
+                error.bind="error.InternalTransferOrder"
+                loader.one-time="internalTransferOrderLoader"
+                read-only.bind="readOnly"
+                query.one-time="selectedInternalTransferOrderFilter"
+                text.bind="selectedInternalTransferOrderView">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-1">
+            <button class="btn btn-info" click.delegate="toggle()">i</button> 
+            <button class="btn btn-danger" click.delegate="onremove(data)" if.bind="!readOnly">-</button>
+        </td>
+    </tr>
+    <tr show.bind="isShowing">
+        <td colspan="2">
+            <au-collection
+                items.bind="data.ExternalTransferOrderDetails" 
+                errors.bind="error.ExternalTransferOrderDetails"
+                columns.bind="columns"
+                read-only.bind="readOnly"
+                remove.bind="onRemove"
+                options.bind="options"
+                item-template="modules/int-purchasing/external-transfer-order/template/external-transfer-order-detail"
+                header-template="modules/int-purchasing/external-transfer-order/template/external-transfer-order-detail-header">
+            </au-collection>
+        </td>  
+    </tr>
+</template>

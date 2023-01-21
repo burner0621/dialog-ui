@@ -1,0 +1,83 @@
+
+<template>
+  
+        <h1 class="page-header">Laporan Pemasukan Barang per Dokumen Pabean</h1>
+        <form class="form-horizontal">
+            <au-dropdown 
+                label="Tipe Beacukai" 
+                value.bind="type"
+                items.bind="Types"
+                options.bind="controlOptions" >
+            </au-dropdown>
+             
+            <au-datepicker 
+            label="Tanggal Awal Laporan" 
+            value.bind="dateFrom" error.bind="error.dateFrom"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-datepicker 
+            label="Tanggal Akhir Laporan" 
+            value.bind="dateTo" error.bind="error.dateTo"
+            options.bind="controlOptions">
+            </au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+             <div class="btn-group pull-left">
+                <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+           <br>
+        </br>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td>No</td>
+                        <td>Jenis Dokumen</td>
+                        <td colspan="2">Dokumen Pabean</td>
+                        <td colspan="2">Bukti Penerimaan Barang</td>
+                        <td >Pemasok / Pengirim</td>
+                        <td>Kode Barang</td>
+                        <td>Nama Barang</td>
+                        <td>Jumlah</td>
+                        <td>Sat</td>
+                        <td>Nilai Barang</td>
+                        <td>Mata Uang</td>          
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                    <tr repeat.for="item of data">
+                            <td if.bind="item.docspan" rowspan="${item.docspan}">${item.count}</td>
+                            <td class="text-left" if.bind="item.rowspan" rowspan="${item.rowspan}">${item.BCType}</td>
+                            <!--<td class="text-left" if.bind="item.code!=null" rowspan="${item.row_count}">${item.BCType}</td>-->
+                            <td class="text-left" if.bind="item.docspan" rowspan="${item.docspan}">${item.BCNo}</td>
+                            <td class="text-right" if.bind="item.docspan" rowspan="${item.docspan}">${item.BCDate | dateFormat:'D MMM YYYY'}</td>
+                            <td class="text-left">${item.BonNo}</td>
+                            <td class="text-left">${item.BonDate | dateFormat:'D MMM YYYY'}</td>
+                            <td class="text-left">${item.SupplierName}</td>
+                            <td class="text-left">${item.ItemCode}</td>
+                            <td class="text-left">${item.ItemName}</td>
+                            <td class="text-right">${item.Quantity}</td>
+                            <td class="text-left">${item.UnitQtyName}</td>
+                            <td class="text-right">${item.Nominal}</td>
+                            <td class="text-left">${item.CurrencyCode}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </au-input-form> 
+</template>

@@ -1,0 +1,46 @@
+<template>
+  <tr>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.WarpingBeamNumber" error.bind="error.WarpingBeamNumber" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.LatestDateBeamProduct" error.bind="error.LatestDateBeamProduct"
+        read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.LatestTimeBeamProduct" error.bind="error.LatestTimeBeamProduct"
+        read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <!-- <au-textbox value.bind="data.WarpingBrokenThreads" options.bind="brokenThreadsOptions"
+          error.bind="error.WarpingBrokenThreads" read-only.bind="true">
+        </au-textbox> -->
+
+      <button class="btn btn-info pull-right" click.delegate="brokenCausesToggle()">i</button>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.WarpingTotalBeamLength" error.bind="error.WarpingTotalBeamLength"
+        read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.Tention" error.bind="error.Tention" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineSpeed" error.bind="error.MachineSpeed" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.PressRoll" error.bind="error.PressRoll" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.WarpingBeamStatus" error.bind="error.WarpingBeamStatus" read-only.bind="true">
+      </au-textbox>
+    </td>
+  </tr>
+</template>

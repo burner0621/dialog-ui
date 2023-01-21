@@ -1,0 +1,56 @@
+<template>
+    <tr>
+        <td>
+            <au-checkbox value.bind="data.IsSave" disabled.bind="readOnly" change.delegate="changeCheckBox()">
+            </au-checkbox>
+        </td>
+        <td class="col-sm-2" if.bind="data.SubconType == 'SEWING'">
+            <au-textbox if.bind="data.IsFromSubconCutting || readOnly" value.bind="data.Product.Code" read-only="true">
+            </au-textbox>
+            <au-dropdown if.bind="!data.IsFromSubconCutting && !readOnly" value.bind="selectedProduct"
+                error.bind="error.Product" items.bind="productList">
+            </au-dropdown>
+        </td>
+        <td class="col-sm-2" if.bind="data.SubconType == 'CUTTING SEWING'">
+            <au-autocomplete value.bind="selectedProductCS" error.bind="error.Size" loader.bind="productLoader"
+                query.bind="filter"
+                read-only.bind="readOnly || data.IsFromSubconCutting" placeholder="Kode Barang" text="ProductCode"
+                view-model.ref="selectedProductCSViewModel">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-2" if.bind="data.SubconType == 'SEWING'">
+            <au-textbox value.bind="data.DesignColor" read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2" if.bind="data.SubconType == 'CUTTING SEWING'">
+            <au-dropdown value.bind="selectedDC" read-only.bind="readOnly" items.bind="opDC">
+            </au-dropdown>
+        </td>
+        <td class="col-sm-1">
+            <au-autocomplete value.bind="data.Size" error.bind="error.Size" loader.bind="sizeLoader"
+                read-only.bind="readOnly || data.IsFromSubconCutting" placeholder="Size" text="Size">
+            </au-autocomplete>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox value.bind="data.Comodity.Name" read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox value.bind="data.Color" placeholder="Keterangan"
+                read-only.bind="readOnly || data.IsFromSubconCutting">
+            </au-textbox>
+        </td>
+        <td class="col-sm-1" if.bind="data.SubconType == 'SEWING'">
+            <au-numeric value.bind="data.CuttingOutQuantity" format="0" read-only="true">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-numeric value.bind="dataQuantity" error.bind="error.Quantity" format="0" read-only.bind="readOnly">
+            </au-numeric>
+        </td>
+        <td class="col-sm-1">
+            <au-textbox value="PCS" read-only="true">
+            </au-textbox>
+        </td>
+    </tr>
+</template>

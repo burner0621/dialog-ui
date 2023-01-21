@@ -1,0 +1,30 @@
+<template>  
+  <au-table 
+    data.bind="items" 
+    selections.bind="selected" 
+    row-click.delegate="rowClickCallback($event)" 
+    context-click.delegate="contextClickCallback($event)"
+    context.bind="context"
+    show-context.call="showContextCallback(index, context, data)">
+    <button slot="toolbar" id="button" class="btn btn-default" click.delegate="sel()">create</button>
+    <!--<template replace-part="tbody">-->
+    <!--  <tr repeat.for="item of items"> -->
+    <!--    <td>${item.id}</td>-->
+    <!--    <td>${item.name}</td>-->
+    <!--  </tr>-->
+    <!--</template>-->
+    
+    <template  replace-part="tr">
+      <td>${item.code}</td>
+      <td>${item.name}</td>
+    </template> 
+  </au-table> 
+
+  <au-input-form>
+    <input type="text" value.bind="text"/>
+    <input type="text" value.bind="text"/>
+    <au-textbox value.bind="text"></au-textbox>
+    <au-numeric placeholder="hello place" value.bind="numeric"></au-numeric>
+    <au-textbox value.bind="numeric"></au-textbox>
+  </au-input-form>
+</template>

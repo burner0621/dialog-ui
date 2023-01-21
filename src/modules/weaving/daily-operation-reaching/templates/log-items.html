@@ -1,0 +1,45 @@
+<template>
+  <style>
+      #delete-button {
+      background-color: #d65151;
+      color: white;
+      white-space: nowrap;
+      width: 100px;
+      border: 1px solid #777777;
+    }
+
+  </style>
+  <tr>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineDate" error.bind="error.MachineDate" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineTime" error.bind="error.MachineTime" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.ShiftName" error.bind="error.ShiftName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.OperatorName" error.bind="error.OperatorName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-numeric value.bind="data.YarnStrandsProcessed" error.bind="error.YarnStrandsProcessed" read-only.bind="true">
+      </au-numeric>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <au-textbox value.bind="data.MachineStatus" error.bind="error.MachineStatus" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+        <div if.bind="$first">
+          <button class="btn btn-default" id="delete-button" click.delegate="delete()" disabled.bind="isDeleteDisabled">
+            Delete
+          </button>
+        </div>
+      </td>
+  </tr>
+</template>

@@ -1,0 +1,117 @@
+<template>
+  <div class="row">
+      <div class="col-md-6">
+        <au-input-form 
+          title.bind="title" 
+          with.bind="context"
+          options.bind="formOptions">  
+
+          <au-dropdown
+            label="Jenis Produk"
+            value.bind="data.ProductType"
+            error.bind="error.productType"
+            read-only.bind="(readOnly || isEdit)"
+            items.bind="ProductTypes"
+            change.delegate="ProductTypeChanged($event)"
+          ></au-dropdown>  
+
+          <au-textbox
+            label="Kode"
+            value.bind="data.Code"
+            error.bind="error.code"
+            read-only.bind="(readOnly || isEdit)"
+          ></au-textbox>
+
+          <au-textbox
+            label="Nama"
+            value.bind="data.Name"
+            error.bind="error.name"
+            read-only.bind="(readOnly || nameCheck)"
+          ></au-textbox>
+                   
+          <au-autocomplete
+            label="Satuan"
+            value.bind="UOM"
+            error.bind="error.uom"
+            loader.bind="uomLoader"
+            read-only.bind="readOnly"
+            key="Unit"
+            text="Unit"
+          ></au-autocomplete>
+
+          <au-textbox
+            label=" "
+            show.bind="error.combinationerror"
+            error.bind="error.combinationerror"
+            read-only="true">
+          </au-textbox>
+
+          <au-textbox
+            label="Komposisi"
+            value.bind="data.Composition"
+            error.bind="error.composition"
+            read-only.bind="readOnly"
+            if.bind="nameCheck"
+          ></au-textbox>
+
+          <au-textbox
+            label="Const"
+            value.bind="data.Const"
+            error.bind="error.const"
+            read-only.bind="readOnly"
+            if.bind="nameCheck"
+          ></au-textbox>
+
+          <au-textbox
+            label="Yarn"
+            value.bind="data.Yarn"
+            error.bind="error.yarn"
+            read-only.bind="readOnly"
+            if.bind="nameCheck"
+          ></au-textbox>
+
+          <au-textbox
+            label="Width"
+            value.bind="data.Width"
+            error.bind="error.width"
+            read-only.bind="readOnly"
+            if.bind="nameCheck"
+          ></au-textbox>
+
+          <!--<au-autocomplete
+            label="Mata Uang"
+            value.bind="data.currency"
+            error.bind="error.currency"
+            loader.bind="currencyLoader"
+            read-only.bind="readOnly"
+            key="symbol"
+            text="code"      
+          ></au-autocomplete>
+
+          <au-numeric
+            label="Harga"
+            value.bind="data.price"
+            error.bind="error.price"
+            read-only.bind="readOnly"
+          ></au-numeric>-->
+
+          <au-multiline
+            label="Tags"
+            value.bind="data.Tags"
+            error.bind="error.tags"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <au-multiline
+            label="Keterangan"
+            value.bind="data.Remark"
+            error.bind="error.remark"
+            read-only.bind="readOnly"
+          ></au-multiline>
+
+          <template replaceable part="actions"></template>
+
+        </au-input-form>
+      </div>
+  </div>
+</template>

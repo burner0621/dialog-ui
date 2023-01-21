@@ -1,0 +1,47 @@
+<template>
+    <ai-dialog style="width:500px;"
+               if.bind="data.verifiedAlert">
+
+        <ai-dialog-body>
+            <div class="text-center">Data Nota Intern ? </div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <div class="text-center">
+                <button click.delegate="datadisposisi(false)"
+                        class='btn btn-danger btn-sm'>Not Ok</button>
+                <button click.delegate="datadisposisi(true)"
+                        class='btn btn-success btn-sm'>Ok</button>
+            </div>
+        </ai-dialog-footer>
+
+    </ai-dialog>
+
+    <ai-dialog style="width:500px;"
+               if.bind="!data.verifiedAlert">
+
+        <block>
+
+            <ai-dialog-body>
+                <au-multiline label="Alasan"
+                              placeholder="masukan alasan"
+                              value.bind="data.Remark"
+                              error.bind="error.Remark">
+                </au-multiline>
+            </ai-dialog-body>
+
+            <ai-dialog-footer>
+                <div class="text-center"
+                     style="margin:100px 0px 10px 0px;">
+                    <button click.delegate="back()"
+                            class='btn btn-default btn-sm'>Kembali</button>
+                    <button click.delegate="save('Not Verified')"
+                            class='btn btn-success btn-sm'>Submit</button>
+                </div>
+            </ai-dialog-footer>
+
+        </block>
+
+    </ai-dialog>
+
+</template>

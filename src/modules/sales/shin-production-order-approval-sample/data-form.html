@@ -1,0 +1,175 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-6" style="padding:0">
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="SalesContract" label="Nomor Sales Contract" error.bind="error.SalesContractNo"
+              read-only.bind="readOnly" loader.bind="fpSalesContractLoader" placeholder="cari nomor sales kontrak "
+              text.bind="getSCText">
+            </au-autocomplete>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="No. SPP" value.bind="data.OrderNo" error.bind="error.orderNo" read-only="true"
+              if.bind="data.Id"></au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Buyer" value.bind="data.Buyer" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Unit" value.bind="data.Unit" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Tipe Buyer" value.bind="data.BuyerType" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Jenis Proses" value.bind="data.ProcessType" read-only="true">
+            </au-textbox>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Jenis Order" value.bind="data.OrderType" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Material" value.bind="data.Material" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Konstruksi Material" value.bind="data.MaterialConstruction" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="No Benang Material" value.bind="data.YarnMaterial" read-only="true">
+            </au-textbox>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Lebar Finish" value.bind="data.MaterialWidth" read-only="true">
+            </au-textbox>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox label="Jumlah Order" read-only.bind="true"></textbox>
+            </div>
+
+            <div class="col-sm-3">
+              <au-numeric format="0" error.bind="error.OrderQuantity" value.bind="orderQuantity" read-only.bind="readOnly">
+              </au-numeric>
+            </div>
+
+            <div class="col-sm-1">
+              <textbox label="Satuan" read-only="true"></textbox>
+            </div>
+
+            <div class="col-sm-3">
+              <!-- <au-autocomplete value.bind="data.UOM" error.bind="error.UOMID" read-only.bind="true"
+                loader.bind="uomLoader" text="Unit" key="Unit" placeholder="pilih satuan">
+              </au-autocomplete> -->
+              <au-textbox value.bind="data.UOM" read-only="true" options.bind="controlOptions">
+              </au-textbox>
+
+            </div>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-numeric label="Toleransi Jumlah (%)" value.bind="shippingQuantityTolerance" read-only.bind="true"
+              post-fix="%">
+            </au-numeric>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Asal Material" value.bind="data.MaterialOrigin" read-only.bind="readOnly"></au-textbox>
+            </au-textbox>
+          </div>
+
+        </div>
+        <div class="col-md-6" style="padding:0">
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Kualitas" value.bind="data.Quality" read-only="true">
+            </au-textbox>
+          </div>
+
+          <textbox label="Standar Handling" value.bind="data.HandlingStandard" error.bind="error.HandlingStandard"
+            read-only.bind="(readOnly)"></textbox>
+
+          <dropdown label="RUN" value.bind="data.Run" error.bind="error.Run" read-only.bind="(readOnly)"
+            items.bind="RUNOptions" if.bind="isPrintingOnly" change.delegate="RUNChanged($event)"></dropdown>
+
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox value="Lebar RUN (cm)" read-only="true" if.bind="isPrinting && data.RunWidth.length"></textbox>
+            </div>
+            <div class="col-sm-2" repeat.for="i of data.RunWidth.length">
+              <numeric value.bind="data.RunWidth[i].Value" read-only.bind="(readOnly)"
+                if.bind="isPrinting && (isRUN || run)" error.bind="error.RunWidth"></numeric>
+            </div>
+          </div>
+
+          <textbox label="Tulisan Pinggir Kain" value.bind="data.ArticleFabricEdge" error.bind="error.ArticleFabricEdge"
+            read-only.bind="(readOnly)" if.bind="isPrintingOnly"></textbox>
+
+          <textbox label="Standar Shrinkage" value.bind="data.ShrinkageStandard" error.bind="error.ShrinkageStandard"
+            read-only.bind="(readOnly)"></textbox>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="standardTests" value.bind="data.StandardTests" label="Standar Test"
+              error.bind="error.StandardTests" read-only.bind="readOnly" text="Name">
+            </au-autocomplete>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Jenis Sales Contract" value.bind="data.SalesContractType" read-only="true">
+            </au-textbox>
+          </div>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-textbox label="Packing" value.bind="data.Packing" read-only="true">
+            </au-textbox>
+          </div>
+
+          <datepicker label="Jadwal Pengiriman" value.bind="data.DeliveryDate" error.bind="error.DeliveryDate"
+            read-only.bind="true"></datepicker>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="account" label="Nama Staff Penjualan" text.bind="text"
+              error.bind="error.Account" read-only.bind="true" loader.bind="accountLoader">
+            </au-autocomplete>
+          </div>
+
+          <multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"
+            rows.bind="10"></multiline>
+
+        </div>
+      </div>
+      <hr />
+      <au-collection items.bind="data.LampStandards" errors.bind="error.LampStandards" read-only.bind="readOnly"
+        columns.bind="lampHeader" item-template="modules/sales/shin-production-order/templates/lamp-standard"
+        add.bind="addLamp" remove.bind="removeLamp"></au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly"
+        if.bind="data.Unit && isPrinting" columns.bind="detailHeader"
+        item-template="modules/sales/shin-production-order/templates/detail-item-printing"
+        footer-template="modules/sales/shin-production-order/templates/detail-footer-printing"
+        add.bind="addDetail" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly"
+        if.bind="data.FinishingPrintingSalesContract && !isPrinting" columns.bind="detailHeader"
+        item-template="modules/sales/shin-production-order/templates/detail-item"
+        footer-template="modules/sales/shin-production-order/templates/detail-footer" add.bind="addDetail"
+        view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <div if.bind="error.LampStandards.toString()">
+        <span style="color:red">-Standar Lampu tidak boleh kosong</span>
+      </div>
+      <br>
+      <div if.bind="error.Details.toString()">
+        <span style="color:red">-Detail Warna harus diisi dan Jumlah Total pada detail harus sama dengan jumlah order
+          .</span>
+      </div>
+    </form>
+  </au-input-form>
+</template>

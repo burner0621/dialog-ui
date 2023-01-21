@@ -1,0 +1,43 @@
+<template>
+  <tr>
+    <td>
+      <au-autocomplete
+        value.bind="currency"
+        error.bind="error.CurrencyId"
+        loader.one-time="currencyLoader"
+        text="Code"
+      >
+      </au-autocomplete>
+    </td>
+    <td>
+      <au-numeric
+        value.bind="currencyNominal"
+        error.bind="error.CurrencyNominal"
+        read-only.bind="!isCurrency || data.IsIDR"
+        format="0.00"
+      >
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric
+        value.bind="nominal"
+        error.bind="error.Nominal"
+        read-only.bind="!isCurrency || !data.IsIDR"
+        format="0.00"
+      >
+      </au-numeric>
+    </td>
+    <td>
+      <au-numeric
+        value.bind="data.Total"
+        error.bind="error.Total"
+        format="0.00"
+        read-only.bind="true"
+      >
+      </au-numeric>
+    </td>
+    <td class="col-sm-1">
+      <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+    </td>
+  </tr>
+</template>

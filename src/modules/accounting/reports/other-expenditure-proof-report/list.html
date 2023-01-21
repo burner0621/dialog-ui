@@ -1,0 +1,107 @@
+<template>
+    <h1 class="page-header">Laporan Bukti Pengeluaran Lain-lain</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="info.bankExpenditureNo"
+            label="No Bukti Pengeluaran" 
+            loader.bind="otherExpenditureDocumentLoader"
+            placeholder="No Bukti Pengeluaran" 
+            read-only.bind="false"
+            text.bind = "otherExpenditureDocumentView"
+            options.bind="controlOptions" >
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Pengeluaran" 
+            value.bind="info.date" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete 
+            value.bind="info.division"
+            label="Divisi" 
+            loader.bind="divisionLoader"
+            placeholder="Divisi" 
+            read-only.bind="false"
+            text.bind = "divisionView"
+            options.bind="controlOptions" >
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal Awal Pengeluaran" 
+            value.bind="info.startDate" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker 
+            label="Tanggal Akhir Pengeluaran" 
+            value.bind="info.endDate" 
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="reset()" class='btn btn-primary'>Reset</button>
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!--Table-->
+            <table class="table table-bordered">
+                <!--Table head-->
+                <thead>
+                    <tr>
+                        <th rowspan="2">No</th>
+                        <th colspan="2">Bukti Pengeluaran</th>
+                        <th rowspan="2">Nama Bank</th>
+                        <th rowspan="2">Mata Uang</th>
+                        <th rowspan="2">Total</th>
+                        <th rowspan="2">Jenis Transaksi</th>
+                        <th rowspan="2">No Cek/BG</th>
+                        <th rowspan="2">Keterangan</th>
+                    </tr>
+                    <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr show.bind="isEmpty">
+                        <td colspan="10">
+                            <div class="alert alert-info">Tidak ada data</div>
+                        </td>
+                    </tr>
+                    <tr repeat.for="datum of data">
+                        <td>${datum.Index}</td>
+                        <td>${datum.DocumentNo}</td>
+                        <td>${datum.DateFormatted}</td>
+                        <td>${datum.AccountName} ${datum.AccountNumber}</td>
+                        <td>${datum.CurrencyCode}</td>
+                        <td>${datum.TotalFormatted}</td>
+                        <td>${datum.Type}</td>
+                        <td>${datum.CekBgNo}</td>
+                        <td>${datum.Remark}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="5">TOTAL </td>
+                        <td style="text-align: left;" colspan="4">${totalAmount}</td>
+                    </tr>
+                </tbody>
+                <!--Table body-->
+                <div style="margin-bottom: 1%" slot="toolbar" class="btn-group">
+                    <button class='btn btn-primary' click.delegate="excel()">Excel</button>
+                </div>
+            </table>
+            <!--Table-->
+        </div>
+    </div>
+
+
+</template>

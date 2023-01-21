@@ -1,0 +1,36 @@
+<template>
+  <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)" if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)" if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)" if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger" click.delegate="context.delete($event)" if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-textbox 
+            label="Keterangan Bad Output" 
+            value.bind="data.Reason"
+            error.bind="error.Reason"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+        
+        
+        <au-layout error.bind="item"></au-layout>
+        <au-collection 
+            items.bind="data.MachineDetails" 
+            errors.bind="error.MachineDetails"
+            columns.bind="machineInfo.columns" 
+            add.bind="machineInfo.onAdd" 
+            remove.bind="machineInfo.onRemove"
+            view-model.ref="ItemsCollection"
+            title="Details Mesin" 
+            read-only.bind="readOnly" 
+            item-template="modules/master/bad-output-reason/template/machine-item">
+        </au-collection>
+
+  </au-input-form>
+</template>

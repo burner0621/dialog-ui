@@ -1,0 +1,66 @@
+<template>
+    <tr>
+        <td class="col-sm-3">
+            <au-textbox value.bind="data.ePONo"
+                        error.bind="error.ePONo"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox value.bind="data.pRNo"
+                        error.bind="error.pRNo"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td style="text-align:center;"
+            class="col-sm-2">
+            <au-textbox value.bind="data.product"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.deliveredQuantity"
+                        read-only.bind="true"
+                        options.bind="controlOptions"
+                        format="0,0.00">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.quantity"
+                        error.bind="error.quantity"
+                        format="0,0.00"
+                        change.delegate="quantityChanged($event)"
+                        read-only.bind="options.readOnly"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-textbox value.bind="data.uom.unit"
+                        read-only.bind="true"
+                        options.bind="controlOptions">
+            </au-textbox>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.pricePerDealUnitAfter"
+                        error.bind="error.pricePerDealUnitAfter"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2">
+            <au-numeric value.bind="data.priceTotalAfter"
+                        error.bind="error.priceTotalAfter"
+                        read-only.bind="true"
+                        format="0,0.0000"
+                        options.bind="controlOptions">
+            </au-numeric>
+        </td>
+        <td class="col-sm-2"
+            if.bind="!options.readOnly"><button class="btn btn-danger pull-right"
+                    click.delegate="onremove(data)">-</button></td>
+    </tr>
+</template>

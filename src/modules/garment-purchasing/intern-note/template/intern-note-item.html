@@ -1,0 +1,44 @@
+<template>
+	<tr>
+		<td>
+			<au-autocomplete value.bind="invoice" error.bind="error.garmentInvoice" loader.bind="invoiceNoteLoader" placeholder="cari nomor invoice"
+			 text.bind="garmentInvoiceView" query.bind="filter" read-only.bind="readOnly || isEdit" options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+		<td>
+			<au-datepicker value.bind="data.garmentInvoice.invoiceDate" read-only.bind="true">
+			</au-datepicker>
+		</td>
+		<td>
+			<div class="col-sm-7">
+				<au-numeric value.bind="data.garmentInvoice.totalAmount" read-only.bind="true" format="0.00" options.bind="controlOptions">
+				</au-numeric>
+			</div>
+			<div class="col-sm-1  pull-right">
+				<button class="btn btn-info pull-right" if.bind="data.details" click.delegate="toggle()">i</button>
+			</div>
+		</td>
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data)">-</button>
+		</td>
+	</tr>
+	<tr show.bind="isShowing">
+		<td colspan="5">
+				<div if.bind="error.detailscount" class="form-group has-error"><span class="text-danger help-block">${error.detailscount}</span></div>
+				<div if.bind="error.incometax" class="form-group has-error"><span class="text-danger help-block">${error.incometax}</span></div>
+				<div if.bind="error.usevat" class="form-group has-error"><span class="text-danger help-block">${error.usevat}</span></div>
+				<div if.bind="error.useincometax" class="form-group has-error"><span class="text-danger help-block">${error.useincometax}</span></div>
+				<div if.bind="error.paymentMethod" class="form-group has-error"><span class="text-danger help-block">${error.paymentMethod}</span></div>
+
+			<au-collection 
+			items.bind="data.details" 
+			errors.bind="error.details" 
+			columns.bind="itemsColumns" 
+			remove.bind="removeItems" 
+			options.bind="context.context.options"
+			read-only.bind="options.readOnly"
+			item-template="modules/garment-purchasing/intern-note/template/invoice-note-item">
+			</au-collection>
+		</td>
+	</tr>
+</template>

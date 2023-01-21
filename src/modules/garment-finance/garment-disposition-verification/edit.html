@@ -1,0 +1,150 @@
+<template>
+    <style>
+        table .btn-success {
+            float: none !important;
+        }
+
+        .col-sm-12 {
+            margin-top: 0px !important;
+        }
+    </style>
+    <au-input-form title="Buat Verifikasi Disposisi"
+                   options.bind="formOptions">
+
+        <au-datepicker label="Tanggal Verifikasi"
+                       value.bind="verificationDate"
+                       read-only.bind="true"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete value.bind="selectedExpedition"
+                         loader.bind="expeditionLoader"
+                         label="No. Disposisi"
+                         error.bind="error.dispositionNote"
+                         placeholder="cari nomor disposisi"
+                         text="DispositionNoteNo"
+                         read-only.bind="true"
+                         options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox label="Supplier"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.SupplierName"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Mata Uang"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.CurrencyCode"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Bank Tujuan"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.Bank"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="No. Order Confirmation"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.ConfirmationOrderNo"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox label="Term Pembayaran"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.PaymentType"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker label="Tanggal Jatuh Tempo"
+                       if.bind="selectedExpedition"
+                       value.bind="dispositionNote.PaymentDueDate"
+                       read-only.bind="true"
+                       options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-textbox label="No. Proforma / Invoice"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.ProformaNo"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+        </au-textbox>
+
+        <au-numeric label="DPP"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.DPP"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="PPN"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.VATValue"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="PPh"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.IncomeTaxValue"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="Amount"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.Amount"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <au-numeric label="Biaya Lain - lain"
+                    if.bind="selectedExpedition"
+                    value.bind="dispositionNote.MiscAmount"
+                    read-only.bind="true"
+                    format="0.00"
+                    options.bind="controlOptions">
+        </au-numeric>
+
+        <!-- <au-collection items.bind="data.Items"
+                       errors.bind="error.Items"
+                       columns.bind="collection.columns"
+                       add.bind="collection.onAdd"
+                       item-template="modules/garment-finance/garment-purchasing-to-verification/templates/item">
+        </au-collection> -->
+
+        <!-- <au-collection items.bind="items"
+                       show.bind="items && items.length > 0"
+                       options.bind="options"
+                       columns.bind="invoiceNoteItem.columns"
+                       read-only.bind="true"
+                       add.bind="invoiceNoteItem.onAdd"
+                       view-model.ref="ItemsCollection"
+                       item-template="modules/garment-finance/garment-purchasing-verification/template/intern-note-item">
+        </au-collection> -->
+
+        <au-collection items.bind="items"
+                       show.bind="items && items.length > 0"
+                       options.bind="options"
+                       columns.bind="collection.columns"
+                       read-only.bind="true"
+                       view-model.ref="ItemsCollection"
+                       item-template="modules/garment-finance/garment-disposition-verification/template/item">
+        </au-collection>
+
+        <div class="btn-group pull-right">
+            <button class="btn btn-danger"
+                    click.delegate="rejectCallback($event)">Not Verified</button>
+        </div>
+    </au-input-form>
+</template>

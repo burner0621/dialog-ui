@@ -1,0 +1,43 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+
+        <au-datepicker label="Tanggal" value.bind="inputDate" error.bind="error.Date" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-dropdown label="Jenis Proses" value.bind="processType" error.bind="error.ProcessType"
+            read-only.bind="readOnly" items.bind="typeOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-autocomplete label="Unit" value.bind="unit" error.bind="error.UnitDepartmentId" loader.bind="unitLoader"
+            placeholder="Cari unit spinning" key="Id" text="Name" read-only.bind="readOnly" query.bind="spinningFilter"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Nama Benang" value.bind="yarn" error.bind="error.YarnMaterialTypeId"
+            loader.bind="materialTypeLoader" placeholder="Cari nama benang" key="Id" text="Name"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-autocomplete label="Lot" value.bind="lot" error.bind="error.LotConfigurationId"
+            loader.bind="lotConfigurationLoader" placeholder="Cari nomor Lot" key="Id" text="LotNo"
+            read-only.bind="readOnly" query.bind="lotFilter" options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-dropdown label="Shift" value.bind="shift" error.bind="error.Shift" read-only.bind="readOnly"
+            items.bind="shiftOptions" options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox label="Group" value.bind="group" error.bind="error.Group" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+
+        <au-collection view-model.ref="machineCollections" remove.bind="inputInfo.onRemove" columns.bind="itemColumns"
+            items.bind="data.Items" errors.bind="error.Items" options.one-way="filters" read-only.bind="readOnly"
+            item-template="modules/production/spinning/machine-input/template/item">
+        </au-collection>
+
+    </au-input-form>
+</template>

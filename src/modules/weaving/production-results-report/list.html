@@ -1,0 +1,79 @@
+<template>
+  <h1 class="page-header">Laporan Hasil Produksi</h1>
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Tanggal Pasang" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="DateFrom" error.bind="error.DateFrom" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap; padding-top: 20px;text-align:center;">
+      <p>s.d</p>
+    </div>
+
+    <div class="col-md-2" style="text-align:left;">
+      <au-datepicker value.bind="DateTo" error.bind="error.DateTo" read-only.bind="readOnly">
+      </au-datepicker>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Shift" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="white-space: nowrap;">
+      <au-autocomplete value.bind="Shift" error.bind="error.Period" read-only.bind="readOnly"
+        loader.bind="shifts" text="Name">
+      </au-autocomplete>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="Unit Weaving" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="WeavingUnit" error.bind="error.WeavingUnit" read-only.bind="readOnly"
+        loader.bind="units" text="Name"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="No. Order Produksi" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="OrderProduction" error.bind="error.OrderProduction" read-only.bind="readOnly"
+        loader.bind="orders" text="OrderNumber"></au-autocomplete>
+    </div>
+
+    <div class="col-md-1" style="white-space: nowrap;">
+      <textbox label="No. Mesin" read-only="true"></textbox>
+    </div>
+    <div class="col-md-2" style="text-align:left;">
+      <au-autocomplete value.bind="Machine" error.bind="error.Machine" read-only.bind="readOnly"
+        loader.bind="machines" text="MachineNumber"></au-autocomplete>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-4">
+      <button class="btn btn-primary" click.delegate="exportToExcel()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 112px; border: 1px solid #777777;">
+        Print Laporan
+      </button>
+      <button class="btn btn-success" click.delegate="searchDailyOperationLooms()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 56px; border: 1px solid #777777;">
+        Cari
+      </button>
+      <button class="btn btn-success" click.delegate="reset()"
+        style="margin-bottom: 8px; white-space: nowrap; width: 96px; border: 1px solid #777777;">
+        Atur Ulang
+      </button>
+    </div>
+  </div>
+  <au-table style="white-space: nowrap; margin-top: 26px;" data.bind="loader" columns.bind="columns"
+    sortable.bind="true" view-model.ref="productionResultsTable" page-size="25" options.bind="tableOptions"
+    context.bind="context" context-click.delegate="contextCallback($event)">
+  </au-table>
+</template>

@@ -1,0 +1,85 @@
+<template>
+    <h1 class="page-header">Laporan Distribusi R/O Garment</h1>
+    <form class="form-horizontal">
+        <au-autocomplete  value.bind="unitName" label="Unit"  loader.bind="unitLoader"></au-autocomplete>
+        <au-datepicker label="Tanggal Distribusi Awal" value.bind="dateFrom"></au-datepicker>
+        <au-datepicker label="Tanggal Distribusi Akhir" value.bind="dateTo"></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari Data</button>
+                <button click.delegate="reset()" class='btn btn-danger'>Reset Data</button>
+            </div>
+        </div>
+        <div slot="toolbar" class="btn-group">
+            <button class='btn btn-primary' click.delegate="ExportToExcel()">Export To Excel</button>
+        </div>
+        <br>
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead>
+                <tr>
+                    <td rowspan="3">Nomor</td>
+                    <td rowspan="3">Tgl Distribusi</td>
+                    <td rowspan="3">Nomor RO</td>
+                    <td rowspan="3">Kode Agent</td>                    
+                    <td rowspan="3">Nama Buyer Agent</td>
+                    <td rowspan="3">Brand Buyer</td>
+                    <td rowspan="3">Nama Brand Buyer</td>
+                    <td rowspan="3">Article / Style</td>
+                    <td align="center" colspan="15" >TANDA TERIMA R/O PER BAGIAN</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">CUTT</td>      
+                    <td rowspan="2">SPL</td>
+                    <td rowspan="2">QC SPL</td>                            
+                    <td rowspan="2">GD FAB</td>
+                    <td rowspan="2">GD ACC SEW</td>
+                    <td rowspan="2">QC BULK (SEW)</td>        
+                    <td rowspan="2">ADM SEW</td>        
+                    <td rowspan="2">QC FINAL</td>        
+                    <td rowspan="2">QA IN LINE</td>        
+                    <td rowspan="2">QC BULK (FNS)</td>        
+                    <td rowspan="2">QA FINAL</td>        
+                    <td rowspan="2">FNSH</td>        
+                    <td rowspan="2">GD PACK</td>        
+                    <td rowspan="2">MD</tD>        
+                    <td rowspan="2">NOHI/NISSENKEN</td>    
+                </tr>    
+
+            </thead>
+
+            <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center"> ${$index + 1}</td>
+                        <td>${item.DistributionDate}</td>
+                        <td>${item.RO_Number}</td>
+                        <td>${item.BuyerCode}</td>
+                        <td>${item.BuyerName}</td>
+                        <td>${item.BrandCode}</td>
+                        <td>${item.BrandName}</td>
+                        <td>${item.Article}</td>                        
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>
+                        <td> </td>  
+                        <td> </td>
+                        <td> </td>                       
+                    </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak Ada Data Yang Ditemukan.
+        </div>
+        <hr/>
+    </form>
+
+</template>

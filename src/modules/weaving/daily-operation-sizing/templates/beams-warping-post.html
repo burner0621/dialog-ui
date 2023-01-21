@@ -1,0 +1,24 @@
+<template>
+  <tr>
+    <td style="white-space: nowrap;">
+      <au-autocomplete value.bind="data.BeamDocument" error.bind="error.BeamDocument" read-only.bind="readOnly"
+        placeholder="Nomor Beam" loader.bind="beams" text="Number" query.bind="OrderIdFilter">
+      </au-autocomplete>
+    </td>
+    <td style="white-space: nowrap;">
+      <au-textbox value.bind="data.BeamDocument ? data.BeamDocument.YarnStrands : ''" error.bind="error.YarnStrands"
+        read-only.bind="true">
+      </au-textbox>
+    </td>
+    <!-- <td style="white-space: nowrap; display:none;">
+      <au-textbox value.bind="data.BeamDocument ? data.BeamDocument.EmptyWeight : ''" error.bind="error.EmptyWeight"
+        read-only.bind="true">
+      </au-textbox>
+    </td> -->
+    <td class="col-sm-1" if.bind="!readOnly">
+      <button class="btn btn-danger pull-right" click.delegate="onremove(beamData, $event)">
+        -
+      </button>
+    </td>
+  </tr>
+</template>

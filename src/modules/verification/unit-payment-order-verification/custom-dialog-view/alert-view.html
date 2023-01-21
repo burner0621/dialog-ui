@@ -1,0 +1,38 @@
+<template>
+    <ai-dialog style="width:500px;" if.bind="data.verifiedAlert">
+
+        <ai-dialog-body>
+            <div class="text-center"> Kirim Ke ? </div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <div class="text-center">
+                <button click.delegate="controller.cancel()" class='btn btn-default btn-sm'>Kembali</button>
+                <button show.bind="data.position != 4" click.delegate="save('Cashier')" class='btn btn-success btn-sm'>Kasir</button>
+                <button show.bind="data.position != 5" click.delegate="save('Finance')" class='btn btn-success btn-sm'>Accounting</button>
+            </div>
+        </ai-dialog-footer>
+
+    </ai-dialog>
+
+    <ai-dialog style="width:500px;" if.bind="!data.verifiedAlert">
+
+        <block>
+
+            <ai-dialog-body>
+                <au-multiline label="Alasan" placeholder="masukan alasan" value.bind="data.Remark" error.bind="error.Remark">
+                </au-multiline>
+            </ai-dialog-body>
+
+            <ai-dialog-footer>
+                <div class="text-center" style="margin:100px 0px 10px 0px;">
+                    <button click.delegate="controller.cancel()" class='btn btn-default btn-sm'>Kembali</button>
+                    <button click.delegate="save('NotVerified')" class='btn btn-success btn-sm'>Submit</button>
+                </div>
+            </ai-dialog-footer>
+
+        </block>
+
+    </ai-dialog>
+
+</template>

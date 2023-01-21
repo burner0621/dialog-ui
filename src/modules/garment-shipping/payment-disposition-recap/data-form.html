@@ -1,0 +1,43 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context">
+
+        <div class="row">
+            <au-textbox label="Nomor Lampiran" value.bind="data.recapNo" read-only="true" options.bind="controlOptions"
+                if.bind="readOnly || isEdit">
+            </au-textbox>
+
+            <au-datepicker label="Tanggal" value.bind="data.date" error.bind="error.date" read-only.bind="readOnly"
+                options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-autocomplete label="EMKL" placeholder="Pilih EMKL" value.bind="selectedEmkl" error.bind="error.emkl"
+                loader.bind="emklLoader" text.bind="emklView" read-only.bind="readOnly || isEdit"
+                options.bind="controlOptions">
+            </au-autocomplete>
+
+            <au-multiline label="Alamat EMKL" value.bind="address" read-only.bind="true" options.bind="controlOptions">
+            </au-multiline>
+
+            <au-textbox label="NPWP EMKL" value.bind="npwp" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+        </div>
+
+        <div class="row">
+            <div class="form-group has-error">
+                <p if.bind="error.itemsCount" class="help-block text-center">${error.itemsCount}</p>
+            </div>
+            <au-collection items.bind="data.items" errors.bind="error.items" columns.bind="itemsColumns"
+                read-only.bind="readOnly" remove.bind="removeItems" add.bind="addItems" options.bind="itemsOptions"
+                item-template="modules/garment-shipping/payment-disposition-recap/template/item">
+            </au-collection>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <au-collection title="Beban Per Unit" items.one-way="bills" columns.bind="billsColumns" read-only="true">
+                </au-collection>
+            </div>
+        </div>
+
+    </au-input-form>
+</template>

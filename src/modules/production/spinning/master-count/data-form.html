@@ -1,0 +1,15 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+        <div class="col-lg-12" style="padding-left:0px">
+
+            <au-textbox value.bind="data.Count" error.bind="error.Count"
+                read-only.bind="readOnly || context.isEdit" label="Count" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox value.bind="data.Remark" error.bind="error.Remark"
+                read-only.bind="readOnly || context.isEdit" label="Keterangan" options.bind="controlOptions">
+            </au-textbox>
+        </div>
+
+    </au-input-form>
+</template>

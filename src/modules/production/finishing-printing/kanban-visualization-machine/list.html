@@ -1,0 +1,70 @@
+<template>
+    <require from="./styles/list-style.css"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+
+    <div id="kanbanMachine">
+        <h1 class="page-header">Visualisasi Kanban Mesin</h1>
+        <!--<dragula-and-drop drop-fn.call="itemDropped(item, target, source, sibling, itemVM, siblingVM)"></dragula-and-drop>-->
+
+        <div class="row" id="kanbanRow" css.bind="kanbanMachine">
+            <div class="stagesBox" repeat.for="stage of stages">
+                <div class="kanban__box ${type[$index % 4]}">
+                    <div class="kanban__title">
+                        <h4>${stage.name}</h4>
+                    </div>
+
+                    <div class="col-sm-12 kanban">
+                        <div class="col-sm-6">
+                            <div class="kanban__title">
+                                <h4>Input</h4>
+                            </div>
+                            <ol>
+                                <li class="kanbanDd-item" repeat.for="i of stage.map.input">
+                                    <h4 class="kanbanTitle">
+                                        ${i.productionOrderNo} - ${i.cart} - ${i.currentStepIndex}/${i.stepsLength}
+                                        <br>
+                                    </h4>
+                                    <div class="kanbanText">
+                                        Sales Contract: ${i.salesContractNo} - ${i.buyer} - ${i.orderQuantity}
+                                        <br/> Tanggal Deadline: ${i.deadline}
+                                        <br/> Tanggal Kirim: ${i.deliveryDate}
+                                        <br/> Kuantiti: ${i.input | numberFormat: '0,000'}
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="kanban__title">
+                                <h4>Output</h4>
+                            </div>
+                            <ol>
+                                <li class="kanbanDd-item" repeat.for="i of stage.map.output">
+                                    <h4 class="kanbanTitle">
+                                        ${i.productionOrderNo} - ${i.cart} - ${i.currentStepIndex}/${i.stepsLength}
+                                        <br>
+                                    </h4>
+                                    <div class="kanbanText">
+                                        Sales Contract: ${i.salesContractNo} - ${i.buyer} - ${i.orderQuantity}
+                                        <br/> Tanggal Deadline: ${i.deadline}
+                                        <br/> Tanggal Kirim: ${i.deliveryDate}
+                                        <br/> Good Kuantiti: ${i.goodOutput | numberFormat: '0,000'}
+                                        <br/> Bad Kuantiti: ${i.badOutput | numberFormat: '0,000'}
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="total col-sm-12">
+                        <div class="col-sm-6">
+                            Total: ${stage.inputTotal | numberFormat: '0,000'}
+                        </div>
+                        <div class="col-sm-6">
+                            Good Output Total: ${stage.goodOutputTotal | numberFormat: '0,000'}
+                            <br> Bad Output Total: ${stage.badOutputTotal | numberFormat: '0,000'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

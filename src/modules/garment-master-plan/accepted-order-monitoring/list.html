@@ -1,0 +1,45 @@
+<template>
+    <form class="form-horizontal">
+      <h3>Monitoring Order Diterima dan Booking</h3>
+      <hr/>
+  
+      <au-autocomplete 
+        value.bind="year" 
+        label="Year" 
+        loader.bind="yearLoader"
+        text.bind = "yearView"
+        placeholder="Tahun" 
+        options.bind="controlOptions">
+      </au-autocomplete>
+  
+      <au-autocomplete 
+        value.bind="unit" 
+        label="Unit" 
+        loader.bind="unitLoader"
+        text.bind = "unitView"
+        placeholder="Unit" 
+        query.bind="filterUnit"
+        options.bind="controlOptions">
+      </au-autocomplete>
+  
+      <div class="text-center">
+        <button class="btn btn-primary" click.delegate="searching()">Cari</button>
+        <button class="btn btn-success" click.delegate="reset()">Reset</button>
+      </div>
+  
+    </form>
+  
+    <div class="btn-group pull-left">
+      <button class="btn btn-primary" click.delegate="ExportToExcel()">Export to Excel</button>
+    </div>
+    <br>
+    <br>
+  
+    <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+      Tidak ada data.
+    </div>
+  
+  </template>
+  

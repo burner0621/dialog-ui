@@ -1,0 +1,58 @@
+<template>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-datepicker label="Tanggal Verifikasi" value.bind="data.VerifyDate" error.bind="error.VerifyDate" read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-autocomplete label="No Surat Perintah Bayar" value.bind="SPB" error.bind="error.UnitPaymentOrderNo" query.bind="SPBQuery"
+            select.bind="selectSPB" loader.one-time="unitPaymentOrderLoader" read-only.bind="readOnly" options.bind="controlOptions"
+            placeholder="Cari No Surat Perintah Bayar" text="no">
+        </au-autocomplete>
+
+        <div if.bind="SPB._id">
+
+            <au-datepicker label="Tanggal Surat Perintah Bayar" value.bind="data.date" read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-textbox label="Divisi" value.bind="data.division.name" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Supplier" value.bind="data.supplier.name" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Kategori" value.bind="data.category.name" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Term Pembayaran" value.bind="data.paymentMethod" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="Mata Uang" value.bind="data.currency.code" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-textbox label="No. Invoice" value.bind="data.invoiceNo" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-datepicker label="Tanggal Invoice" value.bind="data.invoiceDate" read-only.bind="true" options.bind="controlOptions">
+            </au-datepicker>
+
+            <au-textbox label="No. PIB" value.bind="data.pibNo" read-only.bind="true" options.bind="controlOptions">
+            </au-textbox>
+
+            <au-numeric label="Nominal PPH?" value.bind="data.IncomeTax"  read-only.bind="true" options.bind="numericOptions">
+            </au-numeric>
+
+            <au-numeric label="Nominal PPN?" value.bind="data.Vat" read-only.bind="true" options.bind="numericOptions">
+            </au-numeric>
+
+            <au-numeric label="Total Bayar(DPP + PPN)" value.bind="data.TotalPaid" read-only.bind="true" options.bind="numericOptions">
+            </au-numeric>
+
+            <au-table data.bind="items" errors.bind="error.items" columns.bind="columns" options.bind="tableOptions" read-only.bind="readOnly"
+                context.bind="context" context-click.delegate="contextCallback($event)">
+            </au-table>
+
+        </div>
+
+    </au-input-form>
+</template>

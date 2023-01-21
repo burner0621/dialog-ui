@@ -1,0 +1,59 @@
+<template>
+    <h1 class="page-header">Detail Blocking Plan Sewing</h1>
+        <form class="form-horizontal">
+           
+           
+       <table class="table table-bordered table-hover" border="1" id="myTable">
+           <thead>
+               <tr>
+                   <th class="text-center">Confirm</th>
+                   <th class="text-center">Komoditi</th>
+                   <!--<th class="text-center">SH Cutting</th>-->
+                   <th class="text-center">SMV Sewing</th>
+                   <!--<th class="text-center">SH Finishing</th>-->
+                   <!--<th class="text-center">Total SH</th>-->
+                   <th class="text-center">Unit</th>
+                   <th class="text-center">Tahun</th>
+                   <th class="text-center">Week</th>
+                   <th class="text-center">Jumlah Order</th>
+                   <th class="text-center">Keterangan</th>
+                   <th class="text-center">Tanggal Pengiriman</th>
+                   <th class="text-center">EH Booking</th>
+                   <!--<th>Kategori UOM</th>-->
+               </tr>
+           </thead>
+           <tbody>
+               <tr repeat.for="item of data">
+                   <td class="text-center">${item.confirm}</td>
+                   <td class="text-center">${item.Comodity.Name}</td>
+                   <!--<td class="text-right" >${item.shCutting}</td>-->
+                   <td class="text-right" >${item.SMVSewing}</td>
+                   <!--<td class="text-right" >${item.shFinishing}</td>-->
+                   <!--<td class="text-right" >${item.totalSH}</td>-->
+                   <td class="text-center">${item.Unit.Name}</td>
+                   <td class="text-right">${item.Year}</td>
+                   <td class="text-center">${item.week}</td>
+                   <td class="text-right">${item.OrderQuantity}</td>
+                   <td class="text-center">${item.Remark}</td>
+                   <td class="text-right">${item.DeliveryDate | dateFormat:'D MMM YYYY'}</td>
+                   <td class="text-center">${item.EHBooking}</td>
+               </tr>
+           </tbody>
+           <tfoot if.bind="data.length > 0">
+               <tr>
+                   <td colspan="6" class="text-center">Total</td>
+                   <td colspan="4">${total}</td>
+               </tr>
+           </tfoot>
+       </table>
+       <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+               Tidak ada data ditemukan.
+           </div>
+           <hr/>
+           
+           <div slot="actions" style="float: right" class="btn-group">
+               <button style="float: right" class="btn btn-default" click.delegate="cancel($event)"    >Kembali</button>
+           </div>
+       </form>
+       
+   </template>

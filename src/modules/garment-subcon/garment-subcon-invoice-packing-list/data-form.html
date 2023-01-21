@@ -1,0 +1,115 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+        <div class="row">
+            <div class="col-sm-6">
+                <au-dropdown 
+                    label="Jenis BC" 
+                    value.bind="selecteBCType" 
+                    read-only.bind="readOnly"
+                    items.bind="BCType"
+                    error.bind="error.BCType"
+                    read-only.bind="readOnly|| isEdit "
+                    options.bind="controlOptions">
+                </au-dropdown>
+
+
+                <au-datepicker 
+                    label="Tanggal"
+                    value.bind="data.Date"
+                    error.bind="error.Date"
+                    read-only.bind="readOnly|| isEdit"
+                    options.bind="controlOptions">
+                </au-datepicker>
+
+                <!-- <au-textbox
+                    error.bind="error.ContractNo"
+                    value.bind="data.ContractNo"
+                    label="No Kontrak"
+                    read-only.bind="true"
+                    if.bind="data.ContractNo"
+                    options.bind="controlOptions">
+                </au-textbox> -->
+
+                <au-autocomplete
+                    value.bind="selectedContract"
+                    error.bind="error.ContractNo"
+                    label="Surat Kontrak"
+                    loader.bind="contractLoader"
+                    text.bind="contractView"
+                    placeholder="cari No Kontrak"
+                    read-only.bind="readOnly || isEdit"
+                    options.bind="controlOptions">
+                </au-autocomplete>
+
+                <!-- <au-autocomplete
+                    value.bind="selectedSupplier"
+                    error.bind="error.Supplier"
+                    label="Penerima"
+                    loader.bind="supplierLoader"
+                    text.bind="supplierView"
+                    placeholder="cari supplier"
+                    read-only.bind="readOnly || IsUsed || data.Id"
+                    options.bind="controlOptions">
+                </au-autocomplete> -->
+
+                <au-textbox
+                    value.bind="data.Supplier.name || Supplier.Name"
+                    label="Penerima"
+                    loader.bind = "supplierLoader"
+                    text.bind="supplierView"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-textbox
+                    value.bind="data.Supplier.address || Supplier.Address"
+                    label="Alamat Penerima"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-textbox>
+
+                <au-numeric
+                    value.bind="data.NW"
+                    label="Nilai NW"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-numeric
+                    value.bind="data.GW"
+                    label="Nilai GW"
+                    read-only.bind="true"
+                    options.bind="controlOptions">
+                </au-numeric>
+
+                <au-multiline
+                    value.bind="data.Remark"
+                    label="Keterangan"
+                    placeholder="Keterangan"
+                    read-only.bind="readOnly || data.IsUsed"
+                    options.bind="controlOptions">
+                </au-multiline>
+
+               
+            </div>
+        </div>
+        <div class="row">
+            <au-collection
+                items.bind="data.Items"
+                errors.bind="error.Items"
+                columns.bind="columns"
+                read-only.bind="readOnly"
+                remove.bind="removeItems"
+                add.bind="addItems"
+                if.bind="isItems"
+                options.bind="itemOptions"
+                item-template="modules/garment-subcon/garment-subcon-invoice-packing-list/template/item"
+                footer-template="modules/garment-subcon/garment-subcon-invoice-packing-list/template/invoice-packing-list">
+            </au-collection>
+        </div>
+    </au-input-form>
+    <div class="row"></div>
+</template>

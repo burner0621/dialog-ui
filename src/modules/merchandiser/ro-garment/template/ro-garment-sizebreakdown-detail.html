@@ -1,0 +1,20 @@
+<template>
+    <tr>
+        <td class="col-md-1">
+            <au-textbox value.bind="data.SizeBreakdownDetailIndex + 1" options.bind="controlOptions" read-only="true">
+            </au-textbox>
+        </td>
+        <td class="col-md-${readOnly ? 7 : 8}">
+            <au-textbox placeholder="Isi Keterangan" value.bind="data.Information" error.bind="error.Information" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-2">
+            <au-textbox placeholder="Isi Size" value.bind="data.Size" error.bind="error.Size" options.bind="controlOptions" read-only.bind="readOnly"></au-textbox>
+        </td>
+        <td class="col-md-2">
+            <au-numeric format="0" value.bind="data.Quantity" error.bind="error.Quantity" options.bind="controlOptions" read-only.bind="readOnly"></au-numeric>
+        </td>
+        <td class="col-md-1" if.bind="!readOnly">
+            <button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+        </td>
+    </tr>
+</template>

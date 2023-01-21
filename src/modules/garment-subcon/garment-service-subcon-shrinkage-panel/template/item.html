@@ -1,0 +1,50 @@
+<template>
+	<tr>
+		<td class="bg-primary">
+			<au-autocomplete value.bind="selectedUEN" error.bind="error.ExpenditureNoteNo" loader.bind="garmentUENLoader"
+				text="UENNo" placeholder="Nomor Bon Pengeluaran Unit" read-only.bind="readOnly|| (isEdit && data.Id)"
+				query.bind=" filter" options.bind="controlOptions">
+			</au-autocomplete>
+		</td>
+
+		<td class="bg-primary">
+			<au-datepicker value.bind="data.ExpenditureDate" error.bind="error.ExpenditureDate" read-only="true"
+				options.bind="controlOptions">
+			</au-datepicker>
+		</td>
+
+		<td class="bg-primary">
+			<au-textbox value.bind="data.UnitSender.Code" read-only="true" options.bind="controlOptions">
+			</au-textbox>
+		</td>
+
+		<!--<td class="bg-primary">
+			<au-textbox value.bind="data.UnitRequest.Code" read-only="true" options.bind="controlOptions">
+			</au-textbox>
+		</td>-->
+
+		<td if.bind="!readOnly">
+			<button class="btn btn-danger pull-right" click.delegate="onremove(data, $event)">-</button>
+		</td>
+		<td class="col-sm-1">
+			<div>
+				<button class="btn btn-info pull-right" if.bind="data.Details" click.delegate="toggle()">i</button>
+			</div>
+		</td>
+	</tr>
+	<tr if.bind="error.DetailsCount">
+		<div class="form-group has-error" if.bind="error.DetailsCount">
+			<p if.bind="error.DetailsCount" class="help-block text-center">${error.DetailsCount}</p>
+		</div>
+	</tr>
+	<tr show.bind="isShowing">
+		<td></td>
+		<td colspan="5">
+			<au-collection items.bind="data.Details" errors.bind="error.Details" columns.bind="detailColumns"
+				read-only.bind="readOnly || isEdit" options.bind="itemOptions"
+				footer-template="modules/garment-subcon/garment-service-subcon-shrinkage-panel/template/detail-footer"
+				item-template="modules/garment-subcon/garment-service-subcon-shrinkage-panel/template/detail">
+			</au-collection>
+		</td>
+	</tr>
+</template>

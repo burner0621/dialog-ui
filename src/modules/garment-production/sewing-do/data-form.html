@@ -1,0 +1,85 @@
+<template>
+    <au-input-form
+        title.bind="title"
+        with.bind="context"
+        options.bind="formOptions">
+
+        <!-- <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div> -->
+
+        <au-textbox
+            label="No. DO Sewing"
+            value.bind="data.SewingDONo"
+            read-only="true"
+            if.bind="data.SewingDONo"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Unit"
+            error.bind="error.Unit"
+            label="Unit Tujuan"
+            loader.bind="unitLoader"
+            text.bind="unitView"
+            placeholder="Unit"
+            read-only.bind="readOnly || isEdit"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox
+            value.bind="data.RONo"
+            error.bind="error.RONo"
+            label="RO"
+            placeholder="Nomor RO"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-textbox
+            value.bind="data.Article"
+            error.bind="error.Article"
+            label="No Artikel"
+            read-only="true"
+            if.bind="data.Article"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete
+            value.bind="data.Comodity"
+            error.bind="error.Comodity"
+            label="Komoditi"
+            text.bind="comodityView"
+            read-only.bind="true"
+            if.bind="data.Comodity"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-datepicker 
+            label="Tanggal DO Sewing"
+            value.bind="data.SewingDODate"
+            error.bind="error.SewingDODate"
+            read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-layout error.bind="error.Item" if.bind="error.Item"></au-layout>
+
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="itemsInfo.columns" 
+            options.bind="itemOptions"
+            if.bind="data.Items"
+            read-only.bind="readOnly"
+            item-template="modules/garment-production/sewing-do/template/item"
+            >
+        </au-collection>
+
+        <p if.bind="data.Items"><b>Jumlah Total Sewing DO : ${totalQuantity} PCS</b></p>
+
+    </au-input-form>
+</template>

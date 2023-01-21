@@ -1,0 +1,104 @@
+<template>
+  <style>
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+  <div class="side-nav-bar ${minimized ? 'minimized' : ''} ${expand ? 'expand' : ''} ${expandMore ? 'expand-more' : ''}"
+    if.bind="isAuthenticated">
+    <!-- NEW CODE -->
+    <aside class="main-sidebar">
+      <div class="sidebar-header">
+        <button type="button" class="sidebar-toggle" data-toggle="sidebar-toggle" click.delegate="toggleSideMenu()">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <ul class="sidebar-menu">
+        <li repeat.for="[key, value] of group" click.delegate="selectMenu(key, value)" value.bind="activeMenu"
+          class.bind="activeMenu == value ? 'active' : ''">
+          <a href="#" title.bind="key.toUpperCase()">
+            <i class="fa fa-list-alt" if.bind="key.toUpperCase() == 'MASTER'"></i>
+            <i class="fa fa-shopping-cart" if.bind="key.toUpperCase() == 'PURCHASING'"></i>
+            <i class="fa fa-calendar" if.bind="key.toUpperCase() == 'G-MASTER-PLAN'"></i>
+            <i class="fa fa-shopping-cart" if.bind="key.toUpperCase() == 'G-PURCHASING'"></i>
+            <i class="fa fa-area-chart" if.bind="key.toUpperCase() == 'G-FINANCE'"></i>
+            <i class="fa fa-envelope" if.bind="key.toUpperCase() == 'WEAVING'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'PRODUCTION'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'SPINNING'"></i>
+            <i class="fa fa-money" if.bind="key.toUpperCase() == 'SALES'"></i>
+            <i class="fa fa-building" if.bind="key.toUpperCase() == 'INVENTORY'"></i>
+            <i class="fa fa-exchange" if.bind="key.toUpperCase() == 'INT-PURCHASING'"></i>
+            <i class="fa fa-table" if.bind="key.toUpperCase() == 'CUSTOMS-REPORT'"></i>
+            <i class="fa fa-users" if.bind="key.toUpperCase() == 'AUTH'"></i>
+            <i class="fa fa-table" if.bind="key.toUpperCase() == 'REPORTS'"></i>
+            <i class="fa fa-sticky-note" if.bind="key.toUpperCase() == 'MIGRATION-LOG'"></i>
+            <i class="fa fa-clone" if.bind="key.toUpperCase() == 'EXPEDITION'"></i>
+            <i class="fa fa-clone" if.bind="key.toUpperCase() == 'FINANCE'"></i>
+            <i class="fa fa-clone" if.bind="key.toUpperCase() == 'ACCOUNTING'"></i>
+            <i class="fa fa-calendar-check-o" if.bind="key.toUpperCase() == 'VERIFICATION'"></i>
+            <i class="fa fa-calculator" if.bind="key.toUpperCase() == 'MERCHANDISER'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'G-PRODUCTION'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'G-SHIPPING'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'G-SUBCON'"></i>
+            <i class="fa fa-industry" if.bind="key.toUpperCase() == 'G-SAMPLE'"></i>
+            <i class="fa fa-building" if.bind="key.toUpperCase() == 'PS-INVENTORY'"></i>
+            <i class="fa fa-area-chart" if.bind="key.toUpperCase() == 'DASHBOARD-DP'"></i>
+            <i class="fa fa-area-chart" if.bind="key.toUpperCase() == 'G-DASHBOARD'"></i>
+            <i class="fa fa-table" if.bind="key.toUpperCase() == 'CUSTOMS'"></i>
+            <span if.bind="!minimized">${key.toUpperCase()}</span>
+            <div class="pull-right" if.bind="value.size > 0 && !minimized">
+              <i class="fa ${activeMenu == value ? 'fa-angle-left' : 'fa-angle-right'}"></i>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <aside class="secondary-sidebar">
+      <div class="sidebar-header">
+        <span class="title">${activeTitle.toUpperCase()}</span>
+      </div>
+      <ul class="sidebar-menu">
+        <li repeat.for="[key, value] of activeMenu" click.delegate="selectSubMenu(key, value)"
+          value.bind="activeSubMenu" class.bind="activeSubMenu == value ? 'active' : ''"
+          class="${key === 'uncategorized' ? 'hide' : ''}">
+          <a href="#" title.bind="key.toUpperCase()">
+            <span if.bind="!minimized">${key.toUpperCase()}</span>
+            <div class="pull-right" if.bind="value.length > 0 && !minimized">
+              <i class="fa ${activeSubMenu == value ? 'fa-angle-left' : 'fa-angle-right'}"></i>
+            </div>
+          </a>
+        </li>
+
+        <!-- Item which has no subgroup will be using this li -->
+        <li if.bind="hasNoSubGroup" repeat.for="item of hasNoSubGroup" click.delegate="selectItem()"
+          class.bind="activeItem == item ? 'active' : ''">
+          <a href.bind="item.href" title.bind="item.title">
+            <span>${item.title}</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <aside class="tertiary-sidebar">
+      <div class="sidebar-header">
+        <span class="title">${activeSubtitle.toUpperCase()}</span>
+      </div>
+      <ul class="sidebar-menu">
+        <li repeat.for="item of activeSubMenu" click.delegate="selectItem()"
+          class.bind="activeItem == item ? 'active' : ''">
+          <a href.bind="item.href" title.bind="item.title">
+            <span>${item.title}</span>
+          </a>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</template>

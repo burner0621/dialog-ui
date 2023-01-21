@@ -1,0 +1,65 @@
+<template>
+    <require from="../../../au-components/form/input/_input"></require>
+    <require from="../../../lib/number-format-value-converter"></require>
+    <au-input-form
+        title.bind="title"
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-input
+            type="number"
+            value.bind="data.YearOfPeriod"
+            label="Tahun"
+            input-options.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-input>
+
+        <au-dropdown
+            value.bind="filterMonth"
+            label="Bulan"
+            items.bind="monthList"
+            options.bind="controlOptions">
+        </au-dropdown>
+
+        <au-textbox
+            label="Quater"
+            value.bind="data.QuaterCode"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-autocomplete 
+            label="Seksi"
+            value.bind="filterSection"
+            error.bind="error.Section"
+            loader.bind="sectionLoader"
+            text.bind = "sectionView"
+            key="SectionCode"
+            aria-placeholder="Cari Seksi"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox
+            label="Penanggung Jawab Seksi"
+            value.bind="data.SectionName"
+            read-only="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+         <au-numeric 
+            label="Target Omzet"
+            value.bind="data.Amount" 
+            error.bind="error.Amount"
+            format="0"
+            read-only.bind="readOnly" 
+            options.bind="controlOptions">
+        </au-numeric>
+       
+    </au-input-form>
+</template>

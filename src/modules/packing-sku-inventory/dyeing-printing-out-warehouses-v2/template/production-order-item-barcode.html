@@ -1,0 +1,19 @@
+<template replace-part="packingCodeItem">
+  <style>
+    .text-center {
+      text-align: center;
+    }
+  </style>
+
+  <tr>
+    <td show.bind="!readOnly" style="text-align: center;">
+      <au-checkbox value.bind="data.IsSave" disabled.bind="readOnly" change.delegate="clickCheckBox()">
+      </au-checkbox>
+    </td>
+    <td class="text-center">
+      <au-textbox value.bind="data.packingCode" read-only.bind="true" error.bind="error.packingCode"
+        options.bind="controlOptions">
+      </au-textbox>
+    </td>
+  </tr>
+</template>

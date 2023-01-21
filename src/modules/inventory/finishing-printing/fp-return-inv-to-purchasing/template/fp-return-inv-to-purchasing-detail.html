@@ -1,0 +1,46 @@
+<template>
+    <tr>
+        <td>
+            <au-autocomplete 
+                value.bind="fpRegradingResultDocs" 
+                error.bind="error.fpRegradingResultDocs"
+                loader.one-time="fpRegradingResultDocsLoader"
+                read-only.bind="readOnly"
+                options.bind="controlOptions"
+                query.bind="options.filter"
+                placeholder="Cari No Bon Hasil Re-grading"
+                text="Code">
+            </au-autocomplete>
+        </td>
+        <td>
+            <au-textbox value.bind="data.Product.name" read-only="true"></au-textbox>
+        </td>
+        <td>
+            <au-numeric
+                show.bind="fpRegradingResultDocs"
+                value.bind="data.Quantity"
+                read-only="true" />
+        </td>
+        <td>
+            <au-numeric
+                show.bind="fpRegradingResultDocs"
+                value.bind="data.Length"
+                read-only="true" />
+        </td>
+        <td>
+            <au-numeric
+                show.bind="fpRegradingResultDocs"
+                value.bind="data.NecessaryLength"
+                error.bind="error.NecessaryLength"
+                read-only.bind="readOnly" />
+        </td>
+        <td>
+            <au-textbox value.bind="data.Description" placeholder="Keterangan" read-only.bind="readOnly"></au-textbox>            
+        </td>
+        <!--
+        <td if.bind="!readOnly">
+            <button class="btn btn-danger" click.delegate="onremove(data)">-</button>
+        </td>
+        -->
+    </tr>
+</template>

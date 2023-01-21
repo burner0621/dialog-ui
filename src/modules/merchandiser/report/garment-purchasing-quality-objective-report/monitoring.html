@@ -1,0 +1,97 @@
+<template>
+    <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Laporan Sasaran Mutu Penjualan Garment</h1>
+    <form class="form-horizontal">
+        <au-input
+            type="number"
+            value.bind="filterYear"
+            label="Year"
+            input-options.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-input>
+        <au-dropdown
+            value.bind="filterMonth"
+            label="Month"
+            items.bind="monthList"
+            options.bind="controlOptions">
+        </au-dropdown>
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <br><br>
+        <template repeat.for="data of tableData">
+            <table class="table table-bordered">
+                <div style="font-weight: bold;">SEKSI = ${data.Section}</div>
+                <thead>
+                    <tr>
+                        <th class="col-sm-3"><label>Target</label></th>
+                        <th class="col-sm-3"><label>Omset</label></th>
+                        <th class="col-sm-3"><label>Persentase Tercapai</label></th>
+                        <th class="col-sm-3"><label>Status</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="center">
+                            <au-numeric value.bind="data.Target" read-only="true"></au-numeric>
+                        </td>
+                        <td align="center">
+                            <au-numeric value.bind="data.Omzet" read-only="true"></au-numeric>
+                        </td>
+                        <td align="center">
+                            <au-numeric value.bind="data.Achievement" read-only="true"></au-numeric>
+                        </td>
+                        <td align="center">
+                            <au-textbox value="${data.Achievement > 100 ? 'OK' : 'NOT OK'}" read-only="true"></au-textbox>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
+
+        <table class="table table-bordered">
+            <div style="font-weight: bold;" if.bind="tableData && tableData.length > 0">SEMUA SEKSI</div>
+            <thead>
+                <tr>
+                    <th class="col-sm-3"><label>Target</label></th>
+                    <th class="col-sm-3"><label>Omset</label></th>
+                    <th class="col-sm-3"><label>Persentase Tercapai</label></th>
+                    <th class="col-sm-3"><label>Status</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--No data to display-->
+                <tr show.bind="!tableData || tableData.length < 1">
+                    <td colspan="4">
+                        <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                    </td>
+                </tr>
+
+                <!--Data to display-->
+                <tr show.bind="tableData && tableData.length > 0">
+                    <td align="center">
+                        <au-numeric value.bind="allTarget" read-only="true"></au-numeric>
+                    </td>
+                    <td align="center">
+                        <au-numeric value.bind="allOmzet" read-only="true"></au-numeric>
+                    </td>
+                    <td align="center">
+                        <au-numeric value.bind="allAchievement" read-only="true"></au-numeric>
+                    </td>
+                    <td align="center">
+                        <au-textbox value="${allAchievement > 100 ? 'OK' : 'NOT OK'}" read-only="true"></au-textbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr/>
+    </form>
+</template>

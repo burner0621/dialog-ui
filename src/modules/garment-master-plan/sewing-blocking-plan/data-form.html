@@ -1,0 +1,174 @@
+<template>
+    <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+        <div slot="actions" class="btn-group">
+            <button class="btn btn-default" click.delegate="context.cancel($event)"     if.one-way="context.hasCancel">Kembali</button>
+            <button class="btn btn-primary" click.delegate="context.edit($event)"       if.one-way="context.hasEdit">Ubah</button>
+            <button class="btn btn-success" click.delegate="context.save($event)"       if.one-way="context.hasSave">Simpan</button>
+            <button class="btn btn-danger"  click.delegate="context.delete($event)"     if.one-way="context.hasDelete">Hapus</button>
+        </div>
+
+        <au-autocomplete 
+            value.bind="selectedBookingOrder" 
+            error.bind="error.bookingOrderNo"
+            label="Kode Booking Md" 
+            loader.bind="bookingLoader"
+            text.bind = "bookingView"
+            placeholder="cari booking order" 
+            query.bind="filterBookingOrder"
+            key="code" 
+            read-only.bind="isView || isEdit"
+            if.bind="!isView"
+            options.bind="controlOptions">
+        </au-autocomplete>
+
+        <au-textbox 
+            label="Kode Booking Md" 
+            value.bind="bookingCode" 
+            read-only.bind="true"
+            if.bind="isView"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <au-datepicker 
+            label="Tanggal Booking" 
+            value.bind="data.BookingOrderDate"  
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <div class="has-error" if.bind="booking.BookingOrderDate">
+            <au-datepicker 
+                label="Tanggal Booking Berubah" 
+                value.bind="booking.BookingOrderDate"  
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-datepicker>        
+        </div>
+        <au-textbox 
+            label="Buyer" 
+            value.bind="data.Buyer.Name" 
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-textbox>
+
+        <numeric 
+            label="Jumlah Order" 
+            value.bind="data.OrderQuantity" 
+            format="0"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </numeric>
+        <div class="has-error" if.bind="booking.OrderQuantity!=null">
+            <numeric 
+                label="Jumlah Order Berubah" 
+                value.bind="booking.OrderQuantity" 
+                format="0"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </numeric>      
+        </div>
+
+        <au-datepicker 
+            label="Tanggal Pengiriman" 
+            value.bind="data.DeliveryDate" 
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-datepicker>
+        <div class="has-error" if.bind="booking.DeliveryDate">
+            <au-datepicker 
+                label="Tanggal Pengiriman Berubah" 
+                value.bind="booking.DeliveryDate"  
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-datepicker>        
+        </div>
+        
+        <au-multiline 
+            label="Keterangan" 
+            value.bind="data.Remark"
+            read-only.bind="true"
+            options.bind="controlOptions">
+        </au-multiline>
+        <div class="has-error" if.bind="booking.Remark">
+            <au-multiline 
+                label="Keterangan Berubah" 
+                value.bind="booking.Remark"
+                read-only.bind="true"
+                options.bind="controlOptions">
+            </au-multiline>       
+        </div>
+
+        <label for="Detail Confirm Booking Order" if.bind="data.BookingOrderId">Detail Confirm Booking Order</label>
+        <au-collection 
+            items.bind="data.booking" 
+            columns.bind="bookingItemColumns" 
+            options.bind="options"
+            read-only.bind="true"
+            if.bind="data.BookingOrderId"
+            item-template="modules/garment-master-plan/sewing-blocking-plan/templates/detail">
+        </au-collection>
+
+        <label for="Jadwal Pengerjaan" if.bind="data.BookingOrderId">Jadwal Pengerjaan :</label>
+        <au-layout error.bind="error.details" if.bind="error.details"></au-layout>
+        
+    <div class="table-responsive">
+        <au-collection 
+            items.bind="data.Items" 
+            errors.bind="error.Items" 
+            columns.bind="detailColumns" 
+            add.bind="addDetails"  
+            remove.bind="removeDetails"
+            change.delegate="detailsChanged($event)"
+            options.bind="options"
+            read-only.bind="readOnly"
+            if.bind="data.BookingOrderId"
+            item-template="modules/garment-master-plan/sewing-blocking-plan/templates/item"
+            footer-template="modules/garment-master-plan/sewing-blocking-plan/templates/item-footer">
+        </au-collection>
+    </div>
+    
+        <label for="Jadwal Pengerjaan" if.bind="!isView">Preview Remaining EH :</label>
+        <au-table 
+        view-model.ref="previewTable"
+        columns.bind="columnPreview"
+        data.bind="previewData"
+        if.bind="!isView"></au-table>
+
+        <au-table 
+        view-model.ref="previewTable1"
+        columns.bind="columnPreview"
+        data.bind="previewData1"
+        if.bind="!isView"></au-table>
+
+        <!--<label for="Preview 6 bulan" if.bind="data.bookingOrderId">Preview 6 bulan</label>
+        <au-dropdown
+            label="Bulan"
+            value.bind="preview.month"
+            read-only.bind="readOnly"
+            items.bind="months"
+            if.bind="data.bookingOrderId"
+            options.bind="controlOptions"
+            >
+        </au-dropdown>
+        <au-dropdown
+            label="Tahun"
+            value.bind="preview.year"
+            read-only.bind="readOnly"
+            items.bind="years"
+            if.bind="data.bookingOrderId"
+            options.bind="controlOptions">
+        </au-dropdown>
+        <button class="btn btn-default" click.delegate="previewChange($event)" if.bind="data.bookingOrderId">Preview</button>
+        <au-collection 
+            items.bind="previewData" 
+            columns.bind="previewColumns" 
+            options.bind="options"
+            read-only.bind="true"
+            if.bind="data.bookingOrderId"
+            item-template="modules/garment-master-plan/sewing-blocking-plan/templates/preview">
+        </au-collection>-->
+        
+  </au-input-form>
+</template>

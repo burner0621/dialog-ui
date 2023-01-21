@@ -1,0 +1,169 @@
+<template>
+    <require from="../../../../au-components/form/input/_input"></require>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <h1 class="page-header">Laporan Order Produksi</h1>
+    <form class="form-horizontal">
+        <au-input
+            type="number"
+            value.bind="filterYear"
+            label="Year"
+            input-options.bind="yearOptions"
+            options.bind="controlOptions">
+        </au-input>
+        <au-dropdown
+            value.bind="filterMonth"
+            label="Month"
+            items.bind="monthList"
+            options.bind="controlOptions">
+        </au-dropdown>
+        <au-autocomplete
+            value.bind="filterUnit"
+            label="Unit"
+            loader.bind="unitLoader"
+            placeholder="Cari Unit"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="filterSection"
+            label="Seksi"
+            loader.bind="sectionLoader"
+            placeholder="Cari Seksi"
+            text="Code"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <au-autocomplete
+            value.bind="filterBuyer"
+            label="Buyer"
+            loader.bind="garmentBuyerLoader"
+            placeholder="Cari Buyer"
+            text="Name"
+            options.bind="controlOptions">
+        </au-autocomplete>
+        <div class="form-group">
+            <div class.bind="'col-sm-'+controlOptions.label.length"></div>
+            <div class.bind="'col-sm-'+controlOptions.control.length">
+                <button type="submit" click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="clear()" class='btn btn-danger'>Bersihkan</button>
+            </div>
+        </div>
+
+        <button click.delegate="xls()" class='btn btn-primary'>Cetak</button>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><label>Week</label></th>
+                        <th><label>Buyer</label></th>
+                        <th><label>Seksi</label></th>
+                        <th><label>Komoditi</label></th>
+                        <th><label>Artikel</label></th>
+                        <th><label>No RO</label></th>
+                        <th><label>Tgl Cost Calculation</label></th>
+                        <th><label>Quantity</label></th>
+                        <th><label>Satuan</label></th>
+                        <th><label>Confirm Price</label></th>
+                        <th><label>Amount</label></th>
+                        <th><label>Tgl Confirm</label></th>
+                        <th><label>Tgl Shipment</label></th>
+                        <th><label>Validasi Kadiv Md</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--No data to display-->
+                    <tr if.bind="!tableData || tableData.length < 1">
+                        <td colspan="14">
+                            <div class="alert alert-info"> Tidak ada data untuk ditampilkan. </div>
+                        </td>
+                    </tr>
+
+                    <!--Data to display-->
+                    <template repeat.for="data of tableData">
+                        <template repeat.for="buyerIndex of data.Buyers.length">
+                            <template repeat.for="detailIndex of data.Buyers[buyerIndex].Details.length">
+                                <tr style="background: white;">
+                                    <template if.bind="buyerIndex==0 && detailIndex==0">
+                                        <td rowspan.bind="data.rowSpan + data.Buyers.length" align="center">
+                                            <label><au-textbox value.bind="data.Week" read-only="true"></au-textbox></label>
+                                        </td>
+                                    </template>
+                                    <template if.bind="detailIndex==0">
+                                        <td rowspan.bind="data.Buyers[buyerIndex].Details.length || 1" align="center">
+                                            <label><au-textbox value.bind="data.Buyers[buyerIndex].Buyer" read-only="true"></au-textbox></label>
+                                        </td>
+                                    </template>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].Section" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].Commodity" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].Article" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].RONo" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-datepicker value.bind="data.Buyers[buyerIndex].Details[detailIndex].Date" read-only="true"></au-datepicker>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].Quantity" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].Uom" read-only="true"></au-textbox>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-numeric value.bind="data.Buyers[buyerIndex].Details[detailIndex].ConfirmPrice" format="0,0.0000" read-only="true"></au-numeric>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-numeric value.bind="data.Buyers[buyerIndex].Details[detailIndex].Amount" read-only="true"></au-numeric>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-datepicker value.bind="data.Buyers[buyerIndex].Details[detailIndex].ConfirmDate" read-only="true"></au-datepicker>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1" align="right">
+                                        <au-datepicker value.bind="data.Buyers[buyerIndex].Details[detailIndex].ShipmentDate" read-only="true"></au-datepicker>
+                                    </td>
+                                    <td rowspan.bind="data.UnpostReasons.length || 1">
+                                        <au-textbox value.bind="data.Buyers[buyerIndex].Details[detailIndex].ValidationPPIC" read-only="true"></au-textbox>
+                                    </td>
+                                </tr>
+                            </template>
+                            <tr style="background: lightgray; font-weight: bold;">
+                                <td colspan="6" align="right">
+                                    <au-textbox value="SUB TOTAL" read-only="true"></au-textbox>
+                                </td>
+                                <td align="right">
+                                    <au-textbox value.bind="data.Buyers[buyerIndex].Quantities" read-only="true"></au-textbox>
+                                </td>
+                                <td colspan="2"></td>
+                                <td align="right">
+                                    <au-numeric value.bind="data.Buyers[buyerIndex].Amounts" read-only="true"></au-numeric>
+                                </td>
+                                <td colspan="3"></td>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <div class="row" if.bind="grandTotalByUom.length > 0">
+            <div class="form-group col-md-1"></div>
+            <div class="form-group col-md-5">
+                <template repeat.for="uomIndex of grandTotalByUom.length">
+                    <label class="control-label text-left col-md-4">${uomIndex==0 ? 'GRAND TOTAL' : ''}</label>
+                    <p class="form-control-static text-right col-md-3">${grandTotalByUom[uomIndex].quantity}</p>
+                    <p class="form-control-static col-md-2">${grandTotalByUom[uomIndex].uom}</p>
+                    <p class="form-control-static text-right col-md-3">${grandTotalByUom[uomIndex].amount | numberFormat:'0,000.00'}</p>
+                </template>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="control-label text-left col-md-4">GRAND TOTAL</label>
+                <p class="form-control-static col-md-8">${grandTotal | numberFormat:'0,000.00'}</p>
+            </div>
+        </div>
+
+        <hr/>
+    </form>
+</template>

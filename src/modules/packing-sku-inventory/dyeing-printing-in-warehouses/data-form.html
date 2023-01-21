@@ -1,0 +1,56 @@
+<template>
+  <style>
+    .collection .panel-body {
+      padding: 0px;
+    }
+  </style>
+  <au-input-form title.bind="title"
+                 with.bind="context"
+                 options.bind="formOptions">
+    <au-datepicker options.bind="controlOptions"
+                   value.bind="data.date"
+                   error.bind="error.Date"
+                   read-only.bind="readOnly"
+                   label="Tanggal">
+    </au-datepicker>
+
+    <au-dropdown options.bind="controlOptions"
+                 label="Shift"
+                 value.bind="data.shift"
+                 error.bind="error.Shift"
+                 read-only.bind="readOnly"
+                 items.bind="shifts"></au-dropdown>
+
+    <au-dropdown options.bind="controlOptions"
+                 label="Group"
+                 value.bind="data.group"
+                 error.bind="error.Group"
+                 read-only.bind="readOnly"
+                 items.bind="groups"></au-dropdown>
+    <au-autocomplete if.bind="!isAdj" options.bind="controlOptions" value.bind="selectedFilterSPP"
+                 label="Filter Nomor SPP" show.bind="!readOnly && !isEdit" read-only.bind="readOnly" loader.bind="filterSPPLoader"
+                 text.bind="sppTextFormatter">
+                </au-autocomplete>
+    <textbox label="Nomor Bon"
+             value.bind="data.bonNo"
+             read-only.bind="true"
+             if.bind="readOnly"></textbox>
+
+    <au-textbox error.bind="error.item"
+                read-only.bind="true"
+                if.bind="error.item"></au-textbox>
+
+    <au-collection columns.bind="itemColumns"
+                   view-model.ref="ItemsCollection"
+                   items.bind="data.warehousesProductionOrders"
+                   errors.one-way="error.items"
+                   options.bind="detailOptions"
+                   read-only.bind="readOnly"
+                   header-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/item-header"
+                   item-template="modules/packing-sku-inventory/dyeing-printing-in-warehouses/template/item">
+    </au-collection>
+
+    <template replaceable
+              part="actions"></template>
+  </au-input-form>
+</template>

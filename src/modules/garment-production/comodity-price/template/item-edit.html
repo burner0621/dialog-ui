@@ -1,0 +1,35 @@
+<template >
+    <tr>
+        <td>
+            <au-textbox
+                value.bind="comodity"
+                error.bind="error.Comodity"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-textbox
+                value.bind="data.Unit.Code"
+                error.bind="error.UnitCode"
+                read-only.bind="true">
+            </au-textbox>
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.Price"
+                error.bind = "error.Price"
+                read-only.bind="true"
+                format="0,000.00">
+            </au-numeric>                    
+        </td>
+        <td>
+            <au-numeric 
+                value.bind="data.NewPrice"
+                error.bind = "error.NewPrice"
+                read-only.bind="readOnly"
+                format="0,000.00">
+            </au-numeric>                    
+        </td>
+        
+    </tr>
+</template>

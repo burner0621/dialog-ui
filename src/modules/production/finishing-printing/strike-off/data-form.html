@@ -1,0 +1,28 @@
+<template>
+    <require from="../../../../lib/number-format-value-converter"></require>
+    <au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+
+        <au-textbox label="Kode" error.bind="error.Code" value.bind="data.Code"
+            read-only.bind="readOnly" options.bind="controlOptions">
+        </au-textbox>
+
+        <au-dropdown options.bind="controlOptions" label="Jenis Printing" value.bind="type" error.bind="error.Type"
+            read-only.bind="readOnly" items.bind="types"></au-dropdown>
+
+        <au-dropdown options.bind="controlOptions" label="Jenis Kain" value.bind="cloth" error.bind="error.Cloth"
+            read-only.bind="readOnly" items.bind="clothes" show.bind="isRegular"></au-dropdown>
+
+        <au-multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly"
+            options.bind="controlOptions">
+        </au-multiline>
+
+        <au-textbox show.bind="error.StrikeOffItem" read-only.bind="true" value.bind="error.StrikeOffItem" style="color: red;"></au-textbox>
+        
+        <au-collection columns.bind="itemColumns" view-model.ref="ItemsCollection" items.bind="data.StrikeOffItems" options.bind="detailOptions"
+            errors.one-way="error.StrikeOffItems" add.bind="addItemCallback" remove.bind="onremove"
+            read-only.bind="readOnly" item-template="modules/production/finishing-printing/strike-off/template/item">
+        </au-collection>
+        
+
+    </au-input-form>
+</template>

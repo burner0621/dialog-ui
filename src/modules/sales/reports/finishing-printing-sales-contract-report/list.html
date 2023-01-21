@@ -1,0 +1,119 @@
+<template>
+
+    <h1 class="page-header">Laporan Sales Contract - Finishing & Printing</h1>
+    <form class="form-horizontal">
+        <au-autocomplete value.bind="filter.salesContractNo" 
+            label="Nomor Sales Contract" 
+            loader.bind="fpSalesContractLoaderLoader" 
+            placeholder="cari nomor sales kontrak " 
+            key="SalesContractNo"
+            text="SalesContractNo">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="filter.buyer" 
+            label="Buyer" 
+            loader.bind="buyersLoader"
+            placeholder="cari buyer " 
+            key="Code" 
+            text.bind = "buyerView" >
+        </au-autocomplete>
+
+        <au-autocomplete
+          label="Jenis Order"
+          value.bind="filter.orderType"
+          key="Name"
+          text="Name"
+          loader.bind="orderTypeLoader"
+          options.bind="controlOptions"
+          placeholder="cari jenis order">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="filter.comodity" 
+            label="Komoditas"  
+            loader.bind="comodityLoader"
+            placeholder="cari comodity " 
+            key="Code" 
+            text="Name" >
+        </au-autocomplete>
+        
+            <au-datepicker label="Tanggal Awal" value.bind="filter.dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Akhir" value.bind="filter.dateTo"></au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" border="1" id="myTable">
+                <thead align="center">
+                    <tr>
+                        <td rowspan="2">No</td>
+                        <td rowspan="2">Nomor Sales Kontrak</td>
+                        <td rowspan="2">Tanggal Sales Kontrak</td>
+                        <td rowspan="2">Buyer</td>
+                        <td rowspan="2">Jenis Buyer</td>
+                        <td rowspan="2">Nomor Disposisi</td>
+                        <td rowspan="2">Jenis Order</td>
+                        <td rowspan="2">Komoditas</td>
+                        <td rowspan="2">Kualitas</td>
+                        <td rowspan="2">Jumlah Order SC</td>
+                        <td rowspan="2">Jumlah sudah dibuatkan SPP</td>
+                        <td rowspan="2">Satuan</td>
+                        <td rowspan="2">Toleransi(%)</td>
+                        <td rowspan="2">Syarat Pembayaran</td>
+                        <td rowspan="2">Pembayaran ke Rekening</td>
+                        <td rowspan="2">Jadwal Pengiriman</td>
+                        <td rowspan="2">Agen</td>
+                        <td rowspan="2">Komisi</td>
+                        <td colspan="4">Detail Order</td>
+                        <td rowspan="2">Status</td>
+                    </tr>
+                    <tr>
+                        <td>Warna</td>
+                        <td>Harga</td>
+                        <td>Mata Uang</td>
+                        <td>PPN</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr repeat.for="item of data">
+                        <td class="text-center">${$index + 1}</td>
+                        <td class="text-right">${item.salesContractNo}</td>
+                        <td class="text-center">${item.CreatedUtc | dateFormat:'D MMM YYYY'}</td>
+                        <td class="text-right">${item.buyerName}</td>
+                        <td class="text-right">${item.buyerType}</td>
+                        <td class="text-right">${item.dispositionNo}</td>
+                        <td class="text-right">${item.orderType}</td>
+                        <td class="text-right">${item.comodityName}</td>
+                        <td class="text-left">${item.qualityName}</td>
+                        <td class="text-left">${item.orderQuantity}</td>
+                        <td class="text-left">${item.productionOrderQuantity}</td>
+                        <td class="text-right">${item.uomUnit}</td>
+                        <td class="text-right">${item.shippingQuantityTolerance}</td>
+                        <td class="text-right">${item.termOfPaymentName}</td>
+                        <td class="text-right">${item.paymentTo}</td>
+                        <td class="text-right">${item.deliverySchedule| dateFormat:'D MMM YYYY'}</td>
+                        <td class="text-right">${item.agentName}</td>
+                        <td class="text-right">${item.comission}</td>
+                        <td class="text-left">${item.color}</td>
+                        <td class="text-right">${item.price}</td>
+                        <td class="text-right">${item.accountCurrencyCode}</td>
+                        <td class="text-right">${item.useIncomeTax}</td>
+                        <td class="text-right">${item.status}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+            Tidak ada data ditemukan.
+        </div>
+        <pagination if.bind="info.total>info.size" info.bind="info" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+    </form>
+</template>

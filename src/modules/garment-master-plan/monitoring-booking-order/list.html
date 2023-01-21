@@ -1,0 +1,96 @@
+<template>
+  
+        <h1 class="page-header">Monitoring Booking Order</h1>
+        <form class="form-horizontal">
+            <au-autocomplete 
+                value.bind="section" 
+                label="Seksi" 
+                loader.bind="sectionLoader"
+                text.bind = "sectionView"
+                placeholder="Seksi" 
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+            <au-autocomplete 
+                value.bind="BookingOrderNo" 
+                label="Kode Booking" 
+                loader.bind="bookingOrderLoader"
+                text.bind = "bookingOrderView"
+                placeholder="Cari No Booking Order"
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+            <au-autocomplete 
+                value.bind="buyer" 
+                label="Buyer" 
+                loader.bind="buyerLoader"
+                text.bind = "buyerView"
+                placeholder="Cari Buyer"
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+             <au-autocomplete 
+                value.bind="comodity" 
+                label="Komoditi" 
+                loader.bind="comodityLoader"
+                text.bind = "comodityView"
+                placeholder="Cari Komoditi"
+                read-only.bind="readOnly" 
+                options.bind="controlOptions">
+            </au-autocomplete>
+            <au-dropdown label="Status Confirm" 
+                value.bind="confirmState"
+                items.bind="confirmStateOption" 
+                read-only.bind="readOnly" 
+                change.delegate="confirmStateChanged($event)">
+            </au-dropdown>
+            <au-dropdown label="Status Booking Order" 
+                value.bind="bookingOrderState"
+                items.bind="bookingOrderStateOption" 
+                read-only.bind="readOnly" 
+                change.delegate="bookingOrderStateChanged($event)">
+            </au-dropdown>
+             
+            <au-datepicker label="Tanggal Booking Awal" value.bind="dateFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Booking Akhir" value.bind="dateTo"></au-datepicker>
+
+            
+            <au-datepicker label="Tanggal Pengiriman Awal" value.bind="dateDeliveryFrom"></au-datepicker>
+            <au-datepicker label="Tanggal Pengiriman Akhir" value.bind="dateDeliveryTo"></au-datepicker>
+
+            <div class="form-group">
+                <label for="contact" class="col-sm-6 control-label"></label>
+                <div class="col-sm-3">
+                    <button click.delegate="searching()" class='btn btn-success'>Cari</button>
+                    <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+                </div>
+            </div>
+             <div class="btn-group pull-left">
+                 <a click.delegate="ExportToExcel()" class='btn btn-primary'>Excel</a>
+            </div>
+        </form>
+
+           <br>
+        </br>
+
+        <table ref="table" class="table table-bordered table-hover" border="1" id="myTable"></table>
+
+        <div class="alert alert-info text-center" role="alert" if.bind="data.length === 0">
+            Tidak ada data.
+        </div>
+
+            <div class="form-group">
+                 <label class="control-label text-left col-md-0"><strong>NOTE :</strong></label>
+                 <br>
+                 </br>
+                 <label class="control-label text-left col-md-0"><strong>1. JUMLAH CONFIRM ( MAX ALLOWANCE 5% DARI JUMLAH ORDER )</strong></label>
+                 <br>
+                 </br>
+                 <label class="control-label text-left col-md-0"><strong>2. BUDGET TURUN ( MAX ALLOWANCE 5% DARI JUMLAH CONFIRM )</strong></label>
+            </div>
+
+        <pagination if.bind="args.total>args.size" info.bind="args" change.delegate="changePage($event)" id="pager"></pagination>
+        <hr/>
+        </form>
+    </au-input-form> 
+</template>

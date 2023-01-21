@@ -1,0 +1,8 @@
+<template> 
+    <form class="form-horizontal">
+        <textbox    label="Code"    value.bind="data.code"      error.bind="error.code"     read-only.bind="(readOnly || isEdit)"></textbox>
+        <textbox    label="Name"    value.bind="data.name"      error.bind="error.name"     read-only.bind="readOnly"></textbox> 
+        <multiline    label="Description"    value.bind="data.description"      error.bind="error.description"     read-only.bind="readOnly"></multiline> 
+        <role-permission-item-collection value.bind="data.permissions" error.bind="data.error" read-only.bind="readOnly"></role-permission-item-collection>
+    </form>
+</template>

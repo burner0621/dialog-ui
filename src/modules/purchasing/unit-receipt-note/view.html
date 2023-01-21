@@ -1,0 +1,13 @@
+<template>  
+    <h1 class="page-header">Detail Bon Terima Unit</h1>
+    <require from="./data-form"></require>
+    <block>
+        <data-form data.bind="data" unit.bind="unit" supplier.bind="supplier" delivery-order.bind="deliveryOrder" error.bind="error" read-only="true"></data-form>
+        <hr/>
+        <div class="btn-group pull-right">
+            <a click.delegate="list()" class='btn btn-default'  >Kembali</a>
+            <a click.delegate="edit()" if.bind = "!data.isPaid && !isLocked" class="btn btn-primary" >Ubah</a>
+            <a click.delegate="delete()" if.bind = "!data.isPaid && !isLocked" class="btn btn-danger" >Hapus</a>
+        </div>
+    </block>
+</template>

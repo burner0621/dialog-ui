@@ -1,0 +1,73 @@
+<template>
+  <require from="./collection.css"></require>
+  <div class="panel panel-default collection ${responsive === true ? 'table-responsive' : ''}">
+    <div class="panel-heading" if.bind="title">
+      <h4>${title}</h4>
+    </div>
+    <div class="panel-body">
+      <slot name="body"></slot>
+    </div>
+    <table class="table table-hover table-bordered">
+      <!--THEAD-->
+      <template replaceable part="thead">
+        <thead if.bind="!headerTemplate && __hasColumns">
+          <tr>
+            <th repeat.for="column of __columns">
+              <label if.bind="column.value != '__check'">${column.header}</label>
+              <label if.bind="column.value == '__check'">
+                <input type="checkbox" change.delegate="checkAllCallBack($event)" />
+              </label>
+            </th>
+            <th if.bind="!readOnly && buttons.add"><button click.delegate="onadd($event)"
+                class="btn btn-success pull-right">+</button></th>
+          </tr>
+        </thead>
+        <thead if.bind="headerTemplate && __hasColumns" as-element="compose" view="${headerTemplate}.html"
+          view-model="${headerTemplate}" model.bind="context"></thead>
+      </template>
+      <!--/THEAD-->
+
+      <tbody>
+
+        <!--no-columns-->
+        <tr if.bind="!__hasColumns">
+          <td>
+            <div class="alert alert-error">cannot display data with empty columns.</div>
+          </td>
+        </tr>
+        <!--No data to display-->
+        <tr if.bind="__hasColumns && !__hasItems">
+          <td colspan="${columns.length + (!readOnly || buttons.remove ? 1 : 0)}">
+            <div class="alert alert-info"> No data.</div>
+          </td>
+        </tr>
+
+        <!--default-->
+        <tr if.bind="!itemTemplate && __hasColumns" repeat.for="item of __items">
+          <template with.bind="item">
+            <template replaceable part="item">
+              <td repeat.for="column of __columns">
+                <au-textbox value.bind="item.data[column.value]" error.bind="item.error[column.value]"
+                  read-only.bind="item.options.readOnly" options.bind="defaultOptions"></au-textbox>
+              </td>
+              <td if.bind="!readOnly && (buttons.remove || buttons.copy)">
+                <button if.bind="buttons.remove" click.delegate="onremove(data[$index].data)">Remove</button>
+                <button if.bind="buttons.copy" click.delegate="oncopy(data[$index].data)">Copy</button>
+              </td>
+            </template>
+          </template>
+        </tr>
+
+        <!--with-template-->
+        <tr if.bind="itemTemplate" repeat.for="item of context.items" as-element="compose" view="${itemTemplate}.html"
+          view-model="${itemTemplate}" model.bind="context.items[$index]" containerless></tr>
+
+      </tbody>
+
+      <tfoot if.bind="footerTemplate" as-element="compose" view="${footerTemplate}.html" view-model="${footerTemplate}"
+        model.bind="context">
+
+      </tfoot>
+    </table>
+  </div>
+</template>

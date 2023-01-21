@@ -1,0 +1,118 @@
+<template>
+    <h1 class="page-header">Laporan Ekspedisi Disposisi Pembayaran</h1>
+
+    <form class="form-horizontal">
+        <au-autocomplete 
+            value.bind="disposition"
+            loader.one-time="dispositionLoader"
+            text="DispositionNo"
+            label="No Disposisi"
+            options.bind="controlOptions"
+            placeholder="Masukkan No Disposisi"
+            select.bind="selectDisposition">
+        </au-autocomplete>
+
+        <au-autocomplete 
+            value.bind="supplier"
+            loader.one-time="supplierLoader"
+            label="Supplier"
+            options.bind="controlOptions"
+            placeholder="Masukkan Nama Supplier"
+            select.bind="selectSupplier">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="Position"
+            label="Posisi"
+            options.bind="controlOptions"
+            items.bind="itemsStatus"
+            key="value"
+            text="text">
+        </au-dropdown>
+
+        <au-autocomplete value.bind="staffName" 
+            label="Nama Staff Pembelian" 
+            loader.bind="accountLoader" 
+            options.bind="controlOptions"
+            placeholder="nama staff pembelian"
+            key="username"
+            text.bind="stafView">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="bankExpenditureNo" 
+            label="No Bukti Pengeluaran Bank" 
+            loader.bind="dispoExpeditionLoader" 
+            options.bind="controlOptions"
+            placeholder="no bukti pengeluaran bank"        
+            text.bind="dispoExpeditionView">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="division" 
+            label="Divisi" 
+            loader.bind="divisionLoader" 
+            options.bind="controlOptions"
+            placeholder="divisi"        
+            text.bind="divisionView">
+        </au-autocomplete>
+
+        <au-dropdown
+            value.bind="PaymentStatus"
+            label="Status Bayar"
+            options.bind="controlOptions"
+            items.bind="paymentStatus"
+            key="value"
+            text="text">    
+        </au-dropdown>
+        <au-dropdown
+            value.bind="SPBStatus"
+            label="Status SPB"
+            options.bind="controlOptions"
+            items.bind="spbStatus"
+            key="value"
+            text="text">    
+        </au-dropdown>
+            <au-datepicker
+            value.bind="dateFrom"
+            label="Tanggal Awal Disposisi"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateTo"
+            label="Tanggal Akhir Diposisi"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateFromPayment"
+            label="Tanggal Awal Pembayaran"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <au-datepicker
+            value.bind="dateToPayment"
+            label="Tanggal Akhir Pembayaran"
+            options.bind="controlOptions">
+        </au-datepicker>
+
+        <div class="form-group">
+            <label for="contact" class="col-sm-5 control-label"></label>
+            <div class="col-sm-3">
+                <button click.delegate="search()" class='btn btn-success'>Cari</button>
+                <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+    </form>
+
+    <au-table
+        view-model.ref="tableList"
+        data.bind="loader"
+        columns.bind="columns"
+        sortable="true"
+        page-size="25"
+        options.bind="tableOptions">
+        <div slot="toolbar" class="btn-group">
+            <button class="btn btn-primary" click.delegate="excel()">Excel</button>
+        </div>
+    </au-table>
+</template>

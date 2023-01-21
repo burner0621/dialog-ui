@@ -1,0 +1,80 @@
+<template>
+	<div class="row">
+		<div class="col-md-12">
+			<au-input-form title.bind="title" with.bind="context" options.bind="formOptions">
+				<div class="col-md-8">
+
+					<au-textbox label="No Memorial" value.bind="data.MemorialNo"
+						error.bind="error.MemorialNo" read-only.bind="true"
+						show.bind="readOnly || isEdit">
+					</au-textbox>
+
+					<au-datepicker label="Tanggal" value.bind="date"
+						read-only.bind="readOnly" options.bind="controlOptions"
+						error.bind="error.Date">
+					</au-datepicker>
+
+					<au-autocomplete 
+                        value.bind="accountingBook" 
+                        loader.one-time="accountingBookLoader"
+						error.bind="error.AccountingBook" 
+                        text.bind="accountingBookView" label="Kode Buku"
+						read-only.bind="readOnly || isEdit" 
+                        options.bind="controlOptions"
+						placeholder="Pilih kode buku">
+					</au-autocomplete>
+
+                    <div class="row form-group" show.bind="data.Date">
+                        <label for="name" options.bind="controlOptions" class="col-sm-3 text-right au-layout control-label">Kurs</label>
+                        <div class = "col-sm-5">
+                            <au-autocomplete 
+                                value.bind="currencies"
+								loader.one-time="currenciesLoader"
+								error.bind="error.Currency" 
+                                text.bind="currenciesView"
+								read-only.bind="readOnly || isEdit"
+                                placeholder="Pilih Kurs">
+							</au-autocomplete>
+                        </div>
+                        <div class ="col-sm-3">
+                            <au-numeric 
+                                label="Rate" 
+                                value.bind="rate"
+								error.bind="error.CurrencyRate" 
+                                read-only.bind="true">
+							</au-numeric>
+                        </div>
+                    </div>
+	
+					<au-multiline label="Keterangan" value.bind="data.Remark"
+						error.bind="error.Remark" read-only.bind="readOnly"
+						placeholder="Tambah keterangan">
+					</au-multiline>
+				</div>
+
+				<div style="clear:both">
+					<div class="form-group has-error">
+						<p if.bind="error.ItemsCount" class="help-block text-center">
+							${error.ItemsCount}
+						</p>
+                        <p if.bind="error.DebitCredit" class="help-block text-center">
+							${error.DebitCredit}
+						</p>
+					</div>
+
+					<au-collection 
+                        items.bind="data.Items" 
+                        errors.bind="error.Items"
+						columns.bind="itemsColumns" 
+                        read-only.bind="readOnly"
+						add.bind="addItems" 
+                        remove.bind="removeItems" 
+                        options.bind="Options"
+						item-template="modules/garment-finance/bank-cash/memorial/template/item"
+						footer-template="modules/garment-finance/bank-cash/memorial/template/footer">
+					</au-collection>
+				</div>
+			</au-input-form>
+		</div>
+	</div>
+</template>

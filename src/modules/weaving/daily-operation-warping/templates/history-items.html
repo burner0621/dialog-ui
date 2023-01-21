@@ -1,0 +1,54 @@
+<template>
+    <style>
+        #delete-button {
+            background-color: #d65151;
+            color: white;
+            white-space: nowrap;
+            width: 100px;
+            border: 1px solid #777777;
+          }
+      </style>
+  <tr>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.WarpingBeamNumber" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.DateMachine" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.TimeMachine" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.ShiftName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.OperatorName" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.OperatorGroup" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.WarpingBeamLengthPerOperator" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td style="white-space: nowrap">
+      <au-textbox value.bind="data.MachineStatus" read-only.bind="true">
+      </au-textbox>
+    </td>
+    <td class="col-sm-1" style="white-space: nowrap;">
+      <!-- <div if.bind="$first"> -->
+      <!-- <div if.bind="showButtonDeleteId.findIndex( function ( element ) { return element.Id === data.Id; } ) > -1"> -->
+      <div if.bind="data.ShowDeleteButton">
+        <button class="btn btn-default btn-danger" id="delete-button" click.delegate="delete(data)" disabled.bind="isDeleteDisabled">
+          Delete 
+        </button>
+      </div>
+    </td>
+  </tr>
+</template>

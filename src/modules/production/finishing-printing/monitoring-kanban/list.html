@@ -1,0 +1,87 @@
+<template>
+
+<h1 class="page-header">Monitoring Kanban</h1>
+<form class="form-horizontal">
+        <au-dropdown                       label="Reproses" value.bind="proses"      items.bind="reprosesOption"></au-dropdown>
+
+        <au-autocomplete value.bind="orderType" error.bind="error.OrderType" label="Jenis Order" loader.bind="orderTypeLoader" 
+            key="Id" text="Name" read-only.bind="(readOnly)" options.bind="auInputOptions">
+        </au-autocomplete>
+
+        <au-autocomplete value.bind="processType" error.bind="error.processType" label="Jenis Proses" loader.bind="processTypeLoader" 
+            read-only.bind="(readOnly)" options.bind="auInputOptions" filter.one-way="filterOrder" if.bind="orderType">
+        </au-autocomplete>
+
+        <!-- <order-type-auto-suggest	label="Jenis Order"	            value.bind="orderType" 	        ></order-type-auto-suggest> -->
+        <!-- <process-type-auto-suggest	label="Jenis Proses"	        value.bind="processType" 	    filter.one-way="filterOrder" if.bind="orderType" ></process-type-auto-suggest> -->
+        <au-textbox                    label="Nomor Order"             value.bind="orderNo"            ></au-textbox>
+        <au-datepicker                 label="Tanggal Awal"            value.bind="dateFrom"           ></au-datepicker>
+        <au-datepicker                 label="Tanggal Akhir"           value.bind="dateTo"             ></au-datepicker>
+        <div class="form-group">
+            <label for="contact" class="col-sm-6 control-label"></label>
+            <div class="col-sm-3">
+               <button click.delegate="searching()" class='btn btn-success'>Cari</button> 
+               <button click.delegate="reset()" class='btn btn-success'>Reset</button>
+            </div>
+        </div>
+        <div>
+            <a click.delegate="ExportToExcel()" class='btn btn-primary'>Cetak Excel</a>
+        </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" border="1" id="myTable">
+            <thead align="center">
+                <tr>
+                    <td>No</td>
+                    <td>Nomor Order</td>
+                    <td>Tanggal</td>
+                    <td>Jenis Order</td>
+                    <td>Jenis Proses</td>
+                    <td>Warna</td>
+                    <td>Standar Handfeel</td>
+                    <td>Lebar Finish</td>
+                    <td>Material</td>
+                    <td>Konstruksi</td>
+                    <td>Nomor Benang</td>
+                    <td>Grade</td>
+                    <td>Nomor Kereta</td>
+                    <td>Panjang</td>
+                    <td>PCS</td>
+                    <td>Satuan</td>
+                    <td>Step Index</td>
+                    <td>Step</td>
+                    <td>Status</td>
+					 <td>Reproses</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr repeat.for="item of data">
+                    <td class="text-center">${$index + 1}</td>
+                    <td class="text-right">${item.orderNo}</td>
+                    <td class="text-center">${item._createdDate}</td>
+                    <td class="text-right">${item.orderType}</td>
+                    <td class="text-right">${item.processType}</td>
+                    <td class="text-right">${item.color}</td>
+                    <td class="text-right">${item.handfeelStandard}</td>
+                    <td class="text-left">${item.finishWidth}</td>
+                    <td class="text-right">${item.material}</td>
+                    <td class="text-right">${item.construction}</td>
+                    <td class="text-right">${item.yarnNumber}</td>
+                    <td class="text-right">${item.grade}</td>
+                    <td class="text-left">${item.cartNumber}</td>
+                    <td class="text-right">${item.length}</td>
+                    <td class="text-right">${item.pcs}</td>
+                    <td class="text-right">${item.uom}</td>
+                    <td class="text-right">${item.currentStepIndex}</td>
+                    <td class="text-right">${item.step}</td>
+                    <td class="text-right">${item.isComplete}</td>
+					  <td class="text-right">${item.isReprocess}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="alert alert-info text-center" role="alert" if.bind="data.length == 0">
+        Tidak ada data ditemukan.
+    </div>
+    <hr/>
+</form>
+</template>

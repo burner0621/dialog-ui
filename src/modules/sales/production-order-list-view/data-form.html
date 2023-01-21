@@ -1,0 +1,161 @@
+<template>
+  <au-input-form title.bind="title" with.bind="context">
+    <form class="form-horizontal">
+      <div class="row">
+        <div class="col-md-6" style="padding:0">
+          <!--<div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="SalesContract" label="Nomor Sales Contract" error.bind="error.SalesContractNo" read-only.bind="(readOnly)"
+              loader.bind="fpSalesContractLoader" placeholder="cari nomor sales kontrak " key="SalesContractNo" text="SalesContractNo"
+              change.delegate="SalesContractChanged($event)" if.bind="!readOnly">
+            </au-autocomplete>
+          </div>-->
+          <textbox label="No. Sales Contract" value.bind="data.SalesContractNo" error.bind="error.SalesContractNo" read-only.bind="true"
+            if.bind="readOnly"></textbox>
+          <textbox label="No. Order Produksi" value.bind="data.OrderNo" error.bind="error.orderNo" read-only="true" if.bind="data.OrderNo"></textbox>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.Buyer" label="Buyer" error.bind="error.Buyer" read-only="true" text.bind="getBuyerText">
+            </au-autocomplete>
+          </div>
+          <!-- <buyer-auto-suggest         label="Buyer"               value.bind="data.Buyer"                 error.bind="error.Buyer"           read-only="true"   change.delegate="buyerChanged($event)"></buyer-auto-suggest> -->
+          <textbox label="Tipe Buyer" value.bind="data.Buyer.Type" error.bind="error.Buyer" read-only="true"></textbox>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.OrderType" label="Jenis Order" error.bind="error.OrderType" read-only="true" text="Name">
+            </au-autocomplete>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="processTypeLoader" value.bind="data.ProcessType" label="Jenis Proses" error.bind="error.ProcessType"
+              if.bind="data.OrderType.Id" filter.bind="filterOrder" read-only.bind="(readOnly)" text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <order-type-auto-suggest label="Jenis Order" value.bind="data.OrderType" error.bind="error.OrderType" read-only="true" change.delegate="orderChanged($event)"></order-type-auto-suggest> -->
+          <!-- <process-type-auto-suggest label="Jenis Proses" value.bind="data.ProcessType" error.bind="error.ProcessType" read-only.bind="(readOnly)"
+            change.delegate="processChanged($event)" if.bind="data.OrderType"></process-type-auto-suggest> -->
+          <!-- <design-motive-auto-suggest label="Motif" value.bind="data.DesignMotive" error.bind="error.DesignMotive" read-only="true"
+            if.bind="!buyerType && isPrinting" change.delegate="designMotiveChanged($event)"></design-motive-auto-suggest> -->
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete if.bind="buyerType&&isPrinting" value.bind="data.DesignMotive" label="Motif" error.bind="error.DesignMotive"
+              read-only="true" text="Name">
+            </au-autocomplete>
+          </div>
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.Material" label="Material" error.bind="error.Material" read-only="true" text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <sales-material-auto-suggest label="Material" value.bind="data.Material" error.bind="error.Material" read-only="true" change.delegate="materialChanged($event)"
+            filter.bind="filterMaterial"></sales-material-auto-suggest> -->
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="materialConstructionLoader" value.bind="data.MaterialConstruction" label="Konstruksi Material"
+              error.bind="error.MaterialConstruction" read-only.bind="(readOnly)" text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <material-construction-auto-suggest label="Konstruksi Material" value.bind="data.MaterialConstruction" error.bind="error.MaterialConstruction"
+            read-only.bind="(readOnly)" change.delegate="constructionChanged($event)"></material-construction-auto-suggest> -->
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.YarnMaterial" label="Nomor Benang Material" error.bind="error.YarnMaterial" read-only="true"
+              text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <yarn-material-auto-suggest label="Nomor Benang Material" value.bind="data.YarnMaterial" error.bind="error.YarnMaterial"
+            read-only="true" change.delegate="yarnChanged($event)"></yarn-material-auto-suggest> -->
+          <textbox label="Lebar Material" value.bind="data.MaterialWidth" error.bind="error.MaterialWidth" read-only.bind="(readOnly)"></textbox>
+          <!--<numeric label="Sisa Jumlah Order SC" read-only="true" value.bind="data.remainingQuantity" if.bind="rq"></numeric>-->
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox label="Jumlah Order" read-only="true"></textbox>
+            </div>
+            <div class="col-sm-3">
+              <numeric value.bind="data.OrderQuantity" error.bind="error.OrderQuantity" read-only.bind="(readOnly)"></numeric>
+            </div>
+            <div class="col-sm-2">
+              <textbox label="Satuan" read-only="true"></textbox>
+            </div>
+            <div class="col-sm-2">
+              <textbox value.bind="data.Uom.Unit" error.bind="error.Uom" read-only="true"></textbox>
+            </div>
+          </div>
+          <numeric label="Toleransi Jumlah Kirim (%)" value.bind="data.ShippingQuantityTolerance" error.bind="error.ShippingQuantityTolerance"
+            read-only.bind="readOnly" post-fix="%"></numeric>
+          <textbox label="Asal Material" value.bind="data.MaterialOrigin" error.bind="error.MaterialOrigin" read-only.bind="(readOnly)"></textbox>
+          <textbox label="Lebar Finish" value.bind="data.FinishWidth" error.bind="error.FinishWidth" read-only="true"></textbox>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="finishTypeLoader" value.bind="data.FinishType" label="Jenis Finish" error.bind="error.FinishType"
+              read-only.bind="readOnly" text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <finish-type-auto-suggest label="Jenis Finish" value.bind="data.finishType" error.bind="error.finishType" read-only.bind="readOnly"
+            change.delegate="finishTypeChanged($event)"></finish-type-auto-suggest> -->
+
+          <textbox label="Kode Desain" value.bind="data.DesignCode" error.bind="error.DesignCode" read-only.bind="(readOnly)" if.bind="isPrintingOnly"></textbox>
+          <textbox label="Nomor Desain" value.bind="data.DesignNumber" error.bind="error.DesignNumber" read-only.bind="(readOnly)"
+            if.bind="isPrintingOnly"></textbox>
+        </div>
+        <div class="col-md-6" style="padding:0">
+          <textbox label="Standar Handling" value.bind="data.HandlingStandard" error.bind="error.HandlingStandard" read-only.bind="(readOnly)"></textbox>
+          <dropdown label="RUN" value.bind="data.RUN" error.bind="error.RUN" read-only.bind="(readOnly)" items.bind="RUNOptions" if.bind="isPrintingOnly"
+            change.delegate="RUNChanged($event)"></dropdown>
+          <div class="row">
+            <div class="col-sm-4" style="padding-left:20%">
+              <textbox value="Lebar RUN (cm)" read-only="true" if.bind="isPrinting && data.RunWidth.length"></textbox>
+            </div>
+            <div class="col-sm-2" repeat.for="i of data.RunWidth.length">
+              <numeric value.bind="data.RunWidth[i]" read-only.bind="(readOnly)" if.bind="isPrinting && (isRUN || run)" error.bind="error.RunWidth"></numeric>
+            </div>
+          </div>
+          <textbox label="Tulisan Pinggir Kain" value.bind="data.ArticleFabricEdge" error.bind="error.ArticleFabricEdge" read-only.bind="(readOnly)"
+            if.bind="isPrintingOnly"></textbox>
+          <textbox label="Standar Shrinkage" value.bind="data.ShrinkageStandard" error.bind="error.ShrinkageStandard" read-only.bind="(readOnly)"></textbox>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete loader.bind="standardTests" value.bind="data.StandardTests" label="Standar Test" error.bind="error.StandardTests" read-only.bind="readOnly"
+              text="Name">
+            </au-autocomplete>
+          </div>
+          <!-- <standard-test-auto-suggest label="Standar Test" value.bind="data.StandardTest" error.bind="error.StandardTest" read-only.bind="readOnly"
+            change.delegate="standardTestChanged($event)"></standard-test-auto-suggest>
+           -->
+          <textbox label="Sample" value.bind="data.Sample" error.bind="error.Sample" read-only.bind="(readOnly)"></textbox>
+          <multiline label="Packing Instruction" value.bind="data.PackingInstruction" error.bind="error.PackingInstruction" read-only.bind="(readOnly)"
+            rows.bind="10"></multiline>
+          <datepicker label="Tanggal Delivery" value.bind="data.DeliveryDate" error.bind="error.DeliveryDate" read-only.bind="readOnly"></datepicker>
+          <multiline label="Keterangan" value.bind="data.Remark" error.bind="error.Remark" read-only.bind="readOnly" rows.bind="10"></multiline>
+
+          <div class="col-sm-10" style="padding-left:18%">
+            <au-autocomplete value.bind="data.Account" label="Nama Staff Penjualan" error.bind="error.Account" read-only.bind="readOnly" 
+              loader.bind="accountLoader" text="UserName">
+            </au-autocomplete>
+          </div>
+          <!-- <account-auto-suggest label="Nama Staff Penjualan" value.bind="account" error.bind="error.account" read-only.bind="readOnly"
+            change.delegate="accountChanged($event)" filter.bind="filterAccount"></account-auto-suggest>
+        </div> -->
+        </div>
+      </div>
+      <hr />
+      <au-collection items.bind="data.LampStandards" errors.bind="error.LampStandards" read-only.bind="readOnly" columns.bind="lampHeader"
+        item-template="modules/sales/production-order-list-view/templates/lamp-standard" add.bind="addLamp" remove.bind="removeLamp"></au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly" if.bind="data.OrderType.Name && data.Uom && isPrinting"
+        columns.bind="detailHeader" item-template="modules/sales/production-order-list-view/templates/detail-item-printing" footer-template="modules/sales/production-order-list-view/templates/detail-footer-printing"
+        add.bind="addDetailPrintingYarnDyed" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly" if.bind="data.OrderType.Name && data.Uom && !isPrinting && !isYarnDyed"
+        columns.bind="detailHeader" item-template="modules/sales/production-order-list-view/templates/detail-item" footer-template="modules/sales/production-order-list-view/templates/detail-footer"
+        add.bind="addDetailnonPrinting" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <au-collection items.bind="data.Details" errors.bind="error.Details" read-only.bind="readOnly" if.bind="data.OrderType && data.Uom && isYarnDyed"
+        columns.bind="detailHeader" item-template="modules/sales/production-order-list-view/templates/detail-item-yarn-dyed" footer-template="modules/sales/production-order-list-view/templates/detail-footer-yarn-dyed"
+        add.bind="addDetailPrintingYarnDyed" view-model.ref="ItemsCollection">
+      </au-collection>
+
+      <div if.bind="error.LampStandards.toString()">
+        <span style="color:red">-Standar Lampu tidak boleh kosong</span>
+      </div>
+      <br>
+      <div if.bind="error.Details.toString()">
+        <span style="color:red">-Detail Warna harus diisi dan Jumlah Total pada detail harus sama dengan jumlah order .</span>
+      </div>
+    </form>
+  </au-input-form>
+</template>
